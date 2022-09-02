@@ -1,0 +1,56 @@
+Metadata-Version: 2.1
+Name: snapy
+Version: 0.0.4
+Summary: python extension for SNAP model
+Home-page: https://snap.chengcli.io
+Author: Cheng Li
+Author-email: chengcli@umich.edu
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.0
+Description-Content-Type: text/markdown
+License-File: LICENCE
+Requires-Dist: numpy (>=1.13)
+Requires-Dist: netCDF4 (>=1.5)
+Provides-Extra: dev
+Provides-Extra: docs
+Requires-Dist: sphinx ; extra == 'docs'
+Requires-Dist: sphinx-rtd-theme ; extra == 'docs'
+
+## This folder contains wrapper functions for the python extension of Athena/HARP.
+## It uses Cython as the software to extend the existing C++ modules
+## To install cython, execute:
+## pip install Cython
+## More information can be found at http://docs.cython.org/
+
+# I found that it is hard to distribute cython project to python
+# Here's the problems I encountered
+# 1. the extern keywords import header files counting from the 'setup.py' directory
+# 2. the pxd file uses relative import
+# 3. the pyx file uses absolute import
+# 4. pypi needs manylinux tag
+#    see discuss at:
+# https://stackoverflow.com/questions/50690526/how-to-publish-binary-python-wheels-for-linux-on-a-local-machine
+# https://github.com/pypa/manylinux
+# https://github.com/pypa/python-manylinux-demo
+# Check wiki page on continuous integration
+# https://en.wikipedia.org/wiki/Continuous_integration
+
+# How to distribution a cython package
+https://stackoverflow.com/questions/47042483/how-to-build-and-distribute-a-python-cython-package-that-depends-on-third-party
+
+# How to package and distribute
+https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/
+
+# Pypi token
+https://pypi.org/manage/account/token/
+
+# How to distribute a package
+python3 -m build --sdist
+python3 -m build --wheel
+twine upload dist/*0.0.3*
+
+

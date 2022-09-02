@@ -1,0 +1,1 @@
+python3 ../initiate_chem_0dim.py --i vulcan_test.inp --ex vulcan.py --o vulcan.nc

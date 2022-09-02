@@ -1,0 +1,19 @@
+#Test program for Chapman mechanism
+
+
+#Environment settings
+press = 1197
+temp = 227
+
+#Chemical scheme
+reaction_database = ../data/chapmantest.txt
+ 
+#Chemistry Initial Condition (cm-3)
+O = 1e7
+O3 = 1e12
+O2 = 7.64e16
+
+#Simuation runs
+tstart = 0
+tend = 10
+nTime = 1000

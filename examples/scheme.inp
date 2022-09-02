@@ -1,0 +1,17 @@
+#Input file for the chemical kinetics code
+
+
+#Atmospheric structure
+#Option to read a file for T, P profile
+press = 1e5
+temp = 200
+
+#Chemical scheme
+reaction_database = data/zhangthermo2012.txt
+ 
+#Chemistry Initial Condition
+
+#Simuation runs
+tstart = 0
+tend = 10
+nTime = 100000
