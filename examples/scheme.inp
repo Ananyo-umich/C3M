@@ -13,5 +13,5 @@ reaction_database = data/zhangthermo2012.txt
 
 #Simuation runs
 tstart = 0
-tend = 10
+tend = 100
 nTime = 100000

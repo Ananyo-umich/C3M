@@ -9,11 +9,11 @@ temp = 227
 reaction_database = ../data/chapmantest.txt
  
 #Chemistry Initial Condition (cm-3)
-O = 1e7
+O = 3e7
 O3 = 1e12
-O2 = 7.64e16
+O2 = 7e16
 
 #Simuation runs
 tstart = 0
-tend = 10
-nTime = 1000
+tend = 1000
+nTime = 100000

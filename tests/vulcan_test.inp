@@ -3,7 +3,7 @@
 
 #Environment settings
 press = 1e5
-temp = 1000
+temp = 270
 
 #Chemical scheme
 reaction_database = ../data/vulcan2017.txt
@@ -13,5 +13,5 @@ reaction_database = ../data/vulcan2017.txt
 
 #Simuation runs
 tstart = 0
-tend = 10000
-nTime = 100
+tend = 1
+nTime = 1000

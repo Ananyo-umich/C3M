@@ -3,7 +3,7 @@ import netCDF4 as nc
 from glob import glob
 
 
-T = 1000.0
+T = 270.0
 P = 100000.0
 Kb = 1.38e-23
 N = P/(Kb*T) 
@@ -16245,18 +16245,30 @@ def ReactionRate(x):
 	return dx
 
 t_init = 0.0
-t_final = 10000.0
-n = 100
-x = 1e-12*N*abs(randn(29,n))
+t_final = 1.0
+n = 1000
+x = 1e-6*N*abs(randn(29,n))
 rate = zeros(29)
 jacob = zeros([29,29])
-dt = 100.0
+dt = 0.001
 for i in range(n-1):
-	a_matrix = Jacobian(x[:,i])
+	j_matrix = Jacobian(x[:,i])
 	x_pred = x[:,i]
-	g = x_pred-(ReactionRate(x[:,i])*dt)-x[:,i]
-	b_matrix = matmul(linalg.inv(Jacobian(x[:,i])),g)
-	x[:,i+1] = x[:,i] - (b_matrix)
+	rate = ReactionRate(x[:,i])
+	i_matrix = identity(len(x[:,i]))
+	x_prev = x_pred
+	x_next = x_pred
+#Backward Euler Integration Scheme (Li and Chen, 2020)
+	while True:
+		b_matrix = (rate - ((x_prev - x[:,i])/dt))
+		x_int = x_next
+		x_next = x_prev + matmul(linalg.inv((i_matrix/dt) - j_matrix),b_matrix)
+		x_prev = x_int
+		print(str(abs(x_next - x_prev)/x_prev))
+		if (abs(x_next - x_prev)/x_prev <= 1e-10).all():
+			break
+	x[:,i+1] = x_next
+	
 	print('Chemical Reaction Network solved for '+str(i)+' Time Step')
 
 #Writing the Output into NETCDF format
