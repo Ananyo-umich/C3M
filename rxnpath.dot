@@ -1,0 +1,5 @@
+digraph reaction_paths {
+center=1;
+ label = "Scale = 1e-10\l Reaction path diagram following S";
+ fontname = "Helvetica";
+}
