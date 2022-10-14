@@ -1,0 +1,7 @@
+#ifndef CONFIGURE_HPP
+#define CONFIGURE_HPP
+
+// precision
+using Real = @Real@;
+
+#endif
