@@ -33,6 +33,7 @@ Reading VPL (XCROSS)
 reactionID, reaction, rate flag, photofile
 
 Reading SWRI files
+http://amop.space.swri.edu/
 
 0 dim 
 - initial conditon - netcdf or input
