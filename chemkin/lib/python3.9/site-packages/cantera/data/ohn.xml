@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ctml>
+  <validate species="yes" reactions="yes"/>
+
+  <!-- phase gas     -->
+  <phase id="gas" dim="3">
+    <elementArray datasrc="elements.xml">O H N</elementArray>
+    <speciesArray datasrc="gri30.xml#species_data">all
+      <skip element="undeclared"/>
+    </speciesArray>
+    <reactionArray datasrc="gri30.xml#reaction_data">
+      <skip species="undeclared" third_bodies="undeclared"/>
+    </reactionArray>
+    <state>
+      <temperature units="K">300.0</temperature>
+      <pressure units="Pa">101325.0</pressure>
+      <moleFractions>H2:2, O2:1, N2:3.76</moleFractions>
+    </state>
+    <thermo model="IdealGas"/>
+    <kinetics model="GasKinetics"/>
+    <transport model="Mix"/>
+  </phase>
+
+  <!-- species definitions     -->
+  <speciesData id="species_data"/>
+  <reactionData id="reaction_data"/>
+</ctml>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<ctml>
+  <validate species="yes" reactions="yes"/>
+
+  <!-- phase ice     -->
+  <phase id="ice" dim="3">
+    <elementArray datasrc="elements.xml">H O</elementArray>
+    <speciesArray datasrc="#species_data">H2O(S)</speciesArray>
+    <state>
+      <temperature units="K">300.0</temperature>
+      <pressure units="Pa">101325.0</pressure>
+    </state>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">0.917</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase liquid_water     -->
+  <phase id="liquid_water" dim="3">
+    <elementArray datasrc="elements.xml">H O</elementArray>
+    <speciesArray datasrc="#species_data">H2O(L)</speciesArray>
+    <state>
+      <temperature units="K">300.0</temperature>
+      <pressure units="Pa">101325.0</pressure>
+    </state>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- species definitions     -->
+  <speciesData id="species_data">
+
+    <!-- species H2O(S)    -->
+    <species name="H2O(S)">
+      <atomArray>H:2 O:1 </atomArray>
+      <thermo>
+        <NASA Tmin="200.0" Tmax="273.15" P0="100000.0">
+           <floatArray size="7" name="coeffs">
+             5.296779700E+00,  -6.757492470E-02,   5.169421090E-04,  -1.438533600E-06, 
+             1.525647940E-09,  -3.622665570E+04,  -1.792204280E+01</floatArray>
+        </NASA>
+      </thermo>
+    </species>
+
+    <!-- species H2O(L)    -->
+    <species name="H2O(L)">
+      <atomArray>H:2 O:1 </atomArray>
+      <thermo>
+        <NASA Tmin="273.15" Tmax="600.0" P0="100000.0">
+           <floatArray size="7" name="coeffs">
+             7.255750050E+01,  -6.624454020E-01,   2.561987460E-03,  -4.365919230E-06, 
+             2.781789810E-09,  -4.188654990E+04,  -2.882801370E+02</floatArray>
+        </NASA>
+      </thermo>
+    </species>
+  </speciesData>
+  <reactionData id="reaction_data"/>
+</ctml>

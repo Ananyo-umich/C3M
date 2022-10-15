@@ -18,5 +18,6 @@ public:
 protected:
   // data
   std::vector<Real> wavelengths_;
+  std::vector<Real> crossSection_;
   Real *data;
 };

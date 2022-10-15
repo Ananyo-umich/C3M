@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ctml>
+  <validate species="yes" reactions="yes"/>
+
+  <!-- phase silicon     -->
+  <phase id="silicon" dim="3">
+    <elementArray datasrc="elements.xml">Si</elementArray>
+    <speciesArray datasrc="#species_data">Si(cr)</speciesArray>
+    <state>
+      <temperature units="K">1600.0</temperature>
+      <pressure units="Pa">101325.0</pressure>
+    </state>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- species definitions     -->
+  <speciesData id="species_data">
+
+    <!-- species Si(cr)    -->
+    <species name="Si(cr)">
+      <atomArray>Si:1 </atomArray>
+      <thermo>
+        <NASA Tmin="200.0" Tmax="1000.0" P0="100000.0">
+           <floatArray size="7" name="coeffs">
+             -1.291769120E-01,   1.472031390E-02,  -2.765101600E-05,   2.418782510E-08, 
+             -7.934529120E-12,  -4.155164170E+02,  -3.595700080E-01</floatArray>
+        </NASA>
+        <NASA Tmin="1000.0" Tmax="1690.0" P0="100000.0">
+           <floatArray size="7" name="coeffs">
+             1.755473820E+00,   3.172854970E-03,  -2.782364020E-06,   1.264580650E-09, 
+             -2.171284640E-13,  -6.286573630E+02,  -8.553411770E+00</floatArray>
+        </NASA>
+      </thermo>
+    </species>
+  </speciesData>
+  <reactionData id="reaction_data"/>
+</ctml>

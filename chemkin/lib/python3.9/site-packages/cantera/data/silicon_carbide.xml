@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ctml>
+  <validate species="yes" reactions="yes"/>
+
+  <!-- phase silicon_carbide     -->
+  <phase id="silicon_carbide" dim="3">
+    <elementArray datasrc="elements.xml">Si C</elementArray>
+    <speciesArray datasrc="#species_data">SiC(b)</speciesArray>
+    <state>
+      <temperature units="K">1600.0</temperature>
+      <pressure units="Pa">101325.0</pressure>
+    </state>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- species definitions     -->
+  <speciesData id="species_data">
+
+    <!-- species SiC(b)    -->
+    <species name="SiC(b)">
+      <atomArray>Si:1 C:1 </atomArray>
+      <thermo>
+        <NASA Tmin="300.0" Tmax="1000.0" P0="100000.0">
+           <floatArray size="7" name="coeffs">
+             -2.471590700E+00,   3.069378300E-02,  -4.926308500E-05,   3.862638900E-08, 
+             -1.176162100E-11,  -9.069126000E+03,   8.800921400E+00</floatArray>
+        </NASA>
+        <NASA Tmin="1000.0" Tmax="4000.0" P0="100000.0">
+           <floatArray size="7" name="coeffs">
+             3.797480900E+00,   3.187288600E-03,  -1.450233400E-06,   3.154974400E-10, 
+             -2.615899100E-14,  -1.029193700E+04,  -2.106779100E+01</floatArray>
+        </NASA>
+      </thermo>
+    </species>
+  </speciesData>
+  <reactionData id="reaction_data"/>
+</ctml>

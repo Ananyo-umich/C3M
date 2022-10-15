@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<ctml>
+  <validate species="yes" reactions="yes"/>
+
+  <!-- phase KOH_plasma     -->
+  <phase id="KOH_plasma" dim="3">
+    <elementArray datasrc="elements.xml">K O H E</elementArray>
+    <speciesArray datasrc="nasa_gas.xml#species_data">all
+      <skip element="undeclared"/>
+    </speciesArray>
+    <state>
+      <temperature units="K">300.0</temperature>
+      <pressure units="Pa">101325.0</pressure>
+    </state>
+    <thermo model="IdealGas"/>
+    <kinetics model="GasKinetics"/>
+    <transport model="None"/>
+  </phase>
+
+  <!-- phase K_solid     -->
+  <phase id="K_solid" dim="3">
+    <elementArray datasrc="elements.xml">K</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">K(cr)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">0.86</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase K_liquid     -->
+  <phase id="K_liquid" dim="3">
+    <elementArray datasrc="elements.xml">K</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">K(L)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase KOH_a     -->
+  <phase id="KOH_a" dim="3">
+    <elementArray datasrc="elements.xml">K O H</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">KOH(a)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">2.04</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase KOH_b     -->
+  <phase id="KOH_b" dim="3">
+    <elementArray datasrc="elements.xml">K O H</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">KOH(b)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase KOH_liquid     -->
+  <phase id="KOH_liquid" dim="3">
+    <elementArray datasrc="elements.xml">K O H</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">KOH(L)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase K2O2_solid     -->
+  <phase id="K2O2_solid" dim="3">
+    <elementArray datasrc="elements.xml">K O</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">K2O2(s)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase K2O_solid     -->
+  <phase id="K2O_solid" dim="3">
+    <elementArray datasrc="elements.xml">K O</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">K2O(s)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase KO2_solid     -->
+  <phase id="KO2_solid" dim="3">
+    <elementArray datasrc="elements.xml">K O</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">KO2(s)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase ice     -->
+  <phase id="ice" dim="3">
+    <elementArray datasrc="elements.xml">H O</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">H2O(s)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">0.917</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- phase liquid_water     -->
+  <phase id="liquid_water" dim="3">
+    <elementArray datasrc="elements.xml">H O</elementArray>
+    <speciesArray datasrc="nasa_condensed.xml#species_data">H2O(L)</speciesArray>
+    <thermo model="StoichSubstance">
+      <density units="g/cm3">1.0</density>
+    </thermo>
+    <transport model="None"/>
+    <kinetics model="none"/>
+  </phase>
+
+  <!-- species definitions     -->
+  <speciesData id="species_data"/>
+  <reactionData id="reaction_data"/>
+</ctml>
