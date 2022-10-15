@@ -1,0 +1,80 @@
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, H, O]
+  species: [O2, O, O3, O_1D]
+  kinetics: gas
+  reactions: none
+  skip-undeclared-elements: true
+
+species:
+- name: O2
+  composition: {O: 2}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O
+  composition: {O: 1}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O3
+  composition: {O: 3}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O_1D
+  composition: {O: 1}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+
+reactions:
+- equation: O2 <=> 2O
+  rate-constant: {A: 6e-11 }
+- equation: O + O2 <=> O3
+  type: three-body
+  rate-constant: {A: 6e-34,T0: 300.0,b: 2.4,Ea: 0.0 }
+  efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 0.48, H2: 1.0,
+    C2H6: 1.0, N2: 0.4, He: 0.35, C2H4: 1.6, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
+    NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
+- equation: O3 <=> O + O2
+  rate-constant: {A: 0.0007 }
+- equation: O3 <=> O_1D + O2
+  rate-constant: {A: 0.0005 }
+- equation: O + O3 <=> 2O2
+  type: three-body
+  rate-constant: {A: 8e-12,T0: 300.0,b: 0.0,Ea: -2060.0 }
+  efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 0.48, H2: 1.0,
+    C2H6: 1.0, N2: 0.4, He: 0.35, C2H4: 1.6, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
+    NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
+- equation: O_1D <=> O
+  type: three-body
+  rate-constant: {A: 3.2e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+  efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 0.48, H2: 1.0,
+    C2H6: 1.0, N2: 0.4, He: 0.35, C2H4: 1.6, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
+    NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}

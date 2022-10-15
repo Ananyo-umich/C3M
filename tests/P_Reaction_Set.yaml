@@ -1,0 +1,698 @@
+generator: cti2yaml
+cantera-version: 2.6.0a4
+date: Thu, 29 Sep 2022 13:46:18 -0400
+input-files: [P_Reaction_Set.cti]
+
+units: {length: cm, quantity: mol, activation-energy: kJ/mol}
+
+phases:
+- name: p_reaction_set
+  thermo: ideal-gas
+  elements: [O, H, P, He]
+  species: [PH3, H3PO4, HOPO, H, PH2, PH, H2O, H2, O2, O, OH, HO2, PO, PO2,
+    PO3, HPO, HOPO2, P2O3, P, P2, P4, P2O, P2O2, HPOH, H2POH, He]
+  kinetics: gas
+  reactions: all
+  state:
+    T: 300.0
+    P: 1.01325e+05
+
+species:
+- name: H2
+  composition: {H: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    diameter: 2.92
+    well-depth: 38.0
+    polarizability: 0.79
+    rotational-relaxation: 280.0
+  note: TPIS78
+- name: H
+  composition: {H: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.5, 7.05332819e-13, -1.99591964e-15, 2.30081632e-18, -9.27732332e-22,
+      2.54736599e+04, -0.446682853]
+    - [2.50000001, -2.30842973e-11, 1.61561948e-14, -4.73515235e-18, 4.98197357e-22,
+      2.54736599e+04, -0.446682914]
+  transport:
+    model: gas
+    geometry: atom
+    diameter: 2.05
+    well-depth: 145.0
+  note: L 7/88
+- name: O
+  composition: {O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [3.1682671, -3.27931884e-03, 6.64306396e-06, -6.12806624e-09, 2.11265971e-12,
+      2.91222592e+04, 2.05193346]
+    - [2.56942078, -8.59741137e-05, 4.19484589e-08, -1.00177799e-11, 1.22833691e-15,
+      2.92175791e+04, 4.78433864]
+  transport:
+    model: gas
+    geometry: atom
+    diameter: 2.75
+    well-depth: 80.0
+  note: L 1/90
+- name: O2
+  composition: {O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [3.78245636, -2.99673416e-03, 9.84730201e-06, -9.68129509e-09, 3.24372837e-12,
+      -1063.94356, 3.65767573]
+    - [3.28253784, 1.48308754e-03, -7.57966669e-07, 2.09470555e-10, -2.16717794e-14,
+      -1088.45772, 5.45323129]
+  transport:
+    model: gas
+    geometry: linear
+    diameter: 3.46
+    well-depth: 107.4
+    polarizability: 1.6
+    rotational-relaxation: 3.8
+  note: TPIS89
+- name: OH
+  composition: {O: 1, H: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [3.99201543, -2.40131752e-03, 4.61793841e-06, -3.88113333e-09, 1.3641147e-12,
+      3615.08056, -0.103925458]
+    - [3.09288767, 5.48429716e-04, 1.26505228e-07, -8.79461556e-11, 1.17412376e-14,
+      3858.657, 4.4766961]
+  transport:
+    model: gas
+    geometry: linear
+    diameter: 2.75
+    well-depth: 80.0
+  note: RUS 78
+- name: H2O
+  composition: {H: 2, O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [4.19864056, -2.0364341e-03, 6.52040211e-06, -5.48797062e-09, 1.77197817e-12,
+      -3.02937267e+04, -0.849032208]
+    - [3.03399249, 2.17691804e-03, -1.64072518e-07, -9.7041987e-11, 1.68200992e-14,
+      -3.00042971e+04, 4.9667701]
+  transport:
+    model: gas
+    geometry: nonlinear
+    diameter: 2.6
+    well-depth: 572.4
+    dipole: 1.84
+    rotational-relaxation: 4.0
+  note: L 8/89
+- name: HO2
+  composition: {H: 1, O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [4.30179801, -4.74912051e-03, 2.11582891e-05, -2.42763894e-08, 9.29225124e-12,
+      294.80804, 3.71666245]
+    - [4.0172109, 2.23982013e-03, -6.3365815e-07, 1.1424637e-10, -1.07908535e-14,
+      111.856713, 3.78510215]
+  transport:
+    model: gas
+    geometry: nonlinear
+    diameter: 3.46
+    well-depth: 107.4
+    rotational-relaxation: 1.0
+  note: L 5/89
+- name: PO
+  composition: {P: 1, O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [300.0, 1000.0, 5000.0]
+    data:
+    - [3.961308, -2.1235399e-03, 7.5201219e-06, -7.5950912e-09, 2.5637591e-12,
+      -4698.96895, 4.58369221]
+    - [3.8427922, 7.2364456e-04, -2.8934199e-07, 5.3013554e-11, -3.5495373e-15,
+      -4799.45495, 4.55237741]
+- name: PH
+  composition: {P: 1, H: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [300.0, 1000.0, 5000.0]
+    data:
+    - [3.6803433, -1.2756018e-03, 2.5932442e-06, -8.4354107e-10, -1.7208609e-13,
+      2.73339656e+04, 2.91864125]
+    - [3.0745442, 1.1698947e-03, -3.0381654e-07, 4.4436314e-11, -2.7000975e-15,
+      2.74268316e+04, 5.76804855]
+- name: P2
+  composition: {P: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [300.0, 1000.0, 5000.0]
+    data:
+    - [2.8391107, 4.8266193e-03, -5.4947488e-06, 2.5800507e-09, -3.2236453e-13,
+      1.62597073e+04, 8.84241019]
+    - [4.1611733, 3.96208e-04, -1.5580339e-07, 2.9093474e-11, -2.0042458e-15,
+      1.59468693e+04, 2.24109249]
+- name: P4
+  composition: {P: 4}
+  thermo:
+    model: NASA7
+    temperature-ranges: [300.0, 1000.0, 5000.0]
+    data:
+    - [3.53533, 0.024125292, -3.6462759e-05, 2.4916906e-08, -6.3298563e-12,
+      5235.53359, 7.75589567]
+    - [9.2262789, 8.6894128e-04, -3.7758338e-07, 7.2379666e-11, -5.1066109e-15,
+      4090.54959, -19.6417049]
+- name: P
+  composition: {P: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [2.50004278, -4.38968637e-07, 1.58131741e-09, -2.33900457e-12, 1.2051094e-15,
+      3.73073754e+04, 5.38414729]
+    - [2.80721555, -5.30841988e-04, 2.44543046e-07, -2.05708252e-11, -2.94546619e-16,
+      3.71892748e+04, 3.67764733]
+- name: PO3
+  composition: {P: 1, O: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [4.76937251, 7.84394344e-03, 3.34334625e-06, -1.31052242e-08, 6.59556089e-12,
+      -5.5973816e+04, 4.9897798]
+    - [8.23656335, 1.80275397e-03, -7.05110218e-07, 1.20266442e-10, -7.47469163e-15,
+      -5.70566922e+04, -13.6530463]
+- name: HOPO
+  composition: {P: 1, O: 2, H: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [2.2403414, 0.014795394, -7.32116293e-06, -6.11255495e-09, 4.98114135e-12,
+      -5.76114237e+04, 15.6885758]
+    - [7.24520875, 1.90475138e-03, -6.66701011e-07, 1.06214519e-10, -6.31478873e-15,
+      -5.89463248e+04, -10.1464705]
+- name: HOPO2
+  composition: {P: 1, O: 3, H: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [1.63070941, 0.0249990293, -2.23292246e-05, 5.83782168e-09, 1.06880806e-12,
+      -8.7260852e+04, 18.1667382]
+    - [9.07543004, 3.08252827e-03, -1.12339846e-06, 1.83697534e-10, -1.11135239e-14,
+      -8.91864155e+04, -19.7912936]
+- name: P2O3
+  composition: {P: 2, O: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [3.92738024, 0.024440349, -3.23256516e-05, 2.27759324e-08, -6.72127799e-12,
+      -8.43569171e+04, 9.19399061]
+    - [10.1672251, 2.86631097e-03, -1.11444324e-06, 1.8938031e-10, -1.17410794e-14,
+      -8.59087483e+04, -22.0894301]
+- name: HPO
+  composition: {P: 1, O: 1, H: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [4.13953017, -3.75644462e-03, 2.10092493e-05, -2.45887613e-08, 9.33164494e-12,
+      -1.24807211e+04, 5.14556489]
+    - [4.37304891, 2.6428139e-03, -1.05664065e-06, 1.87785142e-10, -1.17888051e-14,
+      -1.28840223e+04, 2.24317064]
+- name: PH2
+  composition: {P: 1, H: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [4.16964428, -2.45830485e-03, 1.00971169e-05, -8.78319734e-09, 2.59205016e-12,
+      1.5086695e+04, 2.18270208]
+    - [3.21773792, 3.49542717e-03, -1.29980152e-06, 2.17194645e-10, -1.32490322e-14,
+      1.513167e+04, 6.1541596]
+- name: HPOH
+  composition: {P: 1, O: 1, H: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [2.73904336, 7.58978157e-03, 6.74887605e-06, -1.70992402e-08, 8.16780196e-12,
+      -1.34621653e+04, 12.9526425]
+    - [5.92320121, 3.20816143e-03, -1.16290506e-06, 1.89203705e-10, -1.13985373e-14,
+      -1.45045236e+04, -4.42324448]
+- name: He
+  composition: {He: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [2.5, 0.0, 0.0, 0.0, 0.0, -745.375, 0.928724724]
+    - [2.5, 0.0, 0.0, 0.0, 0.0, -745.375, 0.928724724]
+- name: P2O
+  composition: {P: 2, O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 5000.0]
+    data:
+    - [4.853, 2.246e-03, -1.285e-06, 3.439e-10, -3.539e-14, 10430, -0.189]
+    - [4.853, 2.246e-03, -1.285e-06, 3.439e-10, -3.539e-14, 10430, -0.189]
+- name: P2O2
+  composition: {P: 2, O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 5000.0]
+    data:
+    - [7.476, 3.446e-03, -1.972e-06, 5.28e-10, -5.435e-14, -12180, -8.971]
+    - [7.476, 3.446e-03, -1.972e-06, 5.28e-10, -5.435e-14, -12180, -8.971]
+- name: PO2
+  composition: {P: 1, O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [300.0, 1000.0, 5000.0]
+    data:
+    - [3.70338274, 1.99856635e-03, 8.62444075e-06, -1.34479846e-08, 5.58470721e-12,
+      -3.51050019e+04, 8.53959173]
+    - [5.27587261, 1.80638038e-03, -7.5002835e-07, 1.40062873e-10, -9.17506743e-15,
+      -3.57348111e+04, -0.574241509]
+- name: PH3
+  composition: {P: 1, H: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [300.0, 1000.0, 5000.0]
+    data:
+    - [4.17009763, -5.06487157e-03, 2.86027846e-05, -3.13123782e-08, 1.13447768e-11,
+      203.144445, 2.02004617]
+    - [3.71229298, 5.85959002e-03, -2.16607791e-06, 3.56195511e-10, -2.15913467e-14,
+      -188.863997, 1.92781913]
+- name: H2POH
+  composition: {P: 1, O: 1, H: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [2.39504082, 0.0105844681, 8.84484556e-06, -2.30430925e-08, 1.12066638e-11,
+      -2.64839015e+04, 13.9221049]
+    - [6.15922994, 5.46647072e-03, -1.92690009e-06, 3.0738163e-10, -1.82564639e-14,
+      -2.76911446e+04, -6.55338354]
+- name: H3PO4
+  composition: {P: 1, O: 4, H: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 5000.0]
+    data:
+    - [-1.82480022, 0.069298374, -1.01448758e-04, 6.91910155e-08, -1.77690951e-11,
+      -1.36317149e+05, 33.0354162]
+    - [13.8520189, 4.93643885e-03, -1.55822515e-06, 2.29340638e-10, -1.28366239e-14,
+      -1.39420678e+05, -42.2913846]
+- name: H3PO4(l)
+  composition: {P: 1, O: 4, H: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [315.5, 1000.0]
+    data:
+    - [6.65046048, 0.0361771329, 1.28913999e-07, -1.29177869e-10, 4.67686463e-14,
+      -1.56550222e+05, -30.5483412]
+- name: H3PO4(cr)
+  composition: {P: 1, O: 4, H: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 315.5]
+    data:
+    - [1.52627527, 0.0380900191, 1.3033279e-06, -9.1375361e-09, 0.0, -1.56629014e+05,
+      -6.73453156]
+
+reactions:
+- equation: H + H + M <=> H2 + M  # Reaction 1
+  type: three-body
+  rate-constant: {A: 6.457e+17, b: -1, Ea: 0}
+- equation: O + O + M <=> O2 + M  # Reaction 2
+  type: three-body
+  rate-constant: {A: 1.0e+17, b: -1, Ea: 0}
+- equation: H + O + M <=> OH + M  # Reaction 3
+  type: three-body
+  rate-constant: {A: 2.57e+16, b: -0.6, Ea: 0}
+- equation: H + OH + M <=> H2O + M  # Reaction 4
+  type: three-body
+  rate-constant: {A: 8.318e+21, b: -2, Ea: 0}
+- equation: H + O2 + M <=> HO2 + M  # Reaction 5
+  type: three-body
+  rate-constant: {A: 7.08e+17, b: -0.8, Ea: 0}
+- equation: H + O2 <=> OH + O  # Reaction 6
+  rate-constant: {A: 1.585e+17, b: -0.927, Ea: 70.6}
+- equation: OH + H2 <=> H2O + H  # Reaction 7
+  rate-constant: {A: 6.31e+13, b: 0, Ea: 33.6}
+- equation: OH + OH <=> O + H2O  # Reaction 8
+  rate-constant: {A: 2.0893e+08, b: 1.4, Ea: -1.7}
+- equation: O + H2 <=> OH + H  # Reaction 9
+  rate-constant: {A: 1.8621e+14, b: 0, Ea: 57.0}
+- equation: HO2 + H <=> OH + OH  # Reaction 10
+  rate-constant: {A: 2.1878e+14, b: 0, Ea: 5.9}
+- equation: HO2 + H <=> H2 + O2  # Reaction 11
+  rate-constant: {A: 2.5119e+13, b: 0, Ea: 2.9}
+- equation: HO2 + O <=> O2 + OH  # Reaction 12
+  rate-constant: {A: 1.9953e+13, b: 0, Ea: 0}
+- equation: HO2 + OH <=> H2O + O2  # Reaction 13
+  rate-constant: {A: 1.9953e+13, b: 0, Ea: 0}
+- equation: H + PO <=> HPO  # Reaction 14
+  rate-constant: {A: 1.87e+22, b: -1.96, Ea: 5.32}
+- equation: H + PO2 <=> HOPO  # Reaction 15
+  rate-constant: {A: 1.59e+27, b: -3.03, Ea: 8.2}
+- equation: H  + PO3 <=> HOPO2  # Reaction 16
+  rate-constant: {A: 3.73e+24, b: -2.32, Ea: 6.3}
+- equation: H + HPO <=> HPOH  # Reaction 17
+  rate-constant: {A: 1.71e+25, b: -2.65, Ea: 7.19}
+- equation: H + P <=> PH  # Reaction 18
+  rate-constant: {A: 3.36e+18, b: -1.1, Ea: 2.97}
+- equation: H + PH2 <=> PH3  # Reaction 19
+  rate-constant: {A: 1.32e+25, b: -2.67, Ea: 7.25}
+- equation: H + PH <=> PH2  # Reaction 20
+  rate-constant: {A: 7.56e+21, b: -1.89, Ea: 5.12}
+- equation: H + HPOH <=> H2POH  # Reaction 21
+  rate-constant: {A: 5.61e+28, b: -3.52, Ea: 9.54}
+- equation: O + PO <=> PO2  # Reaction 22
+  rate-constant: {A: 4.09e+24, b: -2.44, Ea: 6.62}
+- equation: O + PO2 <=> PO3  # Reaction 23
+  rate-constant: {A: 1.41e+27, b: -3.15, Ea: 8.54}
+- equation: O + HOPO <=> HOPO2  # Reaction 24
+  rate-constant: {A: 1.1e+26, b: -2.67, Ea: 7.23}
+- equation: O + P <=> PO  # Reaction 25
+  rate-constant: {A: 1.59e+20, b: -1.39, Ea: 3.78}
+- equation: O + P2 <=> P2O  # Reaction 26
+  rate-constant: {A: 4.99e+16, b: -0.73, Ea: 1.97}
+- equation: O + PH <=> HPO  # Reaction 27
+  rate-constant: {A: 2.33e+14, b: -0.27, Ea: 0.722}
+- equation: O + P2O <=> P2O2  # Reaction 28
+  rate-constant: {A: 6.72e+13, b: -0.23, Ea: 0.627}
+- equation: OH + PO <=> HOPO  # Reaction 29
+  rate-constant: {A: 3.39e+19, b: -1.64, Ea: 4.44}
+- equation: OH + PO2 <=> HOPO2  # Reaction 30
+  rate-constant: {A: 1.13e+30, b: -4.06, Ea: 11.0}
+- equation: OH + PH2 <=> H2POH  # Reaction 31
+  rate-constant: {A: 8.04e+21, b: -2.28, Ea: 6.18}
+- equation: OH + PH <=> HPOH  # Reaction 32
+  rate-constant: {A: 8.92e+15, b: -0.93, Ea: 2.52}
+- equation: PO + PO <=> P2O2  # Reaction 33
+  rate-constant: {A: 9.51e+18, b: -1.9, Ea: 5.14}
+- equation: PO + PO2 <=> P2O3  # Reaction 34
+  rate-constant: {A: 4.71e+30, b: -4.41, Ea: 11.9}
+- equation: PO + P <=> P2O  # Reaction 35
+  rate-constant: {A: 9.82e+22, b: -2.2, Ea: 5.96}
+- equation: P + P <=> P2  # Reaction 36
+  rate-constant: {A: 4.07e+20, b: -1.52, Ea: 4.12}
+- equation: P2 + P2 <=> P4  # Reaction 37
+  rate-constant: {A: 1.96e+26, b: -3.48, Ea: 9.44}
+- equation: H2O + PO3 <=> OH + HOPO2  # Reaction 38
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0}
+- equation: H2 + PO3 <=> H + HOPO2  # Reaction 39
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0}
+- equation: O2 + PO <=> O + PO2  # Reaction 40
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 23.98}
+- equation: O2 + P <=> O + PO  # Reaction 41
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 17.56}
+- equation: O2 + PH <=> O + HPO  # Reaction 42
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 16.73}
+- equation: H + HOPO <=> H2O + PO  # Reaction 43
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: H + HOPO <=> H2 + PO2  # Reaction 44
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.18}
+- equation: H + HOPO2 <=> H2O + PO2  # Reaction 45
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: H + PO3 <=> O + HOPO  # Reaction 46
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.0}
+- equation: H + PO3 <=> OH + PO2  # Reaction 47
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.16}
+- equation: H + P2O3 <=> PO + HOPO  # Reaction 48
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: H + HPO <=> H2 + PO  # Reaction 49
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 16.54}
+- equation: H + PH3 <=> H2 + PH2  # Reaction 50
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 17.49}
+- equation: H + PH2 <=> H2 + PH  # Reaction 51
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 21.7}
+- equation: H + PH <=> H2 + P  # Reaction 52
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 20.89}
+- equation: H + P2O <=> OH + P2  # Reaction 53
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 23.34}
+- equation: H + P2O <=> PO + PH  # Reaction 54
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 23.37}
+- equation: H + P2O <=> HPO + P  # Reaction 55
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: H + P2O2 <=> PO + HPO  # Reaction 56
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: H + H2POH <=> H2O + PH2  # Reaction 57
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: H + H2POH <=> H2 + HPOH  # Reaction 58
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 17.37}
+- equation: H + HPOH <=> H2O + PH  # Reaction 59
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.0}
+- equation: H + HPOH <=> H2 + HPO  # Reaction 60
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 23.81}
+- equation: O + HOPO <=> OH + PO2  # Reaction 61
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.0}
+- equation: O + HOPO2 <=> O2 + HOPO  # Reaction 62
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 34.51}
+- equation: O + PO3 <=> O2 + PO2  # Reaction 63
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.0}
+- equation: O + P2O3 <=> PO + PO3  # Reaction 64
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: O + P2O3 <=> PO2 + PO2  # Reaction 65
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: O + HPO <=> H + PO2  # Reaction 66
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: O + HPO <=> OH + PO  # Reaction 67
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 11.58}
+- equation: O + P2 <=> PO + P  # Reaction 68
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 19.03}
+- equation: O + PH3 <=> OH + PH2  # Reaction 69
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 11.79}
+- equation: O + PH2 <=> H + HPO  # Reaction 70
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.0}
+- equation: O + PH2 <=> OH + PH  # Reaction 71
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 15.5}
+- equation: O + PH <=> H + PO  # Reaction 72
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 9.99}
+- equation: O + PH <=> OH + P  # Reaction 73
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 15.58}
+- equation: O + P2O <=> O2 + P2  # Reaction 74
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 14.17}
+- equation: O + P2O <=> PO + PO  # Reaction 75
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 7.06}
+- equation: O + P2O <=> PO2 + P  # Reaction 76
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: O + P2O2 <=> O2 + P2O  # Reaction 77
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 25.69}
+- equation: O + P2O2 <=> PO + PO2  # Reaction 78
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 50.0}
+- equation: O + H2POH <=> OH + HPOH  # Reaction 79
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 11.71}
+- equation: O + HPOH <=> H + HOPO  # Reaction 80
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.0}
+- equation: O + HPOH <=> OH + HPO  # Reaction 81
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 19.21}
+- equation: OH + PO <=> H + PO2  # Reaction 82
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 24.98}
+- equation: OH + HOPO <=> H2O + PO2  # Reaction 83
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: OH + HOPO <=> H + HOPO2  # Reaction 84
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 40.63}
+- equation: OH + PO3 <=> O + HOPO2  # Reaction 85
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: OH + P2O3 <=> PO + HOPO2  # Reaction 86
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: OH + P2O3 <=> PO2 + HOPO  # Reaction 87
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: OH + HPO <=> H2O + PO  # Reaction 88
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 7.26}
+- equation: OH + HPO <=> H + HOPO  # Reaction 89
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: OH + P <=> H + PO  # Reaction 90
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 19.49}
+- equation: OH + PH3 <=> H2O + PH2  # Reaction 91
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 6.89}
+- equation: OH + PH3 <=> H + H2POH  # Reaction 92
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: OH + PH2 <=> H2O + PH  # Reaction 93
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 9.37}
+- equation: OH + PH2 <=> H + HPOH  # Reaction 94
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: OH + PH <=> H2O + P  # Reaction 95
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 10.17}
+- equation: OH + PH <=> H + HPO  # Reaction 96
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 19.02}
+- equation: OH + P2O <=> H + P2O2  # Reaction 97
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 59.59}
+- equation: OH + P2O <=> HOPO + P  # Reaction 98
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: OH + P2O2 <=> PO + HOPO  # Reaction 99
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: OH + H2POH <=> H2O + HPOH  # Reaction 100
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 6.85}
+- equation: OH + HPOH <=> H2O + HPO  # Reaction 101
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 13.72}
+- equation: HO2 + PO <=> O2 + HPO  # Reaction 102
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 28.24}
+- equation: HO2 + PO <=> O + HOPO  # Reaction 103
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HO2 + PO <=> OH + PO2  # Reaction 104
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 7.55}
+- equation: HO2 + PO2 <=> O2 + HOPO  # Reaction 105
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 2.62}
+- equation: HO2 + PO2 <=> O + HOPO2  # Reaction 106
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HO2 + PO2 <=> OH + PO3  # Reaction 107
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HO2 + HOPO <=> OH + HOPO2  # Reaction 108
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 15.47}
+- equation: HO2 + PO3 <=> O2 + HOPO2  # Reaction 109
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HO2 + HPO <=> O2 + HPOH  # Reaction 110
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 42.7}
+- equation: HO2 + P <=> O2 + PH  # Reaction 111
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 28.44}
+- equation: HO2 + P <=> OH + PO  # Reaction 112
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 7.67}
+- equation: HO2 + P2 <=> OH + P2O  # Reaction 113
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 21.2}
+- equation: HO2 + PH2 <=> O2 + PH3  # Reaction 114
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 21.95}
+- equation: HO2 + PH2 <=> O + H2POH  # Reaction 115
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HO2 + PH <=> O2 + PH2  # Reaction 116
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 21.86}
+- equation: HO2 + PH <=> O + HPOH  # Reaction 117
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HO2 + PH <=> OH + HPO  # Reaction 118
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 6.62}
+- equation: HO2 + P2O <=> OH + P2O2  # Reaction 119
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 18.84}
+- equation: HO2 + HPOH <=> O2 + H2POH  # Reaction 120
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 22.1}
+- equation: PO + HOPO2 <=> PO2 + HOPO  # Reaction 121
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 40.7}
+- equation: PO + PO3 <=> PO2 + PO2  # Reaction 122
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO + P2O <=> PO2 + P2  # Reaction 123
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 17.05}
+- equation: PO + P2O2 <=> PO2 + P2O  # Reaction 124
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 30.04}
+- equation: PO + H2POH <=> HOPO + PH2  # Reaction 125
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: PO + HPOH <=> HOPO + PH  # Reaction 126
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO + HPOH <=> HPO + HPO  # Reaction 127
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 42.26}
+- equation: PO2 + HPO <=> H + P2O3  # Reaction 128
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: PO2 + HPO <=> PO + HOPO  # Reaction 129
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO2 + P <=> PO + PO  # Reaction 130
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 20.56}
+- equation: PO2 + PH3 <=> HOPO + PH2  # Reaction 131
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO2 + PH2 <=> HOPO + PH  # Reaction 132
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO2 + PH <=> PO + HPO  # Reaction 133
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 20.11}
+- equation: PO2 + PH <=> HOPO + P  # Reaction 134
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.3}
+- equation: PO2 + P2O <=> PO3 + P2  # Reaction 135
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 2.57}
+- equation: PO2 + P2O <=> P2O3 + P  # Reaction 136
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: PO2 + P2O2 <=> PO + P2O3  # Reaction 137
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: PO2 + H2POH <=> HOPO + HPOH  # Reaction 138
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO2 + H2POH <=> HOPO2 + PH2  # Reaction 139
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 50.0}
+- equation: PO2 + HPOH <=> HOPO + HPO  # Reaction 140
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 7.44}
+- equation: PO2 + HPOH <=> HOPO2 + PH  # Reaction 141
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HOPO + PO3 <=> PO2 + HOPO2  # Reaction 142
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 6.07}
+- equation: HOPO + P2O <=> HOPO2 + P2  # Reaction 143
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 150.0}
+- equation: HOPO + P2O2 <=> HOPO2 + P2O  # Reaction 144
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 150.0}
+- equation: HOPO2 + P <=> PO + HOPO  # Reaction 145
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 28.65}
+- equation: HOPO2 + PH <=> HOPO + HPO  # Reaction 146
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 29.12}
+- equation: PO3 + HPO <=> PO + HOPO2  # Reaction 147
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO3 + P <=> PO + PO2  # Reaction 148
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 0.15}
+- equation: PO3 + PH3 <=> HOPO2 + PH2  # Reaction 149
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO3 + PH2 <=> HOPO2 + PH  # Reaction 150
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO3 + PH <=> PO2 + HPO  # Reaction 151
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO3 + PH <=> HOPO2 + P  # Reaction 152
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO3 + P2O <=> PO2 + P2O2  # Reaction 153
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 7.63}
+- equation: PO3 + H2POH <=> HOPO2 + HPOH  # Reaction 154
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: PO3 + HPOH <=> HOPO2 + HPO  # Reaction 155
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 0.0}
+- equation: HPO + P <=> PO + PH  # Reaction 156
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 28.89}
+- equation: HPO + PH2 <=> PO + PH3  # Reaction 157
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 20.51}
+- equation: HPO + PH <=> PO + PH2  # Reaction 158
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 20.58}
+- equation: HPO + HPOH <=> PO + H2POH  # Reaction 159
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 20.7}
+- equation: P + PH <=> H + P2  # Reaction 160
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 16.74}
+- equation: P + P2O <=> PO + P2  # Reaction 161
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 12.2}
+- equation: P + P2O2 <=> PO + P2O  # Reaction 162
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 23.41}
+- equation: P + HPOH <=> HPO + PH  # Reaction 163
+  rate-constant: {A: 3.16e+13, b: 0, Ea: 40.53}
+- equation: PH3 + PH <=> PH2 + PH2  # Reaction 164
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 22.94}
+- equation: PH3 + HPOH <=> PH2 + H2POH  # Reaction 165
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 23.53}
+- equation: PH2 + PH <=> P + PH3  # Reaction 166
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 28.62}
+- equation: PH2 + HPOH <=> HPO + PH3  # Reaction 167
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 31.81}
+- equation: PH + PH <=> P + PH2  # Reaction 168
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 27.58}
+- equation: PH + P2O <=> HPO + P2  # Reaction 169
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 14.31}
+- equation: PH + P2O2 <=> HPO + P2O  # Reaction 170
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 23.32}
+- equation: PH + H2POH <=> PH2 + HPOH  # Reaction 171
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 22.71}
+- equation: PH + HPOH <=> HPO + PH2  # Reaction 172
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 30.56}
+- equation: PH + HPOH <=> P + H2POH  # Reaction 173
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 28.93}
+- equation: P2O + P2O <=> P2 + P2O2  # Reaction 174
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 150.0}
+- equation: HPOH + HPOH <=> HPO + H2POH  # Reaction 175
+  rate-constant: {A: 3.16e+11, b: 0, Ea: 32.08}
+- equation: H3PO4 <=> H2O + HOPO2  # Reaction 176
+  rate-constant: {A: 2.1e+07, b: 1.46, Ea: 176}
