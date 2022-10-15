@@ -70,19 +70,28 @@ int main(int argc, char **argv)
   gas->setState_TP(1000., 300.0*OneAtm);
   gas->setMoleFractions(mole_fractions);
   VectorXd m_wdot(gas->nSpecies());
-  float dt = 0.1;
+  VectorXd mole_frac(gas->nSpecies());
+  float dt = 1e-3;
+  int nSteps = 1000;
   //gas_kin->getEquilibriumConstants();
+  
+  //Initiating Matrices for Time Evolution
   Eigen::SparseMatrix<double>  m_wjac;
   m_wjac.resize(gas->nSpecies(), gas->nSpecies());
-  gas_kin->getNetProductionRates(&m_wdot[0]);
-  m_wjac = gas_kin->netProductionRates_ddX();
   MatrixXd mat1(gas->nSpecies(), gas->nSpecies());
   MatrixXd mat2(gas->nSpecies(), gas->nSpecies());
-  mat1 = MatrixXd::Identity(gas->nSpecies(), gas->nSpecies());
-  mat2 = ((mat1/dt) - m_wjac);
-  mat2 = mat2.inverse();
-  mat2 = mat2*m_wdot;
-
+  
+  for (int i = 0; i < nSteps; i++) {
+    gas_kin->getNetProductionRates(&m_wdot[0]);
+    m_wjac = gas_kin->netProductionRates_ddX();
+    mat1 = MatrixXd::Identity(gas->nSpecies(), gas->nSpecies());
+    mat2 = ((mat1/dt) - m_wjac);
+    mat2 = mat2.inverse();
+    mat2 = mat2*m_wdot;
+    gas->getMoleFractions(&mole_frac[0]);
+    mole_frac = mole_frac + mat2;
+    gas->setMoleFractions(&mole_frac[0]);
+  }
 
   // Calculate chemical equilibrium under constant temperature
   // and pressure
@@ -94,8 +103,8 @@ int main(int argc, char **argv)
   
   
   std::cout << std::endl;
-  std::cout << "net production = ";         
-  std::cout << mat2 << " ";
+  std::cout << "mole fractions = ";         
+  std::cout << mole_frac << " ";
   std::cout << std::endl;
             
   gas->equilibrate("TP");
