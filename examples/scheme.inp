@@ -7,7 +7,7 @@ press = 1e5
 temp = 200
 
 #Chemical scheme
-reaction_database = data/vulcan2017.txt
+reaction_database = data/network/vulcan2017.txt
  
 #Chemistry Initial Condition
 

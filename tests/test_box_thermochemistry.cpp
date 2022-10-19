@@ -72,7 +72,7 @@ int main(int argc, char **argv)
   VectorXd m_wdot(gas->nSpecies());
   VectorXd mole_frac(gas->nSpecies());
   float dt = 1e-3;
-  int nSteps = 1000;
+  int nSteps = 100000;
   //gas_kin->getEquilibriumConstants();
   
   //Initiating Matrices for Time Evolution
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
   
 
   // print a report of chemical mixture
-  std::cout << gas->report() << std::endl;
+  //std::cout << gas->report() << std::endl;
 
   delete[] mole_fractions;
 }

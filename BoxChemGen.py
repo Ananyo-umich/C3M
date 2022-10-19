@@ -10,7 +10,6 @@ from glob import glob
 import multiprocessing as mp
 import concurrent.futures
 import re
-from equation import rate_equation
 from config import *
 from glob import glob
 import os

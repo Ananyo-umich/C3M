@@ -1,0 +1,694 @@
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, H, O]
+  species: [H, H2O, OH, H2, O, CH, C, CH2, CH3, CH4, C2, C2H, C2H2, C2H3, C2H4, C2H5, C2H6, C4H2, CO, CO2, CH2OH, H2CO, HCO, CH3OH, CH3O, CH3CO, O2, H2CCO, HCCO]
+  kinetics: gas
+  reactions: all
+  skip-undeclared-elements: true
+
+species:
+- name: H
+  composition: {H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2O
+  composition: {H: 2.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: OH
+  composition: {H: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH
+  composition: {C: 1.0,H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH2
+  composition: {C: 1.0,H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH3
+  composition: {C: 1.0,H: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH4
+  composition: {C: 1.0,H: 4.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2
+  composition: {C: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H
+  composition: {C: 2.0,H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H2
+  composition: {C: 2.0,H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H3
+  composition: {C: 2.0,H: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H4
+  composition: {C: 2.0,H: 4.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H5
+  composition: {C: 2.0,H: 5.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H6
+  composition: {C: 2.0,H: 6.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C4H2
+  composition: {C: 4.0,H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CO
+  composition: {C: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CO2
+  composition: {C: 1.0,O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH2OH
+  composition: {C: 1.0,H: 3.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2CO
+  composition: {C: 1.0,H: 2.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HCO
+  composition: {C: 1.0,H: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH3OH
+  composition: {C: 1.0,H: 4.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH3O
+  composition: {C: 1.0,H: 3.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH3CO
+  composition: {C: 2.0,H: 3.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O2
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2CCO
+  composition: {C: 2.0,H: 2.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HCCO
+  composition: {C: 2.0,H: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+
+reactions:
+- equation: '1.0 H + 1.0 H2O <=> 1.0 OH + 1.0 H2 '
+  rate-constant: {A: 7.5e-16,T0: 1.0,b: -1.6,Ea: 9720.0 }
+- equation: '1.0 O + 1.0 H2 <=> 1.0 OH + 1.0 H '
+  rate-constant: {A: 8.52e-20,T0: 1.0,b: -2.76,Ea: 3160.0 }
+- equation: '1.0 O + 1.0 H2O <=> 2.0 OH '
+  rate-constant: {A: 8.2e-14,T0: 1.0,b: -0.95,Ea: 8570.0 }
+- equation: '1.0 H + 1.0 CH <=> 1.0 H2 + 1.0 C '
+  rate-constant: {A: 1.31e-10,T0: 300.0,b: 0.0,Ea: 80.0 }
+- equation: '1.0 H + 1.0 CH2 <=> 1.0 CH + 1.0 H2 '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 900.0 }
+- equation: '1.0 CH2 + 1.0 H2 <=> 1.0 H + 1.0 CH3 '
+  rate-constant: {A: 7.32e-19,T0: 1.0,b: -2.3,Ea: 3699.0 }
+- equation: '1.0 H + 1.0 CH4 <=> 1.0 CH3 + 1.0 H2 '
+  rate-constant: {A: 2.2e-20,T0: 1.0,b: -3.0,Ea: 4040.0 }
+- equation: '1.0 C + 1.0 CH <=> 1.0 C2 + 1.0 H '
+  rate-constant: {A: 1.05e-12,T0: 1.0,b: -0.5,Ea: 0.0 }
+- equation: '1.0 H2 + 1.0 C2H <=> 1.0 H + 1.0 C2H2 '
+  rate-constant: {A: 9.2e-18,T0: 1.0,b: -2.17,Ea: 478.0 }
+- equation: '1.0 CH + 1.0 CH2 <=> 1.0 H + 1.0 C2H2 '
+  rate-constant: {A: 6.64e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 C2H3 <=> 1.0 C2H2 + 1.0 H2 '
+  rate-constant: {A: 2.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H2 + 1.0 C2H3 <=> 1.0 H + 1.0 C2H4 '
+  rate-constant: {A: 5.5e-20,T0: 1.0,b: -2.63,Ea: 4300.0 }
+- equation: '1.0 CH + 1.0 CH4 <=> 1.0 H + 1.0 C2H4 '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 CH2 + 1.0 CH3 <=> 1.0 H + 1.0 C2H4 '
+  rate-constant: {A: 7.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 C2H5 <=> 2.0 CH3 '
+  rate-constant: {A: 5.99e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 C2H5 <=> 1.0 C2H4 + 1.0 H2 '
+  rate-constant: {A: 3.01e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 C2H6 <=> 1.0 C2H5 + 1.0 H2 '
+  rate-constant: {A: 9.19e-22,T0: 1.0,b: -3.5,Ea: 2600.0 }
+- equation: '1.0 C2H + 1.0 C2H2 <=> 1.0 H + 1.0 C4H2 '
+  rate-constant: {A: 1.3e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 CO <=> 1.0 H + 1.0 CO2 '
+  rate-constant: {A: 1.05e-17,T0: 1.0,b: -1.5,Ea: 259.0 }
+- equation: '1.0 CH + 1.0 CH3 <=> 1.0 H2 + 1.0 C2H2 '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H2 + 1.0 CO2 <=> 1.0 H2O + 1.0 CO '
+  rate-constant: {A: 1.66e-15,T0: 1.0,b: -0.5,Ea: 7550.0 }
+- equation: '1.0 C2 + 1.0 O <=> 1.0 C + 1.0 CO '
+  rate-constant: {A: 1.05e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 CH2 <=> 1.0 C2H2 + 2.0 H '
+  rate-constant: {A: 1.8e-10,T0: 300.0,b: 0.0,Ea: -400.0 }
+- equation: '1.0 CH2 + 1.0 CH2 <=> 1.0 CH + 1.0 CH3 '
+  rate-constant: {A: 3.98e-10,T0: 300.0,b: 0.0,Ea: 5000.0 }
+- equation: '1.0 CH2 + 1.0 CH2 <=> 1.0 H + 1.0 C2H3 '
+  rate-constant: {A: 3.32e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH2 + 1.0 CH4 <=> 2.0 CH3 '
+  rate-constant: {A: 4.09e-18,T0: 1.0,b: -2.0,Ea: 4162.0 }
+- equation: '1.0 CH2 + 1.0 C2H5 <=> 1.0 CH3 + 1.0 C2H4 '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3 + 1.0 OH <=> 1.0 CH2 + 1.0 H2O '
+  rate-constant: {A: 1.85e-21,T0: 1.0,b: -3.0,Ea: 1400.0 }
+- equation: '1.0 C2H + 1.0 OH <=> 1.0 CH2 + 1.0 CO '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H2 + 1.0 O <=> 1.0 CH2 + 1.0 CO '
+  rate-constant: {A: 6.78e-16,T0: 1.0,b: -1.5,Ea: 854.0 }
+- equation: '1.0 CH3 + 1.0 C2H <=> 1.0 C2H2 + 1.0 CH2 '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH4 + 1.0 C2H <=> 1.0 CH3 + 1.0 C2H2 '
+  rate-constant: {A: 3.01e-12,T0: 300.0,b: 0.0,Ea: 250.0 }
+- equation: '1.0 CH3 + 1.0 C2H3 <=> 1.0 CH4 + 1.0 C2H2 '
+  rate-constant: {A: 6.51e-13,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH4 + 1.0 C2H3 <=> 1.0 CH3 + 1.0 C2H4 '
+  rate-constant: {A: 2.13e-24,T0: 1.0,b: -4.02,Ea: 2754.0 }
+- equation: '1.0 CH3 + 1.0 C2H5 <=> 1.0 CH4 + 1.0 C2H4 '
+  rate-constant: {A: 3.25e-11,T0: 1.0,b: 0.5,Ea: 0.0 }
+- equation: '1.0 CH3 + 1.0 C2H6 <=> 1.0 CH4 + 1.0 C2H5 '
+  rate-constant: {A: 9.12e-25,T0: 1.0,b: -4.0,Ea: 4170.0 }
+- equation: '1.0 C2H2 + 1.0 OH <=> 1.0 CH3 + 1.0 CO '
+  rate-constant: {A: 8.04e-28,T0: 1.0,b: -4.0,Ea: -1010.0 }
+- equation: '1.0 C2 + 1.0 H2 <=> 1.0 H + 1.0 C2H '
+  rate-constant: {A: 1e-10,T0: 300.0,b: 0.0,Ea: 4000.0 }
+- equation: '1.0 C2 + 1.0 CH4 <=> 1.0 CH3 + 1.0 C2H '
+  rate-constant: {A: 5.05e-11,T0: 300.0,b: 0.0,Ea: 297.0 }
+- equation: '1.0 C2H + 1.0 CH2 <=> 1.0 CH + 1.0 C2H2 '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H + 1.0 C2H6 <=> 1.0 C2H2 + 1.0 C2H5 '
+  rate-constant: {A: 5.99e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H + 1.0 O <=> 1.0 CH + 1.0 CO '
+  rate-constant: {A: 1.69e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H + 1.0 OH <=> 1.0 C2H2 + 1.0 O '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H + 1.0 H2O <=> 1.0 C2H2 + 1.0 OH '
+  rate-constant: {A: 2.2e-21,T0: 1.0,b: -3.05,Ea: 376.0 }
+- equation: '2.0 C2H3 <=> 1.0 C2H4 + 1.0 C2H2 '
+  rate-constant: {A: 1.6e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H3 + 1.0 C2H5 <=> 2.0 C2H4 '
+  rate-constant: {A: 8e-13,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H3 + 1.0 C2H5 <=> 1.0 C2H6 + 1.0 C2H2 '
+  rate-constant: {A: 8e-13,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H4 + 1.0 OH <=> 1.0 C2H3 + 1.0 H2O '
+  rate-constant: {A: 2.6e-20,T0: 1.0,b: -2.75,Ea: 2100.0 }
+- equation: '2.0 C2H5 <=> 1.0 C2H4 + 1.0 C2H6 '
+  rate-constant: {A: 2.31e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H5 + 1.0 C2H4 <=> 1.0 C2H3 + 1.0 C2H6 '
+  rate-constant: {A: 1.05e-21,T0: 1.0,b: -3.13,Ea: 9060.0 }
+- equation: '1.0 C2H6 + 1.0 OH <=> 1.0 C2H5 + 1.0 H2O '
+  rate-constant: {A: 1.47e-14,T0: 1.0,b: -1.04,Ea: 913.0 }
+- equation: '1.0 CH + 1.0 O <=> 1.0 OH + 1.0 C '
+  rate-constant: {A: 2.52e-11,T0: 300.0,b: 0.0,Ea: 2381.0 }
+- equation: '1.0 O + 1.0 CH <=> 1.0 H + 1.0 CO '
+  rate-constant: {A: 6.59e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 CH3 <=> 1.0 CH2 + 1.0 OH '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 3970.0 }
+- equation: '1.0 CH3 + 1.0 OH <=> 1.0 O + 1.0 CH4 '
+  rate-constant: {A: 1.16e-19,T0: 1.0,b: -2.2,Ea: 2240.0 }
+- equation: '1.0 O + 1.0 C2H6 <=> 1.0 OH + 1.0 C2H5 '
+  rate-constant: {A: 2e-12,T0: 1.0,b: -0.6,Ea: 3680.0 }
+- equation: '1.0 OH + 1.0 C <=> 1.0 CO + 1.0 H '
+  rate-constant: {A: 1.05e-12,T0: 1.0,b: -0.5,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 CH2 <=> 1.0 H2O + 1.0 CH '
+  rate-constant: {A: 1.43e-18,T0: 1.0,b: -2.02,Ea: 3410.0 }
+- equation: '1.0 OH + 1.0 CH4 <=> 1.0 H2O + 1.0 CH3 '
+  rate-constant: {A: 3.19e-19,T0: 1.0,b: -2.4,Ea: 1060.0 }
+- equation: '1.0 OH + 1.0 C2H3 <=> 1.0 H2O + 1.0 C2H2 '
+  rate-constant: {A: 5e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 C2H5 <=> 1.0 H2O + 1.0 C2H4 '
+  rate-constant: {A: 4e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH2OH + 1.0 H <=> 1.0 OH + 1.0 CH3 '
+  rate-constant: {A: 1.6e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H2CO + 1.0 H <=> 1.0 HCO + 1.0 H2 '
+  rate-constant: {A: 3.64e-16,T0: 1.0,b: -1.77,Ea: 1510.0 }
+- equation: '1.0 O + 1.0 C2H4 <=> 1.0 HCO + 1.0 CH3 '
+  rate-constant: {A: 2.19e-16,T0: 1.0,b: -1.55,Ea: 215.0 }
+- equation: '1.0 H2CO + 1.0 CH3 <=> 1.0 CH4 + 1.0 HCO '
+  rate-constant: {A: 9.2e-21,T0: 1.0,b: -2.81,Ea: 2950.0 }
+- equation: '1.0 CH3 + 1.0 CH2OH <=> 1.0 H2CO + 1.0 CH4 '
+  rate-constant: {A: 4e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 HCO + 1.0 H <=> 1.0 CO + 1.0 H2 '
+  rate-constant: {A: 1.5e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 HCO + 1.0 OH <=> 1.0 CO + 1.0 H2O '
+  rate-constant: {A: 1.69e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CO2 + 1.0 CH <=> 1.0 HCO + 1.0 CO '
+  rate-constant: {A: 5.71e-12,T0: 300.0,b: 0.0,Ea: 345.1 }
+- equation: '1.0 CH3OH + 1.0 H <=> 1.0 CH3O + 1.0 H2 '
+  rate-constant: {A: 6.82e-20,T0: 1.0,b: -2.685,Ea: 4643.0 }
+- equation: '1.0 CH3OH + 1.0 H <=> 1.0 CH3 + 1.0 H2O '
+  rate-constant: {A: 4.91e-19,T0: 1.0,b: -2.485,Ea: 10380.0 }
+- equation: '1.0 CH2 + 1.0 O <=> 1.0 CO + 2.0 H '
+  rate-constant: {A: 1.33e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH2 + 1.0 OH <=> 1.0 H2CO + 1.0 H '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CO2 + 1.0 CH2 <=> 1.0 H2CO + 1.0 CO '
+  rate-constant: {A: 3.9e-14,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3O + 1.0 CO <=> 1.0 CH3 + 1.0 CO2 '
+  rate-constant: {A: 2.61e-11,T0: 300.0,b: 0.0,Ea: 5940.0 }
+- equation: '1.0 CH3OH + 1.0 H <=> 1.0 CH2OH + 1.0 H2 '
+  rate-constant: {A: 1.09e-19,T0: 1.0,b: -2.728,Ea: 2240.0 }
+- equation: '1.0 HCO + 1.0 C2H <=> 1.0 C2H2 + 1.0 CO '
+  rate-constant: {A: 1e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH2OH + 1.0 C2H <=> 1.0 H2CO + 1.0 C2H2 '
+  rate-constant: {A: 5.99e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3O + 1.0 C2H <=> 1.0 H2CO + 1.0 C2H2 '
+  rate-constant: {A: 4e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3OH + 1.0 C2H <=> 1.0 CH2OH + 1.0 C2H2 '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3OH + 1.0 C2H <=> 1.0 CH3O + 1.0 C2H2 '
+  rate-constant: {A: 2.01e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 C2H3 <=> 1.0 C2H2 + 1.0 OH '
+  rate-constant: {A: 1.76e-12,T0: 1.0,b: -0.2,Ea: 215.2 }
+- equation: '1.0 CH + 1.0 C2H4 <=> 1.0 C2H2 + 1.0 CH3 '
+  rate-constant: {A: 2.23e-10,T0: 300.0,b: 0.0,Ea: -173.0 }
+- equation: '1.0 CH2 + 1.0 C2H3 <=> 1.0 C2H2 + 1.0 CH3 '
+  rate-constant: {A: 3e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3 + 1.0 C <=> 1.0 C2H2 + 1.0 H '
+  rate-constant: {A: 8.31e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 CH2 <=> 1.0 CO + 1.0 H2 '
+  rate-constant: {A: 9.96e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 C2H3 <=> 1.0 HCO + 1.0 CH2 '
+  rate-constant: {A: 2e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 HCO + 1.0 CH2 <=> 1.0 CO + 1.0 CH3 '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 C2H4 <=> 1.0 H2CO + 1.0 CH2 '
+  rate-constant: {A: 1.35e-17,T0: 1.0,b: -1.8,Ea: 90.0 }
+- equation: '1.0 CH2OH + 1.0 CH2 <=> 1.0 OH + 1.0 C2H4 '
+  rate-constant: {A: 4e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH2OH + 1.0 CH2 <=> 1.0 H2CO + 1.0 CH2 + 1.0 H '
+  rate-constant: {A: 2.01e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3O + 1.0 CH2 <=> 1.0 H2CO + 1.0 CH3 '
+  rate-constant: {A: 3e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3OH + 1.0 CH2 <=> 1.0 CH3O + 1.0 CH3 '
+  rate-constant: {A: 2.39e-23,T0: 1.0,b: -3.1,Ea: 3490.0 }
+- equation: '1.0 CH3OH + 1.0 CH2 <=> 1.0 CH2OH + 1.0 CH3 '
+  rate-constant: {A: 5.29e-23,T0: 1.0,b: -3.2,Ea: 3609.0 }
+- equation: '1.0 HCO + 1.0 CH3 <=> 1.0 CO + 1.0 CH4 '
+  rate-constant: {A: 2.01e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3O + 1.0 CH3 <=> 1.0 H2CO + 1.0 CH4 '
+  rate-constant: {A: 4e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H2CO + 1.0 CH <=> 1.0 CO + 1.0 CH3 '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: 260.0 }
+- equation: '1.0 CH3OH + 1.0 CH3 <=> 1.0 CH3O + 1.0 CH4 '
+  rate-constant: {A: 2.39e-23,T0: 1.0,b: 3.1,Ea: 3490.0 }
+- equation: '1.0 CH3CO + 1.0 H <=> 1.0 HCO + 1.0 CH3 '
+  rate-constant: {A: 3.32e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH3CO + 1.0 CH3 <=> 1.0 CO + 1.0 C2H6 '
+  rate-constant: {A: 4.09e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 OH <=> 1.0 O2 + 1.0 H '
+  rate-constant: {A: 7.47e-10,T0: 1.0,b: 0.5,Ea: -30.0 }
+- equation: '1.0 H + 1.0 CH3O <=> 1.0 H2CO + 1.0 H2 '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 H2CCO <=> 1.0 CO + 1.0 CH3 '
+  rate-constant: {A: 1.29e-15,T0: 1.0,b: -1.45,Ea: 1399.0 }
+- equation: '1.0 O + 1.0 C2H3 <=> 1.0 H2CCO + 1.0 H '
+  rate-constant: {A: 1.6e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 C2H2 + 1.0 O <=> 1.0 HCCO + 1.0 H '
+  rate-constant: {A: 1.5e-11,T0: 300.0,b: 0.0,Ea: 2280.0 }
+- equation: '1.0 HCCO + 1.0 H <=> 1.0 CO + 1.0 CH2 '
+  rate-constant: {A: 2.49e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 H2CO <=> 1.0 HCO + 1.0 OH '
+  rate-constant: {A: 6.85e-13,T0: 1.0,b: -0.57,Ea: 1390.0 }
+- equation: '2.0 HCO <=> 1.0 H2CO + 1.0 CO '
+  rate-constant: {A: 3.01e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 CH3O <=> 1.0 H2O + 1.0 H2CO '
+  rate-constant: {A: 3e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 CH2OH + 1.0 CH3O <=> 1.0 H2CO + 1.0 CH3OH '
+  rate-constant: {A: 4e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 CH3O <=> 1.0 H2CO + 1.0 CH3OH '
+  rate-constant: {A: 1e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 H (+ M) <=> 1.0 H2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 2.7e-31,T0: 1.0,b: 0.6,Ea: 0.0}
+  high-P-rate-constant: {A: 3.31e-06,T0: 1.0,b: 0.6,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 O (+ M) <=> 1.0 OH (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.3e-29,T0: 1.0,b: 1.0,Ea: 0.0}
+  high-P-rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 OH + 1.0 H (+ M) <=> 1.0 H2O (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 3.89e-25,T0: 1.0,b: 2.0,Ea: 0.0}
+  high-P-rate-constant: {A: 4.26e-11,T0: 1.0,b: 0.23,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 CH3 (+ M) <=> 1.0 CH4 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.76e-24,T0: 1.0,b: 1.8,Ea: 0.0}
+  high-P-rate-constant: {A: 2.06e-10,T0: 1.0,b: 0.4,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 C2H2 (+ M) <=> 1.0 C2H3 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.05e-07,T0: 1.0,b: 7.27,Ea: 3630.0}
+  high-P-rate-constant: {A: 9.13e-12,T0: 300.0,b: 0.0,Ea: 1220.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 C2H3 (+ M) <=> 1.0 C2H4 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.5e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 6.4e-11,T0: 1.0,b: -0.2,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 C2H4 (+ M) <=> 1.0 C2H5 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 7.69e-30,T0: 300.0,b: 0.0,Ea: 380.0}
+  high-P-rate-constant: {A: 1.27e-15,T0: 1.0,b: -1.49,Ea: 499.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 C2H5 (+ M) <=> 1.0 C2H6 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 4e-19,T0: 1.0,b: 3.0,Ea: 600.0}
+  high-P-rate-constant: {A: 9.04e-11,T0: 1.0,b: -0.16,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H2 + 1.0 C (+ M) <=> 1.0 CH2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 6.89e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 2.06e-11,T0: 300.0,b: 0.0,Ea: 57.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CH + 1.0 H (+ M) <=> 1.0 CH2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 3.16e-10,T0: 300.0,b: 0.0,Ea: 33700.0}
+  high-P-rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CH2 + 1.0 H (+ M) <=> 1.0 CH3 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 9e-32,T0: 300.0,b: 0.0,Ea: -500.0}
+  high-P-rate-constant: {A: 8.55e-12,T0: 1.0,b: -0.15,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CH + 1.0 H2 (+ M) <=> 1.0 CH3 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 3.4e-31,T0: 300.0,b: 0.0,Ea: -736.0}
+  high-P-rate-constant: {A: 7.3e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '2.0 CH3 (+ M) <=> 1.0 C2H6 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 3.5e-07,T0: 1.0,b: 7.0,Ea: 1390.0}
+  high-P-rate-constant: {A: 1.58e-09,T0: 1.0,b: 0.54,Ea: 68.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 C2H + 1.0 H (+ M) <=> 1.0 C2H2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.26e-18,T0: 1.0,b: 3.1,Ea: 721.0}
+  high-P-rate-constant: {A: 3e-10,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 C2H4 (+ M) <=> 1.0 C2H2 + 1.0 H2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 5.8e-08,T0: 300.0,b: 0.0,Ea: 36000.0}
+  high-P-rate-constant: {A: 7950000000000.0,T0: 1.0,b: -0.44,Ea: 44700.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 C2H6 (+ M) <=> 1.0 C2H4 + 1.0 H2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 3.8e-07,T0: 300.0,b: 0.0,Ea: 34000.0}
+  high-P-rate-constant: {A: 1320000000000000.0,T0: 300.0,b: 0.0,Ea: 36800.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CO + 1.0 O (+ M) <=> 1.0 CO2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.7e-33,T0: 300.0,b: 0.0,Ea: 1510.0}
+  high-P-rate-constant: {A: 2.66e-14,T0: 300.0,b: 0.0,Ea: 1459.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CH2OH (+ M) <=> 1.0 H + 1.0 H2CO (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.66e-10,T0: 300.0,b: 0.0,Ea: 12630.0}
+  high-P-rate-constant: {A: 3000000000.0,T0: 300.0,b: 0.0,Ea: 14600.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 CO (+ M) <=> 1.0 HCO (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 5.29e-34,T0: 300.0,b: 0.0,Ea: 370.0}
+  high-P-rate-constant: {A: 1.96e-13,T0: 300.0,b: 0.0,Ea: 1360.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H2O + 1.0 CH (+ M) <=> 1.0 CH2OH (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1e-31,T0: 300.0,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 9.48e-12,T0: 300.0,b: 0.0,Ea: -380.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CH3O (+ M) <=> 1.0 H + 1.0 H2CO (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 9e-11,T0: 300.0,b: 0.0,Ea: 6790.0}
+  high-P-rate-constant: {A: 1560000000000000.0,T0: 1.0,b: 0.39,Ea: 13300.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CH2OH + 1.0 H (+ M) <=> 1.0 CH3OH (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1.2e-16,T0: 1.0,b: 4.65,Ea: 2557.0}
+  high-P-rate-constant: {A: 2.3e-10,T0: 1.0,b: -0.04,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 OH + 1.0 C2H2 (+ M) <=> 1.0 CH3CO (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 4.99e-25,T0: 1.0,b: 2.0,Ea: 0.0}
+  high-P-rate-constant: {A: 1.06e-07,T0: 1.0,b: 1.9,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CO + 1.0 CH3 (+ M) <=> 1.0 CH3CO (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 3.95e-10,T0: 1.0,b: 7.5,Ea: 5490.0}
+  high-P-rate-constant: {A: 5.14e-19,T0: 1.0,b: -2.2,Ea: 3030.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 HCO + 1.0 H (+ M) <=> 1.0 H2CO (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 7.33e-24,T0: 1.0,b: 2.57,Ea: 215.0}
+  high-P-rate-constant: {A: 7.77e-14,T0: 300.0,b: 0.0,Ea: -2280.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CO + 1.0 H2 (+ M) <=> 1.0 H2CO (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 2.8e-20,T0: 1.0,b: 3.42,Ea: 42445.0}
+  high-P-rate-constant: {A: 7.14e-17,T0: 1.0,b: -1.5,Ea: 40055.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '2.0 C + M <=> 1.0 C2 + M'
+  type: three-body
+  rate-constant: {A: 4.97e-27,T0: 1.0,b: 1.6,Ea: 0.0 }
+- equation: '1.0 C2H (+ M) <=> 1.0 C2 + 1.0 H (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 292000000000.0,T0: 1.0,b: 5.16,Ea: 57400.0}
+  high-P-rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 O + 1.0 C + M <=> 1.0 CO + M'
+  type: three-body
+  rate-constant: {A: 9.1e-22,T0: 1.0,b: 3.1,Ea: 2114.0 }
