@@ -1,0 +1,389 @@
+1,OH + H2 -> H2O + H,t,3.57E-16,300,1.520,1740.0
+1,O + H2 -> OH + H,t 
+1,O + H2O -> OH + OH,t
+1, H + CH -> H2 + C,t
+1,H + CH2 -> CH + H2,t
+1, CH2 + H2 -> H + CH3,t
+1, H + CH4 -> CH3 + H2,t
+1,C + CH -> C2 + H,t 
+1,CH3 + C -> H + C2H2,t
+1,H2 + C2H -> H + C2H2,t
+1,CH + CH2  -> H + C2H2,t
+1, H + C2H3 -> C2H2 + H2,t
+1,H2 + C2H3 -> H + C2H4,t
+1,CH + CH4 -> H + C2H4,t
+1,CH2 + CH3 -> H + C2H4,t
+1,H + C2H5 -> CH3 + CH3,t
+1,H + C2H5 -> C2H4 + H2,t
+1,H + C2H6 -> C2H5 + H2,t
+1,OH + CO -> H + CO2,t
+1,CH + CH3 -> H2 + C2H2,t
+1,C2 + O -> C + CO,t
+1,CH2 + CH2 -> C2H2 + H + H,t
+1,CH2 + CH2 -> CH + CH3,t
+1, CH2 + CH2 -> H + C2H3,t
+1,CH2 + CH4 -> CH3 + CH3,t
+1,CH2 + C2H5 -> CH3 + C2H4,t
+1, CH3 + OH -> CH2 + H2O,t 
+1,C2H + OH -> CH2 + CO,t
+1, C2H2 + O -> CH2 + CO,t
+1,CH3 + C2H -> C2H2 + CH2,t
+1, CH4 + C2H -> CH3 + C2H2,t
+1,CH3 + C2H3 -> CH4 + C2H2,t
+1,CH4 + C2H3 -> CH3 + C2H4,t
+1,CH3 + C2H5 -> CH4 + C2H4,t
+1,CH3 + C2H6 -> CH4 + C2H5,t
+1,C2H2 + OH -> CH3 + CO,t
+1,C2 + H2 -> H + C2H,t
+1,C2 + CH4 -> CH3 + C2H,t
+1,C2H + CH2 -> CH + C2H2,t
+1,C2H + C2H6 -> C2H2 + C2H5,t
+1,C2H + O -> CH + CO,t
+1,C2H + OH -> C2H2 + O,t
+1,C2H + H2O -> C2H2 + OH,t
+1,C2H3 + C2H3 -> C2H4 + C2H2,t
+1,C2H3 + C2H5 -> C2H4 + C2H4,t
+1,C2H3 + C2H5 -> C2H6 + C2H2,t
+1,C2H4 + OH -> C2H3 + H2O,t 
+1,C2H5 + C2H5 -> C2H4 + C2H6,t
+1,C2H5 + C2H4 -> C2H3 + C2H6,t
+1,C2H6 + OH -> C2H5 + H2O,t
+1,CH + O -> OH + C,t
+1,O + CH -> H + CO,t
+1,O + CH3 -> CH2 + OH,t
+1,CH3 + OH -> O + CH4,t
+1, O + C2H6 -> OH + C2H5,t 
+1,OH + C -> CO + H,t 
+1, OH + CH2 -> H2O + CH,t 
+1,OH + CH4 -> H2O + CH3,t
+1,OH + C2H3 -> H2O + C2H2,t 
+1,OH + C2H5 -> H2O + C2H4,t
+1,CH2OH + H -> OH + CH3,t 
+1, H2CO + H -> HCO + H2,t
+1,O + C2H4 -> HCO + CH3,t 
+1,H2CO + CH3 -> CH4 + HCO,t 
+1,CH3 + CH2OH -> H2CO + CH4,t
+1,HCO + H -> CO + H2,t
+1,HCO + OH -> CO + H2O,t
+1,CO2 + CH -> HCO + CO,t
+1,CH3 + O -> H2CO + H,t
+1,CH3O + O -> H2CO + OH,t
+1,CH3O + OH -> H2CO + H2O,t
+1,CH3OH + H -> CH3O + H2,t
+1,CH3OH + H -> CH3 + H2O,t
+1,CH2 + O -> CO + H + H,t
+1, CH2 + OH -> H2CO + H,t
+1,CO2 + CH2 -> H2CO + CO,t
+1,CH3O + CO -> CH3 + CO2,t
+1,CH3OH + H -> CH2OH + H2,t
+1,HCO + C2H -> C2H2 + CO,t
+1,CH2OH + C2H -> H2CO + C2H2,t
+1,CH3O + C2H -> H2CO + C2H2,t
+1,CH3OH + C2H -> CH2OH + C2H2,t
+1,CH3OH + C2H -> CH3O + C2H2,t
+1, O + C2H3 -> C2H2 + OH,t 
+1,CH + C2H4 -> C2H2 + CH3,t
+1,CH2 + C2H3 -> C2H2 + CH3,t
+1,O + CH2 -> CO + H2,t 
+1,HCO + CH2 -> CO + CH3,t
+1,CH2OH + CH2 -> OH + C2H4,t
+1, CH2OH + CH2 -> H2CO + CH3,t
+1,CH3O + CH2 -> H2CO + CH3,t
+1,CH3OH + CH2 -> CH3O + CH3,t 
+1,CH3OH + CH2 -> CH2OH + CH3,t
+1, HCO + CH3 -> CO + CH4,t 
+1,CH3O + CH3 -> H2CO + CH4,t
+1,CH3OH + CH3 -> CH3O + CH4,t
+1,CH3CO + H -> HCO + CH3,t
+1,CH3CO + CH3 -> CO + C2H6,t
+1,O + OH -> O2 + H,t
+1,H + CH3O -> H2CO + H2,t
+1,H + H2CCO -> CO + CH3,t
+1,O + C2H3 -> H2CCO + H,t
+1,C2H2 + O -> HCCO + H,t
+1,HCCO + H -> CO + CH2,t
+1, O + H2CO -> HCO + OH,t
+1, HCO + HCO -> H2CO + CO,t 
+1,CH2OH + CH3O -> H2CO + CH3OH,t 
+1,CH3O + CH3O -> H2CO + CH3OH,t
+1, N + CH -> NH + C,t
+1,N + CH -> CN + H,t
+1,N + CH2 -> NH + CH,t
+1,N + CH2 -> HCN + H,t
+1,N + C2 -> CN + C,t
+1, N + OH -> NO + H,t
+1, H + NH -> H2 + N,t
+1,H + NH2 -> H2 + NH,t 
+1,H2 + CN -> H + HCN,t
+1,CH2 + CN -> CH + HCN,t
+1, CH3 + NH -> CH4 + N,t
+1,CH3 + NH2 -> CH4 + NH,t
+1,CH3 + CN -> CH2 + HCN,t
+1,CH4 + CN -> HCN + CH3,t
+1,C2 + N2 -> CN + CN,t
+1,NH2 + C2H -> NH + C2H2,t 
+1,NH2 + C2H3 -> NH3 + C2H2,t
+1,NH2 + C2H4 -> NH3 + C2H3,t
+1, NH2 + C2H5 -> NH3 + C2H4,t
+1,NH2 + C2H6 -> NH3 + C2H5,t
+1,O + NH -> OH + N,t 
+1, O + NH -> NO + H,t 
+1,O + NH3 -> OH + NH2,t
+1,OH + NH -> H2O + N,t
+1,OH + CN -> O + HCN,t
+1,OH + HCN -> H2O + CN,t
+1, OH + HCN -> NH2 + CO,t
+1, OH + NH -> O + NH2,t
+1,NH2 + OH -> H2O + NH,t
+1,CN + O -> N + CO,t
+1, N + CO2 -> CO + NO,t
+1,N + NO -> N2 + O,t
+1, N + NH -> N2 + H,t
+1,N + CN -> N2 + C,t
+1,N2 + CH2 -> NH + HCN,t 
+1,NO + C -> O + CN,t 
+1, NO + CH -> O + HCN,t 
+1,NO + CH -> CO + NH,t
+1,NO + CH3 -> HCN + H2O,t 
+1, NO + NH -> N2 + OH,t
+1, NO + NH2 -> N2 + H2O,t
+1,NO + CN -> N2 + CO,t
+1,NH + C -> H + CN,t
+1, NH + NH -> N2 + H2,t
+1,NH2 + H2 -> NH3 + H,t 
+1, NH2 + CH4 -> CH3 + NH3,t
+1,NH2 + O -> H2 + NO,t
+1,NH3 + OH -> NH2 + H2O,t
+1, NH2 + NH2  -> NH3 + NH,t
+1, NH3 + CH -> NH2 + CH2,t
+1,NH3 + CN -> HCN + NH2,t
+1,CN + C2H6 -> C2H5 + HCN,t
+1,HCN + O -> CO + NH,t
+1,NH + NH2 -> N2H2 + H,t
+1, NH2 + N2H2 -> NH3 + N2H,t 
+1,NH2 + N2H3 -> NH3 + N2H2,t
+1,N2H2 + H -> N2H + H2,t
+1,N2H2 + CH3 -> N2H + CH4,t
+1,N2H2 + OH -> N2H + H2O,t
+1,N2H3 + H -> N2H2 + H2,t
+1,N2H3 + O -> N2H2 + OH,t
+1,N2H3 + OH -> N2H2 + H2O,t
+1,N2H3 + N2H3 -> N2H4 + N2H2,t
+1,N2H + H -> N2 + H2,t 
+1,N2H + OH -> N2 + H2O,t
+1,N2H + O -> N2 + OH,t
+1,N2H + NH2 -> N2 + NH3,t
+1,NH2 + NO -> N2H + OH,t
+1,N2H + NO -> N2 + HNO,t
+1,N2H2 + O -> N2H + OH,t
+1,NH + N2H2 -> NH2 + N2H,t
+1,H2CN + OH -> HCN + H2O,t
+1,NO + CH2 -> HNCO + H,t
+1,HNCO + H -> CO + NH2,t
+1,HCN + OH -> HNCO + H,t
+1,CH3 + N -> H2CN + H,t
+1,CH3 + N -> HCN + H2,t
+1,CH3 + NH2 -> NH3 + CH2,t
+1,N2H + O -> NH + NO,t
+1,NH2 + NH2 -> N2H2 + H2,t
+1,NO + CH3 -> H2CN + OH,t
+1,N2H4 + H -> N2H3 + H2,t
+1,O + CH3O -> O2 + CH3,t
+1,O2 + C -> O + CO,t
+1,O2 + CH2 -> H2O + CO,t
+1,O2 + CH3 -> OH + H2CO,t
+1,O2 + C2H -> CO + HCO,t
+1,O2 + C2H3 -> H2CO + HCO,t
+1,N + O2 -> NO + O,t
+1,NH + O2 -> NO + OH,t
+1,NH + O2 -> HNO + O,t
+1,O2 + NH2 -> HNO + OH,t
+1,NO2 + O -> NO + O2,t
+1,N2O + O -> N2 + O2,t
+1,N2O + H -> N2 + OH,t
+1,NH + NO -> N2O + H,t
+1,NH2 + NO2 -> N2O + H2O,t
+1,HNO + HNO -> N2O + H2O,t
+1,NO2 + CH3 -> NO + CH3O,t
+1,N2H4 + NH2 -> N2H3 + NH3,t
+1,C2H + C2H2 -> C4H2 + H,t
+1,CH2NH2 + H -> CH2NH + H2,t
+1,CH3NH2 + NH2 -> CH2NH2 + NH3,t
+1,CH2NH2 + CH3 -> NH2 + C2H5,t
+1,CH2NH2 + OH -> CH2OH + NH2,t
+1,CH3NH2 + H -> CH2NH2 + H2,t
+1,CH2NH + H -> H2CN + H2,t
+1,CH3 + NH2 -> CH2NH + H2,t
+1,CH3 + NH2 -> CH2NH2 + H,t
+1,CH3NH2 + CH3 -> CH2NH2 + CH4,t
+1,N2H3 + H -> NH2 + NH2,t
+1,CH + H2O -> H2CO + H,t
+1,O + C2H5 -> CH3CHO + H,t
+1,CH3CHO + H -> H2 + CH3CO,t
+1,NH + OH -> HNO + H,t
+1,HNO + OH -> NO + H2O,t
+1,HNO + O -> NO + OH,t
+1,HNO + H -> NO + H2,t
+1,NO + CH3O -> HNO + H2CO,t
+1,NO + HCO -> HNO + CO,t
+1,HNO2 + OH -> NO2 + H2O,t
+1,HNO2 + H -> HNO + OH,t
+1,HNO2 + H -> NO2 + H2,t
+1,HNO2 + H -> NO + H2O,t
+1,NH2 + HNO -> NO + NH3,t
+1,NCO + HCN -> HNCO + CN,t
+1,NCO + NH2 -> HNCO + NH,t
+1,NCO + HCO -> HNCO + CO,t
+1,CN + CO2 -> CO + NCO,t
+1,HCN + O -> NCO + H,t
+1,CN + OH -> NCO + H,t
+1,HNCO + H -> NCO + H2,t 
+1,HNCO + O -> NCO + OH,t
+1,HNCO + OH -> NCO + H2O,t
+1,N2H3 + NH -> N2H2 + NH2,t
+1,NH2 + H2CN -> NH3 + HCN,t
+1,NH + NH2 -> NH3 + N,t
+1,NH2 + O -> HNO + H,t
+1,H2 + HNO -> NH + H2O,t
+1,HO2 + H -> OH + OH,t
+1,HO2 + H -> O + H2O,t
+1,HO2 + H -> O2 + H2,t
+1,CO + HO2 -> CO2 + OH,t
+1,O + H2O2 -> OH + HO2,t
+1,OH + H2O2 -> H2O + HO2,t
+1,H2O2 + H -> H2 + HO2,t
+1,H2O2 + H -> OH + H2O,t
+1,O + HO2 -> OH + O2,t
+1,CH3 + HO2 -> CH4 + O2,t
+1,C2H5 + HO2 -> C2H6 + O2,t
+1,HCO + O2 -> CO + HO2,t
+1,OH + HO2 -> H2O + O2,t
+1,H2CN + H -> HCN + H2,t
+1,CN + C2H2 -> HC3N + H,t
+1,HCN + C2H -> HC3N + H,t
+1,H + CH3CN -> HCN + CH3,t
+1,H + CH3CN -> CH2CN + H2,t
+1,CH3CN + OH -> CH2CN + H2O,t
+1,CH3CN + O -> CH2CN + OH,t
+1,CN + C2H4 -> C2H3CN + H,t
+1,HCN + C2H3 -> C2H3CN + H,t
+1,C2H3CN + C2 -> HCN + C4H2,t
+1,C2H3CN + C2 -> HC3N + C2H2,t
+1,N + C2H3 -> CH2CN + H,t
+1,CH2CN + O -> HCN + HCO,t
+1,HO2 + CH4 -> CH3 + H2O2,t
+1,HO2 + NH2 -> NH3 + O2,t
+1,N + NH3 -> N2H + H2,t
+1,C2H + C2H5 -> C3H3 + CH3,t 
+1,C2H3 + C2H3 -> CH3 + C3H3,t
+1,C3H3 + OH -> HCO + C2H3,t
+1,CH2OH + C2H -> OH + C3H3,t
+1,N + C3H3 -> HC3N + H2,t
+1,N + C3H2 -> HC3N + H,t
+1,CH2 + C2H2 -> C3H2 + H2,t
+1,CH2 + C2H2 -> C3H3 + H,t
+1,CH2 + C2H -> C3H2 + H,t
+1,CH + C2H2 -> C3H2 + H,t
+1,CH3 + C2H -> C3H3 + H,t
+1,NH3 + NH2 -> N2H3 + H2,t
+1,N2H3 + N2H -> N2H2 + N2H2,t
+1,N2H3 + CH3 -> N2H2 + CH4,t
+1,CH3 + C2H2 -> C3H4 + H,t
+1,CH + C3H3 -> C4H3 + H,t
+1,C2H + C2H5 -> C4H5 + H,t
+1,C2H2 + C4H5 -> C6H6 + H,t
+1,C6H5 + H2 -> C6H6 + H,t
+1,C6H5 + CH4 -> C6H6 + CH3,t
+1,C + C2H2 -> C3H2,t
+1,O + C2H4 -> H2CO + CH2,t 
+1,O + C2H3 -> HCO + CH2,t
+1,CH3OH + OH -> CH3O + H2O,t
+1,CH3OH + OH -> CH2OH + H2O,t
+1,HO2 + NO -> OH + NO2,t
+1,O2 + H2CO -> HO2 + HCO,t
+1,N + NO2 -> N2O + O,t
+1,CH3O + O2 -> H2CO + HO2,t
+1,CH3 + CN -> CH2CN + H,t
+1,HO2 + HO2 -> H2O2 + O2,t
+1,O_1 + C2H6 -> C2H5 + OH,t
+1,O_1 + H2 -> OH + H,t
+1,O_1 + CH4 -> OH + CH3,t
+1,O_1 + H2O -> OH + OH,t
+1,O_1 + CO2 -> O + CO2,t
+1,O_1 + NH3 -> OH + NH2,t
+1,O_1 + CO -> CO2,t
+1,O_1 + NO2 -> O2 + NO,t
+1,O_1 + N2 -> O + N2,t
+1,CH2_1 + H2 -> CH3 + H,t
+1,CH2_1 + H2 -> CH2 + H2,t
+1,CH2_1 + H2O -> CH2 + H2O,t
+1,CH2_1 + CO -> CH2 + CO,t
+1,CH2_1 + C2H2 -> C3H3 + H,t
+1,N_2D + H2 -> NH + H,t 
+1,N_2D + H2O -> NH + OH,t
+1,N_2D + O2 -> NO + O,t
+1,N_2D + NH3 -> NH + NH2,t
+1,N_2D + N2O -> N2 + NO,t
+1,OH + CH3 -> CH2_1 + H2O,t
+1,H + H + M -> H2 + M,m2 
+1,H + O + M -> OH + M,m2
+1,OH + H + M -> H2O + M,m2
+1,H + CH + M -> CH2 + M,m2
+1,H + CH3 + M -> CH4 + M,m2
+1,H + C2H2 + M -> C2H3 + M,m2 
+1,H + C2H3 + M -> C2H4 + M,m2
+1,H + C2H4 + M -> C2H5 + M,m2
+1,H + C2H5 + M -> C2H6 + M,m2
+1,H2 + C + M -> CH2 + M,m2
+1,CH + M -> C + H + M,m2
+1,CH2 + H + M ->  CH3 + M,m2
+1,CH + H2 + M -> CH3 + M,m2
+1,CH3 + CH3 + M -> C2H6 + M,m2 
+1,C2H + H + M -> C2H2 + M,m2 
+1,C2H4 + M -> C2H2 + H2 + M,m2
+1,C2H6 + M -> C2H4 + H2 + M,m2 
+1,CO + O + M -> CO2 + M,m2
+1,CH2OH + M -> H + H2CO + M,m2
+1,H + CO + M -> HCO + M,m2
+1,H2O + CH + M -> CH2OH + M,m2
+1,CH3O + M -> H + H2CO + M,m2
+1,CH2OH + H + M -> CH3OH + M,m2
+1,OH + C2H2 + M -> CH3CO + M,m2
+1,CO + CH3 + M -> CH3CO + M,m2
+1,HCO + H + M -> H2CO + M,m2
+1,CO + H2 + M -> H2CO + M,m2
+1,H + NH2 + M -> NH3 + M,m2
+1,H + CN + M -> HCN + M,m2
+1,H2 + N + M -> NH2 + M,m2
+1,N + N + M -> N2 + M,m2
+1,N2H3 + M -> N2H2 + H + M,m2
+1,HCN + H + M -> H2CN + M,m2
+1,HNCO + M -> CO + NH + M,m2
+1,NH2 + NH2 + M -> N2H4 + M,m2
+1,NO + O + M -> NO2 + M,m2
+1,N2O + M  -> N2 + O + M,m2
+1,N2H + M -> N2 + H + M,m2
+1,NH2 + CH3 + M -> CH3NH2 + M,m2
+1,H + NO + M -> HNO + M,m2
+1,NO + OH + M -> HNO2 + M,m2
+1,C + C + M -> C2 + M,m2
+1,HO2 + HO2 + M -> H2O2 + O2 + M,m2
+1,OH + OH + M -> H2O2 + M,m2
+1, H + O2 + M -> HO2 + M,m2
+1,CH2CN + H + M -> CH3CN + M,m2
+1,C3H2 + H + M -> C3H3 + M,m2
+1,C3H3 + C3H3 + M -> C6H6 + M,m2
+1,N2H2 + M -> N2H + H + M,m2
+1,C3H3 + H + M -> C3H4 + M,m2
+1,CH2 + C2H2 + M -> C3H4 + M,m2
+1,C6H5 + H + M -> C6H6 + M,m2
+1,C4H2 + H + M -> C4H3 + M,m2
+1,C2H2 + C4H3 + M -> C6H5 + M,m2
+1,C2H2 + C2H3 + M -> C4H5 + M,m2
+1,C2H + M -> C2 + H + M,m1,2.92E+11,300,-5.160,57400.0
+1,O + C + M -> CO + M,m1,9.10E-22,300,-3.100,2114.0
+1,NH + M -> H + N + M,m1,2.99E-10,300,0,3.76E04
+1,O + N + M -> NO + M,m1,5.46E-33,300,0,-155
+1,O + O + M -> O2 + M,m1,5.21E-35,300,0,-900
+1,HNCO + M -> H + NCO + M,m1,1.66E-07,300,0,56400.0
+1,N_2D + M -> N + M,m1,1.70e-14,300,0,0
