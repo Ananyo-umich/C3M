@@ -25,7 +25,9 @@
 
 #include <fstream>
 #include <string>
-#ifdef NETCDFOUTPUT
+#include <configure.hpp>
+
+#if NETCDFOUTPUT
   #include <netcdf.h>
 #endif
 
@@ -74,7 +76,7 @@ while (getline(InFile, data1))
 nSize++;
 InFile.close();
 
-int nTime = 10;
+int nTime = 1000;
 int iTemp = 0;
 int iPress =  1;
 int iKzz =  2;
@@ -82,11 +84,14 @@ int iAlt = 3;
 
 //Initial condition for mole fraction
 VectorXd mole_fractions = VectorXd::Zero(nsp);
-mole_fractions(H2O) = 9.67E-6;
+double solar_O = 6.0618E-4;
+double solar_C = 2.7761E-4;
+double enrf_O = 1;
+double enrf_C = 1;
+
 mole_fractions(H2) = 0.87;
-mole_fractions(CO) = 1E-6;
-mole_fractions(CH4) = 1E-5;
-mole_fractions(O2) = 0;
+mole_fractions(H2O) = 0.793*solar_O*enrf_O*mole_fractions(H2);
+mole_fractions(CH4) = solar_C*enrf_C*mole_fractions(H2);
 
 
 
@@ -137,7 +142,7 @@ for (int i = 0; i < nSize; i++) {
 
 
 //Chemical evolution
-double dt = 1e-7;
+double dt = 1e-5;
 double dh = 1000; //m
 int iPrev, iNext;
 
@@ -180,6 +185,7 @@ for (int i = 0; i < nTime; i++) {
 
 
 //Diffusion terms (central difference scheme)
+    //dh = log(AtmData(iPress,j+1)/AtmData(iPress,j-1)); 
     flux1 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
     a.col(j) = a.col(j) - (flux1*dt);
     flux2 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
@@ -192,41 +198,79 @@ for (int i = 0; i < nTime; i++) {
 //Integration for each species (RK4)
     dQ = mat2;
     b.col(j) = dQ + b.col(j) - (flux1*dt);
-
-//Printing the result at each step  
-    std::cout << std::endl;
-    std::cout << "At time step t = ";
-    std::cout << i*dt << " (s) ";
-    std::cout << "mole fractions = ";
-    std::cout << b.col(j).transpose() << " ";
-    std::cout << std::endl;
   
-}}
+} 
+    
+}
 
+//Storing the variables in intermediate variables
+VectorXd cPress = AtmData.row(iPress);
+VectorXd cH2O = b.row(H2O);
+VectorXd cCO = b.row(CO);
+VectorXd cCO2 = b.row(CO2);
+VectorXd cCH3 = b.row(CH3);
+VectorXd cCH4 = b.row(CH4);
+VectorXd cC2H2 = b.row(C2H2);
+VectorXd cC2H4 = b.row(C2H4);
+VectorXd cC2H6 = b.row(C2H6);
+VectorXd cCH3OH = b.row(CH3OH);
+VectorXd cH = b.row(H);
+VectorXd cO = b.row(O);
+VectorXd cH2CO = b.row(H2CO);
 //Writing NetCDF output file
-#ifdef NETCDFOUTPUT
-#define NETCDFOUTPUT
+
+
+#if NETCDFOUTPUT
 stringstream msg;
 int ifile;
 string fname = "Vulcan_CHO_output.nc";
 int status = nc_create(fname.c_str(), NC_NETCDF4, &ifile);
-std::cout << status << std::endl;
+// Defining the dimensions
+int alt, iPres, iH2O, iCO, iCO2, iCH3, iCH4, iC2H2, iC2H4, iC2H6, iCH3OH, iH, iO, iH2CO;
+// Atmospheric Properties
+nc_def_dim(ifile, "Pressure (Pa)", nSize, &alt);
+nc_def_var(ifile, "Pressure (Pa)", NC_DOUBLE, 1, &alt, &iPres);
+nc_put_var_double(ifile, iPres, &cPress[0]);
+
+// Chemical Species
+nc_def_var(ifile, "H2O", NC_DOUBLE, 1, &alt, &iH2O);
+nc_put_var_double(ifile, iH2O, &cH2O[0]);
+
+nc_def_var(ifile, "CO", NC_DOUBLE, 1, &alt, &iCO);
+nc_put_var_double(ifile, iCO, &cCO[0]);
+
+nc_def_var(ifile, "CO2", NC_DOUBLE, 1, &alt, &iCO2);
+nc_put_var_double(ifile, iCO2, &cCO2[0]);
+
+nc_def_var(ifile, "CH3", NC_DOUBLE, 1, &alt, &iCH3);
+nc_put_var_double(ifile, iCH3, &cCH3[0]);
+
+nc_def_var(ifile, "CH4", NC_DOUBLE, 1, &alt, &iCH4);
+nc_put_var_double(ifile, iCH4, &cCH4[0]);
+
+nc_def_var(ifile, "C2H2", NC_DOUBLE, 1, &alt, &iC2H2);
+nc_put_var_double(ifile, iC2H2, &cC2H2[0]);
+
+nc_def_var(ifile, "C2H4", NC_DOUBLE, 1, &alt, &iC2H4);
+nc_put_var_double(ifile, iC2H4, &cC2H4[0]);
+
+nc_def_var(ifile, "C2H6", NC_DOUBLE, 1, &alt, &iC2H6);
+nc_put_var_double(ifile, iC2H6, &cC2H6[0]);
+
+nc_def_var(ifile, "CH3OH", NC_DOUBLE, 1, &alt, &iCH3OH);
+nc_put_var_double(ifile, iCH3OH, &cCH3OH[0]);
+
+nc_def_var(ifile, "H", NC_DOUBLE, 1, &alt, &iH);
+nc_put_var_double(ifile, iH, &cH[0]);
+
+nc_def_var(ifile, "O", NC_DOUBLE, 1, &alt, &iO);
+nc_put_var_double(ifile, iO, &cO[0]);
+
+nc_def_var(ifile, "H2CO", NC_DOUBLE, 1, &alt, &iH2CO);
+nc_put_var_double(ifile, iH2CO, &cH2CO[0]);
+
+nc_close(ifile);
 #endif
 
-/*
-//Writing NetCDF output file
-//Output dimensions: height, nSpecies
-//Description: vertical distribution of the chemical species at the time step.
-NcFile dataFile("sfc_pres_temp.nc", NcFile::Replace);
-NcDim *altDim, *chemDim;
-altDim = dataFile.add_dim("altitude", nSize);
-chemDim = dataFile.add_dim("chemicals", nSpecies);
-altitude = dataFile.add_var("Height", ncFloat, altDim);
-altitude->add_att("units", "km");
-NcVar ChemConc;
-//Either one can manually select species that will be included in the netCDF file or the complete matrix is included
-output = dataFile.add_var("mole_fraction", ncFloat, chemDim, altDim);
-output->put(&b[0][0], nSpecies, nSize);
-*/
 }
 

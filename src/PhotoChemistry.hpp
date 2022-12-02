@@ -1,23 +1,30 @@
 // C/C++ headers
 #include <vector>
+#include <string>
+#include <stdlib.h>
+#include <iostream>
+#include <fstream>
 
 // Cantera headers
 #include <cantera/kinetics/Kinetics.h>
-
+#include <cantera/base/ct_defs.h>
+#include <cantera/kinetics/ReactionData.h>
+#include <cantera/kinetics/ReactionRate.h>
+#include <cantera/kinetics/MultiRate.h>
 // C3M headers
 #include <configure.hpp>
 
-class PhotoChemistry : public Cantera::Kinetics {
-public:
-  // function
-  PhotoChemistry();
-  ~PhotoChemistry();
+using namespace std;
+using Eigen::MatrixXd;
+using Eigen::VectorXd;
 
-  void printWavelength();
 
-protected:
-  // data
-  std::vector<Real> wavelengths_;
-  std::vector<Real> crossSection_;
-  Real *data;
-};
+void printWavelength(Eigen::VectorXd wavelengths_);
+void printCrossSection(Eigen::VectorXd crossSection_);
+double PhotoChemRate(Eigen::MatrixXd wavelengths_, Eigen::MatrixXd crossSection_, Eigen::MatrixXd actinicFlux_);
+Eigen::MatrixXd ReadJPLCrossSection(string JPL_FileName, string Reactant);
+Eigen::MatrixXd ReadVULCANCrossSection(string VULCAN_ID);
+Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName);
+void ReadATMOSCrossSection();
+  
+
