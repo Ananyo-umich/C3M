@@ -1,9 +1,7 @@
-
-# set up project
+## 0.set up project ##
 
 cmake_minimum_required(VERSION 3.18)
-
-message(STATUS "Set up compiler ...")
+message(STATUS "Set up canoe project ...")
 
 project(
   C3M
@@ -12,69 +10,69 @@ project(
   )
 set(CMAKE_CXX_STANDARD 14)
 
-message(STATUS "Done.")
+LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
 
+# 1. set up compiler flags
+message(STATUS "")
+message(STATUS "Set up project configuration ...")
+message(STATUS "Include ${CMAKE_SOURCE_DIR}/cmake/setup_compiler_flags.cmake")
+include(${CMAKE_SOURCE_DIR}/cmake/setup_compiler_flags.cmake)
+
+## 2. set up project configuration ##
+message(STATUS "")
+message(STATUS "Set up project configuration ...")
 message(STATUS "Include ${CMAKE_SOURCE_DIR}/cmake/setup_configure.cmake")
 include(${CMAKE_SOURCE_DIR}/cmake/setup_configure.cmake)
 
-# set up model parameters
-message(STATUS "")
-message(STATUS "Set up project configuration ...")
-
-# set up configure file
-configure_file(configure.hpp.in configure.hpp @ONLY)
-
-message(STATUS "Done.")
-
-## set up project paths ##
-
+## 3. set up project paths ##
 message(STATUS "")
 message(STATUS "Set up project paths ...")
-
 set(EXECUTABLE_RELDIR "bin")
 set(INCLUDE_RELDIR "include")
-set(LIBRARY_RELDIR "lib${PACKAGE_NAME}")
-set(SHARE_RELDIR "share/${PACKAGE_NAME}")
+set(SOURCE_RELDIR "source")
 
-message(STATUS "Done.")
-
-
-## debug and/or release mode ##
+## 4. set up project system libraries ##
 message(STATUS "")
-message(STATUS "Set up compiler flags ...")
-include(cmake/setup_compiler_flags.cmake)
+message(STATUS "Set up project system libraries ...")
 
-if (CMAKE_BUILD_TYPE MATCHES "Debug")
-  list(APPEND BUILD_TYPES "DEBUG")
+find_package(Eigen3 3.3 REQUIRED)
+find_package(Cantera REQUIRED)
+if (${UseNetCDF})
+  find_package(NetCDF REQUIRED)
+endif()
+if (${UsePNetCDF})
+  find_package(PNetCDF REQUIRED)
 endif()
 
-if (CMAKE_BUILD_TYPE MATCHES "Release")
-  list(APPEND BUILD_TYPES "RELEASE")
+if (${UseMPI})
+  find_package(MPI REQUIRED)
+  set(MPIOption MPI_PARALLEL)
+else()
+  set(MPIOption NOT_MPI_PARALLEL)
 endif()
 
-foreach(build ${BUILD_TYPES})
-  message(STATUS "build = ${build}")
-  message(STATUS "C compiler flags = ${CMAKE_C_FLAGS_${build}}")
-  message(STATUS "C++ compiler flags = ${CMAKE_CXX_FLAGS_${build}}")
-  message(STATUS "Fortran compiler flags = ${CMAKE_Fortran_FLAGS_${build}}")
-endforeach()
+if (${UseCubedSphere})
+  set(CubedSphereOption CUBED_SPHERE)
+else()
+  set(CubedSphereOption NOT_CUBED_SPHERE)
+endif()
 
-message(STATUS "Done.")
-
-## set up system libraries ##
-# use cantera
-set(CANTERA_INCLUDE_DIR /home/ananyo/opt/include)
-set(CANTERA_LIBRARY_DIR /home/ananyo/opt/lib)
-set(CANTERA_LIBRARY cantera)
-
-## compilation and installation ##
-
+## 5. set up project external libraries ##
 message(STATUS "")
-message(STATUS "Set up complication and installation ...")
+message(STATUS "Set up project external libraries ...")
 
-add_subdirectory(external)
+# compile athenapp
+if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
+  add_subdirectory(athenapp)
+endif()
+
+## 6. set up compilation and installation ##
+message(STATUS "")
+message(STATUS "Set up project complication and installation ...")
+
+# configure file
+configure_file(${CMAKE_SOURCE_DIR}/configure.hpp.in configure.hpp @ONLY)
+
+#add_subdirectory(external)
 add_subdirectory(src)
 add_subdirectory(tests)
-
-message(STATUS "Done.")
-message(STATUS "")

@@ -1,0 +1,3 @@
+[submodule "athenapp"]
+	path = athenapp
+	url = https://github.com/chengcli/athenapp

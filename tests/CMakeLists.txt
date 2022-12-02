@@ -18,14 +18,17 @@ foreach(_test ${_tests})
     target_include_directories(${_name}.${buildl}
       SYSTEM PRIVATE
       ${C3M_INCLUDE_DIR}
+      ${EIGEN3_INCLUDE_DIR}
       ${CANTERA_INCLUDE_DIR}
       ${NETCDF_INCLUDES}
+      ${ATHENAPP_INCLUDE_DIR}
       ${CMAKE_BINARY_DIR}
       )
 
     target_link_directories(${_name}.${buildl}
       SYSTEM PRIVATE
       ${CANTERA_LIBRARY_DIR}
+      ${ATHENAPP_LIBRARY_DIR}
       )
 
     target_link_libraries(${_name}.${buildl}
@@ -35,4 +38,14 @@ foreach(_test ${_tests})
       python3.9
       )
   endforeach()
+endforeach()
+
+# model input files
+file(GLOB _inputs 
+  *.yaml
+  *.txt)
+foreach(_input ${_inputs})
+  get_filename_component(_name ${_input} NAME)
+
+  configure_file(${_input} ${CMAKE_BINARY_DIR}/${EXECUTABLE_RELDIR}/${_name} COPYONLY)
 endforeach()
