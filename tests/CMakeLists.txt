@@ -19,6 +19,7 @@ foreach(_test ${_tests})
       SYSTEM PRIVATE
       ${C3M_INCLUDE_DIR}
       ${CANTERA_INCLUDE_DIR}
+      ${NETCDF_INCLUDES}
       ${CMAKE_BINARY_DIR}
       )
 
@@ -30,6 +31,7 @@ foreach(_test ${_tests})
     target_link_libraries(${_name}.${buildl}
       ${C3M_LIBRARY_${build}}
       ${CANTERA_LIBRARY}
+      ${NETCDF_LIBRARIES}
       python3.9
       )
   endforeach()

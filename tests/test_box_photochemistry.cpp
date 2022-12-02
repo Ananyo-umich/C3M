@@ -91,11 +91,6 @@ int main(int argc, char **argv)
   MatrixXd Rxn2 = ReadVULCANCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv");
   MatrixXd Rxn3 = ReadVULCANCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv");
   
-  
-  
-  //gas_kin->setMultiplier(0, rate);
-  //gas_kin->setMultiplier(5, rate2);
-  //VectorXd mole_frac(gas->nSpecies());
   float dt = 1e-1; //Time step (s)
   int nSteps = 10000; //Number of time steps 
   

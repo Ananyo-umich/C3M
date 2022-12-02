@@ -5,9 +5,9 @@
 int main(int argc, char** argv)
 {
     // Create a new Solution object
-    auto sol = Cantera::newSolution("h2o2.yaml", "ohmech", "None");
+    auto sol = Cantera::newSolution("Vulcan_CHNOS.yaml");
     auto gas = sol->thermo();
 
-    std::cout << gas->temperature() << std::endl;
+    //std::cout << gas->temperature() << std::endl;
     return 0;
 }
