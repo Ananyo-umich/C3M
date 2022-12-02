@@ -50,6 +50,7 @@ Eigen::MatrixXd  ReadVULCANCrossSection(string VULCAN_ID){
   rows++;
   InFile.close();
   
+  std::cout << "rows = " << rows << std::endl;
   Eigen::MatrixXd Output(4, rows-1);
   InFile.open(VULCAN_ID); 
   getline(InFile,wavlength);
