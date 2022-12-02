@@ -26,6 +26,7 @@ foreach(build ${BUILD_TYPES})
 
   target_include_directories(c3m_${buildl}
     SYSTEM PRIVATE
+    ${EIGEN3_INCLUDE_DIR}
     ${CANTERA_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}
     )
