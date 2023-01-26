@@ -1,0 +1,3 @@
+earth_HOx_R1,HO2 + NO = NO2 + OH,m1,3.5e-12,0,250
+earth_HOx_R2,HO2 + O = OH + O2,m0,1e-10
+earth_HOx_R3,HO2 + O3 = OH + 2O2,m0,1e-15

@@ -87,9 +87,9 @@ int main(int argc, char **argv)
 
   
   //Reading the cross sections from photochemical database
-  MatrixXd Rxn0 = ReadVULCANCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv");
-  MatrixXd Rxn2 = ReadVULCANCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv");
-  MatrixXd Rxn3 = ReadVULCANCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv");
+  MatrixXd Rxn0 = ReadVULCANPhotoIonCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv");
+  MatrixXd Rxn2 = ReadVULCANPhotoIonCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv");
+  MatrixXd Rxn3 = ReadVULCANPhotoIonCrossSection("/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv");
   
   float dt = 1e-1; //Time step (s)
   int nSteps = 10000; //Number of time steps 

@@ -1,0 +1,112 @@
+<problem>
+planet = /data4/ananyo/models/C3M/tests/Venus_BZ2020.txt
+network = venus_test.yaml
+photochem = true
+
+<init>
+species = CO2, SO2, OCS
+CO2 = 0.965
+SO2 = 120E-6
+OCS = 120E-6
+
+
+<integrator>
+nSteps = 10
+dt = 1E-5
+
+
+<upperboundaryflux>
+species = CO2, SO2, OCS
+CO2 = 0.0
+SO2 =  0.0
+OCS = 0.0
+
+
+<lowerboundaryflux>
+species = CO2, SO2, OCS
+CO2 = 0.0
+SO2 =  0.0
+OCS = 0.0
+
+
+<photocross>
+O2 -> 2 O  = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
+O3 -> O + O2 = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+
+
+
+<radtran>
+solar = sun_spec.inp #spectral irradiance file
+distance = 0.7 #Distance from the star/sun (AU)
+reference = 1 #Distance of reference observer from the star/sun (AU)
+
+<abscross>
+absorbers = O3, O2
+O3 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+O2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
+
+
+
+<extra>
+species = O, O_1D, O2, O2_1D, O3, H, H2, OH, HO2, H2O, H2O2, N, NO, NO2, NO3, N2O, HNO, HNO2, HNO3, Cl, Cl2, CLO, HCl, HOCl, ClCO, COCl2, ClCO3, CO, CO2, S, S2, S3, S4, S5, S6, S7, S8, SO, (SO)2, SO2, SO3, S2O, SH, H2S, HSO3, H2SO4, ClSH, ClS, ClS2, Cl2S, Cl2S2, OSCl, ClSO2, Cl2SO2, OCS
+O = 0.0
+O_1D = 0.0
+O2 = 0.0
+O2_1D = 0.0
+O3 = 0.0
+H = 0.0
+H2 = 0.0
+OH = 0.0
+HO2 = 0.0
+H2O = 0.0
+H2O2 = 0.0
+N = 0.0
+NO = 0.0
+NO2 = 0.0
+NO3 = 0.0
+N2O = 0.0
+HNO = 0.0
+HNO2 = 0.0
+HNO3 = 0.0
+Cl = 0.0
+Cl2 = 0.0
+ClO = 0.0
+HCl = 0.0
+HOCl = 0.0
+ClCO = 0.0
+COCl2 = 0.0
+ClCO3 = 0.0
+CO = 0.0
+CO2 = 0.0
+S = 0.0
+S2 = 0.0
+S3 = 0.0
+S4 = 0.0
+S5 = 0.0
+S6 = 0.0
+S7 = 0.0
+S8 = 0.0
+SO = 0.0
+S2O2 = 0.0
+SO2 = 0.0
+SO3 = 0.0
+S2O = 0.0
+SH = 0.0
+H2S = 0.0
+HSO3 = 0.0
+H2SO4 = 0.0
+ClSH = 0.0
+ClS = 0.0
+ClS2 = 0.0
+Cl2S = 0.0
+Cl2S2 = 0.0
+OSCl = 0.0
+ClSO2 = 0.0
+Cl2SO2 = 0.0
+OCS = 0.0
+
+
+
+
+
+

@@ -76,7 +76,7 @@ while (getline(InFile, data1))
 nSize++;
 InFile.close();
 
-int nTime = 1000;
+int nTime = 10;
 int iTemp = 0;
 int iPress =  1;
 int iKzz =  2;
@@ -161,7 +161,7 @@ for (int i = 0; i < nTime; i++) {
     iNext = j+1;
     Temp = AtmData(iTemp,j);
     Press = AtmData(iPress,j); 
-    gas->setState_TP(Temp, 300.0*OneAtm);
+    gas->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     mole_frac = b.col(j);
     gas->setMoleFractions_NoNorm(&mole_frac[0]);
     Keddy = AtmData(iKzz, j);
