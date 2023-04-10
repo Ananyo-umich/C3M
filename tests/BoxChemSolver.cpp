@@ -2,9 +2,11 @@
 // Author: Ananyo Bhattacharya
 // Affiliation: University of Michigan
 // Email: ananyo@umich.edu
+// The code computes the chemical evolution of a reaction network at a point
+
+
 // Solution class describes a phase consists of a mixture of chemical species
 #include <cantera/base/Solution.h>
-
 
 // ThermoPhase object stores the thermodynamic state
 #include <cantera/thermo.h>
@@ -30,6 +32,12 @@
 #include <RadTran.hpp>
 #include <interpolation.hpp>
 
+
+// NetCDF Output
+#if NETCDFOUTPUT
+  #include <netcdf.h>
+#endif
+
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using namespace Cantera;
@@ -49,31 +57,26 @@ int main(int argc, char **argv) {
   
 //Reading input file
   IOWrapper infile;
-  infile.Open("test_Venus.inp", IOWrapper::FileMode::read);
-
+  infile.Open("test_athena.inp", IOWrapper::FileMode::read);
   ParameterInput *pinput = new ParameterInput();
 
   pinput->LoadFromFile(infile);
   infile.Close();
 
 //Loading the input parameters for atmospheric profile and reaction network
-  std::string atm_file = pinput->GetString("problem", "planet");
   std::string network_file = pinput->GetString("problem", "network");
   
 //Reading the chemical kinetics network
   auto sol = newSolution(network_file);
-  std::cout << "Hello" << std::endl;
+  //auto sol = newSolution(network_file);
   auto gas = sol->thermo();
   auto gas_kin = sol->kinetics();  
   int nsp = gas->nSpecies();
   int nrxn = gas_kin->nReactions();
-  
+  std::cout << "Network imported" << std::endl;
 //Initial condition for mole fraction
   VectorXd mole_fractions = VectorXd::Zero(nsp);
   
-//Initial condition for boundary fluxes
-  VectorXd flux_lower = VectorXd::Zero(nsp);
-  VectorXd flux_upper = VectorXd::Zero(nsp);
 
 //Loading the input parameters for initial condition
   std::string init_species_list = pinput->GetString("init", "species");
@@ -88,162 +91,115 @@ int main(int argc, char **argv) {
     }
     init_species_list = m.suffix().str();
   }
-
-
-//Loading the input for upper boundary condition
-  std::string ub_species_list = pinput->GetString("upperboundaryflux", "species");
-  while (std::regex_search (ub_species_list,m,pattern)) {
-    for (auto x:m){
-    std::string species_upperboundary_condition = pinput->GetString("upperboundaryflux", x);
-    species_inx = gas->speciesIndex(x);
-    flux_upper(species_inx) = atof(species_upperboundary_condition.c_str());
-    }
-    ub_species_list = m.suffix().str();
-  }
-
-//Loading the input for lower boundary condition 
-  std::string lb_species_list = pinput->GetString("lowerboundaryflux", "species");
-  while (std::regex_search (lb_species_list,m,pattern)) {
-    for (auto x:m){
-    std::string species_lowerboundary_condition = pinput->GetString("lowerboundaryflux", x);
-    species_inx = gas->speciesIndex(x);
-    flux_lower(species_inx) = atof(species_lowerboundary_condition.c_str());
-    }
-    lb_species_list = m.suffix().str();
-  }
+ std::cout << "Initial conditions loaded" << std::endl;
+ 
+//Loading the atmospheric conditions
+  std::string tp = pinput->GetString("problem", "temp");
+  std::string ps = pinput->GetString("problem", "pres");
+  double temp = atof(tp.c_str());
+  double pres = atof(ps.c_str());
 
 //Integrator
   std::string time_step = pinput->GetString("integrator", "dt");
-  std::string total_time_steps = pinput->GetString("integrator", "nSteps");
+  std::string max_time = pinput->GetString("integrator", "Tmax");
   double dt = atof(time_step.c_str());
-  int nTime = stoi(total_time_steps.c_str());
+  double Tmax = atof(max_time.c_str());
+  double Ttot = 0.0;
+  std::cout << "Time step: " << dt << std::endl;
+  //int nTime = stoi(total_time_steps.c_str());
 
+
+//Atmosphere Properties, indices for I/O storage
+
+  
+
+std::cout << "All inputs loaded into C3M " << std::endl;
 
 //Photochemistry
   std::string photochem = pinput->GetString("problem", "photochem");
   if(photochem == "true")
   {
   
-  
+  std::cout << "Starting photochemistry calculations" << std::endl;
 //Radiative transfer
 //Reading the Stellar Irradiance Input
   std::string stellar_input_file = pinput->GetString("radtran", "solar");
-  MatrixXd stellar_input = ReadStellarRadiationInput(stellar_input_file);  
+  std::string radius = pinput->GetString("radtran", "radius");
+  std::string reference =   pinput->GetString("radtran", "reference");
+  
+  double rad = atof(radius.c_str());
+  double ref = atof(reference.c_str());
+  std::cout << rad << " " << ref << std::endl;
+  MatrixXd stellar_input = ReadStellarRadiationInput(stellar_input_file, rad, ref);
+  std::cout << "Radiation Input Complete!" << std::endl;
+
+  std::cout << "Initiating photochemistry!" << std::endl;
+//Storing the photochemical cross section data
+  int PhotoRxn = 0;
   
   
-//Reading absorber cross section for all absorbers
-  std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
-  while (std::regex_search (absorber_species_list,m,pattern)) {
-    for (auto x:m){
-    std::string absorber_cross_info = pinput->GetString("abscross", x);
-    std::string absorber_cross_database = absorber_cross_info.substr(0,absorber_cross_info.find(","));  
-    std::string absorber_cross_file = absorber_cross_info.substr(absorber_cross_info.find(",")+1,absorber_cross_info.length()-1);
-    
-//Reading the absorption cross section for absorber as per the database structure
-//Interpolating the cross sections to reference grid
-
-   if(absorber_cross_database == "VULCAN"){
-     MatrixXd cross_info = ReadVULCANPhotoAbsCrossSection(absorber_cross_file);
-     MatrixXd cross_section_data = InterpolateCrossSection(stellar_input.row(0), cross_info.row(0), cross_info.row(1));
-   }
-
-/*    
-   if(absorber_cross_database == "KINETICS"){
-     std::cout << absorber_cross_database << std::endl;
-
+  
+  for(int irxn = 0; irxn < nrxn; irxn++){
+    std::cout << gas_kin->reactionString(irxn) << std::endl;
+    std::string rxnEquation = gas_kin->reactionString(irxn);
+    int pos = rxnEquation.find("=");
+    rxnEquation.replace(pos, 2, "->");
+    std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan");
+    if(photo_cross_info != "nan"){
+    PhotoRxn++;
     }
-*/
-    
-   if(absorber_cross_database == "VPL"){
-     MatrixXd cross_info = ReadAtmosCrossSection(absorber_cross_file);
-   
-   } 
-
-    //species_inx = gas->speciesIndex(x);
     
     }
-    absorber_species_list = m.suffix().str();
-  }
+
+  Eigen::MatrixXd photo_cross_data(stellar_input.row(0).size(), PhotoRxn);
+  Eigen::VectorXd RxnIndex(PhotoRxn);
+  Eigen::VectorXd Jrate(PhotoRxn);
   
 //Reading cross section for all photochemical reactions
+  int ph_inx = 0;
   for(int irxn = 0; irxn < nrxn; irxn++){
     std::string rxnEquation = gas_kin->reactionString(irxn);
     int pos = rxnEquation.find("=");
-    rxnEquation.replace(pos-1, 3, "->");
+    rxnEquation.replace(pos, 2, "->");
     std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan");
-    
+    std::cout << photo_cross_info << std::endl;    
     if(photo_cross_info != "nan"){
+    RxnIndex(ph_inx) = irxn;
     std::string photo_cross_database = photo_cross_info.substr(0,photo_cross_info.find(","));  
     std::string photo_cross_file = photo_cross_info.substr(photo_cross_info.find(",")+1,photo_cross_info.length()-1);
-    
+    std::cout << "Identifying the reactions" << std::endl;
     
     if(photo_cross_database == "VULCAN_Ion"){
      MatrixXd photoXsection_info = ReadVULCANPhotoIonCrossSection(photo_cross_file);
-   
+     photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1)); 
    }
     
     if(photo_cross_database == "VULCAN_Diss"){
      MatrixXd photoXsection_info = ReadVULCANPhotoDissCrossSection(photo_cross_file);
+     photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1));
    
    }
    
     if(photo_cross_database == "VPL"){
      MatrixXd photoXsection_info = ReadAtmosCrossSection(photo_cross_file);
+     photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1));
    
    }
+
+   if(photo_cross_database == "MPD"){
+     MatrixXd photoXsection_info = ReadMPCrossSection(photo_cross_file);
+     photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1));
+
+   }
    
-   
+   ph_inx++;
     }
     
 //If the string is not equal to nan and then proceed and load the photochemical cross sectikons
    }
-   
-  }
 
-
-//Atmosphere Properties, indices for I/O storage
-  fstream InFile;
-  int nSize = 0;
-  string data1, data2, data3;
-  InFile.open(atm_file); 
-  getline(InFile, data1);
-  getline(InFile, data1);
-  while (getline(InFile, data1))
-    nSize++;
-  InFile.close();
-  
-//Setting initial condition for chemical species
-  MatrixXd ChemMoleFrac(nsp, nSize);
-  MatrixXd a(nsp, nSize);
-  for (int i = 0; i < nSize; i++) {
-      ChemMoleFrac.col(i) = mole_fractions;
-    }
-  
-
-//Atmospheric Profile Data
-  MatrixXd AtmData(4, nSize);
-  int iTemp = 0;
-  int iPress =  1;
-  int iKzz =  2;
-  int iAlt = 3;
-  
-//Input from txt file
-  int inx = 0;
-  InFile.open(atm_file); 
-  getline(InFile, data1);
-  getline(InFile, data1);
-  while (InFile >> data1 >> data2 >> data3){
-      AtmData(iPress, inx) = atof(data1.c_str())*0.1; //Pressure (dyn/cm^2) -> Pa
-      AtmData(iTemp,inx) = atof(data2.c_str()); //Temperature (K)
-      AtmData(iKzz, inx) = atof(data3.c_str())*1E-4; //Kzz (cm^2/s) -> m^2/s
-      inx++;
-      }
-  InFile.close();
- 
 //Chemical evolution
-double dh = 1000; //m
-int iPrev, iNext;
-
+ std::cout << "Starting chemical evolution " << std::endl;
 //Initiating Matrices for Time Evolution
 Eigen::SparseMatrix<double>  m_wjac;
 m_wjac.resize(nsp, nsp);
@@ -263,55 +219,161 @@ double Temp, Press, Kzz;
 VectorXd m_wdot(nsp);
 VectorXd mole_frac(nsp);
 
+double Kb = 1.38E-23;
+int i = 0;
+double j_rate;
+double j_O3;
+VectorXd krate(nrxn);
+//Calculating the photochemical reaction rate
+std::cout << "Computing the photochemical reaction rates" << std::endl;
+//Computing the photochemical reaction rate for each reaction
+for(int rx = 0; rx < PhotoRxn; rx++){
+  j_rate = PhotoChemRate(stellar_input.row(0),photo_cross_data.col(rx), stellar_input.row(1).transpose());
+  std::cout << j_rate << std::endl;
+//Setting the multiplier for each reaction
+ gas_kin->setMultiplier(RxnIndex(rx), j_rate);
+ }
+std::cout << "Photochemical reaction rates computed!" << std::endl;
+std::ofstream outfile ("box_network_output.txt");
 
-for (int i = 0; i < nTime; i++) {
-  for (int j = 0; j < nSize; j++) {
+//gas->setState_TP(temp, (pres)*OneBar);
+//gas->setMoleFractions(&mole_fractions[0]);
+//gas->equilibrate("TP");
+//std::cout << gas->report() << std::endl;
+
+while(Ttot  < Tmax) {
 //Setting T, P, X for each grid point
-    iPrev = j-1;
-    iNext = j+1;
-    Temp = AtmData(iTemp,j);
-    Press = AtmData(iPress,j); 
-    gas->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
-    mole_frac = ChemMoleFrac.col(j);
-    gas->setMoleFractions_NoNorm(&mole_frac[0]);
-    Keddy = AtmData(iKzz, j);
+    gas->setState_TP(temp, (pres)*OneBar);
+    gas->setMoleFractions(&mole_fractions[0]);
 //Solving the net production for each species
     gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
     m_wjac = gas_kin->netProductionRates_ddX(); //Extracting Jacobian from Cantera
-
-
+    m_wjac = m_wjac/ gas->molarDensity(); 
+   // std::cout << m_wdot.transpose() << std::endl;
+//Integration for each species
 //Backward Euler Scheme (Li and Chen, 2019)
     mat2 = ((mat1/dt) - m_wjac);
     mat2 = mat2.inverse();
-    mat2 = mat2*m_wdot;
-    a = ChemMoleFrac;
-    if (j == 0){
-    flux1 = flux_upper;
-    }
-    if (j == nSize-1){
-    flux1 = flux_lower;
-    }
-    if ((j > 0) && (j < nSize-1)) {
-
-
-//Diffusion terms (central difference scheme)
-    //dh = log(AtmData(iPress,j+1)/AtmData(iPress,j-1)); 
-    flux1 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
-    a.col(j) = a.col(j) - (flux1*dt);
-    flux2 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
-    a.col(j) = a.col(j) - (flux2*dt/2);
-    flux3 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
-    a.col(j) = a.col(j) - (flux3*dt/2);
-    flux4 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
-    flux1 = ((flux1 + (2*flux2) + (2*flux3) + flux4)/6);
-    }
-//Integration for each species (RK4)
+    mat2 = mat2*(m_wdot / gas->molarDensity());
     dQ = mat2;
-    ChemMoleFrac.col(j) = dQ + ChemMoleFrac.col(j) - (flux1*dt);
-  
+    mole_fractions = mole_fractions + dQ;
+    //gas->setMoleFractions(&mole_fractions[0]);
+    //gas->getMoleFractions(&mole_fractions[0]);   
+    //std::cout << "Simulation completed at time t = " << Ttot << std::endl;
+    Ttot = Ttot + dt;
+    
+    dt = dt*1.25;
+    gas_kin->getFwdRatesOfProgress(&krate[0]);
+    std::cout << m_wdot.transpose() << std::endl;
+    outfile << Ttot << " " << mole_fractions.transpose()  << std::endl;
 } 
-    std::cout << "Simulation completed at time step t = " << i << std::endl;
-} 
+    std::cout << gas->report() << std::endl;
+    //std::cout << j_rate << std::endl;
+    outfile.close();
+//Analytical solution
+//double ratio = j_O3/(krate(1)*0.21*number_density);
+  }
 
-  delete pinput;
+//This is where the photochemistry definition ends (Anything beyond is not defined in the scope of photochemistry) 
+
+
+  if(photochem != "true"){
+//If photochemistry is set equal to false
+   //Initiating Matrices for Time Evolution
+Eigen::SparseMatrix<double>  m_wjac;
+m_wjac.resize(nsp, nsp);
+MatrixXd mat1(nsp, nsp);
+mat1 = MatrixXd::Identity(nsp, nsp);
+MatrixXd mat2(nsp, nsp);
+VectorXd Un(nsp);
+VectorXd Unext(nsp);
+VectorXd Uprev(nsp);
+VectorXd flux1(nsp);
+VectorXd flux2(nsp);
+VectorXd flux3(nsp);
+VectorXd flux4(nsp);
+VectorXd dQ(nsp);
+double Keddy;
+double Temp, Press, Kzz;
+VectorXd m_wdot(nsp);
+VectorXd mole_frac(nsp);
+double dh;
+int iPrev, iNext;
+
+double Kb = 1.38E-23;
+int i = 0;
+while(Ttot  < Tmax){
+//Setting T, P, X for each grid point 
+    gas->setState_TP(temp, (pres/1.0132E5)*OneAtm);
+    gas->setMoleFractions_NoNorm(&mole_fractions[0]);
+    
+    //Solving the net production for each species
+    gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
+    m_wjac = gas_kin->netProductionRates_ddX()/gas->molarDensity(); //Extracting Jacobian from Cantera
+
+//Integration for each species
+//Backward Euler Scheme (Li and Chen, 2019)
+    mat2 = ((mat1/dt) - m_wjac);
+    mat2 = mat2.inverse();
+    m_wdot = m_wdot;
+    mat2 = mat2*(m_wdot / gas->molarDensity());
+    dQ = mat2;
+    mole_fractions = mole_fractions + dQ;
+    //gas->setMoleFractions(&mole_fractions[0]);
+    //gas->getMoleFractions(&mole_fractions[0]);   
+    std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
+    Ttot = Ttot + dt;
+    dt = dt*1.25;
+}
+
+
+}
+//Writing output into NetCDF file
+
+/*
+VectorXd cPress = AtmData.row(iPress);
+VectorXd cTemp = AtmData.row(iTemp);
+VectorXd cHeight = AtmData.row(iAlt);
+VectorXd cKzz = AtmData.row(iKzz);
+#if NETCDFOUTPUT
+int ifile;
+string fname = pinput->GetString("output", "out_file");
+int status = nc_create(fname.c_str(), NC_NETCDF4, &ifile);
+int alt, iPres, iTem, iKeddy, iAltz, iChem;
+// Atmospheric Properties (All in SI units!)
+nc_def_dim(ifile, "Pressure", nSize, &alt);
+nc_def_var(ifile, "Pressure", NC_DOUBLE, 1, &alt, &iPres);
+nc_put_var_double(ifile, iPres, &cPress[0]);
+
+nc_def_var(ifile, "Keddy", NC_DOUBLE, 1, &alt, &iKeddy);
+nc_put_var_double(ifile, iKeddy, &cKzz[0]);
+
+nc_def_var(ifile, "Temp", NC_DOUBLE, 1, &alt, &iTem);
+nc_put_var_double(ifile, iTem, &cTemp[0]);
+
+nc_def_var(ifile, "Altitude", NC_DOUBLE, 1, &alt, &iAltz);
+nc_put_var_double(ifile, iAltz, &cHeight[0]);
+
+
+
+init_species_list = pinput->GetString("output", "species");
+  while (std::regex_search (init_species_list,m,pattern)) {
+    for (auto x:m){
+    std::string species = x;
+    species_inx = gas->speciesIndex(x);
+    VectorXd cChem = ChemMoleFrac.row(species_inx);
+    const char* ccx = &species[0];
+    nc_def_var(ifile, ccx, NC_DOUBLE, 1, &alt, &iChem);
+    nc_put_var_double(ifile, iChem, &cChem[0]);
+    
+    
+    }
+    init_species_list = m.suffix().str();
+  }
+
+nc_close(ifile);
+#endif
+*/
+
+delete pinput;
 }

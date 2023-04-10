@@ -21,10 +21,12 @@ using Eigen::VectorXd;
 
 void printWavelength(Eigen::VectorXd wavelengths_);
 void printCrossSection(Eigen::VectorXd crossSection_);
-double PhotoChemRate(Eigen::MatrixXd wavelengths_, Eigen::MatrixXd crossSection_, Eigen::MatrixXd actinicFlux_);
+double PhotoChemRate(Eigen::MatrixXd wavelengths_, Eigen::MatrixXd crossSection_, Eigen::MatrixXd Spectral_radiance);
 Eigen::MatrixXd ReadJPLCrossSection(string JPL_FileName, string Reactant);
-Eigen::MatrixXd ReadVULCANCrossSection(string VULCAN_ID);
+Eigen::MatrixXd ReadVULCANPhotoIonCrossSection(string VULCAN_ID);
+Eigen::MatrixXd ReadVULCANPhotoDissCrossSection(string VULCAN_ID);
 Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName);
-void ReadATMOSCrossSection();
+Eigen::MatrixXd ReadMPCrossSection(string MPFileName);
+Eigen::MatrixXd ReadKINETICSCrossSection(string SpeciesName);
   
 

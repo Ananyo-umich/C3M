@@ -195,7 +195,7 @@ std::cout << "All inputs loaded into C3M " << std::endl;
   MatrixXd stellar_input = ReadStellarRadiationInput(stellar_input_file, rad, ref);
 
 
-  std::cout << "!! Radiation Input loaded in C3M !!" << std::endl;
+  std::cout << "Radiation reading complete!" << std::endl;
 //Input Wavelength and Cross Section Data for all the absorbers 
   int AbsorberSize = 0; 
   std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
@@ -206,7 +206,7 @@ std::cout << "All inputs loaded into C3M " << std::endl;
     absorber_species_list = m.suffix().str();
   }
   Eigen::MatrixXd absorber_cross_data(stellar_input.row(0).size(), AbsorberSize); 
-  std::cout << "!! Initiating absorbers  !!" << std::endl;
+  std::cout << "Initiating absorbers!" << std::endl;
 //Reading absorber cross section for all absorbers
   int ab_inx = 0;
   absorber_species_list = pinput->GetString("abscross", "absorbers");
@@ -242,7 +242,7 @@ std::cout << "All inputs loaded into C3M " << std::endl;
     }
     absorber_species_list = m.suffix().str();
   }
-  std::cout << "!! Obtaining Photochemical Cross Sections !!" << std::endl;
+  std::cout << "Initiating photochemistry!" << std::endl;
 //Storing the photochemical cross section data
   int PhotoRxn = 0;
   
@@ -342,25 +342,10 @@ VectorXd mole_frac(nsp);
 
 double Kb = 1.38E-23;
 int i = 0;
-
-std::string equbm = pinput->GetString("problem", "equilibrate");
-if(equbm == "true"){
-std::cout << "!!  Initiating Equilibrium  !!" << std::endl;
-//Equilibrium as initial condition
-  for (int j = 0; j < nSize; j++) {
-   Temp = AtmData(iTemp,j);
-   Press = AtmData(iPress,j);
-   gas->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
-   mole_frac = ChemMoleFrac.col(j);
-   gas->setMoleFractions(&mole_frac[0]);
-   gas->equilibrate("TP");        
-   } }
-std::cout << "!! Atmosphere in thermochemical equilibrium !! \n" << std::endl;
 while(Ttot  < Tmax) {
   MatrixXd Opacity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
   Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
   a = ChemMoleFrac;
-
   for (int j = 0; j < nSize; j++) {
 //Setting T, P, X for each grid point
     iPrev = j-1;
@@ -406,7 +391,7 @@ while(Ttot  < Tmax) {
 //Computing the photochemical reaction rate for each reaction
    for(int rx = 0; rx < PhotoRxn; rx++){
      double j_rate = PhotoChemRate(stellar_input.row(0),photo_cross_data.col(rx), Stellar_activity.col(j));
-     std::cout << AtmData(iAlt,j)/1e3   << " " << j_rate << std::endl;
+     //std::cout << j_rate << std::endl;
 //Setting the multiplier for each reaction
      
    if(i == 0){
@@ -445,7 +430,7 @@ while(Ttot  < Tmax) {
    
     }
     if ((j > 0) && (j < nSize-1)) {
-    dh = 0.5*(AtmData(iAlt,j-1) - AtmData(iAlt,j+1));
+    dh = 0.5*(AtmData(iAlt,j+1) - AtmData(iAlt,j-1));
 
 //Diffusion terms (central difference scheme)
     flux1 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
@@ -459,35 +444,7 @@ while(Ttot  < Tmax) {
     mole_frac = mole_frac + dQ;
     gas->setMoleFractions(&mole_frac[0]);
     gas->getMoleFractions(&mole_frac[0]);
-      
-//Forced boundary condition
-//Upper boundary
-    if (j == 0){
-    std::string u_species_list = pinput->GetOrAddString("upperboundaryMixRat", "species", "nan");
-    if(u_species_list != "nan"){
-    while (std::regex_search (u_species_list,m,pattern)) {
-      for (auto x:m){
-        std::string species_upperboundary_MixRat = pinput->GetString("upperboundaryMixRat", x);
-        species_inx = gas->speciesIndex(x);
-        mole_frac(species_inx) = atof(species_upperboundary_MixRat.c_str());
-    }
-      u_species_list = m.suffix().str();
-  } } }
-
-//Lower boundary
-    if (j == nSize-1){
-    std::string l_species_list = pinput->GetOrAddString("lowerboundaryMixRat", "species", "nan");
-    if(l_species_list != "nan"){
-    while (std::regex_search (l_species_list,m,pattern)) {
-      for (auto x:m){
-        std::string species_lowerboundary_MixRat = pinput->GetString("lowerboundaryMixRat", x);
-        species_inx = gas->speciesIndex(x);
-        mole_frac(species_inx) = atof(species_lowerboundary_MixRat.c_str());
-    }
-      l_species_list = m.suffix().str();
-  } } }
-  
-    ChemMoleFrac.col(j) = mole_frac;
+    ChemMoleFrac.col(j) = mole_frac;  
 } 
     std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
     Ttot = Ttot + dt;
@@ -556,14 +513,12 @@ while(Ttot  < Tmax){
     }
 //Integration for each species
 //Backward Euler Scheme (Li and Chen, 2019)
-    mat2 = ((mat1/dt) - (m_wjac/gas->molarDensity()));
+    mat2 = ((mat1/dt) - m_wjac);
     mat2 = mat2.inverse();
-    mat2 = mat2*((m_wdot / gas->molarDensity()) + flux1 );
+    m_wdot = m_wdot + flux1;
+    mat2 = mat2*(m_wdot / gas->molarDensity());
     dQ = mat2;
-    mole_frac = mole_frac + dQ;
-    gas->setMoleFractions(&mole_frac[0]);
-    gas->getMoleFractions(&mole_frac[0]);
-    ChemMoleFrac.col(j) = mole_frac;  
+    ChemMoleFrac.col(j) = ChemMoleFrac.col(j) +  dQ;
  
 } 
     Ttot = Ttot + dt;

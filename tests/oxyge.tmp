@@ -1,0 +1,26 @@
+<problem>
+pres = 0.1 #bar
+temp = 250 #K
+network = oxygen.yaml
+photochem = true
+
+
+<init>
+species = N2, O2
+N2 = 0.78
+O2 = 0.21
+
+<integrator>
+nSteps = 50
+dt = 1E-8
+Tmax = 700
+
+
+<photocross>
+O2 => 2 O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
+
+
+<radtran>
+solar = sun_spec.inp #spectral irradiance file
+radius = 1 #semi-major axis to the planet from the star (AU)
+reference = 1 #semi-major axis to the reference point from the star (AU)

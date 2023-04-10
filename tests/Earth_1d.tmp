@@ -35,6 +35,7 @@ solar = sun_spec.inp #spectral irradiance file
 radius = 1 #semi-major axis to the planet from the star (AU)
 reference = 1 #semi-major axis to the reference point from the star (AU)
 
+
 <abscross>
 absorbers = N2, O2, O3
 N2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_cross.csv
@@ -45,5 +46,4 @@ O3 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
 <output>
 out_file = chapman_1d.nc
 species = N2, O2, O3, O
-
 
