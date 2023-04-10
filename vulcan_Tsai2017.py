@@ -7,4 +7,4 @@ import cantera as ct
 T = 200.0
 P = 100000.0
 #Creatng chemistry network
-gas = ct.Solution("vulcan_Tsai2017.yaml")
+gas = ct.Solution("vulcanCHOnetwork.yaml")

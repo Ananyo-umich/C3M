@@ -35,17 +35,74 @@ reactionID, reaction, rate flag, photofile
 Reading SWRI files
 http://amop.space.swri.edu/
 
-0 dim 
-- initial conditon - netcdf or input
-1 dim
-- initial condition - netcdf i.e. T, P, Xi, Kzz
+The input file format for 1-D chemistry solver
 
-Tests
-(i) Chapman test: Standard case of chapman mechanism at 30 km
-(ii) VULCAN test: Standard case of thermochemical reactions of Tsai et al., 2017
+<problem>
+planet
+network
+photochem
+
+<init>
+species
+name of each species listed with their initial mole fraction
 
 
+<integrator>
+nSteps
+dt
+Tmax
+
+<upperboundaryflux>
+species
+name of each species listed with corresponding upper boundary condition
+
+<lowerboundaryflux>
+species
+name of each species listed with corresponding lower boundary condition
+
+<photocross>
+reaction with the rate flag and location of cross section file
+
+<radtran>
+solar
+radius
+reference
 
 
+<abscross>
+absorbers
+name of each absorber listed with the absorber flag and location of absorption cross
+section file
+
+
+<output>
+out_file
+species
+
+
+The input file format for box chemistry solver
+
+<problem>
+pres
+temp
+network
+photochem
+
+
+<init>
+species
+name of each specues listed with their initial mole fraction
+
+<photocross>
+reactions with rate flag and location of cross section file
+
+<radtran>
+solar
+radius
+reference
+
+<output>
+out_file
+species
 
 

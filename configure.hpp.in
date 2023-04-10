@@ -17,6 +17,7 @@
 // precision
 #define SINGLE_PRECISION @SinglePrecision@
 
+
 #if SINGLE_PRECISION
   using Real = float;
   #ifdef MPI_PARALLEL

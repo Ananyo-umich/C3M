@@ -1,0 +1,1073 @@
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, H, O]
+  species: [O2, O, O_1D, O3, O2_1D, OH, H, HO2, H2O, H2, H2O2, Cl2, Cl, ClO, HCl, HOCl, COCl2, CO, CO2, S2, S, S3, S4, ClS, Cl2S, ClS2, SO, SO2, SO3, OCS, H2SO4, S2O, ClCOOO, NO, N, NO2, NO3, N2O, N2, HNO2, HNO3, ClCO, ClSO2, OSCl, HSO3, S5, S6, S7, S8, S2O2, Cl2S2, HNO]
+  kinetics: gas
+  reactions: all
+  skip-undeclared-elements: true
+
+species:
+- name: O2
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O_1D
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O3
+  composition: {O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O2_1D
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: OH
+  composition: {H: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H
+  composition: {H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HO2
+  composition: {H: 1.0,O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2O
+  composition: {H: 2.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2O2
+  composition: {H: 2.0,O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: Cl2
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: Cl
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClO
+  composition: {C: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HCl
+  composition: {C: 1.0,H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HOCl
+  composition: {C: 1.0,H: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: COCl2
+  composition: {C: 2.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CO
+  composition: {C: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CO2
+  composition: {C: 1.0,O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S2
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S3
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S4
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClS
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: Cl2S
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClS2
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: SO
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: SO2
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: SO3
+  composition: {O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: OCS
+  composition: {C: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2SO4
+  composition: {H: 2.0,O: 4.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S2O
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClCOOO
+  composition: {C: 2.0,O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: NO
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: N
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: NO2
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: NO3
+  composition: {O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: N2O
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: N2
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HNO2
+  composition: {H: 1.0,O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HNO3
+  composition: {H: 1.0,O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClCO
+  composition: {C: 2.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClSO2
+  composition: {C: 1.0,O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: OSCl
+  composition: {C: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HSO3
+  composition: {H: 1.0,O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S5
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S6
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S7
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S8
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S2O2
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: Cl2S2
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HNO
+  composition: {H: 1.0,O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+
+reactions:
+- equation: '1.0 O_1D + 1.0 O2 <=> 1.0 O + 1.0 O2 '
+  rate-constant: {A: 3.2e-11,T0: 300.0,b: 0.0,Ea: 70.0 }
+- equation: '1.0 O_1D + 1.0 N2 <=> 1.0 O + 1.0 N2 '
+  rate-constant: {A: 1.8e-11,T0: 300.0,b: 0.0,Ea: 110.0 }
+- equation: '1.0 O_1D + 1.0 CO2 <=> 1.0 O + 1.0 CO2 '
+  rate-constant: {A: 7.4e-11,T0: 300.0,b: 0.0,Ea: 120.0 }
+- equation: '1.0 O2_1D + 1.0 O <=> 1.0 O2 + 1.0 O '
+  rate-constant: {A: 2e-16,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O2_1D + 1.0 O2 <=> 2.0 O2 '
+  rate-constant: {A: 3.6e-18,T0: 300.0,b: 0.0,Ea: -220.0 }
+- equation: '1.0 O2_1D + 1.0 H2O <=> 1.0 O2 + 1.0 H2O '
+  rate-constant: {A: 4.8e-18,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O2_1D + 1.0 N2 <=> 1.0 O2 + 1.0 N2 '
+  rate-constant: {A: 1e-20,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O2_1D + 1.0 CO <=> 1.0 O2_1D + 1.0 CO '
+  rate-constant: {A: 1e-20,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O2_1D + 1.0 CO2 <=> 1.0 O2 + 1.0 CO2 '
+  rate-constant: {A: 2e-21,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '2.0 O + 1.0 CO2 <=> 1.0 O2 + 1.0 CO2 '
+  rate-constant: {A: 2.898e-23,T0: 300.0,b: -2.0,Ea: 0.0 }
+- equation: '2.0 O + 1.0 CO2 <=> 1.0 O2_1D + 1.0 CO2 '
+  rate-constant: {A: 8.712e-23,T0: 300.0,b: -2.0,Ea: 0.0 }
+- equation: '2.0 O + 1.0 O2 <=> 1.0 O3 + 1.0 O '
+  rate-constant: {A: 5.9e-34,T0: 300.0,b: -2.4,Ea: 0.0 }
+- equation: '1.0 O + 2.0 O2 <=> 1.0 O3 + 1.0 O2 '
+  rate-constant: {A: 5.9e-34,T0: 300.0,b: -2.4,Ea: 0.0 }
+- equation: '1.0 O + 1.0 O2 + 1.0 N2 <=> 1.0 O3 + 1.0 N2 '
+  rate-constant: {A: 5.95e-34,T0: 300.0,b: -2.3,Ea: 0.0 }
+- equation: '1.0 O + 1.0 O2 + 1.0 CO <=> 1.0 O3 + 1.0 CO '
+  rate-constant: {A: 6.7e-34,T0: 300.0,b: -2.5,Ea: 0.0 }
+- equation: '1.0 O + 1.0 O2 + 1.0 CO2 <=> 1.0 O3 + 1.0 CO2 '
+  rate-constant: {A: 1.4e-33,T0: 300.0,b: -2.5,Ea: 0.0 }
+- equation: '1.0 H + 1.0 O2 + 1.0 N2 <=> 1.0 HO2 + 1.0 N2 '
+  rate-constant: {A: 5.7e-32,T0: 300.0,b: -1.6,Ea: 0.0 }
+- equation: '1.0 O + 1.0 O3 <=> 2.0 O2 '
+  rate-constant: {A: 8e-12,T0: 300.0,b: 0.0,Ea: -2060.0 }
+- equation: '1.0 O_1D + 1.0 O3 <=> 2.0 O2 '
+  rate-constant: {A: 1.2e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O_1D + 1.0 O3 <=> 2.0 O + 1.0 O2 '
+  rate-constant: {A: 1.2e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O2_1D + 1.0 O3 <=> 2.0 O2 + 1.0 O '
+  rate-constant: {A: 5.2e-11,T0: 300.0,b: 0.0,Ea: -2840.0 }
+- equation: '1.0 H + 1.0 O3 <=> 1.0 OH + 1.0 O2 '
+  rate-constant: {A: 1.4e-10,T0: 300.0,b: 0.0,Ea: -470.0 }
+- equation: '1.0 OH + 1.0 O3 <=> 1.0 HO2 + 1.0 O2 '
+  rate-constant: {A: 1.7e-12,T0: 300.0,b: 0.0,Ea: -940.0 }
+- equation: '1.0 OH + 1.0 O3 <=> 1.0 HO2 + 1.0 O2_1D '
+  rate-constant: {A: 3.2e-14,T0: 300.0,b: 0.0,Ea: -940.0 }
+- equation: '1.0 HO2 + 1.0 O3 <=> 1.0 OH + 2.0 O2 '
+  rate-constant: {A: 1e-14,T0: 300.0,b: 0.0,Ea: -490.0 }
+- equation: '1.0 O + 1.0 H2 <=> 1.0 OH + 1.0 H '
+  rate-constant: {A: 7.65e-15,T0: 300.0,b: 2.7,Ea: 3160.0 }
+- equation: '1.0 O_1D + 1.0 H2 <=> 1.0 H + 1.0 OH '
+  rate-constant: {A: 1.1e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 H2 <=> 1.0 H2O + 1.0 H '
+  rate-constant: {A: 4.95e-07,T0: 300.0,b: 0.0,Ea: -2000.0 }
+- equation: '1.0 O + 1.0 OH <=> 1.0 O2 + 1.0 H '
+  rate-constant: {A: 1.98e-06,T0: 300.0,b: 0.0,Ea: 120.0 }
+- equation: '1.0 H + 1.0 OH + 1.0 N2 <=> 1.0 H2O + 1.0 N2 '
+  rate-constant: {A: 5.49e-21,T0: 300.0,b: -2.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 OH + 1.0 CO2 <=> 1.0 H2O + 1.0 CO2 '
+  rate-constant: {A: 6.93e-21,T0: 300.0,b: -2.0,Ea: 0.0 }
+- equation: '2.0 OH <=> 1.0 H2O + 1.0 O '
+  rate-constant: {A: 4.2e-12,T0: 300.0,b: 0.0,Ea: -240.0 }
+- equation: '1.0 O + 1.0 HO2 <=> 1.0 OH + 1.0 O2 '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: 200.0 }
+- equation: '1.0 O + 1.0 HO2 <=> 1.0 OH + 1.0 O2_1D '
+  rate-constant: {A: 6e-13,T0: 300.0,b: 0.0,Ea: 200.0 }
+- equation: '1.0 H + 1.0 HO2 <=> 2.0 OH '
+  rate-constant: {A: 7.21e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 HO2 <=> 1.0 H2 + 1.0 O2 '
+  rate-constant: {A: 7.29e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 HO2 <=> 1.0 H2 + 1.0 O2_1D '
+  rate-constant: {A: 1.3e-13,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 HO2 <=> 1.0 H2O + 1.0 O '
+  rate-constant: {A: 1.62e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 HO2 <=> 1.0 H2O + 1.0 O2 '
+  rate-constant: {A: 4.8e-11,T0: 300.0,b: 0.0,Ea: 250.0 }
+- equation: '1.0 OH + 1.0 HO2 <=> 1.0 H2O + 1.0 O2_1D '
+  rate-constant: {A: 9.6e-13,T0: 300.0,b: 0.0,Ea: 250.0 }
+- equation: '2.0 HO2 <=> 1.0 H2O2 + 1.0 O2 '
+  rate-constant: {A: 2.3e-13,T0: 300.0,b: 0.0,Ea: 600.0 }
+- equation: '2.0 HO2 <=> 1.0 H2O2 + 1.0 O2_1D '
+  rate-constant: {A: 4.6e-15,T0: 300.0,b: 0.0,Ea: 600.0 }
+- equation: '1.0 O_1D + 1.0 H2O <=> 2.0 OH '
+  rate-constant: {A: 2.2e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 H2O2 <=> 1.0 OH + 1.0 HO2 '
+  rate-constant: {A: 1.4e-12,T0: 300.0,b: 0.0,Ea: -2000.0 }
+- equation: '1.0 OH + 1.0 H2O2 <=> 1.0 H2O + 1.0 HO2 '
+  rate-constant: {A: 2.9e-12,T0: 300.0,b: 0.0,Ea: -160.0 }
+- equation: '1.0 Cl + 1.0 O3 <=> 1.0 ClO + 1.0 O2 '
+  rate-constant: {A: 2.3e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 Cl + 1.0 O3 <=> 1.0 ClO + 1.0 O2_1D '
+  rate-constant: {A: 5.8e-13,T0: 300.0,b: 0.0,Ea: -260.0 }
+- equation: '1.0 Cl + 1.0 H2 <=> 1.0 HCl + 1.0 H '
+  rate-constant: {A: 3.7e-11,T0: 300.0,b: 0.0,Ea: -2300.0 }
+- equation: '1.0 Cl + 1.0 OH <=> 1.0 HCl + 1.0 O '
+  rate-constant: {A: 8.33e-12,T0: 300.0,b: 0.0,Ea: -2790.0 }
+- equation: '1.0 Cl + 1.0 HO2 <=> 1.0 HCl + 1.0 O2 '
+  rate-constant: {A: 1.8e-11,T0: 300.0,b: 0.0,Ea: 170.0 }
+- equation: '1.0 Cl + 1.0 HO2 <=> 1.0 OH + 1.0 ClO '
+  rate-constant: {A: 4.1e-11,T0: 300.0,b: 0.0,Ea: -450.0 }
+- equation: '1.0 Cl + 1.0 H2O2 <=> 1.0 HCl + 1.0 H2O2 '
+  rate-constant: {A: 1.1e-11,T0: 300.0,b: 0.0,Ea: -980.0 }
+- equation: '1.0 Cl + 1.0 HOCl <=> 1.0 OH + 1.0 Cl2 '
+  rate-constant: {A: 6e-13,T0: 300.0,b: 0.0,Ea: -130.0 }
+- equation: '1.0 Cl + 1.0 HOCl <=> 1.0 HCl + 1.0 ClO '
+  rate-constant: {A: 1.9e-12,T0: 300.0,b: 0.0,Ea: -130.0 }
+- equation: '1.0 Cl + 1.0 ClCO <=> 1.0 Cl2 + 1.0 CO '
+  rate-constant: {A: 2.16e-09,T0: 300.0,b: 0.0,Ea: -1670.0 }
+- equation: '1.0 Cl + 1.0 CO + 1.0 N2 <=> 1.0 ClCO + 1.0 N2 '
+  rate-constant: {A: 1.3e-33,T0: 300.0,b: -3.8,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 OCS <=> 1.0 ClS + 1.0 CO '
+  rate-constant: {A: 1e-16,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 ClS2 <=> 1.0 S2 + 1.0 Cl2 '
+  rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '2.0 Cl + 1.0 N2 <=> 1.0 Cl2 + 1.0 N2 '
+  rate-constant: {A: 6.1e-34,T0: 300.0,b: 0.0,Ea: 900.0 }
+- equation: '2.0 Cl + 1.0 CO2 <=> 1.0 Cl2 + 1.0 CO2 '
+  rate-constant: {A: 2.6e-33,T0: 300.0,b: 0.0,Ea: 900.0 }
+- equation: '1.0 O + 1.0 Cl2 <=> 1.0 ClO + 1.0 Cl '
+  rate-constant: {A: 7.4e-12,T0: 300.0,b: 0.0,Ea: -1650.0 }
+- equation: '1.0 O_1D + 1.0 Cl2 <=> 1.0 Cl + 1.0 ClO '
+  rate-constant: {A: 1.55e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O_1D + 1.0 Cl2 <=> 1.0 Cl2 + 1.0 O '
+  rate-constant: {A: 5.25e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 Cl2 <=> 1.0 HCl + 1.0 Cl '
+  rate-constant: {A: 1.43e-10,T0: 300.0,b: 0.0,Ea: -590.0 }
+- equation: '1.0 OH + 1.0 Cl2 <=> 1.0 Cl + 1.0 HOCl '
+  rate-constant: {A: 1.4e-12,T0: 300.0,b: 0.0,Ea: -900.0 }
+- equation: '1.0 ClCO + 1.0 Cl2 <=> 1.0 COCl2 + 1.0 Cl '
+  rate-constant: {A: 6.45e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 ClO + 1.0 O <=> 1.0 Cl + 1.0 O2 '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: 70.0 }
+- equation: '1.0 ClO + 1.0 O <=> 1.0 Cl + 1.0 O2_1D '
+  rate-constant: {A: 6e-13,T0: 300.0,b: 0.0,Ea: 70.0 }
+- equation: '1.0 ClO + 1.0 H2 <=> 1.0 HCl + 1.0 OH '
+  rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: -4800.0 }
+- equation: '1.0 ClO + 1.0 OH <=> 1.0 HO2 + 1.0 Cl '
+  rate-constant: {A: 7.4e-12,T0: 300.0,b: 0.0,Ea: 270.0 }
+- equation: '1.0 ClO + 1.0 OH <=> 1.0 HCl + 1.0 O2 '
+  rate-constant: {A: 6e-13,T0: 300.0,b: 0.0,Ea: 230.0 }
+- equation: '1.0 ClO + 1.0 HO2 <=> 1.0 HOCl + 1.0 O2 '
+  rate-constant: {A: 2.7e-12,T0: 300.0,b: 0.0,Ea: 220.0 }
+- equation: '1.0 ClO + 1.0 CO <=> 1.0 CO2 + 1.0 Cl '
+  rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: -3700.0 }
+- equation: '2.0 ClO <=> 1.0 Cl2 + 1.0 O2 '
+  rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: -1590.0 }
+- equation: '2.0 ClO <=> 1.0 Cl2 + 1.0 O2_1D '
+  rate-constant: {A: 2e-14,T0: 300.0,b: 0.0,Ea: -1590.0 }
+- equation: '1.0 ClO + 1.0 OCS <=> 1.0 OSCl + 1.0 CO '
+  rate-constant: {A: 2e-16,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 ClO + 1.0 SO <=> 1.0 Cl + 1.0 SO2 '
+  rate-constant: {A: 2.8e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 ClO + 1.0 SO2 <=> 1.0 Cl + 1.0 SO3 '
+  rate-constant: {A: 4e-18,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 HCl <=> 1.0 OH + 1.0 Cl '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: -3300.0 }
+- equation: '1.0 O_1D + 1.0 HCl <=> 1.0 Cl + 1.0 OH '
+  rate-constant: {A: 1e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O_1D + 1.0 HCl <=> 1.0 ClO + 1.0 H '
+  rate-constant: {A: 3.6e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O_1D + 1.0 HCl <=> 1.0 O + 1.0 HCl '
+  rate-constant: {A: 1.35e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 HCl <=> 1.0 Cl + 1.0 H2O '
+  rate-constant: {A: 2.6e-12,T0: 300.0,b: 0.0,Ea: -350.0 }
+- equation: '1.0 O + 1.0 HOCl <=> 1.0 OH + 1.0 ClO '
+  rate-constant: {A: 1.7e-13,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 HOCl <=> 1.0 H2O + 1.0 ClO '
+  rate-constant: {A: 3e-12,T0: 300.0,b: 0.0,Ea: -500.0 }
+- equation: '1.0 O + 1.0 ClCO <=> 1.0 Cl + 1.0 CO2 '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 ClCO <=> 1.0 CO + 1.0 ClO '
+  rate-constant: {A: 3e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 ClCO <=> 1.0 HCl + 1.0 CO '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 OH + 1.0 ClCO <=> 1.0 HOCl + 1.0 CO '
+  rate-constant: {A: 1.5e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '2.0 ClCO <=> 1.0 COCl2 + 1.0 CO '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 ClCO + 1.0 ClCOOO <=> 2.0 CO2 + 2.0 Cl '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 ClCO + 1.0 N2 <=> 1.0 CO + 1.0 Cl + 1.0 N2 '
+  rate-constant: {A: 1.6e-25,T0: 300.0,b: 0.0,Ea: 4000.0 }
+- equation: '1.0 O_1D + 1.0 COCl2 <=> 1.0 Cl2 + 1.0 CO2 '
+  rate-constant: {A: 3.6e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O_1D + 1.0 COCl2 <=> 1.0 ClCO + 1.0 ClO '
+  rate-constant: {A: 3.6e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 ClCOOO <=> 1.0 Cl + 1.0 O2 + 1.0 CO2 '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 ClCOOO <=> 1.0 Cl + 1.0 OH + 1.0 CO2 '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 ClCOOO <=> 1.0 Cl + 1.0 ClO + 1.0 CO2 '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '2.0 ClCOOO <=> 2.0 Cl + 2.0 CO2 + 1.0 O2 '
+  rate-constant: {A: 5e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 O2 + 1.0 CO2 <=> 1.0 HO2 + 1.0 CO2 '
+  rate-constant: {A: 2e-31,T0: 300.0,b: -1.6,Ea: 0.0 }
+- equation: '1.0 H + 1.0 HCl <=> 1.0 H2 + 1.0 HCl '
+  rate-constant: {A: 1.5e-11,T0: 300.0,b: 0.0,Ea: -1750.0 }
+- equation: '1.0 Cl + 1.0 CO + 1.0 CO2 <=> 1.0 ClCO + 1.0 CO2 '
+  rate-constant: {A: 4.2e-33,T0: 300.0,b: 0.0,Ea: -3.8 }
+- equation: '1.0 ClCO + 1.0 CO2 <=> 1.0 CO + 1.0 Cl + 1.0 CO2 '
+  rate-constant: {A: 1.6e-25,T0: 300.0,b: 0.0,Ea: 4000.0 }
+- equation: '1.0 O + 2.0 CO <=> 1.0 CO2 + 1.0 CO '
+  rate-constant: {A: 6.5e-33,T0: 300.0,b: 0.0,Ea: -2180.0 }
+- equation: '2.0 O + 1.0 CO <=> 1.0 CO2 + 1.0 O '
+  rate-constant: {A: 3.4e-33,T0: 300.0,b: 0.0,Ea: -2180.0 }
+- equation: '1.0 OH + 1.0 CO <=> 1.0 CO2 + 1.0 H '
+  rate-constant: {A: 1.5e-13,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 O2 <=> 1.0 SO + 1.0 O '
+  rate-constant: {A: 2.3e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 SO + 1.0 O <=> 1.0 SO2 + 1.0 O '
+  rate-constant: {A: 1.6e-13,T0: 300.0,b: 0.0,Ea: -2280.0 }
+- equation: '1.0 HSO3 + 1.0 O2 <=>  '
+  rate-constant: {A: 1.3e-12,T0: 300.0,b: 0.0,Ea: -330.0 }
+- equation: '1.0 ClS + 1.0 O2 <=> 1.0 SO + 1.0 ClO '
+  rate-constant: {A: 2e-15,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 O3 <=> 1.0 SO + 1.0 O2 '
+  rate-constant: {A: 1.2e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 SO + 1.0 O3 <=> 1.0 SO2 + 1.0 O2 '
+  rate-constant: {A: 4.5e-12,T0: 300.0,b: 0.0,Ea: -1170.0 }
+- equation: '1.0 SO + 1.0 O3 <=> 1.0 SO2 + 1.0 O2_1D '
+  rate-constant: {A: 3.6e-13,T0: 300.0,b: 0.0,Ea: -1100.0 }
+- equation: '1.0 SO2 + 1.0 O3 <=> 1.0 SO3 + 1.0 O2 '
+  rate-constant: {A: 3e-12,T0: 300.0,b: 0.0,Ea: -7000.0 }
+- equation: '1.0 SO2 + 1.0 O3 <=> 1.0 SO3 + 1.0 O2_1D '
+  rate-constant: {A: 6e-14,T0: 300.0,b: 0.0,Ea: -7000.0 }
+- equation: '1.0 S + 1.0 OH <=> 1.0 SO + 1.0 H '
+  rate-constant: {A: 6.6e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 HO2 <=> 1.0 SO + 1.0 OH '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: 200.0 }
+- equation: '1.0 SO3 + 1.0 H2O <=> 1.0 H2SO4 '
+  rate-constant: {A: 1.0,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 ClS + 1.0 Cl2 <=> 1.0 Cl2S + 1.0 Cl '
+  rate-constant: {A: 7e-14,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 Cl2 <=> 1.0 ClS + 1.0 Cl '
+  rate-constant: {A: 2.8e-11,T0: 300.0,b: 0.0,Ea: -290.0 }
+- equation: '1.0 S + 1.0 ClO <=> 1.0 SO + 1.0 Cl '
+  rate-constant: {A: 4e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 ClCO <=> 1.0 CO + 1.0 ClS '
+  rate-constant: {A: 3e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 ClCO <=> 1.0 OCS + 1.0 Cl '
+  rate-constant: {A: 3e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 ClCOOO <=> 1.0 Cl + 1.0 SO + 1.0 CO2 '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 S2 <=> 1.0 SO + 1.0 S '
+  rate-constant: {A: 2.2e-11,T0: 300.0,b: 0.0,Ea: -84.0 }
+- equation: '1.0 ClO + 1.0 S2 <=> 1.0 S2O + 1.0 Cl '
+  rate-constant: {A: 2.8e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 S3 <=> 1.0 SO + 1.0 S2 '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 S3 <=> 2.0 S2 '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 S4 <=> 1.0 SO + 1.0 S3 '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 S4 <=> 1.0 ClS2 + 1.0 S2 '
+  rate-constant: {A: 2e-12,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 S4 <=> 1.0 S2 + 1.0 S3 '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S3 + 1.0 S4 <=> 1.0 S2 + 1.0 S5 '
+  rate-constant: {A: 4e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 O + 1.0 S5 <=> 1.0 S4 + 1.0 SO '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S + 1.0 S5 <=> 2.0 S3 '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S + 1.0 S5 <=> 1.0 S2 + 1.0 S4 '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S3 + 1.0 S5 <=> 1.0 S2 + 1.0 S6 '
+  rate-constant: {A: 4e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S4 + 1.0 S5 <=> 1.0 S2 + 1.0 S7 '
+  rate-constant: {A: 2e-12,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S4 + 1.0 S5 <=> 1.0 S3 + 1.0 S6 '
+  rate-constant: {A: 2e-12,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 O + 1.0 S6 <=> 1.0 S5 + 1.0 SO '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: -300.0 }
+- equation: '1.0 S + 1.0 S6 <=> 1.0 S3 + 1.0 S4 '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: -300.0 }
+- equation: '1.0 S + 1.0 S6 <=> 1.0 S2 + 1.0 S5 '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: -300.0 }
+- equation: '1.0 S3 + 1.0 S6 <=> 1.0 S2 + 1.0 S7 '
+  rate-constant: {A: 4e-12,T0: 300.0,b: 0.0,Ea: -300.0 }
+- equation: '1.0 S4 + 1.0 S6 <=> 1.0 S2 + 1.0 S8 '
+  rate-constant: {A: 2e-12,T0: 300.0,b: 0.0,Ea: -300.0 }
+- equation: '1.0 S4 + 1.0 S6 <=> 2.0 S5 '
+  rate-constant: {A: 2e-12,T0: 300.0,b: 0.0,Ea: -300.0 }
+- equation: '1.0 O + 1.0 S7 <=> 1.0 S6 + 1.0 SO '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S + 1.0 S7 <=> 1.0 S2 + 1.0 S6 '
+  rate-constant: {A: 4e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S + 1.0 S7 <=> 1.0 S3 + 1.0 S5 '
+  rate-constant: {A: 2e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S + 1.0 S7 <=> 2.0 S4 '
+  rate-constant: {A: 2e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S3 + 1.0 S7 <=> 1.0 S2 + 1.0 S8 '
+  rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S3 + 1.0 S7 <=> 1.0 S4 + 1.0 S6 '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S3 + 1.0 S7 <=> 2.0 S5 '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S4 + 1.0 S7 <=> 1.0 S3 + 1.0 S8 '
+  rate-constant: {A: 5e-12,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 S4 + 1.0 S7 <=> 1.0 S5 + 1.0 S6 '
+  rate-constant: {A: 5e-12,T0: 300.0,b: 0.0,Ea: -200.0 }
+- equation: '1.0 O + 1.0 S8 <=> 1.0 S7 + 1.0 SO '
+  rate-constant: {A: 8e-11,T0: 300.0,b: 0.0,Ea: -400.0 }
+- equation: '1.0 S + 1.0 S8 <=> 1.0 S2 + 1.0 S7 '
+  rate-constant: {A: 4e-11,T0: 300.0,b: 0.0,Ea: -400.0 }
+- equation: '1.0 S + 1.0 S8 <=> 1.0 S3 + 1.0 S6 '
+  rate-constant: {A: 2e-11,T0: 300.0,b: 0.0,Ea: -400.0 }
+- equation: '1.0 S + 1.0 S8 <=> 1.0 S4 + 1.0 S5 '
+  rate-constant: {A: 2e-11,T0: 300.0,b: 0.0,Ea: -400.0 }
+- equation: '1.0 S2 + 1.0 S8 <=> 2.0 S5 '
+  rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: -1400.0 }
+- equation: '1.0 O + 1.0 SO <=> 1.0 S + 1.0 O2 '
+  rate-constant: {A: 6.6e-13,T0: 300.0,b: 0.0,Ea: -2760.0 }
+- equation: '1.0 O + 1.0 SO (+ M) <=> 1.0 SO2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 5.1e-31,T0: 300.0,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 5.3e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 OH + 1.0 SO <=> 1.0 SO2 + 1.0 H '
+  rate-constant: {A: 8.6e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 HO2 + 1.0 SO <=> 1.0 SO2 + 1.0 OH '
+  rate-constant: {A: 2.8e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 SO + M <=> 1.0 OSCl + M'
+  type: three-body
+  rate-constant: {A: 7.3e-21,T0: 1.0,b: 5.0,Ea: 0.0 }
+- equation: '1.0 ClCOOO + 1.0 SO <=> 1.0 Cl + 1.0 SO2 + 1.0 CO2 '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 ClS + 1.0 SO <=> 1.0 S2O + 1.0 Cl '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S3 + 1.0 SO <=> 1.0 S2O + 1.0 S2 '
+  rate-constant: {A: 1e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S + 1.0 SO + M <=> 1.0 S2O + M'
+  type: three-body
+  rate-constant: {A: 3.3e-26,T0: 1.0,b: 2.0,Ea: 0.0 }
+- equation: '2.0 SO <=> 1.0 SO2 + 1.0 S '
+  rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: -1700.0 }
+- equation: '2.0 SO (+ M) <=> 1.0 S2O2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 4.4e-31,T0: 300.0,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 1e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 O + 1.0 S2O2 <=> 1.0 S2O + 1.0 O2 '
+  rate-constant: {A: 3e-14,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 S2O2 <=> 1.0 SO + 1.0 SO2 '
+  rate-constant: {A: 3e-15,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S2 + 1.0 S2O2 <=> 2.0 S2O '
+  rate-constant: {A: 3.3e-14,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 SO + 1.0 S2O2 <=> 1.0 S2O + 1.0 SO2 '
+  rate-constant: {A: 3.3e-14,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S2O2 + M <=> 2.0 SO + M'
+  type: three-body
+  rate-constant: {A: 1e-28,T0: 300.0,b: 0.0,Ea: 6000.0 }
+- equation: '1.0 O + 1.0 SO2 <=> 1.0 SO + 1.0 O2 '
+  rate-constant: {A: 8e-12,T0: 300.0,b: 0.0,Ea: -9800.0 }
+- equation: '1.0 O_1D + 1.0 SO2 <=> 1.0 SO2 + 1.0 O '
+  rate-constant: {A: 7e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O_1D + 1.0 SO2 <=> 1.0 SO + 1.0 O2 '
+  rate-constant: {A: 1.3e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 SO2 + M <=> 1.0 SO3 + M'
+  type: three-body
+  rate-constant: {A: 1.32e-31,T0: 300.0,b: 0.0,Ea: -1000.0 }
+- equation: '1.0 OH + 1.0 SO2 (+ M) <=> 1.0 HSO3 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1e-30,T0: 300.0,b: 4.3,Ea: 0.0}
+  high-P-rate-constant: {A: 1.6e-12,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 HO2 + 1.0 SO2 <=> 1.0 OH + 1.0 SO3 '
+  rate-constant: {A: 1e-18,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 ClCOOO + 1.0 SO2 <=> 1.0 Cl + 1.0 SO3 + 1.0 CO2 '
+  rate-constant: {A: 1e-15,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 SO3 <=> 1.0 SO2 + 1.0 O2 '
+  rate-constant: {A: 2.32e-16,T0: 300.0,b: 0.0,Ea: -487.0 }
+- equation: '1.0 S + 1.0 SO3 <=> 1.0 SO2 + 1.0 SO '
+  rate-constant: {A: 1e-16,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S2 + 1.0 SO3 <=> 1.0 S2O + 1.0 SO3 '
+  rate-constant: {A: 2e-16,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 SO + 1.0 SO3 <=> 2.0 SO2 '
+  rate-constant: {A: 2e-15,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 S2O <=> 2.0 SO '
+  rate-constant: {A: 1.7e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S + 1.0 S2O <=> 1.0 S2 + 1.0 SO '
+  rate-constant: {A: 1e-12,T0: 300.0,b: 0.0,Ea: -1200.0 }
+- equation: '2.0 S2O <=> 1.0 S3 + 1.0 SO2 '
+  rate-constant: {A: 1e-14,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 ClS <=> 1.0 SO + 1.0 Cl '
+  rate-constant: {A: 1.2e-10,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 ClS <=> 1.0 S + 1.0 Cl2 '
+  rate-constant: {A: 1e-14,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 ClS (+ M) <=> 1.0 Cl2S (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 1e-30,T0: 300.0,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 S + 1.0 ClS <=> 1.0 S2 + 1.0 Cl '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S2 + 1.0 ClS <=> 1.0 S3 + 1.0 Cl '
+  rate-constant: {A: 2e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 ClS <=> 1.0 Cl2 + 1.0 S2 '
+  rate-constant: {A: 6e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 ClS <=> 1.0 Cl2S + 1.0 S '
+  rate-constant: {A: 7.5e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 ClS <=> 1.0 ClS2 + 1.0 Cl '
+  rate-constant: {A: 5.4e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 ClS (+ M) <=> 1.0 Cl2S2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 4e-31,T0: 300.0,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 4e-12,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 OCS + 1.0 ClS <=> 1.0 ClS2 + 1.0 CO '
+  rate-constant: {A: 3e-16,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 ClS2 <=> 1.0 SO + 1.0 ClS '
+  rate-constant: {A: 1e-13,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 ClS2 <=> 1.0 Cl2 + 1.0 S2 '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 ClS + 1.0 ClS2 <=> 1.0 Cl2S + 1.0 S2 '
+  rate-constant: {A: 1e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 Cl2S <=> 1.0 HCl + 1.0 ClS '
+  rate-constant: {A: 2e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 Cl2S <=> 1.0 Cl2 + 1.0 ClS '
+  rate-constant: {A: 1e-19,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 Cl2S <=> 1.0 Cl2S2 + 1.0 Cl2 '
+  rate-constant: {A: 1e-20,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 Cl2S2 <=> 1.0 Cl2 + 1.0 ClS2 '
+  rate-constant: {A: 4.3e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 OSCl <=> 1.0 SO2 + 1.0 Cl '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: -600.0 }
+- equation: '1.0 O + 1.0 OSCl <=> 1.0 SO + 1.0 ClO '
+  rate-constant: {A: 2e-11,T0: 300.0,b: 0.0,Ea: -600.0 }
+- equation: '1.0 Cl + 1.0 OSCl <=> 1.0 Cl2 + 1.0 SO '
+  rate-constant: {A: 2.3e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S + 1.0 OSCl <=> 1.0 S2O + 1.0 Cl '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: -600.0 }
+- equation: '1.0 S + 1.0 OSCl <=> 1.0 SO + 1.0 ClS '
+  rate-constant: {A: 2e-11,T0: 300.0,b: 0.0,Ea: -600.0 }
+- equation: '1.0 SO + 1.0 OSCl <=> 1.0 SO2 + 1.0 ClS '
+  rate-constant: {A: 6e-13,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 OSCl + M <=> 1.0 SO + 1.0 Cl + M'
+  type: three-body
+  rate-constant: {A: 7.29e-21,T0: 1.0,b: 5.0,Ea: 0.0 }
+- equation: '1.0 O + 1.0 ClSO2 <=> 1.0 SO2 + 1.0 ClO '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 ClSO2 <=> 1.0 SO2 + 1.0 HCl '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 Cl + 1.0 ClSO2 <=> 1.0 SO2 + 1.0 Cl2 '
+  rate-constant: {A: 1e-20,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 ClS + 1.0 ClSO2 <=> 1.0 SO2 + 1.0 Cl2S '
+  rate-constant: {A: 5e-12,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S + 1.0 ClSO2 <=> 1.0 SO2 + 1.0 ClS '
+  rate-constant: {A: 1e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 S2 + 1.0 ClSO2 <=> 1.0 SO2 + 1.0 ClS2 '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: -800.0 }
+- equation: '1.0 SO + 1.0 ClSO2 <=> 1.0 OSCl + 1.0 SO2 '
+  rate-constant: {A: 5e-11,T0: 300.0,b: 0.0,Ea: -800.0 }
+- equation: '2.0 ClSO2 <=> 1.0 Cl2 + 1.0 SO2 '
+  rate-constant: {A: 5e-13,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 O + 1.0 OCS <=> 1.0 SO + 1.0 CO '
+  rate-constant: {A: 1.6e-11,T0: 300.0,b: 0.0,Ea: -2150.0 }
+- equation: '1.0 S + 1.0 OCS <=> 1.0 S2 + 1.0 CO '
+  rate-constant: {A: 6.63e-20,T0: 1.0,b: -2.57,Ea: -1180.0 }
+- equation: '1.0 N + 1.0 O2 <=> 1.0 NO + 1.0 O '
+  rate-constant: {A: 1.5e-11,T0: 300.0,b: 0.0,Ea: -3600.0 }
+- equation: '1.0 HNO + 1.0 O2 <=> 1.0 NO + 1.0 HO2 '
+  rate-constant: {A: 5.25e-12,T0: 300.0,b: 0.0,Ea: -1510.0 }
+- equation: '1.0 N + 1.0 O3 <=> 1.0 NO + 1.0 O2 '
+  rate-constant: {A: 2e-16,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 N + 1.0 OH <=> 1.0 NO + 1.0 H '
+  rate-constant: {A: 3.8e-11,T0: 300.0,b: 0.0,Ea: 85.0 }
+- equation: '1.0 O2_1D + 1.0 N <=> 1.0 NO + 1.0 O '
+  rate-constant: {A: 9e-17,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 N + 1.0 HO2 <=> 1.0 NO + 1.0 OH '
+  rate-constant: {A: 2.2e-11,T0: 300.0 ,b: 0.0 ,Ea: 0.0 }
+- equation: '2.0 N + M <=> 1.0 N2 + M'
+  type: three-body
+  rate-constant: {A: 8.27e-34,T0: 300.0,b: 0.0,Ea: 490.0 }
+- equation: '1.0 O_1D + 1.0 N2 + M <=> 1.0 N2O + M'
+  type: three-body
+  rate-constant: {A: 3.5e-37,T0: 300.0,b: 0.6,Ea: 0.0 }
+- equation: '1.0 O + 1.0 NO (+ M) <=> 1.0 NO2 (+ M)'
+  type: falloff
+  low-P-rate-constant: {A: 9e-31,T0: 300.0,b: 1.5,Ea: 0.0}
+  high-P-rate-constant: {A: 3e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 O3 + 1.0 NO <=> 1.0 NO2 + 1.0 O2 '
+  rate-constant: {A: 3e-12,T0: 300.0,b: 0.0,Ea: -1500.0 }
+- equation: '1.0 H + 1.0 NO + M <=> 1.0 HNO + M '
+  type: three-body

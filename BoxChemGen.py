@@ -41,38 +41,9 @@ def stoich(word, pattern):
   return ans
 
 #Reading input file
-inpFile = str(args['i'])
-reactionFileSearch = "reaction_database"
-rateFileSearch = "rate_database"
-reactionFile = []
-rateFile = []
-Temp = []
-Press = []
-Tstart = []
-Tend = []
-nTime = []
-with open(inpFile) as f:
-  InpLines = f.read().splitlines()
-  f.close()
-  
-for i in range(len(InpLines)):
-  if(re.findall(reactionFileSearch, InpLines[i]) != []):
-    reactionFile = re.findall("[A-Za-z0-9.\/_]+",InpLines[i].split("=")[1])
-  if(re.findall(rateFileSearch, InpLines[i]) != []):
-    rateFile = re.findall("[A-Za-z0-9.\/_]+",InpLines[i].split("=")[1])
-  if(re.findall("temp", InpLines[i]) != []):  
-    Temp = float(re.findall("[+0-9.Ee-]+",InpLines[i].split("=")[1])[0])
-  if(re.findall("press", InpLines[i]) != []):  
-    Press = float(re.findall("[+0-9.Ee-]+",InpLines[i].split("=")[1])[0])
-  if(re.findall("tstart", InpLines[i]) != []):  
-    Tstart = float(re.findall("[+0-9.Ee-]+",InpLines[i].split("=")[1])[0])
-  if(re.findall("tend", InpLines[i]) != []):  
-    Tend = float(re.findall("[+0-9.Ee-]+",InpLines[i].split("=")[1])[0])
-  if(re.findall("nTime", InpLines[i]) != []):  
-    nTime = int(re.findall("[+0-9.Ee-]+",InpLines[i].split("=")[1])[0])
-
+reactionFile = str(args['i'])
 reaction_array = []
-with open(reactionFile[0]) as f:
+with open(reactionFile) as f:
     lines = f.read().splitlines()
     f.close()
 
@@ -134,8 +105,8 @@ for varIndex in range(len(variables)):
       if(variables[varIndex] == rxn.Products[pts]): 
         rxn.ProductID[pts] = varIndex 
 
-elements = ['C','H','O']
-elementList = '[C, H, O]'
+elements = ['C','H','O', 'N']
+elementList = '[C, H, O, N]'
 
 #Template for YAML files
 '''
@@ -231,16 +202,41 @@ with open(args['o'], 'w') as chem:
 # p_JPL, p_SWRI, p_VULCAN, t, t0, m0, m1, m2, m3
       if(rxn.RateFlag == 't'):
         chem.write("\n- equation: '" + reactant_string + " <=> " + product_string + " '")
+        print(rxn.Data)
         RateCoeff = 'A: ' + str(double(rxn.Data[3])) + ',T0: ' + str(double(rxn.Data[4])) + ',b: ' + str(double(rxn.Data[5])) + ',Ea: ' + str(double(rxn.Data[6]))
+        #chem.write("\n  duplicate: true")
         chem.write('\n  rate-constant: {' + RateCoeff + ' }')
 #rate-constant: {A: 6.E-34, T0: 300, b: -2.3}
       if(rxn.RateFlag == 't0'):
         chem.write("\n- equation: '" + reactant_string + " <=> " + product_string + " '")
+        #chem.write("\n  duplicate: true")
         RateCoeff = 'A: ' + str(double(rxn.Data[3])) + ',T0: 300.0 ,b: 0.0 ,Ea: 0.0'
         chem.write('\n  rate-constant: {' + RateCoeff + ' }')
+#Photochemical reactions
+      if(rxn.RateFlag == 'p_JPL'):
+        chem.write("\n- equation: '" + reactant_string + " => " + product_string + " '")
+        #chem.write("\n  duplicate: true")
+        RateCoeff = 'A: 1 ,T0: 300 ,b: 0 ,Ea: 0' 
+        chem.write('\n  rate-constant: {' + RateCoeff + ' }')
+      if(rxn.RateFlag == 'p_VULCAN'):
+        chem.write("\n- equation: '" + reactant_string + " => " + product_string + " '")
+        #chem.write("\n  duplicate: true")
+        RateCoeff = 'A: 1 ,T0: 300 ,b: 0 ,Ea: 0' 
+        chem.write('\n  rate-constant: {' + RateCoeff + ' }')
+      if(rxn.RateFlag == 'p_SWRI'):
+        chem.write("\n- equation: '" + reactant_string + " => " + product_string + " '")
+        #chem.write("\n  duplicate: true")
+        RateCoeff = 'A: 1 ,T0: 300 ,b: 0 ,Ea: 0' 
+        chem.write('\n  rate-constant: {' + RateCoeff + ' }')
+      
+
+
+
+
 #Three-body reaction
       if(rxn.RateFlag == 'm0'):
-        chem.write("\n- equation: '" + reactant_string + " + M <=> " + product_string + " + M '")
+        chem.write("\n- equation: '" + reactant_string + " + M => " + product_string + " + M '")
+        #chem.write("\n  duplicate: true")
         chem.write('\n  type: three-body')
         RateCoeff = 'A: ' + str(double(rxn.Data[3])) + ',T0: ' + str(double(rxn.Data[4])) + ',b: ' + str(double(rxn.Data[5])) + ',Ea: ' + str(double(rxn.Data[6]))
         chem.write('\n  rate-constant: {' + RateCoeff + ' }')
@@ -248,7 +244,8 @@ with open(args['o'], 'w') as chem:
         #chem.write('\n    C2H6: 1.0, C2H4: 1.6}')
 #Three-body reaction
       if(rxn.RateFlag == 'm1'):
-        chem.write("\n- equation: '" + reactant_string + " + M <=> " + product_string + " + M'")
+        chem.write("\n- equation: '" + reactant_string + " + M => " + product_string + " + M'")
+        #chem.write("\n  duplicate: true")
         chem.write('\n  type: three-body')
         RateCoeff = 'A: ' + str(double(rxn.Data[3])) + ',T0: ' + str(double(rxn.Data[4])) + ',b: ' + str(double(rxn.Data[5])) + ',Ea: ' + str(double(rxn.Data[6]))
 
@@ -257,7 +254,20 @@ with open(args['o'], 'w') as chem:
         #chem.write('\n    C2H6: 1.0, C2H4: 1.6}')
 #Three-body reaction
       if(rxn.RateFlag == 'm2'):
-        chem.write("\n- equation: '" + reactant_string + " (+ M) <=> " + product_string + " (+ M)'")
+        chem.write("\n- equation: '" + reactant_string + " (+ M) => " + product_string + " (+ M)'")
+        #chem.write("\n  duplicate: true")
+        chem.write('\n  type: falloff')
+        RateCoeff_lowP = 'A: ' + str(double(rxn.Data[3])) + ',T0: ' + str(double(rxn.Data[4])) + ',b: ' + str(double(rxn.Data[5])) + ',Ea: ' + str(double(rxn.Data[6]))
+        RateCoeff_highP = 'A: ' + str(double(rxn.Data[7])) + ',T0: ' + str(double(rxn.Data[8])) + ',b: ' + str(double(rxn.Data[9])) + ',Ea: ' + str(double(rxn.Data[10]))
+        chem.write('\n  low-P-rate-constant: {'+ RateCoeff_lowP +'}')
+        chem.write('\n  high-P-rate-constant: {'+ RateCoeff_highP +'}')
+        chem.write('\n  Troe: {A: 1, T3: 94.0, T1: 10000.0}')
+        #chem.write('\n  efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 0.48, H2: 1.0,')
+        #chem.write('\n    C2H6: 1.0, C2H4: 1.6}')
+#Pressure-dependent reaction
+      if(rxn.RateFlag == 't_pd'):
+        chem.write("\n- equation: '" + reactant_string + " (+ M) => " + product_string + " (+ M)'")
+        #chem.write("\n  duplicate: true")
         chem.write('\n  type: falloff')
         RateCoeff_lowP = 'A: ' + str(double(rxn.Data[3])) + ',T0: ' + str(double(rxn.Data[4])) + ',b: ' + str(double(rxn.Data[5])) + ',Ea: ' + str(double(rxn.Data[6]))
         RateCoeff_highP = 'A: ' + str(double(rxn.Data[7])) + ',T0: ' + str(double(rxn.Data[8])) + ',b: ' + str(double(rxn.Data[9])) + ',Ea: ' + str(double(rxn.Data[10]))
@@ -271,41 +281,3 @@ with open(args['o'], 'w') as chem:
 #Using the Arrhenius term for reaction rate
     chem.close()
  
-#Writing Executable Python File for Cantera
-with open(args['ex'], 'w') as code:
-    code.write('from pylab import *\nimport netCDF4 as nc\nfrom glob import glob\nimport cantera as ct\n\n')
-    code.write('\nT = '+ str(Temp))
-    code.write('\nP = '+ str(Press))
-    code.write('\n#Creatng chemistry network')
-    ReactionList = ''
-    ReactionSpecies = ''
-    for cix in range(len(variables)):
-        if(cix !=0):
-            ReactionSpecies = ReactionSpecies + ", "
-        ReactionSpecies = ReactionSpecies + variables[cix]
-    for rxn in reaction_array:
-        if(reaction_array.index(rxn) !=0 ):
-            ReactionList = ReactionList + " , "
-        #code.write('#Creating reaction ' + str(rxn.Equation)+'\n' )
-#Reactant string for Cantera elementary reaction
-        Reactant_string = ''
-        for rix in range(len(rxn.Reactants)):
-            if(rix != 0):
-                Reactant_string = Reactant_string + " , "
-            Reactant_string = Reactant_string + "'"+str(rxn.Reactants[rix])+ "'"+" : "+str(rxn.Rstoic[rix])
-        Product_string = ''
-        for pix in range(len(rxn.Products)):
-            if(pix != 0):
-                Product_string = Product_string + " , "
-            Product_string = Product_string + "'"+str(rxn.Products[pix])+ "'"+" : "+str(rxn.Pstoic[pix])
-        ReactionIX = 'r'+str(reaction_array.index(rxn)+1)
-        ReactionList = ReactionList + ReactionIX
-        #code.write('\nr'+str(reaction_array.index(rxn)+1)+' = ct.ElementaryReaction({'+Reactant_string+'}, {'+Product_string+'}) \n')
-    code.write('\ngas = ct.Solution("'+args['o']+'")')
-    #code.write('\nrun("dot {0} -Tpng -o{1} -Gdpi=200".format(dot_file, img_file).split())')
-    code.close()
-
-
-    
-
-
