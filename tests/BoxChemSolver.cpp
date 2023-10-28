@@ -159,6 +159,7 @@ std::cout << "All inputs loaded into C3M " << std::endl;
   int ph_inx = 0;
   for(int irxn = 0; irxn < nrxn; irxn++){
     std::string rxnEquation = gas_kin->reactionString(irxn);
+    std::cout << rxnEquation << std::endl;
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
     std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan");
@@ -231,17 +232,50 @@ for(int rx = 0; rx < PhotoRxn; rx++){
   j_rate = PhotoChemRate(stellar_input.row(0),photo_cross_data.col(rx), stellar_input.row(1).transpose());
   std::cout << j_rate << std::endl;
 //Setting the multiplier for each reaction
- gas_kin->setMultiplier(RxnIndex(rx), j_rate);
+ gas_kin->setMultiplier(RxnIndex(rx), j_rate); 
  }
+
+std::string ionkin_state = pinput->GetString("problem", "ionkinetics");
+if(ionkin_state == "true"){
+for(int irxn = 0; irxn < nrxn; irxn++){
+    std::string rxnEqn = gas_kin->reactionString(irxn);
+    int pos = rxnEqn.find("=");
+    rxnEqn.replace(pos, 2, "->");
+    std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
+    if(ion_rate != "nan"){
+    gas_kin->setMultiplier(irxn, atof(ion_rate.c_str())); 
+    }
+    
+    }
+    
+}
 std::cout << "Photochemical reaction rates computed!" << std::endl;
-std::ofstream outfile ("box_network_output.txt");
+std::string OutFileName = pinput->GetString("output", "file");
+std::ofstream outfile (OutFileName);
 
-//gas->setState_TP(temp, (pres)*OneBar);
-//gas->setMoleFractions(&mole_fractions[0]);
-//gas->equilibrate("TP");
-//std::cout << gas->report() << std::endl;
-
+std::string time_step = pinput->GetOrAddString("problem", "time", "nan");
 while(Ttot  < Tmax) {
+//Switch off the precipitating source after certain time step
+   if(ionkin_state == "true"){
+      std::string source_time = pinput->GetString("integrator", "Tsource");
+      double t_source = atof(source_time.c_str());
+      if(Ttot >= t_source){
+std::cout << "Source is switched off" << std::endl;
+       for(int irxn = 0; irxn < nrxn; irxn++){
+         std::string rxnEqn = gas_kin->reactionString(irxn);
+         int pos = rxnEqn.find("=");
+         rxnEqn.replace(pos, 2, "->");
+         std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
+         if(ion_rate != "nan"){
+            gas_kin->setMultiplier(irxn, 0.0); 
+            }
+    
+    }
+      
+      }
+      
+      
+    }
 //Setting T, P, X for each grid point
     gas->setState_TP(temp, (pres)*OneBar);
     gas->setMoleFractions(&mole_fractions[0]);
@@ -249,7 +283,6 @@ while(Ttot  < Tmax) {
     gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
     m_wjac = gas_kin->netProductionRates_ddX(); //Extracting Jacobian from Cantera
     m_wjac = m_wjac/ gas->molarDensity(); 
-   // std::cout << m_wdot.transpose() << std::endl;
 //Integration for each species
 //Backward Euler Scheme (Li and Chen, 2019)
     mat2 = ((mat1/dt) - m_wjac);
@@ -261,8 +294,9 @@ while(Ttot  < Tmax) {
     //gas->getMoleFractions(&mole_fractions[0]);   
     //std::cout << "Simulation completed at time t = " << Ttot << std::endl;
     Ttot = Ttot + dt;
-    
-    dt = dt*1.25;
+    if(time_step == "log"){
+      dt = dt*1.25;
+    }
     gas_kin->getFwdRatesOfProgress(&krate[0]);
     std::cout << m_wdot.transpose() << std::endl;
     outfile << Ttot << " " << mole_fractions.transpose()  << std::endl;
@@ -301,79 +335,79 @@ double dh;
 int iPrev, iNext;
 
 double Kb = 1.38E-23;
-int i = 0;
-while(Ttot  < Tmax){
-//Setting T, P, X for each grid point 
-    gas->setState_TP(temp, (pres/1.0132E5)*OneAtm);
-    gas->setMoleFractions_NoNorm(&mole_fractions[0]);
+std::string ionkin_state = pinput->GetString("problem", "ionkinetics");
+if(ionkin_state == "true"){
+for(int irxn = 0; irxn < nrxn; irxn++){
+    std::string rxnEqn = gas_kin->reactionString(irxn);
+    int pos = rxnEqn.find("=");
+    rxnEqn.replace(pos, 2, "->");
+    std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
+    if(ion_rate != "nan"){
+    gas_kin->setMultiplier(irxn, atof(ion_rate.c_str())); 
+    }
     
-    //Solving the net production for each species
-    gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
-    m_wjac = gas_kin->netProductionRates_ddX()/gas->molarDensity(); //Extracting Jacobian from Cantera
+    }}
 
+
+int i = 0;
+std::string OutFileName = pinput->GetString("output", "file");
+std::ofstream outfile (OutFileName);
+std::string time_step = pinput->GetOrAddString("problem", "time", "nan");
+while(Ttot  < Tmax) {
+//Switch off the precipitating source after certain time step
+   if(ionkin_state == "true"){
+      std::string source_time = pinput->GetString("integrator", "Tsource");
+      double t_source = atof(source_time.c_str());
+      if(Ttot >= t_source){
+std::cout << "Source is switched off" << std::endl;
+       for(int irxn = 0; irxn < nrxn; irxn++){
+         std::string rxnEqn = gas_kin->reactionString(irxn);
+         int pos = rxnEqn.find("=");
+         rxnEqn.replace(pos, 2, "->");
+         std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
+         if(ion_rate != "nan"){
+            gas_kin->setMultiplier(irxn, 0.0); 
+            }
+    
+    }
+      
+      }
+      
+      
+    }
+
+//Setting T, P, X for each grid point
+    gas->setState_TP(temp, (pres)*OneBar);
+    gas->setMoleFractions(&mole_fractions[0]);
+//Solving the net production for each species
+    gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
+    gas_kin->getFwdRatesOfProgress(&m_wdot[0]);
+    std::cout << 1E3*6.022E23*1E-6*m_wdot.transpose() << std::endl;
+    m_wjac = gas_kin->netProductionRates_ddX(); //Extracting Jacobian from Cantera
+    m_wjac = m_wjac/ gas->molarDensity(); 
 //Integration for each species
 //Backward Euler Scheme (Li and Chen, 2019)
     mat2 = ((mat1/dt) - m_wjac);
     mat2 = mat2.inverse();
-    m_wdot = m_wdot;
     mat2 = mat2*(m_wdot / gas->molarDensity());
     dQ = mat2;
     mole_fractions = mole_fractions + dQ;
     //gas->setMoleFractions(&mole_fractions[0]);
     //gas->getMoleFractions(&mole_fractions[0]);   
-    std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
+    std::cout << "Simulation completed at time t = " << Ttot << std::endl;
     Ttot = Ttot + dt;
-    dt = dt*1.25;
+    if(time_step == "log"){
+      dt = dt*1.25;
+    }
+    outfile << Ttot << " " << mole_fractions.transpose()  << std::endl;
 }
 
-
+    std::cout << gas->report() << std::endl;
+    outfile.close();
 }
 //Writing output into NetCDF file
 
-/*
-VectorXd cPress = AtmData.row(iPress);
-VectorXd cTemp = AtmData.row(iTemp);
-VectorXd cHeight = AtmData.row(iAlt);
-VectorXd cKzz = AtmData.row(iKzz);
-#if NETCDFOUTPUT
-int ifile;
-string fname = pinput->GetString("output", "out_file");
-int status = nc_create(fname.c_str(), NC_NETCDF4, &ifile);
-int alt, iPres, iTem, iKeddy, iAltz, iChem;
-// Atmospheric Properties (All in SI units!)
-nc_def_dim(ifile, "Pressure", nSize, &alt);
-nc_def_var(ifile, "Pressure", NC_DOUBLE, 1, &alt, &iPres);
-nc_put_var_double(ifile, iPres, &cPress[0]);
 
-nc_def_var(ifile, "Keddy", NC_DOUBLE, 1, &alt, &iKeddy);
-nc_put_var_double(ifile, iKeddy, &cKzz[0]);
-
-nc_def_var(ifile, "Temp", NC_DOUBLE, 1, &alt, &iTem);
-nc_put_var_double(ifile, iTem, &cTemp[0]);
-
-nc_def_var(ifile, "Altitude", NC_DOUBLE, 1, &alt, &iAltz);
-nc_put_var_double(ifile, iAltz, &cHeight[0]);
-
-
-
-init_species_list = pinput->GetString("output", "species");
-  while (std::regex_search (init_species_list,m,pattern)) {
-    for (auto x:m){
-    std::string species = x;
-    species_inx = gas->speciesIndex(x);
-    VectorXd cChem = ChemMoleFrac.row(species_inx);
-    const char* ccx = &species[0];
-    nc_def_var(ifile, ccx, NC_DOUBLE, 1, &alt, &iChem);
-    nc_put_var_double(ifile, iChem, &cChem[0]);
-    
-    
-    }
-    init_species_list = m.suffix().str();
-  }
-
-nc_close(ifile);
-#endif
-*/
 
 delete pinput;
 }

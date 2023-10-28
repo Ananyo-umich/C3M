@@ -5,5 +5,5 @@ cmake ..
 make -j8
 cd bin
 cp ../../tests/*.yaml .
-cp ../../tests/*.inp .
-cp ../../tests/*.csv .
+cp  ../../tests/*.inp .
+cp  ../../tests/*.csv .

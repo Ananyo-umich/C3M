@@ -262,6 +262,7 @@ std::cout << "All inputs loaded into C3M " << std::endl;
     }
 
   Eigen::MatrixXd photo_cross_data(stellar_input.row(0).size(), PhotoRxn);
+  Eigen::MatrixXd qyield_data(stellar_input.row(0).size(), PhotoRxn);
   Eigen::VectorXd RxnIndex(PhotoRxn);
   Eigen::VectorXd Jrate(PhotoRxn);
   
@@ -271,8 +272,7 @@ std::cout << "All inputs loaded into C3M " << std::endl;
     std::string rxnEquation = gas_kin->reactionString(irxn);
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
-    std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan");
-    
+    std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan"); 
     if(photo_cross_info != "nan"){
     RxnIndex(ph_inx) = irxn;
     std::string photo_cross_database = photo_cross_info.substr(0,photo_cross_info.find(","));  
@@ -302,11 +302,31 @@ std::cout << "All inputs loaded into C3M " << std::endl;
    }
    
    ph_inx++;
-  // std::cout << photo_cross_data.col(ph_inx).transpose() << std::endl;
     }
     
 //If the string is not equal to nan and then proceed and load the photochemical cross sectikons
    }
+
+ph_inx = 0;
+//Reading all the quantum yield
+  for(int irxn = 0; irxn < nrxn; irxn++){
+    std::string rxnEquation = gas_kin->reactionString(irxn);
+    int pos = rxnEquation.find("=");
+    rxnEquation.replace(pos, 2, "->");
+    std::string qyield_info = pinput->GetOrAddString("qyield", rxnEquation, "nan");
+    std::cout << qyield_info << std::endl; 
+    if(qyield_info != "nan"){
+      //RxnIndex(ph_inx) = irxn;
+      std::string col_str = qyield_info.substr(0,qyield_info.find(","));  
+      int col_num = atoi(col_str.c_str());
+      std::string qyield_file = qyield_info.substr(qyield_info.find(",")+1,qyield_info.length()-1);
+      MatrixXd QYield_info = ReadQYield(qyield_file);
+      qyield_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), QYield_info.row(0), QYield_info.row(col_num));
+      ph_inx++;
+      }
+    
+    }
+    
 
 //Chemical evolution
 double dh; //m
@@ -354,8 +374,10 @@ std::cout << "!!  Initiating Equilibrium  !!" << std::endl;
    mole_frac = ChemMoleFrac.col(j);
    gas->setMoleFractions(&mole_frac[0]);
    gas->equilibrate("TP");        
-   } }
+   }
 std::cout << "!! Atmosphere in thermochemical equilibrium !! \n" << std::endl;
+   }
+
 while(Ttot  < Tmax) {
   MatrixXd Opacity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
   Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
@@ -367,7 +389,9 @@ while(Ttot  < Tmax) {
     iNext = j+1;
     Temp = AtmData(iTemp,j);
     Press = AtmData(iPress,j);
+    //std::cout << "Lets get started " << std::endl;
     gas->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
+    //std::cout << "Done" << std::endl;
     mole_frac = ChemMoleFrac.col(j);
     gas->setMoleFractions(&mole_frac[0]);
     
@@ -406,12 +430,13 @@ while(Ttot  < Tmax) {
 //Computing the photochemical reaction rate for each reaction
    for(int rx = 0; rx < PhotoRxn; rx++){
      double j_rate = PhotoChemRate(stellar_input.row(0),photo_cross_data.col(rx), Stellar_activity.col(j));
-     std::cout << AtmData(iAlt,j)/1e3   << " " << j_rate << std::endl;
+    // std::cout << AtmData(iAlt,j)/1e3   << " " << j_rate << std::endl;
 //Setting the multiplier for each reaction
      
    if(i == 0){
      //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
-     gas_kin->setMultiplier(RxnIndex(rx), j_rate);
+     //gas_kin->setMultiplier(RxnIndex(rx), j_rate);
+     //std::cout << gas_kin->reactionString(RxnIndex(rx)) <<" "  <<  j_rate << std::endl;
      //std::cout << "new photochemical rates for reaction " << gas_kin->reactionString(RxnIndex(rx)) << std::endl;
      //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
      Jrate(rx) = j_rate;
@@ -422,6 +447,8 @@ while(Ttot  < Tmax) {
        double multiplier = j_rate/Jrate(rx);
        //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
        gas_kin->setMultiplier(RxnIndex(rx), multiplier);
+        std::cout << AtmData(iAlt,j)/1e3   << " " << j_rate << std::endl;
+       //std::cout << gas_kin->reactionString(RxnIndex(rx)) <<" "  <<  j_rate << std::endl;
        //std::cout << "new photochemical rates for reaction" << gas_kin->reactionString(RxnIndex(rx)) << std::endl;
        //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
        
@@ -434,6 +461,7 @@ while(Ttot  < Tmax) {
 
 //Solving the net production for each species
     gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
+    //std::cout << m_wdot.transpose() << std::endl;
     m_wjac = gas_kin->netProductionRates_ddX(); //Extracting Jacobian from Cantera
 //Backward Euler Scheme (Li and Chen, 2019)
     if (j == 0){
@@ -452,13 +480,11 @@ while(Ttot  < Tmax) {
     }
 //Integration for each species
 //Backward Euler Scheme (Li and Chen, 2019)
-    mat2 = ((mat1/dt) - (m_wjac/gas->molarDensity()));
+    mat2 = ((mat1) - (dt*m_wjac/gas->molarDensity()));
     mat2 = mat2.inverse();
-    mat2 = mat2*((m_wdot / gas->molarDensity()) + flux1 );
-    dQ = mat2;
+    mat2 = mat2*((m_wdot / gas->molarDensity())  );
+    dQ = mat2*dt;
     mole_frac = mole_frac + dQ;
-    gas->setMoleFractions(&mole_frac[0]);
-    gas->getMoleFractions(&mole_frac[0]);
       
 //Forced boundary condition
 //Upper boundary
@@ -486,12 +512,14 @@ while(Ttot  < Tmax) {
     }
       l_species_list = m.suffix().str();
   } } }
-  
-    ChemMoleFrac.col(j) = mole_frac;
+    
+    gas->setMoleFractions(&mole_frac[0]);
+    gas->getMoleFractions(&ChemMoleFrac.col(j)[0]);
+    //std::cout << mole_frac.transpose() << std::endl;
 } 
     std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
     Ttot = Ttot + dt;
-    if(kmax*dt/(dh*dh) < 0.01){
+    if(kmax*dt/(dh*dh) < 0.1){
     dt = dt*1.5;
     }
     

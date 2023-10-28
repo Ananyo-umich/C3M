@@ -1,13 +1,14 @@
 <problem>
-planet = Earth.txt 
-network = chapman.yaml
+planet = Earth.txt
+network = Earth_test.yaml
 photochem = true
 
 <init>
-species = N2, O2, O3
+species = N2, O2, H2O
 N2 = 0.78
 O2 = 0.21
-O3 = 1E-7
+H2O = 1E-6
+NO2 = 1E-7
 
 
 <integrator>
@@ -20,7 +21,6 @@ species = N2, O2
 N2 = 0.0
 O2 = 0.0
 
-
 <lowerboundaryflux>
 species = N2, O2
 N2 = 0.0
@@ -29,7 +29,9 @@ O2 = 0.0
 <photocross>
 O2 -> 2 O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
 O3 -> O + O2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
-O3 -> O + O2_1D = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+O3 -> O2 + O_1D = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+NO2 -> NO + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO2/NO2_cross.csv
+N2O -> N2 + O_1D = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2O/N2O_cross.csv
 
 <radtran>
 solar = sun_spec.inp #spectral irradiance file
@@ -42,7 +44,7 @@ N2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_cross.csv
 O2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
 O3 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
 
+
 <output>
 out_file = chapman_1d.nc
 species = N2, O2, O3, O
-

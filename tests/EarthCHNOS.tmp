@@ -1,0 +1,304 @@
+<problem>
+planet = Earth.txt
+network = Earth_CHNOS_Vulcan.yaml
+photochem = true
+equilibrate = false
+
+<init>
+species = N2, O2
+N2 = 0.78
+O2 = 0.21
+
+<integrator>
+nSteps = 50
+dt = 1E-8
+Tmax = 1E5
+
+<upperboundaryflux>
+species = N2, O2
+N2 = 0.0
+O2 = 0.0
+
+<lowerboundaryflux>
+species = N2, O2
+N2 = 0.0
+O2 = 0.0
+
+<lowerboundaryMixRat>
+species = N2, O2
+N2 = 0.77
+O2 = 0.21
+H2O = 0.01
+N2O = 300E-9
+
+<qyield>
+H2O -> H + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_branch.csv
+H2O -> H2 + O_1 = 1,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_branch.csv 
+H2O -> 2 H + O = 1,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_branch.csv
+CH4 -> CH3 + H = 1,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH2_1 + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH2_1 + 2 H = 1,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH + H + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH3 -> CH + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_branch.csv
+CH3 -> CH2_1 + H = 1,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_branch.csv
+CO -> C + O = 1,/data4/ananyo/models/C3M/data/VULCAN/CO/CO_branch.csv
+H2 -> 2 H = 1,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_branch.csv
+C2H2 -> C2H + H = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H2/C2H2_branch.csv
+CO2 -> CO + O = 1,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_branch.csv
+CO2 -> CO + O_1 = 1,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_branch.csv
+C2H4 -> C2H2 + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H4 -> C2H2 + 2 H = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H4 -> C2H3 + H = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H6 -> C2H4 + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H4 + 2 H = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H2 + 2 H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> CH2_1 + CH4 = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> 2 CH3 = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+OH -> H + O  = 1,/data4/ananyo/models/C3M/data/VULCAN/OH/OH_branch.csv
+HCO -> CO + H = 1,/data4/ananyo/models/C3M/data/VULCAN/HCO/HCO_branch.csv
+H2CO -> CO + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_branch.csv
+H2CO -> H + HCO = 1,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_branch.csv
+O2 -> O + O_1 = 1,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_branch.csv
+O3 -> O + O2 = 1,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_branch.csv
+O3 -> O2 + O_1 = 1,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_branch.csv
+HO2 -> O + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/HO2/HO2_branch.csv
+H2O2 -> 2 OH = 1,/data4/ananyo/models/C3M/data/VULCAN/H2O2/H2O2_branch.csv
+N2 -> 2 N = 1,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_branch.csv
+NH3 -> H + NH2 = 1,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_branch.csv
+NH3 -> 2 H + NH = 1,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_branch.csv
+HCN -> CN + H = 1,/data4/ananyo/models/C3M/data/VULCAN/HCN/HCN_branch.csv
+NO -> N + O = 1,/data4/ananyo/models/C3M/data/VULCAN/NO/NO_branch.csv
+NO2 -> NO + O = 1,/data4/ananyo/models/C3M/data/VULCAN/NO2/NO2_branch.csv
+NO3 -> NO2 + O = 1,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_branch.csv
+NO3 -> NO + O2 = 1,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_branch.csv
+N2O -> N2 + O_1 = 1,/data4/ananyo/models/C3M/data/VULCAN/N2O/N2O_branch.csv
+HNO2 -> NO + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/HNO2/HNO2_branch.csv
+HNO3 -> NO2 + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/HNO3/HNO3_branch.csv
+N2O5 -> NO2 + NO3 = 1,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_branch.csv
+N2O5 -> NO + NO3 + O = 1,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_branch.csv
+HNCO -> CO + NH = 1,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_branch.csv
+HNCO -> H + NCO = 1,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_branch.csv
+SO -> O + S = 1,/data4/ananyo/models/C3M/data/VULCAN/SO/SO_branch.csv
+SO2 -> O + SO = 1,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_branch.csv
+SO2 -> O2 + S = 1,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_branch.csv
+SH -> H + S = 1,/data4/ananyo/models/C3M/data/VULCAN/SH/SH_branch.csv
+H2S -> H + SH = 1,/data4/ananyo/models/C3M/data/VULCAN/H2S/H2S_branch.csv
+S2 -> 2 S = 1,/data4/ananyo/models/C3M/data/VULCAN/S2/S2_branch.csv
+
+<photocross>
+H2O -> H + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
+H2O -> H2 + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
+H2O -> 2 H + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
+CH4 -> CH3 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH2_1 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH2_1 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH + H + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH3 -> CH + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_cross.csv
+CH3 -> CH2_1 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_cross.csv
+CO -> C + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CO/CO_cross.csv
+H2 -> 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_cross.csv
+C2H2 -> C2H + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H2/C2H2_cross.csv
+CO2 -> CO + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_cross.csv
+CO2 -> CO + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_cross.csv
+C2H4 -> C2H2 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H4 -> C2H2 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H4 -> C2H3 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H6 -> C2H4 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> C2H4 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> C2H2 + 2 H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> CH2_1 + CH4 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> 2 CH3 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+OH -> H + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/OH/OH_cross.csv
+HCO -> CO + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HCO/HCO_cross.csv
+H2CO -> CO + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_cross.csv
+H2CO -> H + HCO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_cross.csv
+O2 -> O + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
+O3 -> O + O2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+O3 -> O2 + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+HO2 -> O + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HO2/HO2_cross.csv
+H2O2 -> 2 OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O2/H2O2_cross.csv
+N2 -> 2 N = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_cross.csv
+NH3 -> H + NH2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_cross.csv
+NH3 -> 2 H + NH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_cross.csv
+HCN -> CN + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HCN/HCN_cross.csv
+NO -> N + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO/NO_cross.csv
+NO2 -> NO + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO2/NO2_cross.csv
+NO3 -> NO2 + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_cross.csv
+NO3 -> NO + O2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_cross.csv
+N2O -> N2 + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2O/N2O_cross.csv
+HNO2 -> NO + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNO2/HNO2_cross.csv
+HNO3 -> NO2 + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNO3/HNO3_cross.csv
+N2O5 -> NO2 + NO3 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_cross.csv
+N2O5 -> NO + NO3 + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_cross.csv
+HNCO -> CO + NH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_cross.csv
+HNCO -> H + NCO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_cross.csv
+SO -> O + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SO/SO_cross.csv
+SO2 -> O + SO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_cross.csv
+SO2 -> O2 + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_cross.csv
+SH -> H + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SH/SH_cross.csv
+H2S -> H + SH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2S/H2S_cross.csv
+S2 -> 2 S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/S2/S2_cross.csv
+
+<radtran>
+solar = sun_spec.inp #spectral irradiance file
+radius = 1 #semi-major axis to the planet from the star (AU)
+reference = 1 #semi-major axis to the reference point from the star (AU)
+
+<abscross>
+absorbers = N2, O2, O3
+N2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_cross.csv
+O2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
+O3 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+H2O = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
+
+<output>
+out_file = chapman_1d.nc
+species = N2, O2, O3, O
+
+
+
+
+##Another photochemical reaction set
+<qyield>
+H2O -> H + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_branch.csv
+H2O -> H2 + O_1 = 2,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_branch.csv
+H2O -> 2 H + O = 3,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_branch.csv
+CH4 -> CH3 + H = 1,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH2_1 + H2 = 2,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH2_1 + 2 H = 3,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH + H + H2 = 4,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH3 -> CH + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_branch.csv
+CH3 -> CH2_1 + H = 2,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_branch.csv
+CO -> C + O = 1,/data4/ananyo/models/C3M/data/VULCAN/CO/CO_branch.csv
+H2 -> 2 H = 1,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_branch.csv
+C2H2 -> C2H + H = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H2/C2H2_branch.csv
+CO2 -> CO + O = 1,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_branch.csv
+CO2 -> CO + O_1 = 2,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_branch.csv
+C2H4 -> C2H2 + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H4 -> C2H2 + 2 H = 2,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H4 -> C2H3 + H = 3,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H6 -> C2H4 + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H4 + 2 H = 2,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H2 + 2 H2 = 3,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> CH2_1 + CH4 = 4,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> 2 CH3 = 5,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+OH -> H + O = 1,/data4/ananyo/models/C3M/data/VULCAN/OH/OH_branch.csv
+HCO -> CO + H = 1,/data4/ananyo/models/C3M/data/VULCAN/HCO/HCO_branch.csv
+H2CO -> CO + H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_branch.csv
+H2CO -> H + HCO = 2,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_branch.csv
+O2 -> 2 O = 1,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_branch.csv
+O2 -> O + O_1 = 2,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_branch.csv
+O3 -> O + O2 = 1,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_branch.csv
+O3 -> O2 + O_1 = 2,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_branch.csv
+CH3OH -> CH3 + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/CH3OH/CH3OH_branch.csv
+CH3OH -> H2 + H2CO = 2,/data4/ananyo/models/C3M/data/VULCAN/CH3OH/CH3OH_branch.csv
+CH3OH -> CH3O + H = 3,/data4/ananyo/models/C3M/data/VULCAN/CH3OH/CH3OH_branch.csv
+CH3CHO -> CH4 + CO = 1,/data4/ananyo/models/C3M/data/VULCAN/CH3CHO/CH3CHO_branch.csv
+CH3CHO -> CH3 + HCO = 2,/data4/ananyo/models/C3M/data/VULCAN/CH3CHO/CH3CHO_branch.csv
+HO2 -> O + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/HO2/HO2_branch.csv
+H2O2 -> 2 OH = 1,/data4/ananyo/models/C3M/data/VULCAN/H2O2/H2O2_branch.csv
+N2 -> 2 N = 1,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_branch.csv
+NH3 -> H + NH2 = 1,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_branch.csv
+NH3 -> 2 H + NH = 2,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_branch.csv
+HCN -> CN + H = 1,/data4/ananyo/models/C3M/data/VULCAN/HCN/HCN_branch.csv
+NO -> N + O = 1,/data4/ananyo/models/C3M/data/VULCAN/NO/NO_branch.csv
+NO2 -> NO + O = 1,/data4/ananyo/models/C3M/data/VULCAN/NO2/NO2_branch.csv
+NO3 -> NO2 + O = 1,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_branch.csv
+NO3 -> NO + O2 = 2,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_branch.csv
+N2O -> N2 + O_1 = 1,/data4/ananyo/models/C3M/data/VULCAN/N2O/N2O_branch.csv
+HNO2 -> NO + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/HNO2/HNO2_branch.csv
+HNO3 -> NO2 + OH = 1,/data4/ananyo/models/C3M/data/VULCAN/HNO3/HNO3_branch.csv
+N2O5 -> NO2 + NO3 = 1,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_branch.csv
+N2O5 -> NO + NO3 + O = 2,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_branch.csv
+N2H4 -> H + N2H3 = 1,/data4/ananyo/models/C3M/data/VULCAN/N2H4/N2H4_branch.csv
+HNCO -> CO + NH = 1,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_branch.csv
+HNCO -> H + NCO = 2,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_branch.csv
+SO -> O + S = 1,/data4/ananyo/models/C3M/data/VULCAN/SO/SO_branch.csv
+SO2 -> O + SO = 1,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_branch.csv
+SO2 -> O2 + S = 2,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_branch.csv
+SH -> H + S = 1,/data4/ananyo/models/C3M/data/VULCAN/SH/SH_branch.csv
+H2S -> H + SH = 1,/data4/ananyo/models/C3M/data/VULCAN/H2S/H2S_branch.csv
+S2 -> 2 S = 1,/data4/ananyo/models/C3M/data/VULCAN/S2/S2_branch.csv
+COS -> CO + S = 1,/data4/ananyo/models/C3M/data/VULCAN/COS/COS_branch.csv
+CS -> C + S = 1,/data4/ananyo/models/C3M/data/VULCAN/CS/CS_branch.csv
+CS2 -> CS + S = 1,/data4/ananyo/models/C3M/data/VULCAN/CS2/CS2_branch.csv
+C4H2 -> C2 + C2H2 = 1,/data4/ananyo/models/C3M/data/VULCAN/C4H2/C4H2_branch.csv
+CH2 -> CH + H = 1,/data4/ananyo/models/C3M/data/VULCAN/CH2/CH2_branch.csv
+C6H6 -> C6H5 + H = 1,/data4/ananyo/models/C3M/data/VULCAN/C6H6/C6H6_branch.csv
+C6H6 -> 2 C3H3 = 2,/data4/ananyo/models/C3M/data/VULCAN/C6H6/C6H6_branch.csv
+CH3SH -> CH3S + H = 1,/data4/ananyo/models/C3M/data/VULCAN/CH3SH/CH3SH_branch.csv
+CH3SH -> CH3 + SH = 2,/data4/ananyo/models/C3M/data/VULCAN/CH3SH/CH3SH_branch.csv
+S4 -> 2 S2 = 1,/data4/ananyo/models/C3M/data/VULCAN/S4/S4_branch.csv
+
+
+<photocross>
+H2O -> H + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
+H2O -> H2 + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
+H2O -> 2 H + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
+CH4 -> CH3 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH2_1 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH2_1 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH + H + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH3 -> CH + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_cross.csv
+CH3 -> CH2_1 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3/CH3_cross.csv
+CO -> C + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CO/CO_cross.csv
+H2 -> 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_cross.csv
+C2H2 -> C2H + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H2/C2H2_cross.csv
+CO2 -> CO + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_cross.csv
+CO2 -> CO + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_cross.csv
+C2H4 -> C2H2 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H4 -> C2H2 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H4 -> C2H3 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H6 -> C2H4 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> C2H4 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> C2H2 + 2 H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> CH2_1 + CH4 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> 2 CH3 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+OH -> H + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/OH/OH_cross.csv
+HCO -> CO + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HCO/HCO_cross.csv
+H2CO -> CO + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_cross.csv
+H2CO -> H + HCO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_cross.csv
+O2 -> 2 O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
+O2 -> O + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
+O3 -> O + O2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+O3 -> O2 + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+CH3OH -> CH3 + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3OH/CH3OH_cross.csv
+CH3OH -> H2 + H2CO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3OH/CH3OH_cross.csv
+CH3OH -> CH3O + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3OH/CH3OH_cross.csv
+CH3CHO -> CH4 + CO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3CHO/CH3CHO_cross.csv
+CH3CHO -> CH3 + HCO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3CHO/CH3CHO_cross.csv
+HO2 -> O + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HO2/HO2_cross.csv
+H2O2 -> 2 OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O2/H2O2_cross.csv
+N2 -> 2 N = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_cross.csv
+NH3 -> H + NH2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_cross.csv
+NH3 -> 2 H + NH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NH3/NH3_cross.csv
+HCN -> CN + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HCN/HCN_cross.csv
+NO -> N + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO/NO_cross.csv
+NO2 -> NO + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO2/NO2_cross.csv
+NO3 -> NO2 + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_cross.csv
+NO3 -> NO + O2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/NO3/NO3_cross.csv
+N2O -> N2 + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2O/N2O_cross.csv
+HNO2 -> NO + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNO2/HNO2_cross.csv
+HNO3 -> NO2 + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNO3/HNO3_cross.csv
+N2O5 -> NO2 + NO3 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_cross.csv
+N2O5 -> NO + NO3 + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2O5/N2O5_cross.csv
+N2H4 -> H + N2H3 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/N2H4/N2H4_cross.csv
+HNCO -> CO + NH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_cross.csv
+HNCO -> H + NCO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HNCO/HNCO_cross.csv
+SO -> O + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SO/SO_cross.csv
+SO2 -> O + SO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_cross.csv
+SO2 -> O2 + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SO2/SO2_cross.csv
+SH -> H + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/SH/SH_cross.csv
+H2S -> H + SH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2S/H2S_cross.csv
+S2 -> 2 S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/S2/S2_cross.csv
+COS -> CO + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/COS/COS_cross.csv
+CS -> C + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CS/CS_cross.csv
+CS2 -> CS + S = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CS2/CS2_cross.csv
+C4H2 -> C2 + C2H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C4H2/C4H2_cross.csv
+CH2 -> CH + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH2/CH2_cross.csv
+C6H6 -> C6H5 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C6H6/C6H6_cross.csv
+C6H6 -> 2 C3H3 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C6H6/C6H6_cross.csv
+CH3SH -> CH3S + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3SH/CH3SH_cross.csv
+CH3SH -> CH3 + SH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH3SH/CH3SH_cross.csv
+S4 -> 2 S2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/S4/S4_cross.csv
+

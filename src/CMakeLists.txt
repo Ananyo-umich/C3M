@@ -31,10 +31,10 @@ foreach(build ${BUILD_TYPES})
     ${CMAKE_BINARY_DIR}
     )
 
-  target_link_directories(c3m_${buildl}
-    SYSTEM PRIVATE
-    ${CANTERA_LIBRARY_DIR}
-    )
+  #target_link_directories(c3m_${buildl}
+  #  SYSTEM PRIVATE
+  #  ${CANTERA_LIBRARY_DIR}
+  #  )
 
   target_link_libraries(c3m_${buildl}
     ${CANTERA_LIBRARY}

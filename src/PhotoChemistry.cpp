@@ -1,7 +1,6 @@
 // C/C++ headers
 #include <iostream>
 #include <fstream>
-
 // C3M headers
 #include "PhotoChemistry.hpp"
 using Eigen::MatrixXd;
@@ -52,6 +51,33 @@ sum = sum*2*pi;
 return sum;
 }
 
+
+double QPhotoChemRate(Eigen::MatrixXd wavelengths_, Eigen::MatrixXd d_wavelength, Eigen::MatrixXd crossSection_, Eigen::MatrixXd QYield, Eigen::MatrixXd Spectral_radiance)
+{
+int size = wavelengths_.size();
+double sum = 0;
+double sum1 = 0;
+double pi = 3.141592;
+double h = 6.626e-34;
+double c = 3e8;
+Spectral_radiance = (Spectral_radiance.array()*wavelengths_.array().transpose()/(h*c)).matrix();
+MatrixXd integrd = (QYield.array()*crossSection_.array()*Spectral_radiance.array()).matrix();
+//MatrixXd integrd = (crossSection_.array()*Spectral_radiance.array()).matrix();
+//std::cout << QYield.transpose() << std::endl;
+sum = (integrd.array()*d_wavelength.array()).sum(); //Bhattacharya (5-1-23)
+
+/*
+for(int  i = 0; i < size-1; i++){
+
+  sum = sum + (integrd(i)*(wavelengths_(i+1) - wavelengths_(i)));
+  sum1 = sum1 + (integrd(i+1)*(wavelengths_(i+1) - wavelengths_(i)));
+}
+sum = (sum + sum1)/2;
+*/
+
+sum = sum*2*pi;
+return sum;
+}
 
 // Function to read the photoionization cross sections from VULCAN database
 // The output file will contain wavelength (nm) and photoionization cross section (cm^2)
@@ -184,60 +210,123 @@ Eigen::MatrixXd ReadMPCrossSection(string MPFileName){
 
 }
 
-Eigen::MatrixXd ReadKINETICSCrossSection(string SpeciesName){
-#if NETCDFOUTPUT
-  Eigen::MatrixXd Output(2, 10);
-  //int fileid, dimid, varid, err;
-  //char tname[80];
-  //fname = "KINETICS7_Bhattacharya.nc";
-//Reading the netCDF file
-  //nc_open(fname.c_str(), NC_NETCDF4, &fileid);
+Eigen::MatrixXd ReadQYield(string FileName){
 
-
-//Defining the dimensions and lengths of dimensions
-
-
-
-//Use the reaction number to get the wavelength and cross section
-  /*nc_inq_dimid(fileid, "Wavenumber", &dimid);
-  nc_inq_dimlen(fileid, dimid, (size_t*)len_);
-  nc_inq_dimid(fileid, "Pressure", &dimid);
-  nc_inq_dimlen(fileid, dimid, (size_t*)(len_ + 1));
-  strcpy(tname, "T_");
-  strcat(tname, name_.c_str());
-  nc_inq_dimid(fileid, tname, &dimid);
-  nc_inq_dimlen(fileid, dimid, (size_t*)(len_ + 2));
-
-  axis_.resize(len_[0] + len_[1] + len_[2]);
-
-  nc_inq_varid(fileid, "Wavenumber", &varid);
-  nc_get_var_double(fileid, varid, axis_.data());
-  err = nc_inq_varid(fileid, "Pressure", &varid);
-  if (err != NC_NOERR)
-    throw std::runtime_error(nc_strerror(err));
-  err = nc_get_var_double(fileid, varid, axis_.data() + len_[0]);
-  if (err != NC_NOERR)
-    throw std::runtime_error(nc_strerror(err));
-  nc_inq_varid(fileid, tname, &varid);
-  nc_get_var_double(fileid, varid, axis_.data() + len_[0] + len_[1]);
-
-  Real *temp = new Real[len_[1]];
-  nc_inq_varid(fileid, "Temperature", &varid);
-  nc_get_var_double(fileid, varid, temp);
-
-  refatm_.NewAthenaArray(NHYDRO, len_[1]);
-  for (int i = 0; i < len_[1]; i++) {
-    refatm_(ipr,i) = axis_[len_[0] + i];
-    refatm_(idn,i)  = temp[i];
+fstream InFile;
+  InFile.open(FileName); 
+  //std::cout << FileName << std::endl;
+  string wavlength, line;
+  string photoabs;
+  string photodiss;
+  string photoion; 
+  int num = 0;
+  int rows = 0;
+  int col = 0;
+  while (getline(InFile, wavlength)){
+  //std::cout << wavlength << std::endl;
+  rows++;
   }
-
-  kcoeff_.resize(len_[0]*len_[1]*len_[2]);
-  nc_inq_varid(fileid, name_.c_str(), &varid);
-  nc_get_var_double(fileid, varid, kcoeff_.data());
-  nc_close(fileid);
-  delete[] temp;
-
+  InFile.close();
+  InFile.open(FileName);
+  getline(InFile, wavlength);
+  getline(InFile, wavlength);
+  while (getline(InFile, wavlength, ',')){
+  col = col + 1;
+  }
+  
+  InFile.close();
+  //std::cout << "Col number " <<  (col-1)/(rows-2) << std::endl;
+  InFile.open(FileName);
+  Eigen::MatrixXd Output((col-1)/(rows-2)+1, rows-2);
+  getline(InFile, wavlength);
+  getline(InFile, wavlength);
+  for(int ix =0; ix < rows-2; ix++){
+  for(int ix2=0; ix2 <= (col-1)/(rows-2); ix2++){
+  //std::cout << ix2 << " " << ix << std::endl; 
+  if(ix2==0){
+  getline(InFile, wavlength, ',');
+  //std::cout << wavlength << std::endl;
+  Output(0, ix) = atof(wavlength.c_str())*1E-9; //nm to m
+  
+  //std::cout << Output(0, ix) << std::endl;
+  }
+  if((ix2!=0) && (ix2 < (col-1)/(rows-2)) ){
+  getline(InFile, wavlength, ',');
+  //std::cout << wavlength << std::endl;
+  Output(ix2, ix) = atof(wavlength.c_str());
+  //std::cout << Output(ix2, ix) << std::endl;
+  }
+  if((ix2 == (col-1)/(rows-2))){
+  getline(InFile, wavlength, '\n');
+  //std::cout << wavlength << std::endl;
+  Output(ix2, ix) = atof(wavlength.c_str());
+  //std::cout << Output(ix2, ix) << std::endl;
+  }
+  
+  
+  
+  }
+  }
+  InFile.close();
+  /*
+  InFile.open(VULCAN_ID); 
+  getline(InFile,wavlength);
+  while(getline(InFile,wavlength, ',')){
+  getline(InFile,photoabs,',');
+  getline(InFile,photodiss,',');
+  getline(InFile,photoion,'\n');
+  
+  
+  Output(0, num) = atof(wavlength.c_str())*1E-9; //nm to m
+  Output(1, num) = atof(photodiss.c_str())*1E-4; //cm^2 to m^2
+  
+  num++;
+  }
+  InFile.close();
   */
+  return Output;
+
+}
+
+Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex){
+#if NETCDFOUTPUT
+  int fileid, dimid, varid, err;
+  string fname = "/home/ananyo/models/C3M/data/KINETICS/KINETICS7_Bhattacharya.nc";
+  nc_open(fname.c_str(), NC_NETCDF4, &fileid);
+
+  size_t nwaves;
+  err = nc_inq_dimid(fileid, "wavelength", &dimid);
+  if (err != NC_NOERR)
+    throw std::runtime_error(nc_strerror(err));
+  err = nc_inq_dimlen(fileid, dimid, &nwaves);
+  if (err != NC_NOERR)
+    throw std::runtime_error(nc_strerror(err));
+  
+  Eigen::VectorXd wavelength_(nwaves);
+  Eigen::MatrixXd Output(2, nwaves);
+  err = nc_inq_varid(fileid, "wavelength", &varid);
+  if (err != NC_NOERR)
+    throw std::runtime_error(nc_strerror(err));
+  err = nc_get_var_double(fileid, varid, wavelength_.data());
+  if (err != NC_NOERR)
+    throw std::runtime_error(nc_strerror(err));
+  size_t nreactions = 571;
+
+  Eigen::MatrixXd cross_section_(nreactions, nwaves);
+
+  err = nc_inq_varid(fileid, "cross_section", &varid);
+  if (err != NC_NOERR)
+    throw std::runtime_error(nc_strerror(err));
+  err = nc_get_var_double(fileid, varid, cross_section_.data());
+
+  for (size_t i = 0; i < wavelength_.size(); ++i){
+    Output(0, i) = wavelength_(i)*1E-10; //Angstrom to m
+    Output(1, i) =  cross_section_(RxnIndex,i)*1E-4; //cm^2 to m^2 
+    //std::cout << Output(0, i) << " cross:  " << Output(1, i) << std::endl;
+    }
+  nc_close(fileid);
+
+
 #endif
   return Output;
 

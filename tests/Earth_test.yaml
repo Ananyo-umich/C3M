@@ -166,18 +166,8 @@ reactions:
 - equation: '1.0 O + 1.0 O3 + M => 2.0 O2 + M'
   type: three-body
   rate-constant: {A: 8.0e-12,T0: 300.0,b: 0.0,Ea: -2060.0 K }
-- equation: '1.0 NO2 => 1.0 NO + 1.0 O '
-  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-- equation: '1.0 N2O => 1.0 N2 + 1.0 O_1D '
-  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-- equation: '1.0 N2O + 1.0 O_1D <=> 2.0 NO '
-  rate-constant: {A: 6.71e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
-- equation: '1.0 N2O + 1.0 O_1D <=> 1.0 N2 + 1.0 O2 '
-  rate-constant: {A: 4.9e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
 - equation: '1.0 H2O + 1.0 O_1D <=> 2.0 OH '
   rate-constant: {A: 2.19e-10,T0: 298.0,b: 0.0,Ea: 0.0 }
-- equation: '1.0 CH4 + 1.0 O_1D <=> 1.0 OH + 1.0 CH3 '
-  rate-constant: {A: 1.13e-10,T0: 298.0,b: 0.0,Ea: 0.0 }
 - equation: '1.0 HO2 + 1.0 NO <=> 1.0 NO2 + 1.0 OH '
   rate-constant: {A: 3.6e-12,T0: 298.0,b: 0.0,Ea: -2.24 kJ/mol }
 - equation: '1.0 HO2 + 1.0 O <=> 1.0 OH + 1.0 O2 '

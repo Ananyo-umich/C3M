@@ -33,7 +33,7 @@ kzz_kdata = kdata['kzz']
 
 
 #make a standard atmosphere from 0 to 80 km
-zgrid = linspace(0.0,80,50)
+zgrid = linspace(0.0,100,50)
 pfunc = interp1d(z, pres)
 tfunc = interp1d(z, temp)
 kzzfunc = interp1d(z_kdata, kzz_kdata)

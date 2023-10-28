@@ -3134,223 +3134,223 @@ reactions:
   rate-constant: {A: 1.32e+12, b: 0.0, Ea: 1.65e+04}
 - equation: 'NNH <=>  N2 + H  '  # Reaction 906
   rate-constant: {A: 3.0e+08, b: 0.0, Ea: 0.0}
-- equation: 'C2H6 + M  <=> C2H4 + H2 + M  '  # Reaction 907
+- equation: 'C2H6 + M  => C2H4 + H2 + M  '  # Reaction 907
   type: three-body
   rate-constant: {A: 3.82e-07, b: 0.0, Ea: 3.39e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CHCO + M  <=> CH + CO + M '  # Reaction 908
+- equation: 'CHCO + M  => CH + CO + M '  # Reaction 908
   type: three-body
   rate-constant: {A: 9.97e-09, b: 0.0, Ea: 2.96e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: '_1C2H4OH + M  <=> CH3CHO + H + M '  # Reaction 909
+- equation: '_1C2H4OH + M  => CH3CHO + H + M '  # Reaction 909
   type: three-body
   rate-constant: {A: 8.31e-11, b: 0.0, Ea: 1.1e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'NH + M  <=> N4S + H + M  '  # Reaction 910
+- equation: 'NH + M  => N4S + H + M  '  # Reaction 910
   type: three-body
   rate-constant: {A: 4.4e-10, b: 0.0, Ea: 3.8e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'NH2 + M  <=> NH + H + M '  # Reaction 911
+- equation: 'NH2 + M  => NH + H + M '  # Reaction 911
   type: three-body
   rate-constant: {A: 0.5247, b: -2.0, Ea: 4.6e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'NH3 + M  <=> NH2 + H + M '  # Reaction 912
+- equation: 'NH3 + M  => NH2 + H + M '  # Reaction 912
   type: three-body
   rate-constant: {A: 3.65e-08, b: 0.0, Ea: 4.7e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'NH3 + M  <=> NH + H2 + M  '  # Reaction 913
+- equation: 'NH3 + M  => NH + H2 + M  '  # Reaction 913
   type: three-body
   rate-constant: {A: 1.05e-09, b: 0.0, Ea: 4.7e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2H3 + M  <=> NH2 + NH + M  '  # Reaction 914
+- equation: 'N2H3 + M  => NH2 + NH + M  '  # Reaction 914
   type: three-body
   rate-constant: {A: 8.31e-08, b: 0.0, Ea: 3.02e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2H3 + M  <=> N2H2 + H + M '  # Reaction 915
+- equation: 'N2H3 + M  => N2H2 + H + M '  # Reaction 915
   type: three-body
   rate-constant: {A: 1.66e-08, b: 0.0, Ea: 1.86e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'HCN + M  <=> H + CN + M  '  # Reaction 916
+- equation: 'HCN + M  => H + CN + M  '  # Reaction 916
   type: three-body
   rate-constant: {A: 592.86, b: -2.6, Ea: 6.28e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'HNCO + M  <=> H + NCO + M '  # Reaction 917
+- equation: 'HNCO + M  => H + NCO + M '  # Reaction 917
   type: three-body
   rate-constant: {A: 8.31e-09, b: 0.0, Ea: 6.03e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'H2CN + M  <=> HCN + H + M  '  # Reaction 918
+- equation: 'H2CN + M  => HCN + H + M  '  # Reaction 918
   type: three-body
   rate-constant: {A: 4.98e-10, b: 0.0, Ea: 1.11e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'NCO + M  <=> N4S + CO + M  '  # Reaction 919
+- equation: 'NCO + M  => N4S + CO + M  '  # Reaction 919
   type: three-body
   rate-constant: {A: 3.65e-10, b: 0.0, Ea: 2.72e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CH3 + M  <=> _3CH2 + H + M  '  # Reaction 920
+- equation: 'CH3 + M  => _3CH2 + H + M  '  # Reaction 920
   type: three-body
   rate-constant: {A: 4.83e-08, b: 0.0, Ea: 4.56e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'C2H2 + M  <=> C2H + H + M '  # Reaction 921
+- equation: 'C2H2 + M  => C2H + H + M '  # Reaction 921
   type: three-body
   rate-constant: {A: 1.89e-07, b: 0.0, Ea: 5.38e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: ' C2H4 + M  <=> C2H2 + H2 + M '  # Reaction 922
+- equation: ' C2H4 + M  => C2H2 + H2 + M '  # Reaction 922
   type: three-body
   rate-constant: {A: 1.66e-07, b: 0.0, Ea: 3.6e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'C2H4 + M  <=> C2H3 + H + M '  # Reaction 923
+- equation: 'C2H4 + M  => C2H3 + H + M '  # Reaction 923
   type: three-body
   rate-constant: {A: 1.23e-06, b: 0.0, Ea: 4.86e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'HCO + M  <=> H + CO + M '  # Reaction 924
+- equation: 'HCO + M  => H + CO + M '  # Reaction 924
   type: three-body
   rate-constant: {A: 3.15e-07, b: -1.0, Ea: 8550.0}
   efficiencies: {O2: 1.0, CO: 1.5, CO2: 2.0, H2O: 6.0, CH4: 1.0, H2: 2.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'H2CO + M  <=> HCO + H + M  '  # Reaction 925
+- equation: 'H2CO + M  => HCO + H + M  '  # Reaction 925
   type: three-body
   rate-constant: {A: 2.3265e+12, b: -5.54, Ea: 4.87e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'H2CO + M  <=> H2 + CO + M '  # Reaction 926
+- equation: 'H2CO + M  => H2 + CO + M '  # Reaction 926
   type: three-body
   rate-constant: {A: 5.3933e+12, b: -5.54, Ea: 4.87e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CH3O + M  <=> H2CO + H + M  '  # Reaction 927
+- equation: 'CH3O + M  => H2CO + H + M  '  # Reaction 927
   type: three-body
   rate-constant: {A: 2.57e-10, b: 0.0, Ea: 6790.0}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CH2OH + M  <=> H2CO + H + M  '  # Reaction 928
+- equation: 'CH2OH + M  => H2CO + H + M  '  # Reaction 928
   type: three-body
   rate-constant: {A: 2.09e-08, b: 0.0, Ea: 1.51e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CH2CO + M  <=> _1CH2 + CO + M  '  # Reaction 929
+- equation: 'CH2CO + M  => _1CH2 + CO + M  '  # Reaction 929
   type: three-body
   rate-constant: {A: 1.09e-08, b: 0.0, Ea: 2.9e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CH2CO + M  <=>  CHCO +  H + M  '  # Reaction 930
+- equation: 'CH2CO + M  =>  CHCO +  H + M  '  # Reaction 930
   type: three-body
   rate-constant: {A: 4.49e-07, b: 0.0, Ea: 4.37e+04}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'NO  + M  <=>  N4S + O3P + M  '  # Reaction 931
+- equation: 'NO  + M  =>  N4S + O3P + M  '  # Reaction 931
   type: three-body
   rate-constant: {A: 1.6e-09, b: 0.0, Ea: 7.46e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 2.5, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.5, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 3.0, N4S: 1.0}
-- equation: 'N2 + M  <=>  N4S + N4S + M   '  # Reaction 932
+- equation: 'N2 + M  =>  N4S + N4S + M   '  # Reaction 932
   type: three-body
   rate-constant: {A: 1.6617e+04, b: -3.33, Ea: 1.13e+05}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 2.2,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 5.0}
-- equation: ' NNH + M  <=>  N2 + H + M  '  # Reaction 933
+- equation: ' NNH + M  =>  N2 + H + M  '  # Reaction 933
   type: three-body
   rate-constant: {A: 1.6628e-11, b: 0.5, Ea: 1540.0}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2H2 + M  <=> NNH + H + M   '  # Reaction 934
+- equation: 'N2H2 + M  => NNH + H + M   '  # Reaction 934
   type: three-body
   rate-constant: {A: 8.31e-08, b: 0.0, Ea: 2.51e+04}
   efficiencies: {O2: 2.0, CO: 1.0, CO2: 1.0, H2O: 15.0, CH4: 1.0, H2: 2.0,
     C2H6: 1.0, N2: 2.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2H2 + M  <=>  NH + NH + M '  # Reaction 935
+- equation: 'N2H2 + M  =>  NH + NH + M '  # Reaction 935
   type: three-body
   rate-constant: {A: 5.25e-08, b: 0.0, Ea: 5.0e+04}
   efficiencies: {O2: 2.0, CO: 1.0, CO2: 1.0, H2O: 15.0, CH4: 1.0, H2: 2.0,
     C2H6: 1.0, N2: 2.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2H4 + M  <=> N2H3 + H + M  '  # Reaction 936
+- equation: 'N2H4 + M  => N2H3 + H + M  '  # Reaction 936
   type: three-body
   rate-constant: {A: 1.66e-09, b: 0.0, Ea: 3.2e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 2.4, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 3.0, N2H4: 4.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: ' H2NO + M  <=>  H2 + NO + M  '  # Reaction 937
+- equation: ' H2NO + M  =>  H2 + NO + M  '  # Reaction 937
   type: three-body
   rate-constant: {A: 1.3001e+04, b: -4.29, Ea: 3.03e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 10.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'H2NO  + M  <=>  HNO + H + M  '  # Reaction 938
+- equation: 'H2NO  + M  =>  HNO + H + M  '  # Reaction 938
   type: three-body
   rate-constant: {A: 4.6485, b: -2.83, Ea: 3.26e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 10.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'HNOH + M  <=> HNO + H + M  '  # Reaction 939
+- equation: 'HNOH + M  => HNO + H + M  '  # Reaction 939
   type: three-body
   rate-constant: {A: 3.317, b: -2.84, Ea: 2.96e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 10.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'HNCO + M  <=>  NH + CO + M  '  # Reaction 940
+- equation: 'HNCO + M  =>  NH + CO + M  '  # Reaction 940
   type: three-body
   rate-constant: {A: 1.83e-08, b: 0.0, Ea: 4.32e+04}
   efficiencies: {O2: 1.5, CO: 1.0, CO2: 1.0, H2O: 18.6, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.5, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'HON + M  <=> NO + H + M  '  # Reaction 941
+- equation: 'HON + M  => NO + H + M  '  # Reaction 941
   type: three-body
   rate-constant: {A: 8.4712e-05, b: -1.7, Ea: 8070.0}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 2.0, H2O: 7.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'C2N2 + M  <=> CN + CN + M '  # Reaction 942
+- equation: 'C2N2 + M  => CN + CN + M '  # Reaction 942
   type: three-body
   rate-constant: {A: 1.8248e+10, b: -4.3, Ea: 6.54e+04}
   efficiencies: {O2: 1.5, CO: 1.0, CO2: 3.0, H2O: 10.0, CH4: 1.0, H2: 1.5,
     C2H6: 1.0, N2: 1.5, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'C2H3 (+ M)  <=> C2H2 + H (+ M)  '  # Reaction 943
+- equation: 'C2H3 (+ M)  => C2H2 + H (+ M)  '  # Reaction 943
   type: falloff
   low-P-rate-constant: {A: 1.9773e+18, b: -7.5, Ea: 2.29e+04}
   high-P-rate-constant: {A: 2.0e+14, b: 0.0, Ea: 2.0e+04}
@@ -3358,7 +3358,7 @@ reactions:
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 1.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'C2H5 (+ M)  <=> C2H4 + H (+ M) '  # Reaction 944
+- equation: 'C2H5 (+ M)  => C2H4 + H (+ M) '  # Reaction 944
   type: falloff
   low-P-rate-constant: {A: 5.65e-07, b: 0.0, Ea: 1.68e+04}
   high-P-rate-constant: {A: 8.2e+13, b: 0.0, Ea: 2.01e+04}
@@ -3366,7 +3366,7 @@ reactions:
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 3.0, H2: 1.0,
     C2H6: 3.0, N2: 0.4, He: 0.35, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CO2H (+ M)  <=> CO + OH (+ M) '  # Reaction 945
+- equation: 'CO2H (+ M)  => CO + OH (+ M) '  # Reaction 945
   type: falloff
   low-P-rate-constant: {A: 0.36519, b: -1.83, Ea: 1.77e+04}
   high-P-rate-constant: {A: 5.8872e+12, b: 0.53, Ea: 1.71e+04}
@@ -3374,7 +3374,7 @@ reactions:
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: ' CO2H (+ M)  <=> CO2 + H (+ M) '  # Reaction 946
+- equation: ' CO2H (+ M)  => CO2 + H (+ M) '  # Reaction 946
   type: falloff
   low-P-rate-constant: {A: 481.18, b: -3.02, Ea: 1.76e+04}
   high-P-rate-constant: {A: 1.6996e+12, b: 0.31, Ea: 1.66e+04}
@@ -3382,7 +3382,7 @@ reactions:
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2O (+ M)  <=> N2 + O3P (+ M) '  # Reaction 947
+- equation: 'N2O (+ M)  => N2 + O3P (+ M) '  # Reaction 947
   type: falloff
   low-P-rate-constant: {A: 6.65e-10, b: 0.0, Ea: 2.85e+04}
   high-P-rate-constant: {A: 1.26e+12, b: 0.0, Ea: 3.15e+04}
@@ -3390,7 +3390,7 @@ reactions:
   efficiencies: {O2: 1.4, CO: 1.0, CO2: 1.0, H2O: 12.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.7, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 3.5, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 3.0, N4S: 1.0}
-- equation: 'N2O4 (+ M)  <=> NO2 + NO2 (+ M) '  # Reaction 948
+- equation: 'N2O4 (+ M)  => NO2 + NO2 (+ M) '  # Reaction 948
   type: falloff
   low-P-rate-constant: {A: 3.2616e+04, b: -3.8, Ea: 6460.0}
   high-P-rate-constant: {A: 4.0491e+18, b: -1.1, Ea: 6460.0}
@@ -3398,7 +3398,7 @@ reactions:
   efficiencies: {O2: 2.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 2.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 2.0, NO2: 2.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2H4 (+ M)  <=> NH2 + NH2 (+ M) '  # Reaction 949
+- equation: 'N2H4 (+ M)  => NH2 + NH2 (+ M) '  # Reaction 949
   type: falloff
   low-P-rate-constant: {A: 2.49e-09, b: 0.0, Ea: 1.96e+04}
   high-P-rate-constant: {A: 5.0e+14, b: 0.0, Ea: 3.02e+04}
@@ -3430,7 +3430,7 @@ reactions:
   efficiencies: {O2: 0.79, CO: 1.0, CO2: 1.06, H2O: 5.1, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 0.44, C2H4: 1.0, H2O2: 5.2, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'CH3NO2 (+ M)  <=> CH3 + NO2 (+ M) '  # Reaction 953
+- equation: 'CH3NO2 (+ M)  => CH3 + NO2 (+ M) '  # Reaction 953
   type: falloff
   low-P-rate-constant: {A: 2.16e-06, b: 0.0, Ea: 2.11e+04}
   high-P-rate-constant: {A: 1.8e+17, b: 0.0, Ea: 2.94e+04}
@@ -3438,25 +3438,25 @@ reactions:
   efficiencies: {O2: 0.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: '_1CH2 + M  <=> _3CH2 + M '  # Reaction 954
+- equation: '_1CH2 + M  => _3CH2 + M '  # Reaction 954
   type: three-body
   rate-constant: {A: 2.51e-11, b: 0.0, Ea: 0.0}
   efficiencies: {O2: 0.4, CO: 0.75, CO2: 1.5, H2O: 6.5, CH4: 0.48, H2: 1.0,
     C2H6: 1.0, N2: 0.4, He: 0.35, C2H4: 1.6, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'O1D + M  <=> O3P + M '  # Reaction 955
+- equation: 'O1D + M  => O3P + M '  # Reaction 955
   type: three-body
   rate-constant: {A: 2.15e-11, b: 0.0, Ea: -110.0}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'N2D + M  <=> N4S + M '  # Reaction 956
+- equation: 'N2D + M  => N4S + M '  # Reaction 956
   type: three-body
   rate-constant: {A: 1.7e-14, b: 0.0, Ea: 0.0}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 1.0, CH4: 1.0, H2: 1.0,
     C2H6: 1.0, N2: 1.0, He: 1.0, C2H4: 1.0, H2O2: 1.0, N2O: 1.0, O3P: 1.0,
     NH3: 1.0, N2H4: 1.0, N2O4: 1.0, NO2: 1.0, NO: 1.0, N4S: 1.0}
-- equation: 'H2NO + M  <=> HNOH + M '  # Reaction 957
+- equation: 'H2NO + M  => HNOH + M '  # Reaction 957
   type: three-body
   rate-constant: {A: 1.8286e+05, b: -3.99, Ea: 2.21e+04}
   efficiencies: {O2: 1.0, CO: 1.0, CO2: 1.0, H2O: 10.0, CH4: 1.0, H2: 1.0,

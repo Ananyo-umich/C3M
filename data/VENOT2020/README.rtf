@@ -1,0 +1,269 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoascreenfonts1\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww33740\viewh17640\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 O. Venot     January 2020\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+New chemical scheme for giant planet thermochemistry. Update of the methanol chemistry and new reduced chemical scheme.\kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 See Venot et al., 2020, A&A, 634, A78\
+\pard\pardeftab720\sl300\sa240\partightenfactor0
+\cf2 \expnd0\expndtw0\kerning0
+https://doi.org/10.1051/0004-6361/201936697 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+This network contains 948 reversible chemical reactions and 10 irreversible chemical reactions. The reversal of reaction rates is based on the use of equilibrium constants.\
+These reactions involve 108 neutral species, that are listed in composes.dat.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FORMAT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bimolecular reactions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+\
+The format of the reactions_1.dat file (Reversible bimolecular reactions) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 5(1x,e10.3)\
+Reactants   Products  Alpha  Beta  Gamma  F g\
+\
+Alpha, Beta, Gamma are the parameters to compute the rate coefficients. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+=================================================\
+\
+The format of the reactions_2.dat file (Irreversible bimolecular reactions) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 5(1x,e10.3)\
+Reactants   Products  Alpha  Beta  Gamma  F g\
+\
+Alpha, Beta, Gamma are the parameters to compute the rate coefficients. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+=================================================\
+\
+The format of the reactions_3.dat file (Reversible bimolecular reactions - coefficients with a pressure dependence) is the following:\
+\
+* Three first lines, five values of pressure:\
+Format : 5(1x,a10) 5(1x,a10) 5(1x,e10.3) 5(1x,e10.3) 5(1x,e10.3) 5(1x,e10.3) 2(1x,e10.3) \
+Reactants   Products  P Alpha  Beta  Gamma  F g\
+* Two last lines, eight values of pressure:\
+Format : 5(1x,a10) 5(1x,a10) 8(1x,e10.3) 8(1x,e10.3) 8(1x,e10.3) 8(1x,e10.3) 2(1x,e10.3)\
+Reactants   Products  P Alpha  Beta  Gamma  F g\
+\
+Alpha, Beta, Gamma are the parameters to compute the rate coefficients. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+Several set of the parameters Alpha, Beta, Gamme are given, corresponding to different pressures. The corresponding pressures are given in the column \'91P\'92, in atm. To be more precise, the first Alpha, Beta, Gamma of each column correspond to the first value of P. \
+To calculate the reaction rate in your model, the rate parameters \cf3 \expnd0\expndtw0\kerning0
+are linearly interpolated with respect to the logarithm of the pressure in between two pressure.\'a0 The rate coefficients will take the lowest pressure value or the highest pressure value when the pressure is outside the specified range. \cf0 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 F is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Combination reactions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+\
+The format of the reactions_4.dat file (Reversible combination reactions - low pressure limit) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 5(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Enhanced third body efficiencies are specified for the following selected species :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 O\sub 2\nosupersub , CO, CO\sub 2\nosupersub , H\sub 2\nosupersub O, CH\sub 4\nosupersub , H\sub 2\nosupersub , C\sub 2\nosupersub H\sub 6\nosupersub , Ar, N\sub 2\nosupersub , He, C\sub 2\nosupersub H\sub 4\nosupersub , benzene, toluene, H\sub 2\nosupersub O\sub 2\nosupersub , N\sub 2\nosupersub O, O\super 3\nosupersub P, NH\sub 3\nosupersub , N\sub 2\nosupersub H\sub 4\nosupersub , N\sub 2\nosupersub O\sub 4\nosupersub , NO\sub 2\nosupersub , NO, N\super 4\nosupersub S\
+\
+=================================================\
+The format of the reactions_5.dat file (Reversible combination reactions - Troe formalism) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 10(1x,e10.3) 4(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Alpha_inf   Beta_inf   Gamma_inf   F_inf  g_inf   A_Troe   B_Troe   C_Troe   D_Troe   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. Alpha_inf, Beta_inf, Gamma_inf are the parameters to compute the rate coefficients in the low pressure limits k_inf. The formula adopted follow the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+A_Troe, B_Troe, C_Troe, D_Troe are the four parameters needed to compute the fall-off Troe formulation. When these four parameters are set equal to 0, the Lindemann formulation is adopted to compute the fall-off (see http://kida.obs.u-bordeaux1.fr/help).\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Enhanced third body efficiencies are specified for the following selected species :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 O\sub 2\nosupersub , CO, CO\sub 2\nosupersub , H\sub 2\nosupersub O, CH\sub 4\nosupersub , H\sub 2\nosupersub , C\sub 2\nosupersub H\sub 6\nosupersub , Ar, N\sub 2\nosupersub , He, C\sub 2\nosupersub H\sub 4\nosupersub , benzene, toluene, H\sub 2\nosupersub O\sub 2\nosupersub , N\sub 2\nosupersub O, O\super 3\nosupersub P, NH\sub 3\nosupersub , N\sub 2\nosupersub H\sub 4\nosupersub , N\sub 2\nosupersub O\sub 4\nosupersub , NO\sub 2\nosupersub , NO, N\super 4\nosupersub S\
+\
+=================================================\
+The format of the reactions_6.dat file (Reversible combination reactions - SRI formalism) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 10(1x,e10.3) 5(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Alpha_inf   Beta_inf   Gamma_inf   F_inf  g_inf  A_SRI   B_SRI   C_SRI   D_SRI   E_SRI   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. Alpha_inf, Beta_inf, Gamma_inf are the parameters to compute the rate coefficients in the low pressure limits k_inf. The formula adopted follow the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+A_SRI, B_SRI, C_SRI, D_SRI, E_SRI are the five parameters needed to compute the fall-off SRI formulation (see Stewart et al., Combustion and Flame 75, 25 (1989) for details)\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Enhanced third body efficiencies are specified for the following selected species :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 O\sub 2\nosupersub , CO, CO\sub 2\nosupersub , H\sub 2\nosupersub O, CH\sub 4\nosupersub , H\sub 2\nosupersub , C\sub 2\nosupersub H\sub 6\nosupersub , Ar, N\sub 2\nosupersub , He, C\sub 2\nosupersub H\sub 4\nosupersub , benzene, toluene, H\sub 2\nosupersub O\sub 2\nosupersub , N\sub 2\nosupersub O, O\super 3\nosupersub P, NH\sub 3\nosupersub , N\sub 2\nosupersub H\sub 4\nosupersub , N\sub 2\nosupersub O\sub 4\nosupersub , NO\sub 2\nosupersub , NO, N\super 4\nosupersub S\
+\
+=================================================\
+The format of the reactions_7.dat file (Reversible combination reactions with specific third-body - Troe formalism) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 10(1x,e10.3) 4(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Alpha_inf   Beta_inf   Gamma_inf   F_inf  g_inf   A_Troe   B_Troe   C_Troe   D_Troe   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. Alpha_inf, Beta_inf, Gamma_inf are the parameters to compute the rate coefficients in the low pressure limits k_inf. The formula adopted follow the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+A_Troe, B_Troe, C_Troe, D_Troe are the four parameters needed to compute the fall-off Troe formulation. When these four parameters are set equal to 0, the Lindemann formulation is adopted to compute the fall-off (see http://kida.obs.u-bordeaux1.fr/help).\
+\
+\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Decomposition reactions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+\
+The format of the reactions_8.dat file (Reversible decomposition reactions) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 5(1x,e10.3)\
+Reactants   Products   Alpha   Beta   Gamma   F   g\
+\
+Alpha, Beta, Gamma are the parameters to compute the rate coefficients. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+=================================================\
+The format of the reactions_9.dat file (Reversible decomposition reactions - coefficients with a pressure dependence) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 6(1x,e10.3) 6(1x,e10.3) 6(1x,e10.3) 6(1x,e10.3) 2(1x,e10.3) \
+Reactants   Products  P Alpha  Beta  Gamma  F g\
+\
+Alpha, Beta, Gamma are the parameters to compute the rate coefficients. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+Several set of the parameters Alpha, Beta, Gamme are given, corresponding to different pressures. The corresponding pressures are given in the column \'91P\'92, in atm. To be more precise, the first Alpha, Beta, Gamma of each column correspond to the first value of P. \
+To calculate the reaction rate in your model, the rate parameters \cf3 \expnd0\expndtw0\kerning0
+are linearly interpolated with respect to the logarithm of the pressure in between two pressure.\'a0 The rate coefficients will take the lowest pressure value or the highest pressure value when the pressure is outside the specified range.\cf0 \kerning1\expnd0\expndtw0 \
+\
+F is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+=================================================\
+The format of the reactions_10.dat file (Reversible decomposition reactions - low pressure limit) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 5(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Enhanced third body efficiencies are specified for the following selected species :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 O\sub 2\nosupersub , CO, CO\sub 2\nosupersub , H\sub 2\nosupersub O, CH\sub 4\nosupersub , H\sub 2\nosupersub , C\sub 2\nosupersub H\sub 6\nosupersub , Ar, N\sub 2\nosupersub , He, C\sub 2\nosupersub H\sub 4\nosupersub , benzene, toluene, H\sub 2\nosupersub O\sub 2\nosupersub , N\sub 2\nosupersub O, O\super 3\nosupersub P, NH\sub 3\nosupersub , N\sub 2\nosupersub H\sub 4\nosupersub , N\sub 2\nosupersub O\sub 4\nosupersub , NO\sub 2\nosupersub , NO, N\super 4\nosupersub S\
+\
+=================================================\
+The format of the reactions_11.dat file (Reversible decomposition reactions - Troe formalism) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 10(1x,e10.3) 4(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Alpha_inf   Beta_inf   Gamma_inf   F_inf  g_inf   A_Troe   B_Troe   C_Troe   D_Troe   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. Alpha_inf, Beta_inf, Gamma_inf are the parameters to compute the rate coefficients in the low pressure limits k_inf. The formula adopted follow the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+A_Troe, B_Troe, C_Troe, D_Troe are the four parameters needed to compute the fall-off Troe formulation. When these four parameters are set equal to 0, the Lindemann formulation is adopted to compute the fall-off (see http://kida.obs.u-bordeaux1.fr/help).\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Enhanced third body efficiencies are specified for the following selected species :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 O\sub 2\nosupersub , CO, CO\sub 2\nosupersub , H\sub 2\nosupersub O, CH\sub 4\nosupersub , H\sub 2\nosupersub , C\sub 2\nosupersub H\sub 6\nosupersub , Ar, N\sub 2\nosupersub , He, C\sub 2\nosupersub H\sub 4\nosupersub , benzene, toluene, H\sub 2\nosupersub O\sub 2\nosupersub , N\sub 2\nosupersub O, O\super 3\nosupersub P, NH\sub 3\nosupersub , N\sub 2\nosupersub H\sub 4\nosupersub , N\sub 2\nosupersub O\sub 4\nosupersub , NO\sub 2\nosupersub , NO, N\super 4\nosupersub S\
+\
+=================================================\
+The format of the reactions_12.dat file (Reversible decomposition reactions - SRI formalism) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 10(1x,e10.3) 5(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Alpha_inf   Beta_inf   Gamma_inf   F_inf  g_inf  A_SRI   B_SRI   C_SRI   D_SRI   E_SRI   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. Alpha_inf, Beta_inf, Gamma_inf are the parameters to compute the rate coefficients in the low pressure limits k_inf. The formula adopted follow the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+A_SRI, B_SRI, C_SRI, D_SRI, E_SRI are the four parameters needed to compute the fall-off Troe formulation (see http://kida.obs.u-bordeaux1.fr/help)\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Enhanced third body efficiencies are specified for the following selected species :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 O\sub 2\nosupersub , CO, CO\sub 2\nosupersub , H\sub 2\nosupersub O, CH\sub 4\nosupersub , H\sub 2\nosupersub , C\sub 2\nosupersub H\sub 6\nosupersub , Ar, N\sub 2\nosupersub , He, C\sub 2\nosupersub H\sub 4\nosupersub , benzene, toluene, H\sub 2\nosupersub O\sub 2\nosupersub , N\sub 2\nosupersub O, O\super 3\nosupersub P, NH\sub 3\nosupersub , N\sub 2\nosupersub H\sub 4\nosupersub , N\sub 2\nosupersub O\sub 4\nosupersub , NO\sub 2\nosupersub , NO, N\super 4\nosupersub S\
+\
+\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Desexcitation reactions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\
+\
+The format of the reactions_13.dat file (Reversible third-body assisted desexcitation reactions) is the following:\
+\
+Format : 5(1x,a10) 5(1x,a10) 5(1x,e10.3) 22(1x,e10.3)\
+Reactants   Products   Alpha_0   Beta_0   Gamma_0   F_0   g_0   Efficiencies\
+\
+Alpha_0, Beta_0, Gamma_0 are the parameters to compute the rate coefficients in the low pressure limits k_0. The formula adopted follows the Kooij formalism.\
+See http:// kida.obs.u-bordeaux1.fr/help\
+\
+F_0 is the uncertainty factor on the rate coefficient (see http://kida.obs.u-bordeaux1.fr/help)\
+g_0 is the temperature dependence of this uncertainty factor (see http://kida.obs.u-bordeaux1.fr/help)\
+Type of uncertainty is lognormal (logn)\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 Enhanced third body efficiencies are specified for the following selected species :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 O\sub 2\nosupersub , CO, CO\sub 2\nosupersub , H\sub 2\nosupersub O, CH\sub 4\nosupersub , H\sub 2\nosupersub , C\sub 2\nosupersub H\sub 6\nosupersub , Ar, N\sub 2\nosupersub , He, C\sub 2\nosupersub H\sub 4\nosupersub , benzene, toluene, H\sub 2\nosupersub O\sub 2\nosupersub , N\sub 2\nosupersub O, O\super 3\nosupersub P, NH\sub 3\nosupersub , N\sub 2\nosupersub H\sub 4\nosupersub , N\sub 2\nosupersub O\sub 4\nosupersub , NO\sub 2\nosupersub , NO, N\super 4\nosupersub S\
+\
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!}

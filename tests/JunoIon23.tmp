@@ -1,0 +1,40 @@
+<problem>
+planet = JupAuroral_AB.txt
+network = JupiterIon23.yaml
+photochem = false
+ionkinetics = true
+equilibrate = false
+
+
+<init>
+species = H2, He, H, CH4, E
+H2 = 8.89E-1
+He = 1.09E-1
+H = 8.41E-12
+CH4 = 2.13E-3
+E = 3.32E-13
+
+<integrator>
+nSteps = 50
+dt = 1E-8
+Tmax = 1E5
+
+<ionkinetics_man>
+H2 -> E + H2+ = 7.94E-09
+H2 -> E + H + H+ = 1.24E-09
+
+<upperboundaryflux>
+species = H2, He
+H2 = 0.0
+He = 0.0
+
+<lowerboundaryflux>
+species = H2, He
+H2 = 0.0
+He = 0.0
+
+<lowerboundaryMixRat>
+species = H2, He
+H2 = 8.89E-1
+He = 1.09E-1
+

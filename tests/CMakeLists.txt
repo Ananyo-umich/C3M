@@ -25,10 +25,11 @@ foreach(_test ${_tests})
       ${CMAKE_BINARY_DIR}
       )
 
-    target_link_directories(${_name}.${buildl}
-      SYSTEM PRIVATE
-      ${CANTERA_LIBRARY_DIR}
-      )
+    #target_link_directories(${_name}.${buildl}
+    #  SYSTEM PRIVATE
+    #  ${CANTERA_LIBRARY_DIR}
+    #  )
+
 
     target_link_libraries(${_name}.${buildl}
       ${C3M_LIBRARY_${build}}

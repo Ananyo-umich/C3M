@@ -1,49 +1,111 @@
 <problem>
-planet = Earth.txt
-network = Earth_test.yaml
+planet = JupAuroral_AB.txt
+network = JupiterIon23.yaml
 photochem = true
+ionkinetics_man = false
+ionkinetics = JupIonRate.txt
+equilibrate = false
+chemInp = JupChemProfile_AB.txt
+
 
 <init>
-species = N2, O2
-N2 = 0.78
-O2 = 0.21
+species = H2, He, H, CH4
+H2 = 8.89E-1
+He = 1.09E-1
+H = 8.41E-12
+CH4 = 2.13E-3
+
+<qyield>
+H2 -> E + H2+ = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_ion_branch.csv
+H2 -> E + H + H+ = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_ion_branch.csv
+H -> E + H+ = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/H/H_ion_branch.csv
+CH4 -> CH4+ + E = KINETICS;
+#CH4 -> CH3+ + E + H = KINETICS;
+He -> E + He+ = KINETICS;
+H2 -> 2 H = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_branch.csv
+CH4 -> CH3 + H = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH2 + 2 H = VULCAN;3,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH2 + H2 = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+CH4 -> CH + H + H2 = VULCAN;4,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_branch.csv
+C2H2 -> C2H + H = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/C2H2/C2H2_branch.csv
+C2H4 -> C2H2 + H2 = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H4 -> C2H2 + 2 H = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
+C2H6 -> C2H4 + H2 = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H4 + 2 H = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H2 + 2 H2 = VULCAN;3,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> CH2 + CH4 = VULCAN;4,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> 2 CH3 = VULCAN;5,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+
+
+
+<photocross>
+H2 -> E + H2+ = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_cross.csv
+H2 -> E + H + H+ = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_cross.csv
+H -> E + H+ = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/H/H_cross.csv
+CH4 -> CH4+ + E = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+#CH4 -> CH3+ + E + H = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+He -> E + He+ = VULCAN_Ion,/data4/ananyo/models/C3M/data/VULCAN/He/He_cross.csv
+H2 -> 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_cross.csv
+CH4 -> CH3 + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH2 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH2 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+CH4 -> CH + H + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+C2H2 -> C2H + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H2/C2H2_cross.csv
+C2H4 -> C2H2 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H4 -> C2H2 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
+C2H6 -> C2H4 + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> C2H4 + 2 H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> C2H2 + 2 H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> CH2 + CH4 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+C2H6 -> 2 CH3 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+
+<profile>
+species = H2, He, H, CH4
 
 
 <integrator>
 nSteps = 50
-dt = 1E-5
-Tmax = 100
+dt = 1E-8
+Tmax = 10010
+Tstart = 10000
+Tprecp = 10
+
+<ionkinetics_man>
+H2 -> E + H2+ = 7.94E-09
+H2 -> E + H + H+ = 1.24E-09
+
+<ionkinetics>
+rxn = 0, 1
 
 <upperboundaryflux>
-species = N2, O2
-N2 = 0.0
-O2 = 0.0
+species = H2, He
+H2 = 0.0
+He = 0.0
 
 <lowerboundaryflux>
-species = N2, O2
-N2 = 0.0
-O2 = 0.0
+species = H2, He
+H2 = 0.0
+He = 0.0
 
-<photocross>
-O2 -> 2 O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
-O3 -> O + O2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
-O3 -> O + O2_1D = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
-
+<lowerboundaryMixRat>
+species = H2, He, E
+H2 = 8.89E-1
+He = 1.09E-1
+E = 0.0
 
 <radtran>
 solar = sun_spec.inp #spectral irradiance file
-radius = 1 #semi-major axis to the planet from the star (AU)
+radius = 5 #semi-major axis to the planet from the star (AU)
 reference = 1 #semi-major axis to the reference point from the star (AU)
 
 <abscross>
-absorbers = N2, O2, O3
-N2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/N2/N2_cross.csv
-O2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
-O3 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
+absorbers = H2, H, CH4, He
+H2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_cross.csv
+H = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/H/H_cross.csv
+CH4 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+He = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/He/He_cross.csv
 
 
 <output>
-out_file = chapman_1d.nc
-species = N2, O2, O3, O
-
-
+species = H2, He, H+, E
+out_file = Jup_test.nc
