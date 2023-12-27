@@ -2,7 +2,8 @@
 // Author: Ananyo Bhattacharya
 // Affiliation: University of Michigan
 // Email: ananyo@umich.edu
-// Solution class describes a phase consists of a mixture of chemical species
+// This code represents a 1-d photochemistry model for planetary atmosphere.
+// Note: The equations are solved for mass transport
 #include <cantera/base/Solution.h>
 
 // ThermoPhase object stores the thermodynamic state
@@ -20,7 +21,6 @@
 #include <string>
 #include <sstream>
 #include <regex>
-
 // Athena++ header
 #include <parameter_input.hpp>
 
@@ -28,7 +28,8 @@
 #include <PhotoChemistry.hpp>
 #include <RadTran.hpp>
 #include <interpolation.hpp>
-
+#include <CustomRate.hpp>
+#include <CustomTransport.hpp>
 
 // NetCDF Output
 #if NETCDFOUTPUT
@@ -40,13 +41,19 @@ using Eigen::VectorXd;
 using namespace Cantera;
 using namespace std;
 
-//Function for Central Difference Scheme
-MatrixXd diff_flux(int inxn, int inxNext, int inxPrev, MatrixXd Sp, int ns, double Kzz, double dx){
-  VectorXd diff_flux(ns), Un(ns), Unext(ns), Uprev(ns); 
-  Un = Sp.col(inxn);
-  Unext = Sp.col(inxNext);
-  Uprev = Sp.col(inxPrev);
-  diff_flux = Kzz*(Unext - (2*Un) + Uprev)/(dx*dx);
+//Function for Central Difference Scheme (Hu et al., 2012)
+MatrixXd diff_flux(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, double Kzz, double Kzz_prev, double Kzz_next, double dx){
+  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns), Nn(ns), Nnext(ns), Nprev(ns); 
+  VectorXd beta1(ns), beta2(ns);
+  Xn = Sp.col(inxn); //mole fraction
+  Xnext = Sp.col(inxNext); //mole fraction
+  Xprev = Sp.col(inxPrev); //mole fraction
+  Nn = Np.col(inxn).colwise().sum(); //concentration (kmol/m^3)
+  Nnext = Np.col(inxPrev).colwise().sum(); //concentration (kmol/m^3)
+  Nprev = Np.col(inxNext).colwise().sum(); //concentration (kmol/m^3)
+  beta1 = ((Kzz + Kzz_prev)/2)*((Nn + Nprev)/2); //j-1
+  beta2 = ((Kzz + Kzz_next)/2)*((Nn + Nnext)/2); //j+1
+  diff_flux =   (((-1*((Xnext - Xn)*beta2)/dx) + (((Xn - Xprev))*beta1/dx))/dx);
 return diff_flux;
 }
 
@@ -62,16 +69,19 @@ int main(int argc, char **argv) {
 
 //Loading the input parameters for atmospheric profile and reaction network
   std::string atm_file = pinput->GetString("problem", "planet");
+  std::string PlanetName = pinput->GetString("problem", "planetName");
   std::string network_file = pinput->GetString("problem", "network");
-  
+  std::string profile_file = pinput->GetOrAddString("problem", "chemInp", "nan");
+
 //Reading the chemical kinetics network
   auto sol = newSolution(network_file);
-  //auto sol = newSolution(network_file);
   auto gas = sol->thermo();
   auto gas_kin = sol->kinetics();  
   int nsp = gas->nSpecies();
   int nrxn = gas_kin->nReactions();
+  std::cout << "Number of reactions: " << nrxn << std::endl;
   std::cout << "Network imported" << std::endl;
+
 //Initial condition for mole fraction
   VectorXd mole_fractions = VectorXd::Zero(nsp);
   
@@ -80,8 +90,9 @@ int main(int argc, char **argv) {
   VectorXd flux_upper = VectorXd::Zero(nsp);
 
 //Loading the input parameters for initial condition
+//Homogeneous input condition
   std::string init_species_list = pinput->GetString("init", "species");
-  std::regex pattern ("[a-zA-Z0-9_]+");
+  std::regex pattern ("[a-zA-Z0-9_+-]+");
   std::smatch m;
   int species_inx;
   while (std::regex_search (init_species_list,m,pattern)) {
@@ -92,7 +103,8 @@ int main(int argc, char **argv) {
     }
     init_species_list = m.suffix().str();
   }
- std::cout << "Initial conditions loaded" << std::endl;
+
+
 //Loading the input for upper boundary condition
   std::string ub_species_list = pinput->GetString("upperboundaryflux", "species");
   while (std::regex_search (ub_species_list,m,pattern)) {
@@ -117,13 +129,11 @@ int main(int argc, char **argv) {
 std::cout << "Boundary conditions loaded" << std::endl;
 //Integrator
   std::string time_step = pinput->GetString("integrator", "dt");
-  std::string total_time_steps = pinput->GetString("integrator", "nSteps");
   std::string max_time = pinput->GetString("integrator", "Tmax");
   double dt = atof(time_step.c_str());
   double Tmax = atof(max_time.c_str());
   double Ttot = 0.0;
   std::cout << "Time step: " << dt << std::endl;
-  int nTime = stoi(total_time_steps.c_str());
 
 
 //Atmosphere Properties, indices for I/O storage
@@ -136,13 +146,6 @@ std::cout << "Boundary conditions loaded" << std::endl;
   while (getline(InFile, data1))
     nSize++;
   InFile.close();
-  
-//Setting initial condition for chemical species
-  MatrixXd ChemMoleFrac(nsp, nSize);
-  MatrixXd a(nsp, nSize);
-  for (int i = 0; i < nSize; i++) {
-      ChemMoleFrac.col(i) = mole_fractions;
-    }
   
 
 //Atmospheric Profile Data
@@ -177,15 +180,79 @@ std::cout << "Boundary conditions loaded" << std::endl;
       }
   InFile.close();
 
+
+//Setting initial condition for chemical species
+  std::vector<Eigen::MatrixXd> ChemMole;
+  MatrixXd ChemMoleFrac(nsp, nSize);
+  MatrixXd ChemConc(nsp, nSize);
+  MatrixXd a(nsp, nSize);
+  MatrixXd n_conc(nsp, nSize);
+  MatrixXd conv(nsp, nSize);
+  MatrixXd ProdRates(nsp, nSize);
+  MatrixXd DiffRates(nsp, nSize);
+  VectorXd Time(1);
+  
+  for (int i = 0; i < nSize; i++) {
+      gas->setState_TP(AtmData(iTemp,i), (AtmData(iPress,i)/1.0132E5)*OneAtm);
+      ChemMoleFrac.col(i) = mole_fractions;
+    }
+
+
+//Chemical species profile from input file
+  if(profile_file != "nan"){
+  std::string input_species_list = pinput->GetString("profile", "species");
+  std::regex pattern ("[a-zA-Z0-9_+-]+");
+  int chemP = 0;
+  while (std::regex_search (input_species_list,m,pattern)) {
+    for (auto x:m){
+    chemP++;
+    }
+    input_species_list = m.suffix().str();
+    }
+  InFile.open(profile_file);
+  std::string inp1, inp2;
+  int i = 0;
+  getline(InFile, inp1);
+  while(i < nSize){
+    int chem_inx = 0;
+    input_species_list = pinput->GetString("profile", "species");
+    while (std::regex_search (input_species_list,m,pattern)) {
+    for (auto x:m){
+     species_inx = gas->speciesIndex(x);
+     if(chem_inx < chemP-1){
+       getline(InFile,inp2,',');
+       ChemMoleFrac(species_inx,i) = atof(inp2.c_str());
+       }
+
+     if(chem_inx == chemP-1){
+       getline(InFile,inp2, '\n');
+       ChemMoleFrac(species_inx,i) = atof(inp2.c_str());
+       }
+
+
+     chem_inx++;
+    }
+
+    input_species_list = m.suffix().str();
+    }
+    i++;
+  }}
+ InFile.close();
+ 
+for (int i = 0; i < nSize; i++) {
+      gas->setState_TP(AtmData(iTemp,i), (AtmData(iPress,i)/1.0132E5)*OneAtm);
+      gas->setMoleFractions(&ChemMoleFrac.col(i)[0]);
+      gas->getConcentrations(&ChemConc.col(i)[0]);
+    }
+
 std::cout << "All inputs loaded into C3M " << std::endl;
 
-//Photochemistry
+//Condition for turning on photochemistry
   std::string photochem = pinput->GetString("problem", "photochem");
   if(photochem == "true")
   {
   
   std::cout << "Starting photochemistry calculations" << std::endl;
-//Radiative transfer
 //Reading the Stellar Irradiance Input
   std::string stellar_input_file = pinput->GetString("radtran", "solar");
   std::string radius = pinput->GetString("radtran", "radius");
@@ -193,7 +260,14 @@ std::cout << "All inputs loaded into C3M " << std::endl;
   double rad = atof(radius.c_str());
   double ref = atof(reference.c_str());
   MatrixXd stellar_input = ReadStellarRadiationInput(stellar_input_file, rad, ref);
+  MatrixXd d_wavelength(stellar_input.row(0).size(), 1);
+  MatrixXd wavelength = stellar_input.row(0);
 
+//Discretization of the wavelength
+  for(int dw = 0;  dw < (stellar_input.row(0).size()) - 1; dw++){
+  d_wavelength(dw) = wavelength(dw+1) - wavelength(dw);
+  
+  }
 
   std::cout << "!! Radiation Input loaded in C3M !!" << std::endl;
 //Input Wavelength and Cross Section Data for all the absorbers 
@@ -207,6 +281,7 @@ std::cout << "All inputs loaded into C3M " << std::endl;
   }
   Eigen::MatrixXd absorber_cross_data(stellar_input.row(0).size(), AbsorberSize); 
   std::cout << "!! Initiating absorbers  !!" << std::endl;
+
 //Reading absorber cross section for all absorbers
   int ab_inx = 0;
   absorber_species_list = pinput->GetString("abscross", "absorbers");
@@ -274,59 +349,80 @@ std::cout << "All inputs loaded into C3M " << std::endl;
     rxnEquation.replace(pos, 2, "->");
     std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan"); 
     if(photo_cross_info != "nan"){
+    std::cout << rxnEquation << std::endl;
     RxnIndex(ph_inx) = irxn;
     std::string photo_cross_database = photo_cross_info.substr(0,photo_cross_info.find(","));  
-    std::string photo_cross_file = photo_cross_info.substr(photo_cross_info.find(",")+1,photo_cross_info.length()-1);
+    std::string photo_cross_ = photo_cross_info.substr(photo_cross_info.find(",")+1,photo_cross_info.length()-1);
     
     
     if(photo_cross_database == "VULCAN_Ion"){
-     MatrixXd photoXsection_info = ReadVULCANPhotoIonCrossSection(photo_cross_file);
+     MatrixXd photoXsection_info = ReadVULCANPhotoIonCrossSection(photo_cross_);
      photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1)); 
    }
     
     if(photo_cross_database == "VULCAN_Diss"){
-     MatrixXd photoXsection_info = ReadVULCANPhotoDissCrossSection(photo_cross_file);
+     MatrixXd photoXsection_info = ReadVULCANPhotoDissCrossSection(photo_cross_);
      photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1));
+     //std::cout <<    photo_cross_data.col(ph_inx).transpose() << std::endl;
    }
    
     if(photo_cross_database == "VPL"){
-     MatrixXd photoXsection_info = ReadAtmosCrossSection(photo_cross_file);
+     MatrixXd photoXsection_info = ReadAtmosCrossSection(photo_cross_);
      photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1));
    
    }
 
    if(photo_cross_database == "MPD"){
-     MatrixXd photoXsection_info = ReadMPCrossSection(photo_cross_file);
+     MatrixXd photoXsection_info = ReadMPCrossSection(photo_cross_);
      photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1));
 
    }
    
+   if(photo_cross_database == "KINETICS"){
+     MatrixXd photoXsection_info = ReadKINETICSCrossSection(atoi(photo_cross_.c_str())); //In this case its not file name but the reaction number
+     photo_cross_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), photoXsection_info.row(0), photoXsection_info.row(1));
+   }
+   
+//**Space for custom Photochemical cross section database**
+
    ph_inx++;
     }
     
-//If the string is not equal to nan and then proceed and load the photochemical cross sectikons
    }
 
+
 ph_inx = 0;
-//Reading all the quantum yield
+
+//Reading Quantum Yield for photochemical reactions in the network
   for(int irxn = 0; irxn < nrxn; irxn++){
     std::string rxnEquation = gas_kin->reactionString(irxn);
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
     std::string qyield_info = pinput->GetOrAddString("qyield", rxnEquation, "nan");
-    std::cout << qyield_info << std::endl; 
     if(qyield_info != "nan"){
-      //RxnIndex(ph_inx) = irxn;
-      std::string col_str = qyield_info.substr(0,qyield_info.find(","));  
+      std::string QYType = qyield_info.substr(0,qyield_info.find(";")); 
+
+//Quantum Yield for VULCAN database
+      if(QYType == "VULCAN"){
+      std::string col_str = qyield_info.substr(qyield_info.find(";")+1,qyield_info.find(",") - qyield_info.find(";")-1 );
       int col_num = atoi(col_str.c_str());
-      std::string qyield_file = qyield_info.substr(qyield_info.find(",")+1,qyield_info.length()-1);
+      std::string qyield_file = qyield_info.substr(qyield_info.find(",")+1,qyield_info.length()-qyield_info.find(",") -1);
       MatrixXd QYield_info = ReadQYield(qyield_file);
-      qyield_data.col(ph_inx) = InterpolateCrossSection(stellar_input.row(0), QYield_info.row(0), QYield_info.row(col_num));
+      qyield_data.col(ph_inx) = InterpolateQYield(stellar_input.row(0), QYield_info.row(0), QYield_info.row(col_num));
+      }
+
+//Quantum Yield for KINETICS7 database (QY == 1)
+      if(QYType == "KINETICS"){
+      qyield_data.col(ph_inx) = MatrixXd::Ones(stellar_input.row(0).size(), 1);
+
+      }
+
+//**Space for custom Quantum Yield database**
+
       ph_inx++;
       }
-    
+
     }
-    
 
 //Chemical evolution
 double dh; //m
@@ -334,7 +430,6 @@ int iPrev, iNext;
 
 
    
-// Beer-Lambert Solver
 
 // Generate a opacity profile for the atmosphere. The opacity is calculated at every height
  MatrixXd Stellar_activity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
@@ -351,11 +446,10 @@ VectorXd Un(nsp);
 VectorXd Unext(nsp);
 VectorXd Uprev(nsp);
 VectorXd flux1(nsp);
-VectorXd flux2(nsp);
-VectorXd flux3(nsp);
-VectorXd flux4(nsp);
 VectorXd dQ(nsp);
-double Keddy;
+double Keddy_j;
+double Keddy_prev;
+double Keddy_next;
 double Temp, Press, Kzz;
 VectorXd m_wdot(nsp);
 VectorXd mole_frac(nsp);
@@ -366,7 +460,8 @@ int i = 0;
 std::string equbm = pinput->GetString("problem", "equilibrate");
 if(equbm == "true"){
 std::cout << "!!  Initiating Equilibrium  !!" << std::endl;
-//Equilibrium as initial condition
+
+//Setting Thermochemical Equilibrium
   for (int j = 0; j < nSize; j++) {
    Temp = AtmData(iTemp,j);
    Press = AtmData(iPress,j);
@@ -378,26 +473,37 @@ std::cout << "!!  Initiating Equilibrium  !!" << std::endl;
 std::cout << "!! Atmosphere in thermochemical equilibrium !! \n" << std::endl;
    }
 
-while(Ttot  < Tmax) {
+
+
+
+
+double err = 1e-12;
+double tol = 0.01;
+std::cout << "!! Starting the Simulation !!" << std::endl;
+conv = ChemMoleFrac;
+double old_conv;
+while(Ttot < Tmax) {
+  old_conv = conv.array().abs().matrix().maxCoeff();
+  std::cout << "Convergence: " << old_conv << std::endl;
   MatrixXd Opacity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
   Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
   a = ChemMoleFrac;
-
+  n_conc = ChemConc;
   for (int j = 0; j < nSize; j++) {
 //Setting T, P, X for each grid point
     iPrev = j-1;
     iNext = j+1;
     Temp = AtmData(iTemp,j);
     Press = AtmData(iPress,j);
-    //std::cout << "Lets get started " << std::endl;
     gas->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
-    //std::cout << "Done" << std::endl;
     mole_frac = ChemMoleFrac.col(j);
     gas->setMoleFractions(&mole_frac[0]);
-    
-    Keddy = AtmData(iKzz, j);
-     
-//Calculating the photochemical reaction rate
+    auto sol2 = newSolution(network_file);
+    auto gas2 = sol2->thermo();
+    auto gas_kin2 = sol2->kinetics();
+    Cantera::Kinetics *gasRawPtr = sol2->kinetics().get();
+    Cantera::ThermoPhase *gasThermo = gas2.get(); 
+//Beer-Lambert Solver
     
 //Opacity at the given altitude 
    if(j != 0){
@@ -407,17 +513,16 @@ while(Ttot  < Tmax) {
    std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
    while (std::regex_search (absorber_species_list,m,pattern)) {
      for (auto x:m){
-      species_inx = gas->speciesIndex(x);
+      species_inx = gas2->speciesIndex(x);
       double number_density = Press/(Kb*Temp);
-      //std::cout << mole_fractions(species_inx)*number_density*absorber_cross_data.col(Absorber)*dh << std::endl;
-      //std::cout << number_density << std::endl;
       Opacity.col(j) = Opacity.col(j) - (mole_fractions(species_inx)*number_density*absorber_cross_data.col(Absorber)*dh);
       Absorber++;
      }
       absorber_species_list = m.suffix().str();
     }
-    
-//The transmission coefficient from opacity
+
+//Adding custom opacity to the atmosphere
+    Opacity.col(j) = Opacity.col(j) - (dh*handleCustomOpacity(PlanetName, gasThermo, Press, Temp, AtmData(iAlt,j), stellar_input.row(0)));
     Opacity.col(j) = Opacity.col(j).array().exp().matrix();    
     Opacity.col(j) =  (Opacity.col(j).array()*Opacity.col(j-1).array()).matrix();
 //Stellar spectrum at each altitude
@@ -426,32 +531,20 @@ while(Ttot  < Tmax) {
    if(j == 0){
      Stellar_activity.col(j) = (stellar_input.row(1).transpose());
      }
-     //std::cout << "level " << AtmData(iAlt,j)/1E3 << " km" << std::endl;
 //Computing the photochemical reaction rate for each reaction
    for(int rx = 0; rx < PhotoRxn; rx++){
-     double j_rate = PhotoChemRate(stellar_input.row(0),photo_cross_data.col(rx), Stellar_activity.col(j));
-    // std::cout << AtmData(iAlt,j)/1e3   << " " << j_rate << std::endl;
-//Setting the multiplier for each reaction
+     double j_rate = QPhotoChemRate(stellar_input.row(0),d_wavelength, photo_cross_data.col(rx), qyield_data.col(rx), Stellar_activity.col(j));
      
    if(i == 0){
      //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
-     //gas_kin->setMultiplier(RxnIndex(rx), j_rate);
-     //std::cout << gas_kin->reactionString(RxnIndex(rx)) <<" "  <<  j_rate << std::endl;
-     //std::cout << "new photochemical rates for reaction " << gas_kin->reactionString(RxnIndex(rx)) << std::endl;
-     //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
+     gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
      Jrate(rx) = j_rate;
 
    }
    if(i != 0){
      if(Jrate(rx) != 0){
        double multiplier = j_rate/Jrate(rx);
-       //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
-       gas_kin->setMultiplier(RxnIndex(rx), multiplier);
-        std::cout << AtmData(iAlt,j)/1e3   << " " << j_rate << std::endl;
-       //std::cout << gas_kin->reactionString(RxnIndex(rx)) <<" "  <<  j_rate << std::endl;
-       //std::cout << "new photochemical rates for reaction" << gas_kin->reactionString(RxnIndex(rx)) << std::endl;
-       //std::cout << gas_kin->multiplier(RxnIndex(rx)) << std::endl;
-       
+       gas_kin2->setMultiplier(RxnIndex(rx), multiplier);
        Jrate(rx) = j_rate;
    }
    i++;
@@ -459,35 +552,46 @@ while(Ttot  < Tmax) {
    
    }
 
+//Adding custom reaction rates
+   handleCustomChemistry(PlanetName, gasRawPtr, Press, Temp);
+
 //Solving the net production for each species
-    gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
-    //std::cout << m_wdot.transpose() << std::endl;
-    m_wjac = gas_kin->netProductionRates_ddX(); //Extracting Jacobian from Cantera
-//Backward Euler Scheme (Li and Chen, 2019)
+    gas_kin2->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera 
+    m_wjac = gas_kin2->netProductionRates_ddX(); //Extracting Jacobian from Cantera
+    
+//Upper boundary flux
     if (j == 0){
     flux1 = flux_upper;
+    }
     
-    }
-    if (j == nSize-1){
-    flux1 = flux_lower;
-   
-    }
     if ((j > 0) && (j < nSize-1)) {
     dh = 0.5*(AtmData(iAlt,j-1) - AtmData(iAlt,j+1));
+    Keddy_j = AtmData(iKzz, j);
+    Keddy_prev = AtmData(iKzz, j-1);
+    Keddy_next = AtmData(iKzz, j+1);
 
 //Diffusion terms (central difference scheme)
-    flux1 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
+    flux1 = diff_flux(j,iNext,iPrev,a,n_conc,nsp,Keddy_j,Keddy_prev,Keddy_next,dh);
     }
-//Integration for each species
+
+//Lower boundary flux
+    if (j == nSize - 1){
+    flux1 = flux_lower;
+    }
+
 //Backward Euler Scheme (Li and Chen, 2019)
-    mat2 = ((mat1) - (dt*m_wjac/gas->molarDensity()));
+    mat2 = ((mat1) - (m_wjac*dt/gas2->molarDensity() ));
     mat2 = mat2.inverse();
-    mat2 = mat2*((m_wdot / gas->molarDensity())  );
-    dQ = mat2*dt;
+    mat2 = dt*mat2*((m_wdot ) - flux1);
+    dQ = mat2/gas2->molarDensity();
     mole_frac = mole_frac + dQ;
-      
-//Forced boundary condition
-//Upper boundary
+    ProdRates.col(j) = m_wdot;
+    DiffRates.col(j) = flux1;
+    conv.col(j) = m_wdot - flux1 ;//(dQ.array()/mole_frac.array()).matrix();
+    conv.col(j) =  (isnan(abs(conv.col(j).array())) ).select(0, conv.col(j));
+    
+/*    
+//Upper boundary mixing ratio
     if (j == 0){
     std::string u_species_list = pinput->GetOrAddString("upperboundaryMixRat", "species", "nan");
     if(u_species_list != "nan"){
@@ -499,8 +603,154 @@ while(Ttot  < Tmax) {
     }
       u_species_list = m.suffix().str();
   } } }
+*/
 
-//Lower boundary
+
+//Lower boundary mixing ratio
+    if (j == nSize-1){
+    std::string l_species_list = pinput->GetOrAddString("lowerboundaryMixRat", "species", "nan");
+    if(l_species_list != "nan"){
+    while (std::regex_search (l_species_list,m,pattern)) {
+      for (auto x:m){
+        std::string species_lowerboundary_MixRat = pinput->GetString("lowerboundaryMixRat", x);
+        species_inx = gas2->speciesIndex(x);
+        mole_frac(species_inx) = atof(species_lowerboundary_MixRat.c_str());
+    }
+      l_species_list = m.suffix().str();
+
+  } } 
+
+     conv.col(nSize -1) = VectorXd::Zero(gas2->nSpecies());
+  }
+ 
+  
+//Setting the mole fractions and concentrations
+    gas2->setMoleFractions(&mole_frac[0]);
+    gas2->getMoleFractions(&ChemMoleFrac.col(j)[0]);  
+    gas2->getConcentrations(&ChemConc.col(j)[0]);
+}   
+    
+    std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
+    Ttot = Ttot + dt;
+    
+    if(kmax*dt/(dh*dh) < 0.01){
+      dt = dt*1.25;
+      
+      //if(conv.array().abs().matrix().maxCoeff() < tol){
+       // dt = 0.9*dt*pow(tol/conv.array().abs().matrix().maxCoeff(), 0.5);
+       // Time(Time.size() - 1) = Ttot;
+       // Time.conservativeResize(Time.size() + 1);
+       // ChemMole.push_back(ChemMoleFrac);    
+       // Ttot = Ttot + dt;
+     // }
+      
+      //if(conv.array().abs().matrix().maxCoeff() > tol){
+      //  dt = 0.9*dt*pow(tol/conv.array().abs().matrix().maxCoeff(), 0.5);
+
+      //}
+
+    }
+
+    
+
+} 
+      
+//This is where the photochemistry definition ends (Anything beyond is not defined in the scope of photochemistry)  
+  }
+
+if(photochem != "true"){
+  Eigen::SparseMatrix<double>  m_wjac; 
+  m_wjac.resize(nsp, nsp);
+  MatrixXd mat1(nsp, nsp);
+  mat1 = MatrixXd::Identity(nsp, nsp);
+  MatrixXd mat2(nsp, nsp);
+  VectorXd Un(nsp);
+  VectorXd Unext(nsp);
+  VectorXd Uprev(nsp);
+  VectorXd flux1(nsp);
+  VectorXd dQ(nsp);
+  double Keddy_j, Keddy_next, Keddy_prev;
+  double Temp, Press, Kzz;
+  VectorXd m_wdot(nsp);
+  VectorXd mole_frac(nsp);
+  double dh;
+  int iPrev, iNext;
+  
+  double Kb = 1.38E-23;
+  int i = 0;
+  std::cout << "Starting the simulation now" << std::endl;
+  while(Ttot  < Tmax){
+    for (int j = 0; j < nSize; j++) {
+//Setting T, P, X for each grid point
+      iPrev = j-1;
+      iNext = j+1;
+      Temp = AtmData(iTemp,j);
+      Press = AtmData(iPress,j);
+      auto sol2 = newSolution(network_file);
+      auto gas2 = sol2->thermo();
+      auto gas_kin2 = sol2->kinetics();
+      gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
+      mole_frac = ChemMoleFrac.col(j);
+      gas2->setMoleFractions(&mole_frac[0]);   
+      Cantera::Kinetics *gasRawPtr = sol2->kinetics().get();
+      Cantera::ThermoPhase *gasThermo = gas2.get(); 
+    
+//Adding custom reaction rates
+   handleCustomChemistry(PlanetName, gasRawPtr, Press, Temp);
+
+//Solving the net production for each species
+
+    gas_kin2->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera 
+    m_wjac = gas_kin2->netProductionRates_ddX(); //Extracting Jacobian from Cantera
+    
+//Upper boundary flux
+    if (j == 0){
+    flux1 = flux_upper;
+    }
+    
+    if ((j > 0) && (j < nSize-1)) {
+    dh = 0.5*(AtmData(iAlt,j-1) - AtmData(iAlt,j+1));
+    Keddy_j = AtmData(iKzz, j);
+    Keddy_prev = AtmData(iKzz, j-1);
+    Keddy_next = AtmData(iKzz, j+1);
+
+//Diffusion terms (central difference scheme)
+    flux1 = diff_flux(j,iNext,iPrev,a,n_conc,nsp,Keddy_j,Keddy_prev,Keddy_next,dh);
+    }
+
+//Lower boundary flux
+    if (j == nSize - 1){
+    flux1 = flux_lower;
+    }
+
+//Backward Euler Scheme (Li and Chen, 2019)
+    mat2 = ((mat1) - (m_wjac*dt/gas2->molarDensity() ));
+    mat2 = mat2.inverse();
+    mat2 = dt*mat2*((m_wdot ) - flux1);
+    dQ = mat2/gas2->molarDensity();
+    mole_frac = mole_frac + dQ;
+    ProdRates.col(j) = m_wdot;
+    DiffRates.col(j) = flux1;
+    conv.col(j) = m_wdot - flux1 ;//(dQ.array()/mole_frac.array()).matrix();
+    conv.col(j) =  (isnan(abs(conv.col(j).array())) ).select(0, conv.col(j));
+    
+/*    
+//Upper boundary mixing ratio
+    if (j == 0){
+    std::string u_species_list = pinput->GetOrAddString("upperboundaryMixRat", "species", "nan");
+    if(u_species_list != "nan"){
+    while (std::regex_search (u_species_list,m,pattern)) {
+      for (auto x:m){
+        std::string species_upperboundary_MixRat = pinput->GetString("upperboundaryMixRat", x);
+        species_inx = gas->speciesIndex(x);
+        mole_frac(species_inx) = atof(species_upperboundary_MixRat.c_str());
+    }
+      u_species_list = m.suffix().str();
+  } } }
+*/
+
+
+//Lower boundary mixing ratio
     if (j == nSize-1){
     std::string l_species_list = pinput->GetOrAddString("lowerboundaryMixRat", "species", "nan");
     if(l_species_list != "nan"){
@@ -511,92 +761,22 @@ while(Ttot  < Tmax) {
         mole_frac(species_inx) = atof(species_lowerboundary_MixRat.c_str());
     }
       l_species_list = m.suffix().str();
-  } } }
-    
-    gas->setMoleFractions(&mole_frac[0]);
-    gas->getMoleFractions(&ChemMoleFrac.col(j)[0]);
-    //std::cout << mole_frac.transpose() << std::endl;
-} 
-    std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
-    Ttot = Ttot + dt;
-    if(kmax*dt/(dh*dh) < 0.1){
-    dt = dt*1.5;
-    }
-    
-} 
-      
-//This is where the photochemistry definition ends (Anything beyond is not defined in the scope of photochemistry)  
+
+  } } 
+
+     conv.col(nSize -1) = VectorXd::Zero(gas->nSpecies());
   }
-
-  if(photochem != "true"){
-//If photochemistry is set equal to false
-   //Initiating Matrices for Time Evolution
-Eigen::SparseMatrix<double>  m_wjac;
-m_wjac.resize(nsp, nsp);
-MatrixXd mat1(nsp, nsp);
-mat1 = MatrixXd::Identity(nsp, nsp);
-MatrixXd mat2(nsp, nsp);
-VectorXd Un(nsp);
-VectorXd Unext(nsp);
-VectorXd Uprev(nsp);
-VectorXd flux1(nsp);
-VectorXd flux2(nsp);
-VectorXd flux3(nsp);
-VectorXd flux4(nsp);
-VectorXd dQ(nsp);
-double Keddy;
-double Temp, Press, Kzz;
-VectorXd m_wdot(nsp);
-VectorXd mole_frac(nsp);
-double dh;
-int iPrev, iNext;
-
-double Kb = 1.38E-23;
-int i = 0;
-while(Ttot  < Tmax){
-  for (int j = 0; j <= nSize; j++) {
-//Setting T, P, X for each grid point
-    iPrev = j-1;
-    iNext = j+1;
-    Temp = AtmData(iTemp,j);
-    Press = AtmData(iPress,j); 
-    gas->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
-    mole_frac = ChemMoleFrac.col(j);
-    gas->setMoleFractions_NoNorm(&mole_frac[0]);
-    Keddy = AtmData(iKzz, j);
-    
-    //Solving the net production for each species
-    gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
-    m_wjac = gas_kin->netProductionRates_ddX()/gas->molarDensity(); //Extracting Jacobian from Cantera
-
-    a = ChemMoleFrac;
-    if (j == 0){
-    flux1 = flux_upper;
-    }
-    if (j == nSize-1){
-    flux1 = flux_lower;
-    }
-    if ((j > 0) && (j < nSize-1)) {
-    dh = 0.5*(AtmData(iAlt,j+1) - AtmData(iAlt,j-1));
-
-//Diffusion terms (central difference scheme) 
-    flux1 = diff_flux(j,iNext,iPrev,a,nsp,Keddy,dh);
-    }
-//Integration for each species
-//Backward Euler Scheme (Li and Chen, 2019)
-    mat2 = ((mat1/dt) - (m_wjac/gas->molarDensity()));
-    mat2 = mat2.inverse();
-    mat2 = mat2*((m_wdot / gas->molarDensity()) + flux1 );
-    dQ = mat2;
-    mole_frac = mole_frac + dQ;
-    gas->setMoleFractions(&mole_frac[0]);
-    gas->getMoleFractions(&mole_frac[0]);
-    ChemMoleFrac.col(j) = mole_frac;  
  
+  
+//Setting the mole fractions and concentrations
+    gas2->setMoleFractions(&mole_frac[0]);
+    gas2->getMoleFractions(&ChemMoleFrac.col(j)[0]);  
+    gas2->getConcentrations(&ChemConc.col(j)[0]);
 } 
+
     Ttot = Ttot + dt;
 
-    if(kmax*dt/(dh*dh) < 1){
+    if(kmax*dt/(dh*dh) < 0.1){
     dt = dt*1.25;
     }
     std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
@@ -606,42 +786,73 @@ while(Ttot  < Tmax){
 
 }
 //Writing output into NetCDF file
+int num3D = ChemMole.size();
+
+
+std::vector<Eigen::MatrixXd> matrix3d(Time.size(), Eigen::MatrixXd(nsp, nSize));
 
 VectorXd cPress = AtmData.row(iPress);
 VectorXd cTemp = AtmData.row(iTemp);
 VectorXd cHeight = AtmData.row(iAlt);
 VectorXd cKzz = AtmData.row(iKzz);
+MatrixXd dPRates = ProdRates;
+MatrixXd dDRates = DiffRates;
 #if NETCDFOUTPUT
 int ifile;
 string fname = pinput->GetString("output", "out_file");
 int status = nc_create(fname.c_str(), NC_NETCDF4, &ifile);
-int alt, iPres, iTem, iKeddy, iAltz, iChem;
+int dimids[3];
+int alt, iPres, iTem, iKeddy, iAltz, iChem, isp, iProd, iDiff, iTs;
+
+
 // Atmospheric Properties (All in SI units!)
-nc_def_dim(ifile, "Pressure", nSize, &alt);
-nc_def_var(ifile, "Pressure", NC_DOUBLE, 1, &alt, &iPres);
+nc_def_dim(ifile, "Time", Time.size(), &dimids[0]);
+
+nc_def_dim(ifile, "Pressure", nSize, &dimids[2]);
+
+nc_def_dim(ifile, "Species", nsp, &dimids[1]);
+
+
+nc_def_var(ifile, "Pressure", NC_DOUBLE, 1, &dimids[2], &iPres);
 nc_put_var_double(ifile, iPres, &cPress[0]);
 
-nc_def_var(ifile, "Keddy", NC_DOUBLE, 1, &alt, &iKeddy);
+nc_def_var(ifile, "Keddy", NC_DOUBLE, 1, &dimids[2], &iKeddy);
 nc_put_var_double(ifile, iKeddy, &cKzz[0]);
 
-nc_def_var(ifile, "Temp", NC_DOUBLE, 1, &alt, &iTem);
+nc_def_var(ifile, "Temp", NC_DOUBLE, 1, &dimids[2], &iTem);
 nc_put_var_double(ifile, iTem, &cTemp[0]);
 
-nc_def_var(ifile, "Altitude", NC_DOUBLE, 1, &alt, &iAltz);
+nc_def_var(ifile, "Altitude", NC_DOUBLE, 1, &dimids[2], &iAltz);
 nc_put_var_double(ifile, iAltz, &cHeight[0]);
 
+//nc_def_var(ifile, "Series", NC_DOUBLE, 3, dimids, &iTs);
+//nc_put_var_double(ifile, iTs, matrix3d.data());
 
 
 init_species_list = pinput->GetString("output", "species");
   while (std::regex_search (init_species_list,m,pattern)) {
     for (auto x:m){
     std::string species = x;
+    std::string prod = "Prod";
+    std::string diff = "Diff";
+    std::string prod_species = prod + species;
+    std::string diff_species = diff + species;
     species_inx = gas->speciesIndex(x);
-    VectorXd cChem = ChemMoleFrac.row(species_inx);
+    VectorXd cChem = ChemConc.row(species_inx);
+    VectorXd pChem = ProdRates.row(species_inx);
+    VectorXd dChem = DiffRates.row(species_inx);
     const char* ccx = &species[0];
-    nc_def_var(ifile, ccx, NC_DOUBLE, 1, &alt, &iChem);
+    const char* prodx = &prod_species[0];
+    const char* diffx = &diff_species[0];
+    nc_def_var(ifile, ccx, NC_DOUBLE, 1, &dimids[2], &iChem);
     nc_put_var_double(ifile, iChem, &cChem[0]);
     
+    nc_def_var(ifile, prodx, NC_DOUBLE, 1, &dimids[2], &iProd);
+    nc_put_var_double(ifile, iProd, &pChem[0]);
+
+    nc_def_var(ifile, diffx, NC_DOUBLE, 1, &dimids[2], &iDiff);
+    nc_put_var_double(ifile, iDiff, &dChem[0]);
+
     }
     init_species_list = m.suffix().str();
   }

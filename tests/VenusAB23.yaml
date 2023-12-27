@@ -1,0 +1,593 @@
+#Venus atmospheric chemistry network from surface to homopause
+#Author: Ananyo Bhattacharya, University of Michigan
+#Description: Sulphur chemistry network consisting of important reactions for SOx, H2S,
+#Sx, OCS, and other relevant sulphur species
+units: {length: cm, quantity: molec, activation-energy: K}
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, N, S, O, H, Ar]
+  species: [CO2, N2, SO2, OCS, H2O, H2S, CO, O2, SO3, H2, S, S2, S4, S6, S8, H2SO4, S3, SO, S2O, O, H, cS2O2, tS2O2, rS2O2, OH, SH, HO2, O3, O_1D, O2_1D]
+  kinetics: gas
+  reactions: all
+  skip-undeclared-elements: true
+  
+species:
+- name: CO2
+  composition: {C: 1.0, O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: N2
+  composition: {N: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: SO2
+  composition: {S: 1.0, O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: OCS
+  composition: {C: 1.0, O: 1.0, S: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2O
+  composition: {H: 2.0, O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2S
+  composition: {H: 2.0, S: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CO
+  composition: {C: 1.0, O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O2
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: SO3
+  composition: {S: 1.0, O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S
+  composition: {S: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S2
+  composition: {S: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S4
+  composition: {S: 4.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S6
+  composition: {S: 6.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S8
+  composition: {S: 8.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2SO4
+  composition: {H: 2.0, S: 1.0, O: 4.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S3
+  composition: {S: 3.0}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HO2
+  composition: {H: 1.0, O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: SO
+  composition: {S: 1.0, O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: S2O
+  composition: {S: 2.0, O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H
+  composition: {H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: cS2O2
+  composition: {S: 2.0, O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: tS2O2
+  composition: {S: 2.0, O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: rS2O2
+  composition: {S: 2.0, O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: OH
+  composition: {O: 1.0, H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: SH
+  composition: {S: 1.0, H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O3
+  composition: {O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O_1D
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O2_1D
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+reactions:
+#Photochemical reactions
+- equation: '1.0 CO2 => 1.0 CO + 1.0 O ' 
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 CO2 => 1.0 CO + 1.0 O_1D ' #Bierson er al., 2020
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 O2 => 2.0 O ' #Bierson er al., 2020
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 O2 => 1.0 O + 1.0 O_1D ' #Bierson er al., 2020
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 O3 => 1.0 O2 + 1.0 O '
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 O3 => 1.0 O2_1D + 1.0 O_1D '
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 O3 => 1.0 O2 + 1.0 O_1D '
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 O3 => 1.0 O2_1D + 1.0 O '
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 O3 => 3.0 O '
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 H2O => 1.0 H + 1.0 OH ' #Bierson er al., 2020
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 H2O => 1.0 H2 + 1.0 O_1D ' #Bierson er al., 2020
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 H2O => 2.0 H + 1.0 O ' #Bierson er al., 2020
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 S2 => 2.0 S ' 
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 S3 => 1.0 S2 + 1.0 S ' 
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 S4 => 1.0 S3 + 1.0 S ' 
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 S4 => 2.0 S2 ' 
+  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 SO2 => 1.0 S + 1.0 O2 ' #Bierson et al., (2020)
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 SO2 => 1.0 SO + 1.0 O ' #Bierson et al., (2020)
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 SO3 => 1.0 SO2 + 1.0 O ' #Bierson et al., (2020)
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 SO3 => 1.0 SO2 + 1.0 O_1D ' #Bierson et al., (2020)
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 H2S => 1.0 H + 1.0 SH ' #Bierson et al., (2020)
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 OCS => 1.0 CO + 1.0 S ' #Bierson et al., (2020)
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 cS2O2 => 2.0 SO ' #Pinto et al., 2021
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 cS2O2 => 1.0 S2 + 1.0 O2 ' #Pinto et al., 2021
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 tS2O2 => 2.0 SO ' #Pinto et al., 2021
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 rS2O2 => 1.0 S + 1.0 SO2 ' #Pinto et al., 2021
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+#Thermochemical reactions (including pressure-dependent and three-body reactions)
+- equation: '1.0 SO2 + 1.0 O (+ M) => 1.0 SO3 (+ M) ' #Burkholder et al., 2015 - JPL Evaluation
+  type: falloff
+  low-P-rate-constant: {A: 1.8E-33,T0: 298, b: 2.0,Ea: 0.0}
+  high-P-rate-constant: {A: 4.1E-14,T0: 298,b: 1.8,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 SO3 + 1.0 H2O + M => 1.0 H2SO4 + M ' #Bierson et al., (2020)
+  type: three-body
+  rate-constant: {A: 2.3e-33,T0: 1.0,b: 1.0,Ea: -6540.0}
+- equation: '1.0 SO3 + 1.0 CO <=> 1.0 SO2 + 1.0 CO2 ' #Bierson et al., (2020)
+  rate-constant: {A: 1.0e-11,T0: 300.0,b: 0.0,Ea: 13000.0 }
+- equation: '1.0 O + 1.0 O3 => 2.0 O2 ' #Bierson et al., (2020)
+  rate-constant: {A: 8.0e-12,T0: 300.0,b: 0.0,Ea: -2060.0 }
+- equation: '1.0 O_1D + 1.0 O3 => 2.0 O2 ' #Bierson et al., (2020)
+  rate-constant: {A: 1.2e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O_1D + 1.0 O3 => 2.0 O + 1.0 O2 ' #Bierson et al., (2020)
+  rate-constant: {A: 1.2e-10,T0: 300.0,b: 0.0,Ea: 0.0 }
+#- equation: '1.0 O2_1D + 1.0 O3 => 2.0 O2 + 1.0 O ' #Bierson et al., (2020)
+#  rate-constant: {A: 5.2e-11,T0: 300.0,b: 0.0,Ea: 2840.0 }
+#- equation: '1.0 O2 + 1.0 H2S => 2.0 SO3 + 2.0 H2 ' #Needs to be checked, not possible ?
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+#- equation: '3.0 O2 + 2.0 OCS => 2.0 SO3 + 2.0 CO ' #Needs to be checked, not possible?
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+#- equation: '1.0 H2S => 1.0 H2 + 1.0 S ' #H2S decomposes under very high temperatures, indicated from NIST database
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+#- equation: '1.0 SO3 + 4.0 CO => 1.0 OCS + 3.0 CO2 ' #Prinn (1975) doesn't provide
+#rates, databases dont show this reaction
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+#- equation: '1.0 H2 + 1.0 SO3 + 3.0 CO => 1.0 H2S + 3.0 CO2 ' #Not sure about the
+#reaction rate
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+
+#- equation: '1.0 H + 1.0 SH => 1.0 H2 + 1.0 S ' #Bierson et al., (2020)
+#  rate-constant: {A: 2.16e-11,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 CO + M => 1.0 OCS + M' #Bierson et al., (2020)
+  type: three-body
+  rate-constant: {A: 4.0e-33,T0: 300.0,b: 0.0,Ea: 1940.0}
+- equation: '1.0 SO + 1.0 CO2 => 1.0 SO2 + 1.0 CO ' #Original reaction from Prinn 1978, rate from Bierson et al., 2020
+  rate-constant: {A: 1.5e-11,T0: 300.0,b: 0.0,Ea: 22000.0 }
+- equation: '1.0 S + 1.0 CO2 => 1.0 SO + 1.0 CO ' #Original reaction from Prinn 1978, rate from Bierson et al., 2020
+  rate-constant: {A: 0.0,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 S + 1.0 SO3 => 1.0 SO2 + 1.0 SO ' #Original reaction from Prinn 1978, rate from Bierson et al., 2020
+  rate-constant: {A: 1.0e-16,T0: 300.0,b: 0.0,Ea: 0.0 }
+#- equation: '1.0 O + 1.0 S2O2 => 1.0 SO + 1.0 SO2 ' #Bierson et al., (2020)
+#  rate-constant: {A: 3.0e-15,T0: 300.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O2 + 1.0 OCS => 1.0 SO2 + 1.0 CO ' #Prinn 1979 and rate from NIST database
+  rate-constant: {A: 4.98e-12,b: 0 ,Ea: 10271.83 }
+- equation: '1.0 O2 + 1.0 H2S => 1.0 HO2 + 1.0 SH ' #rate from NIST database
+  rate-constant: {A: 4.98e-12,b: 0 ,Ea: 10271.83 }
+#- equation: '1.0 S + 1.0 OCS => 1.0 S2 + 1.0 CO ' #Prinn 1979 and reaction rate from Bierson et al., (2020)
+#  rate-constant: {A: 2.4e-24,T0: 1.0,b: 4.0,Ea: 580.0 }
+#- equation: '1.0 OCS + 1.0 S2 => 1.0 CO + 1.0 S3 ' #Prinn 1979 and reaction rate from Bierson et al., (2020)
+#  rate-constant: {A: 2.5e-11,T0: 300.0,b: 0.0,Ea: 25500.0 }
+#- equation: '1.0 S3 + 1.0 OCS => 1.0 CO + 1.0 S4 ' #Prinn 1979 (reaction rate ??)
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+#- equation: '1.0 H2S + 3.0 CO2 => 1.0 H2O + 1.0 SO2 + 3.0 CO ' #Krasnopolsky and Pollack, 1994 (reaction rate ??)
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+#- equation: '1.0 OCS + 2.0 CO2 => 1.0 SO2 + 3.0 CO ' #Krasnopolsky and Pollack, 1994
+#(cant find reaction rate)
+#  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+#  Alternatively H2S and OCS are oxidized by O2 to form SO2 
+- equation: '1.0 O + 1.0 OCS => 1.0 SO + 1.0 CO ' #Krasnopolsky and Pollack, 1994; rate from Bierson et al., (2020)
+  rate-constant: {A: 2.1e-11,T0: 300.0,b: 0.0,Ea: 2200.0} 
+- equation: '1.0 OCS + 1.0 O => 1.0 S + 1.0 CO2 ' #Krasnopolsky and Pollack, 1994
+  rate-constant: {A: 8.3e-11,b: 0 ,Ea: -5530.0 }
+- equation: '1.0 OH + 1.0 OCS => 1.0 SH + 1.0 CO2 ' #Krasnopolsky and Pollack, 1994
+  rate-constant: {A: 7.2e-14,T0: 300.0,b: 0.0,Ea: 1070.0 }
+- equation: '1.0 H + 1.0 OCS => 1.0 CO + 1.0 SH ' #Krasnopolsky and Pollack, 1994; rate from Bierson et al., (2020)
+  rate-constant: {A: 1.2e-11,T0: 300.0,b: 0.0,Ea: 1950.0 }
+- equation: '1.0 CO + 1.0 SH => 1.0 H + 1.0 OCS ' #Krasnopolsky and Pollack, 1994; rate from Bierson et al., (2020)
+  rate-constant: {A: 6.3e-14,T0: 300.0,b: 0.0,Ea: 7780.0 }
+#Sx chemistry is imported from Krasnopolsky et al., (2013)
+- equation: '2.0 S + M => 1.0 S2 + M ' 
+  type: three-body
+  rate-constant: {A: 1.0e-32,T0: 300.0,b: 0.0,Ea: -200.0}
+- equation: '1.0 S2 + M => 2.0 S + M ' 
+  type: three-body
+  rate-constant: {A: 5.0e-8,T0: 300.0,b: 0.0,Ea: 50800.0}
+- equation: '1.0 S2 + 1.0 S + M => 1.0 S3 + M ' 
+  type: three-body
+  rate-constant: {A: 1.0e-32,T0: 300.0,b: 0.0,Ea: -200.0}
+- equation: '1.0 S3 + M => 1.0 S + 1.0 S2 + M ' 
+  type: three-body
+  rate-constant: {A: 2.9e-7,T0: 300.0,b: 0.0,Ea: 31200.0}
+- equation: '1.0 S + 1.0 S3 => 2.0 S2 '
+  rate-constant: {A: 1.7e-10,T0: 300.0,b: 0.0,Ea: 2800.0}
+- equation: '2.0 S2 => 1.0 S + 1.0 S3 '
+  rate-constant: {A: 2.8e-11,T0: 300.0,b: 0.0,Ea: 23000.0}
+- equation: '1.0 CO + 1.0 S3 => 1.0 OCS + 1.0 S2 '
+  rate-constant: {A: 1.0e-11,T0: 300.0,b: 0.0,Ea: 20000.0}
+- equation: '1.0 OCS + 1.0 S2 => 1.0 CO + 1.0 S3 '
+  rate-constant: {A: 2.4e-11,T0: 300.0,b: 0.0,Ea: 24900.0}
+- equation: '2.0 SH  => 1.0 H2S + 1.0 S '
+  rate-constant: {A: 1.5e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 H2S + 1.0 S  => 2.0 SH '
+  rate-constant: {A: 1.7e-10,T0: 300.0,b: 0.0,Ea: 3620.0}
+- equation: '1.0 S + 1.0 SH  => 1.0 S2 + 1.0 H '
+  rate-constant: {A: 4.5e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 H + 1.0 S2  => 1.0 SH + 1.0 S '
+  rate-constant: {A: 5.3e-10,T0: 300.0,b: 0.0,Ea: 8830.0}
+- equation: '1.0 H + 1.0 SH  => 1.0 H2 + 1.0 S '
+  rate-constant: {A: 2.5e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 S + 1.0 H2  => 1.0 SH + 1.0 H '
+  rate-constant: {A: 1.0e-10,T0: 300.0,b: 0.0,Ea: 10080.0}
+- equation: '1.0 H + 1.0 SH + M => 1.0 H2S + M'
+  type: three-body
+  rate-constant: {A: 1.0e-30,T0: 300.0,b: -2.0,Ea: 0.0}
+- equation: '1.0 H2S + M => 1.0 SH + 1.0 H + M'
+  type: three-body
+  rate-constant: {A: 1.9e-7,T0: 300.0,b: 0.0,Ea: 44750.0}
+- equation: '1.0 H + 1.0 S3  => 1.0 SH + 1.0 S2 '
+  rate-constant: {A: 1.2e-10,T0: 300.0,b: 0.0,Ea: 1950.0}
+- equation: '1.0 OH + 1.0 H2S  => 1.0 H2O + 1.0 SH '
+  rate-constant: {A: 6.1e-12,T0: 300.0,b: 0.0,Ea: 75.0}
+- equation: '1.0 SH + 1.0 H2O  => 1.0 H2S + 1.0 OH '
+  rate-constant: {A: 1.0e-11,T0: 300.0,b: 0.0,Ea: 14160.0}
+- equation: '1.0 H + 1.0 H2S  => 1.0 SH + 1.0 H2 '
+  rate-constant: {A: 8.2e-11,T0: 300.0,b: 0.0,Ea: 1470.0}
+- equation: '1.0 SH + 1.0 H2  => 1.0 H2S + 1.0 H '
+  rate-constant: {A: 3.0e-11,T0: 300.0,b: 0.0,Ea: 7930.0}
+- equation: '1.0 S + 1.0 OH  => 1.0 SO + 1.0 H '
+  rate-constant: {A: 6.6e-11,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 SO + 1.0 H  => 1.0 S + 1.0 OH '
+  rate-constant: {A: 4.0e-10,T0: 300.0,b: 0.0,Ea: 11200.0}
+- equation: '2.0 S2 + M => 1.0 S4 + M '
+  type: three-body
+  rate-constant: {A: 1.0e-32,T0: 3000.0,b: 0.0,Ea: 200.0}
+- equation: '1.0 S4 + M => 2.0 S2 + M '
+  type: three-body
+  rate-constant: {A: 1.2e-6,T0: 300.0,b: 0.0,Ea: 7800.0}
+- equation: '1.0 S + 1.0 S3 + M => 1.0 S4 + M '
+  type: three-body
+  rate-constant: {A: 1.0e-32,T0: 300.0,b: 0.0,Ea: 200.0}
+- equation: '1.0 S4 + M => 1.0 S3 + 1.0 S + M '
+  type: three-body
+  rate-constant: {A: 3.0e-7,T0: 300.0,b: 0.0,Ea: 32200.0}
+#SxO chemistry from Pinto et al., (2021), rates from Zhang et al., 2012 and based on
+#them
+- equation: '2.0 SO (+ M) => 1.0 cS2O2 (+ M)' 
+  type: falloff
+  low-P-rate-constant: {A: 2.15E-31,T0: 298, b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 1.0E-11,T0: 298,b: 0.0,Ea: 0.0}
+- equation: '2.0 SO (+ M) => 1.0 tS2O2 (+ M)' 
+  type: falloff
+  low-P-rate-constant: {A: 2.15E-31,T0: 298, b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 1.0E-11,T0: 298,b: 0.0,Ea: 0.0}
+- equation: '2.0 SO (+ M) => 1.0 rS2O2 (+ M) ' 
+  type: falloff
+  low-P-rate-constant: {A: 8.8E-33,T0: 298, b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 1.0E-11,T0: 298,b: 0.0,Ea: 0.0}
+- equation: '1.0 O + 1.0 cS2O2  => 1.0 S2O + 1.0 O2 '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 O + 1.0 cS2O2  => 1.0 SO + 1.0 SO2 '
+  rate-constant: {A: 3.0e-15,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 O + 1.0 tS2O2  => 1.0 S2O + 1.0 O2 '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 O + 1.0 tS2O2  => 1.0 SO + 1.0 SO2 '
+  rate-constant: {A: 3.0e-15,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 H + 1.0 cS2O2  => 1.0 S2O + 1.0 OH '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 H + 1.0 tS2O2  => 1.0 S2O + 1.0 OH '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 SO + 1.0 cS2O2  => 1.0 S2O + 1.0 SO2 '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 SO + 1.0 tS2O2  => 1.0 S2O + 1.0 SO2 '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 S + 1.0 cS2O2  => 1.0 S2O + 1.0 SO '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 S + 1.0 tS2O2  => 1.0 S2O + 1.0 SO '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 S2 + 1.0 cS2O2  => 2.0 S2O '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '1.0 S2 + 1.0 tS2O2  => 2.0 S2O '
+  rate-constant: {A: 3.0e-14,T0: 300.0,b: 0.0,Ea: 0.0}
+- equation: '2.0 H (+ M) => 1.0 H2 (+ M) ' #Bierson and Zhang (2020)
+  type: falloff
+  low-P-rate-constant: {A: 2.7e-31,T0: 1.0,b: -0.6,Ea: 0.0}
+  high-P-rate-constant: {A: 1.0e-60,T0: 1.0,b: 0.0,Ea: 0.0} #1e-60 is added to avoid zero error
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+#Reactions from Frances-Moneeris et al., 2022
+- equation: '1.0 S2 + 1.0 O  => 1.0 SO + 1.0 S '
+  rate-constant: {A: 2.2e-11,T0: 300.0,b: 0.0,Ea: 84.0}
+- equation: '1.0 S + 1.0 SO + M => 1.0 S2O  + M '
+  type: three-body
+  rate-constant: {A: 3.3e-26,T0: 1.0,b: -2.0,Ea: 0.0}
+- equation: '1.0 SO + 1.0 S3  => 1.0 S2O + 1.0 S2 '
+  rate-constant: {A: 1.0e-12,T0: 1.0,b: 0.0,Ea: 0.0}

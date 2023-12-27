@@ -7,4 +7,4 @@ import cantera as ct
 T = 200.0
 P = 100000.0
 #Creatng chemistry network
-gas = ct.Solution("JupiterIon23.yaml")
+gas = ct.Solution("../VenusAB23.yaml")

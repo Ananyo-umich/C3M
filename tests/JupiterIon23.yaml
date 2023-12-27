@@ -435,10 +435,17 @@ species:
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
 reactions:
-- equation: '1.0 H2 => 1.0 H2+ + 1.0 E + 1.0 Ecr ' #Cosmic ray induced ionization
+- equation: '1.0 H2 => 1.0 H2+ + 1.0 E + 1.0 Ecr ' #Electron impact ionization
   rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
-- equation: '1.0 H2 => 1.0 H+ + 1.0 H + 1.0 E + 1.0 Ecr ' #Cosmic ray induced ionization
+- equation: '1.0 H2 => 1.0 H+ + 1.0 H + 1.0 E + 1.0 Ecr ' #Electron impact ionization
   rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+# H2 + e => H2_v + e
+- equation: '1.0 H2 => 1.0 H2_v1 + 1.0 Ecr ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 => 1.0 H2_v2 + 1.0 Ecr ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 => 1.0 H2_v3 + 1.0 Ecr ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
 - equation: '1.0 H2 => 1.0 H2+ + 1.0 E ' #photoionization
   rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
 - equation: '1.0 He => 1.0 He+ + 1.0 E ' #photoionization
@@ -631,6 +638,7 @@ reactions:
 - equation: '1.0 He+ + 1.0 CH4 => 1.0 CH4+ + 1.0 He ' #Egert 2016
   rate-constant: {A: 0.0326E-9,b: 0.0 ,Ea: 0.0 }
 #Hydrocarbon ion reactions and vibrationally excited states of hydrogen are added in the following reactions
+# 2H + H2 => H2_v + H2
 - equation: '2.0 H + 1.0 H2 => 1.0 H2_v1 + 1.0 H2 ' #Egert 2016
   rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
 - equation: '2.0 H + 1.0 H2 => 1.0 H2_v2 + 1.0 H2 ' #Egert 2016
@@ -647,6 +655,7 @@ reactions:
   rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
 - equation: '2.0 H + 1.0 H2 => 1.0 H2_v8 + 1.0 H2 ' #Egert 2016
   rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+# H+ + H2(v) => H2+ + H
 - equation: '1.0 H2_v4 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
   rate-constant: {A: 0.6E-9, b: 0.0 ,Ea: 0 }
 - equation: '1.0 H2_v5 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
@@ -657,6 +666,7 @@ reactions:
   rate-constant: {A: 1.3E-9, b: 0.0 ,Ea: 0 }
 - equation: '1.0 H2_v8 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
   rate-constant: {A: 1.3E-9, b: 0.0 ,Ea: 0 }
+# H3+ + e => H2(v) + H
 - equation: '1.0 H3+ + 1.0 E => 1.0 H2_v1 + 1.0 H ' #Egert 2016
   rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
 - equation: '1.0 H3+ + 1.0 E => 1.0 H2_v2 + 1.0 H ' #Egert 2016
@@ -673,6 +683,7 @@ reactions:
   rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
 - equation: '1.0 H3+ + 1.0 E => 1.0 H2_v8 + 1.0 H ' #Egert 2016
   rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+# H2(v) + H => H2(v-1) + H
 - equation: '1.0 H2_v1 + 1.0 H => 1.0 H2 + 1.0 H ' #Egert 2016
   rate-constant: {A: 3.0E-13,T0: 300,b: 0.5 ,Ea: 0 }
 - equation: '1.0 H2_v2 + 1.0 H => 1.0 H2_v1 + 1.0 H ' #Egert 2016
@@ -686,9 +697,10 @@ reactions:
 - equation: '1.0 H2_v6 + 1.0 H => 1.0 H2_v5 + 1.0 H ' #Egert 2016
   rate-constant: {A: 1.0E-11,T0: 300,b: 0.5 ,Ea: 0 }
 - equation: '1.0 H2_v7 + 1.0 H => 1.0 H2_v6 + 1.0 H ' #Egert 2016
-  rate-constant: {A: 2.17-11,T0: 300,b: 0.5 ,Ea: 0 }
+  rate-constant: {A: 2.17E-11,T0: 300,b: 0.5 ,Ea: 0 }
 - equation: '1.0 H2_v8 + 1.0 H => 1.0 H2_v7 + 1.0 H ' #Egert 2016
   rate-constant: {A: 4.4E-11,T0: 300,b: 0.5 ,Ea: 0 }
+# H+ + H2(v) => H+ + H2(v-1)
 - equation: '1.0 H+ + 1.0 H2_v1 => 1.0 H+ + 1.0 H2 ' #Egert 2016
   rate-constant: {A: 1.2E-9, b: 0.0 ,Ea: 0 }
 - equation: '1.0 H+ + 1.0 H2_v2 => 1.0 H+ + 1.0 H2_v1 ' #Egert 2016
@@ -705,3 +717,33 @@ reactions:
   rate-constant: {A: 1.2E-9, b: 0.0 ,Ea: 0 }
 - equation: '1.0 H+ + 1.0 H2_v8 => 1.0 H+ + 1.0 H2_v7 ' #Egert 2016
   rate-constant: {A: 1.2E-9, b: 0.0 ,Ea: 0 }
+# H2 + H2(v) <-> H2 + H2(v-1)
+- equation: '1.0 H2 + 1.0 H2_v1 => 1.0 H2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v2 => 1.0 H2 + 1.0 H2_v1 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v3 => 1.0 H2 + 1.0 H2_v2 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v4 => 1.0 H2 + 1.0 H2_v3 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v5 => 1.0 H2 + 1.0 H2_v4 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v6 => 1.0 H2 + 1.0 H2_v5 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v7 => 1.0 H2 + 1.0 H2_v6 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v8 => 1.0 H2 + 1.0 H2_v7 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+# H2(v) + H2(w) <-> H2(v-1) + H2(w+1)
+- equation: '1.0 H2_v1 + 1.0 H2 => 1.0 H2 + 1.0 H2_v1 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v1 => 1.0 H2 + 1.0 H2_v2 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v2 => 1.0 H2 + 1.0 H2_v3 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v3 => 1.0 H2 + 1.0 H2_v4 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v4 => 1.0 H2 + 1.0 H2_v5 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v5 => 1.0 H2 + 1.0 H2_v6 ' #Egert 2016
+  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }

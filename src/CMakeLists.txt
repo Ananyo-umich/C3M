@@ -28,6 +28,7 @@ foreach(build ${BUILD_TYPES})
     SYSTEM PRIVATE
     ${EIGEN3_INCLUDE_DIR}
     ${CANTERA_INCLUDE_DIR}
+    ${ATHENAPP_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}
     )
 
@@ -38,6 +39,7 @@ foreach(build ${BUILD_TYPES})
 
   target_link_libraries(c3m_${buildl}
     ${CANTERA_LIBRARY}
+    ${ATHENAPP_LIBRARY_${build}}
     python3.9
     )
 

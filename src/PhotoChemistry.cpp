@@ -6,12 +6,19 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
+// Athena++ header
+#include <parameter_input.hpp>
+
 //NetCDF
 #if NETCDFOUTPUT
   #include <netcdf.h>
 #endif
 
+//Cantera header
+#include <cantera/base/Solution.h>
 
+// ThermoPhase object stores the thermodynamic state
+#include <cantera/thermo.h>
 
 //Print wavelengths
 void printWavelength(Eigen::VectorXd wavelengths_)
@@ -331,4 +338,38 @@ Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex){
   return Output;
 
 }
+
+
+Eigen::VectorXd handleCustomOpacity(string PlanetName,Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav){
+
+Eigen::VectorXd Output;
+
+if(PlanetName == "Venus"){
+   Output = VenusUV(NetworkName, Pres, Temp, Alt, wav);
+  }
+
+
+return Output;
+}
+
+Eigen::VectorXd VenusUV(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav){
+
+
+int size = wav.size();
+Eigen::VectorXd COpacity(size);
+//Altitude in km
+if(Alt > 67){
+  for(int i = 0; i < size; i++){
+  COpacity(i) = 0.056*1E-3*exp( ((67E3-Alt)/3E3) - ((wav(i) - 3600E-10)/1000E-10));}
+}
+
+if((Alt <= 67) && (Alt > 58)){
+  for(int i = 0; i < size; i++){
+  COpacity(i) = 0.056*1E-3*exp( -1*((wav(i) - 3600E-10)/1000E-10));}
+}
+
+
+return COpacity;
+}
+
 
