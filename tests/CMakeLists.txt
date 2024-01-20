@@ -21,6 +21,7 @@ foreach(_test ${_tests})
       ${EIGEN3_INCLUDE_DIR}
       ${CANTERA_INCLUDE_DIR}
       ${NETCDF_INCLUDES}
+      ${HDF5_INCLUDE_DIRS}
       ${ATHENAPP_INCLUDE_DIR}
       ${CMAKE_BINARY_DIR}
       )
@@ -35,6 +36,9 @@ foreach(_test ${_tests})
       ${C3M_LIBRARY_${build}}
       ${CANTERA_LIBRARY}
       ${NETCDF_LIBRARIES}
+      ${HDF5_LIBRARIES}
+      ${CMAKE_DL_LIBS}
+      stdc++fs
       ${ATHENAPP_LIBRARY_${build}}
       python3.9
       )

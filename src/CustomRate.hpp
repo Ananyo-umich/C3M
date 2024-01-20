@@ -15,6 +15,7 @@
 // Cantera headers
 #include <cantera/kinetics/Kinetics.h>
 #include <cantera/base/ct_defs.h>
+#include <cantera/kinetics/Reaction.h>
 #include <cantera/kinetics/ReactionData.h>
 #include <cantera/kinetics/ReactionRate.h>
 #include <cantera/kinetics/MultiRate.h>

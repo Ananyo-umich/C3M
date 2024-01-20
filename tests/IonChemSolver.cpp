@@ -11,6 +11,7 @@
 
 // Kinetics object stores the chemical kinetics information
 #include <cantera/kinetics.h>
+#include <cantera/kinetics/Reaction.h>
 
 // output stream
 #include <iostream>
@@ -374,8 +375,9 @@ std::cout << "All inputs loaded into C3M " << std::endl;
   int PhotoRxn = 0;   
   
   for(int irxn = 0; irxn < nrxn; irxn++){
-    std::cout << gas_kin->reactionString(irxn) << std::endl;
-    std::string rxnEquation = gas_kin->reactionString(irxn);
+    auto& rxnObj = *(gas_kin->reaction(irxn));
+    std::string rxnEquation = rxnObj.equation();
+    std::cout << rxnEquation << std::endl;
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
     std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan");
@@ -394,7 +396,8 @@ std::cout << "All inputs loaded into C3M " << std::endl;
 //Reading cross section for all photochemical reactions
   int ph_inx = 0;
   for(int irxn = 0; irxn < nrxn; irxn++){
-    std::string rxnEquation = gas_kin->reactionString(irxn);
+    auto& rxnObj = *(gas_kin->reaction(irxn));
+    std::string rxnEquation = rxnObj.equation();
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
     std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan"); 
@@ -446,7 +449,8 @@ std::cout << "All inputs loaded into C3M " << std::endl;
 ph_inx = 0;
 //Reading all the quantum yield
   for(int irxn = 0; irxn < nrxn; irxn++){
-    std::string rxnEquation = gas_kin->reactionString(irxn);
+    auto& rxnObj = *(gas_kin->reaction(irxn));
+    std::string rxnEquation = rxnObj.equation();
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
     std::string qyield_info = pinput->GetOrAddString("qyield", rxnEquation, "nan");

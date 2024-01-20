@@ -15,6 +15,7 @@
 // Cantera headers
 #include <cantera/kinetics/Kinetics.h>
 #include <cantera/base/ct_defs.h>
+#include <cantera/kinetics/Reaction.h>
 #include <cantera/kinetics/ReactionData.h>
 #include <cantera/kinetics/ReactionRate.h>
 #include <cantera/kinetics/MultiRate.h>
@@ -41,7 +42,8 @@ void handleCustomChemistry(string PlanetName, Cantera::Kinetics* NetworkName, do
 void JupiterAuroralChemistry_VT(Cantera::Kinetics* NetworkName, double Pres, double Temp){
   int numReaction = NetworkName->nReactions();
 for(int inumRxn =  0; inumRxn < numReaction; inumRxn++){
-  std::string Equation = NetworkName->reactionString(inumRxn);
+  auto& react = *(NetworkName->reaction(inumRxn));
+  std::string Equation = react.equation();
   //int pos = Equation.find("=");
   //Equation.replace(pos, 2, "->");
  /*

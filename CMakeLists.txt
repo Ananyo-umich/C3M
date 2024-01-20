@@ -8,7 +8,8 @@ project(
   VERSION 0.0.1
   LANGUAGES C CXX Fortran
   )
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
 
@@ -37,6 +38,7 @@ message(STATUS "Set up project system libraries ...")
 
 find_package(Eigen3 3.3 REQUIRED)
 find_package(Cantera REQUIRED)
+find_package(HDF5 REQUIRED)
 if (${UseNetCDF})
   find_package(NetCDF REQUIRED)
 endif()

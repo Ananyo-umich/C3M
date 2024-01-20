@@ -13,6 +13,7 @@
 
 // Kinetics object stores the chemical kinetics information
 #include <cantera/kinetics.h>
+#include <cantera/kinetics/Reaction.h>
 
 // output stream
 #include <iostream>
@@ -137,11 +138,14 @@ std::cout << "All inputs loaded into C3M " << std::endl;
 //Storing the photochemical cross section data
   int PhotoRxn = 0;
   
-  
+/*
+ *auto& react = *(NetworkName->reaction(inumRxn));
+  std::string Equation = react.equation();
+ */
   
   for(int irxn = 0; irxn < nrxn; irxn++){
-    std::cout << gas_kin->reactionString(irxn) << std::endl;
-    std::string rxnEquation = gas_kin->reactionString(irxn);
+    auto& rxnObj = *(gas_kin->reaction(irxn));
+    std::string rxnEquation = rxnObj.equation();
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
     std::string photo_cross_info = pinput->GetOrAddString("photocross", rxnEquation, "nan");
@@ -158,7 +162,8 @@ std::cout << "All inputs loaded into C3M " << std::endl;
 //Reading cross section for all photochemical reactions
   int ph_inx = 0;
   for(int irxn = 0; irxn < nrxn; irxn++){
-    std::string rxnEquation = gas_kin->reactionString(irxn);
+    auto& rxnObj = *(gas_kin->reaction(irxn));
+    std::string rxnEquation = rxnObj.equation();
     std::cout << rxnEquation << std::endl;
     int pos = rxnEquation.find("=");
     rxnEquation.replace(pos, 2, "->");
@@ -238,7 +243,8 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 std::string ionkin_state = pinput->GetString("problem", "ionkinetics");
 if(ionkin_state == "true"){
 for(int irxn = 0; irxn < nrxn; irxn++){
-    std::string rxnEqn = gas_kin->reactionString(irxn);
+    auto& rxnObj = *(gas_kin->reaction(irxn));
+    std::string rxnEqn = rxnObj.equation();
     int pos = rxnEqn.find("=");
     rxnEqn.replace(pos, 2, "->");
     std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
@@ -262,7 +268,8 @@ while(Ttot  < Tmax) {
       if(Ttot >= t_source){
 std::cout << "Source is switched off" << std::endl;
        for(int irxn = 0; irxn < nrxn; irxn++){
-         std::string rxnEqn = gas_kin->reactionString(irxn);
+         auto& rxnObj = *(gas_kin->reaction(irxn));
+         std::string rxnEqn = rxnObj.equation();
          int pos = rxnEqn.find("=");
          rxnEqn.replace(pos, 2, "->");
          std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
@@ -338,7 +345,8 @@ double Kb = 1.38E-23;
 std::string ionkin_state = pinput->GetString("problem", "ionkinetics");
 if(ionkin_state == "true"){
 for(int irxn = 0; irxn < nrxn; irxn++){
-    std::string rxnEqn = gas_kin->reactionString(irxn);
+    auto& rxnObj = *(gas_kin->reaction(irxn));
+    std::string rxnEqn = rxnObj.equation();
     int pos = rxnEqn.find("=");
     rxnEqn.replace(pos, 2, "->");
     std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
@@ -361,7 +369,8 @@ while(Ttot  < Tmax) {
       if(Ttot >= t_source){
 std::cout << "Source is switched off" << std::endl;
        for(int irxn = 0; irxn < nrxn; irxn++){
-         std::string rxnEqn = gas_kin->reactionString(irxn);
+         auto& rxnObj = *(gas_kin->reaction(irxn));
+         std::string rxnEqn = rxnObj.equation();
          int pos = rxnEqn.find("=");
          rxnEqn.replace(pos, 2, "->");
          std::string ion_rate = pinput->GetOrAddString("ionkinetics_man", rxnEqn, "nan");
