@@ -16,12 +16,16 @@
 #include <fstream>
 #include <cantera/numerics/eigen_dense.h>
 #include <cantera/numerics/eigen_sparse.h>
+#include <cantera/numerics/Integrator.h>
+#include <cantera/numerics/CVodesIntegrator.h>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <regex>
 #include <cantera/oneD/Sim1D.h>
-#include <cantera/oneD/StFlow.h>
+#include <cantera/oneD/Atm.h>
+#include <cantera/oneD/Boundary1D.h>
+#include <cantera/transport/Transport.h>
 // Athena++ header
 #include <parameter_input.hpp>
 
@@ -62,6 +66,7 @@ int main(int argc, char **argv) {
   auto sol = newSolution(network_file);
   auto gas = sol->thermo();
   auto gas_kin = sol->kinetics();  
+  auto gas_tp = sol->transport();
   int nsp = gas->nSpecies();
   int nrxn = gas_kin->nReactions();
   std::cout << "Number of reactions: " << nrxn << std::endl;
@@ -134,11 +139,13 @@ std::cout << "Boundary conditions loaded" << std::endl;
   
 
 //Atmospheric Profile Data
-  MatrixXd AtmData(4, nSize);
+  MatrixXd AtmData(6, nSize);
   int iTemp = 0;
   int iPress =  1;
   int iKzz =  2;
   int iAlt = 3;
+  int locn = 4;
+  int iU = 5;
   
 //Input from txt file
   int inx = 0;
@@ -150,7 +157,8 @@ std::cout << "Boundary conditions loaded" << std::endl;
       AtmData(iPress, inx) = atof(data1.c_str())*1E2; //Pressure (mbar) -> Pa
       AtmData(iTemp,inx) = atof(data2.c_str()); //Temperature (K)
       AtmData(iKzz, inx) = atof(data3.c_str())*1E-4; //Kzz (cm^2/s) -> m^2/s
-      AtmData(iAlt, inx) = atof(data4.c_str())*1E3; //Altitude (m) 
+      AtmData(iAlt, inx) = atof(data4.c_str())*1E3; //Altitude (m)
+      AtmData(locn, inx) = double(inx)/double(nSize-1);
       if(inx == 0)
       {kmax = AtmData(iKzz, inx); }
       if(inx != 0)
@@ -170,19 +178,15 @@ std::cout << "Boundary conditions loaded" << std::endl;
   std::vector<Eigen::MatrixXd> ChemMole;
   MatrixXd ChemMoleFrac(nsp, nSize);
   MatrixXd ChemConc(nsp, nSize);
+  MatrixXd ChemMassFrac(nsp, nSize);
   MatrixXd a(nsp, nSize);
   MatrixXd n_conc(nsp, nSize);
   MatrixXd conv(nsp, nSize);
   MatrixXd ProdRates(nsp, nSize);
   MatrixXd DiffRates(nsp, nSize);
   VectorXd Time(1);
-  
-  for (int i = 0; i < nSize; i++) {
-      gas->setState_TP(AtmData(iTemp,i), (AtmData(iPress,i)/1.0132E5)*OneAtm);
-      ChemMoleFrac.col(i) = mole_fractions;
-    }
 
-
+    
 //Chemical species profile from input file
   if(profile_file != "nan"){
   std::string input_species_list = pinput->GetString("profile", "species");
@@ -226,17 +230,115 @@ std::cout << "Boundary conditions loaded" << std::endl;
 
 //Feeding the inputs to Cantera One-D objects
 
-  Cantera::StFlow domain;
-  domain.setupGrid(AtmData.col(iAlt).size(),  &AtmData.col(iAlt)[0]);
+  auto flow = std::make_shared<Cantera::Atm>(gas);
+  flow->setupGrid(AtmData.row(iAlt).size(),  &AtmData.row(iAlt).reverse()[0]);
+  double massFlowRate = 0.0; //Inlet flow rate
+
+
+//Setting up the T, P, Y for the One-D object
 
 for (int i = 0; i < nSize; i++) {
-      gas->setState_TP(AtmData(iTemp,i), (AtmData(iPress,i)/1.0132E5)*OneAtm);
-      gas->setMoleFractions(&ChemMoleFrac.col(i)[0]);
-      //domain.setGas(gas, i);
+      std::vector<double> data((1 + nsp), 1);
+      flow->setTemperature(i, AtmData(iTemp,nSize -1 - i));
+      flow->setPressure(i, AtmData(iPress,nSize -1 - i));
+      std::cout << AtmData(iTemp,nSize -1 - i) << " " << AtmData(iPress,nSize -1 - i) << std::endl;
+      gas->setState_TP(AtmData(iTemp,nSize -1 - i), (AtmData(iPress,nSize -1 - i)/1.0132E5)*OneAtm);
+      gas->setMoleFractions(&ChemMoleFrac.col(nSize -1 - i)[0]);
+      gas->getMassFractions(ChemMassFrac.col(nSize -1 - i).data());
+      AtmData(iU, nSize -1 - i) = massFlowRate;
     }
 
-  
-  std::cout << "All inputs loaded into Cantera OneD objects " << std::endl;
+///  flow->setMassFrac(ChemMoleFrac);
+
+flow->setKinetics(gas_kin);
+  flow->setTransport(gas_tp);
+  flow->doEnergy(0);
+
+/*Setting up the boundary conditions
+As the domain starts from TOA, the outer refers to the upper boundary, and inlet will refer to the lower boundary or surface
+depending upon the application
+*/
+
+//Inlet condition with T, mole fraction and total mass flow rate
+auto inlet = std::make_shared<Inlet1D>();
+inlet->setTemperature(AtmData(iTemp,nSize-1));
+inlet->setMoleFractions(&ChemMoleFrac.col(nSize-1)[0]);
+inlet->setMdot(massFlowRate);
+
+//Outlet condition
+auto outlet = std::make_shared<OutletRes1D>();
+outlet->setTemperature(AtmData(iTemp,0));
+outlet->setMoleFractions(&ChemMoleFrac.col(0)[0]);
+
+std::cout << "All inputs loaded into Cantera OneD objects " << std::endl;
+
+//Setting up solution domain
+std::vector<std::shared_ptr<Cantera::Domain1D>> domains = {inlet, flow, outlet};
+Sim1D sim(domains);
+
+std::cout << "Simulation object has been set up" << std::endl;
+
+
+//Solving the equations for momentum, continuity, and chemical diffusion
+//auto transportModel = newTransportMgr("Multi", &gas);
+//gas.setTransport(transportModel);
+flow->setTransportModel("mixture-averaged"); // Ignore species diffusion
+std::cout << AtmData.row(locn) << std::endl;
+std::vector<double> locs;
+std::vector<double> Tvalues;
+std::vector<double> Uvalues;
+std::vector<double> Xvalues;
+
+locs.resize(AtmData.cols());
+Tvalues.resize(AtmData.cols());
+Uvalues.resize(AtmData.cols());
+Xvalues.resize(AtmData.cols());
+
+Eigen::Map<Eigen::RowVectorXd>(&locs[0], AtmData.cols()) = AtmData.row(locn);
+Eigen::Map<Eigen::RowVectorXd>(&Tvalues[0], AtmData.cols()) = AtmData.row(iTemp);
+Eigen::Map<Eigen::RowVectorXd>(&Uvalues[0], AtmData.cols()) = AtmData.row(iU);
+
+
+sim.setInitialGuess("T", locs, Tvalues);
+sim.setInitialGuess("velocity", locs, Uvalues);
+flow->setBounds(flow->componentIndex("T"), 100.0, 2500.0);
+
+for (int ij = 0; ij < gas->nSpecies(); ++ij) {
+    int index = flow->componentIndex(gas->speciesName(ij)); // Get index for each species
+    flow->setBounds(index, 0.0, 1.0); // Set bounds for each species
+    Eigen::Map<Eigen::RowVectorXd>(&Xvalues[0], AtmData.cols()) = ChemMassFrac.row(ij);
+    sim.setInitialGuess(gas->speciesName(ij), locs, Xvalues);
+}
+//gas_kin->disableAllReactions();
+flow->solveEnergyEqn();
+sim.fixedTemperature();
+std::cout << "Transport conditions have been set up" << std::endl;
+
+//Setting up the integrator
+CVodesIntegrator integrator;
+integrator.setMethod(BDF_Method);
+integrator.setTolerances(1e-9, 1e-12);
+integrator.setMinStepSize(1e-6);
+integrator.setMaxStepSize(1.0e-5);
+double t = 10.0;
+//integrator.initialize(t, &Cantera::Func);
+
+//Time-dependent solution
+std::cout << "Solver running...." << std::endl;
+dt = 3;
+//integrator.integrate(t);
+
+
+while (t < Tmax) {
+      t +=dt;
+      integrator.integrate(t);
+      std::cout << "Time: " << t << "s\n";
+       
+       }
+
+
+//double final_time = integrator.currentTime();
+std::cout << "Solution complete" << std::endl;
 
 
 

@@ -235,7 +235,7 @@ std::cout << "Boundary conditions loaded" << std::endl;
        getline(InFile,inp2, '\n');
        ChemMoleFrac(species_inx,i) = atof(inp2.c_str());
        }
-       
+   
        
      chem_inx++;
     }
@@ -527,7 +527,7 @@ int niter = 0;
 int tol = 0;
 int ftime = 0;
 std::cout << "!! Starting the Simulation !!" << std::endl;
-Cantera::Kinetics *gasRawPtr = sol->kinetics().get();
+//Cantera::Kinetics *gasRawPtr = sol->kinetics().get();
 
 while(Ttot  < Tmax) {
   MatrixXd Opacity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
@@ -536,8 +536,6 @@ while(Ttot  < Tmax) {
   n_conc = ChemConc;
   for (int j = 0; j < nSize; j++) {
 //Setting T, P, X for each grid point
-    iPrev = j-1;
-    iNext = j+1;
     Temp = AtmData(iTemp,j);
     Press = AtmData(iPress,j);
     auto sol2 = newSolution(network_file);
@@ -547,6 +545,7 @@ while(Ttot  < Tmax) {
     Cantera::ThermoPhase *gasThermo = gas2.get(); 
     gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     mole_frac = ChemMoleFrac.col(j);
+    //std::cout << mole_frac.transpose() << std::endl;
     gas2->setMoleFractions(&mole_frac[0]);
     
 //Setting the multiplier for each reaction involving electron impact process
@@ -555,6 +554,7 @@ while(Ttot  < Tmax) {
       for(int ionx = 0; ionx < ion_rxn; ionx++){
         gas_kin2->setMultiplier(ion_rxnid(ionx), ion_rate(ionx, j));
         gas_kin2->getFwdRatesOfProgress(fwd_rates.data());
+    //    std::cout << ion_rate(ionx, j) << std::endl;
     }
 
 //Calculating the photochemical reaction rate
@@ -587,7 +587,8 @@ while(Ttot  < Tmax) {
    for(int rx = 0; rx < PhotoRxn; rx++){
      double j_rate = QPhotoChemRate(stellar_input.row(0),d_wavelength, photo_cross_data.col(rx), qyield_data.col(rx), Stellar_activity.col(j));
      gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
-   
+     //std::cout<< RxnIndex(rx) << " " << j_rate << std::endl;
+      
    }
 
 //Adding custom reaction rates
@@ -595,15 +596,17 @@ while(Ttot  < Tmax) {
    
    ftime++;
 //Solving the net production for each species
-    gas_kin->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera 
-    m_wjac = gas_kin->netProductionRates_ddX(); //Extracting Jacobian from Cantera
+    gas_kin2->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera 
+    m_wjac = gas_kin2->netProductionRates_ddX(); //Extracting Jacobian from Cantera
     
 //Upper boundary flux
     if (j == 0){
-    flux1 = flux_upper;
+    flux_upper;
     }
     
     if ((j > 0) && (j < nSize-1)) {
+    iPrev = j-1;
+    iNext = j+1;
     dh = 0.5*(AtmData(iAlt,j-1) - AtmData(iAlt,j+1));
     Keddy_j = AtmData(iKzz, j);
     Keddy_prev = AtmData(iKzz, j-1);
@@ -619,17 +622,21 @@ while(Ttot  < Tmax) {
     }
 
 //Backward Euler Scheme (Li and Chen, 2019)
-    mat2 = ((mat1) - (m_wjac*dt/gas->molarDensity() ));
+   //std::cout << "Pre: " << mole_frac.transpose() << std::endl;
+    mat2 = ((mat1) - (m_wjac*dt/gas2->molarDensity() ));
     mat2 = mat2.inverse();
     mat2 = dt*mat2*((m_wdot ) - flux1);
-    dQ = mat2/gas->molarDensity();
+    dQ = mat2/gas2->molarDensity();
     mole_frac = mole_frac + dQ;
     ProdRates.col(j) = m_wdot;
     DiffRates.col(j) = flux1;
     conv.col(j) = m_wdot - flux1 ;//(dQ.array()/mole_frac.array()).matrix();
     conv.col(j) =  (isnan(abs(conv.col(j).array())) ).select(0, conv.col(j));
-    
-/*    
+    VectorXd krate(nrxn);
+    gas_kin2->getFwdRateConstants(&krate[0]);
+    //std::cout << "Post: " << mole_frac.transpose() << std::endl;
+    //std::cout << AtmData(iAlt, j)<< " " << krate.transpose() << std::endl;   
+/*   
 //Upper boundary mixing ratio
     if (j == 0){
     std::string u_species_list = pinput->GetOrAddString("upperboundaryMixRat", "species", "nan");
@@ -652,37 +659,39 @@ while(Ttot  < Tmax) {
     while (std::regex_search (l_species_list,m,pattern)) {
       for (auto x:m){
         std::string species_lowerboundary_MixRat = pinput->GetString("lowerboundaryMixRat", x);
-        species_inx = gas->speciesIndex(x);
+        species_inx = gas2->speciesIndex(x);
         mole_frac(species_inx) = atof(species_lowerboundary_MixRat.c_str());
     }
       l_species_list = m.suffix().str();
 
   } } 
 
-     conv.col(nSize -1) = VectorXd::Zero(gas->nSpecies());
+     conv.col(nSize -1) = VectorXd::Zero(gas2->nSpecies());
   }
  
   
 //Setting the mole fractions and concentrations
-    gas->setMoleFractions(&mole_frac[0]);
-    gas->getMoleFractions(&ChemMoleFrac.col(j)[0]);  
-    gas->getConcentrations(&ChemConc.col(j)[0]);  
+    gas2->setMoleFractions(&mole_frac[0]);
+    gas2->getMoleFractions(&ChemMoleFrac.col(j)[0]);  
+    gas2->getConcentrations(&ChemConc.col(j)[0]);  
 
 //Update the pressure in storage
     //AtmData(iPress,j) = gas->pressure();
 } 
    
     std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
-    Ttot = Ttot + dt;
-    if(kmax*dt/(dh*dh) < 1){
+    
+    if(kmax*dt/(dh*dh) < 0.1){
     dt = dt*(1.25);
     }
+    Ttot = Ttot + dt;
+    /*
     if((Ttot > Tstart)  && (iSource == 0)){
     dt = atof(time_step.c_str());
     iSource = 1;
     }
     niter++;
-    
+    */
 } 
       
 //This is where the photochemistry definition ends (Anything beyond is not defined in the scope of photochemistry)  

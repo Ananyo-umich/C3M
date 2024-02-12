@@ -440,12 +440,12 @@ reactions:
 - equation: '1.0 H2 => 1.0 H+ + 1.0 H + 1.0 E + 1.0 Ecr ' #Electron impact ionization
   rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
 # H2 + e => H2_v + e
-- equation: '1.0 H2 => 1.0 H2_v1 + 1.0 Ecr ' #Egert 2016
-  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
-- equation: '1.0 H2 => 1.0 H2_v2 + 1.0 Ecr ' #Egert 2016
-  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
-- equation: '1.0 H2 => 1.0 H2_v3 + 1.0 Ecr ' #Egert 2016
-  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+#- equation: '1.0 H2 => 1.0 H2_v1 + 1.0 Ecr ' #Egert 2016
+#  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+#- equation: '1.0 H2 => 1.0 H2_v2 + 1.0 Ecr ' #Egert 2016
+#  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
+#- equation: '1.0 H2 => 1.0 H2_v3 + 1.0 Ecr ' #Egert 2016
+#  rate-constant: {A: 1.0, b: 0.0 ,Ea: 0 }
 - equation: '1.0 H2 => 1.0 H2+ + 1.0 E ' #photoionization
   rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
 - equation: '1.0 He => 1.0 He+ + 1.0 E ' #photoionization
