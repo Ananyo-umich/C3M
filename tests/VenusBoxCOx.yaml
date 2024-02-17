@@ -1,0 +1,131 @@
+Author: Ananyo Bhattacharya, University of Michigan
+#Description: COx-cycle for lower atmosphere
+units: {length: cm, quantity: molec, activation-energy: K}
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, N, S, O, H, Cl, Ar]
+  species: [CO2, N2, CO, O, O2, ClCO, ClO, ClCO3, Cl]
+  kinetics: gas
+  reactions: all
+  skip-undeclared-elements: true
+
+species:
+- name: CO2
+  composition: {C: 1.0, O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: N2
+  composition: {N: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CO
+  composition: {C: 1.0, O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]    
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]    
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClCO
+  composition: {Cl: 1.0, C: 1.0, O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClO
+  composition: {Cl: 1.0, O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: ClCO3
+  composition: {Cl: 1.0, C: 1.0, O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: Cl
+  composition: {Cl: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+reactions:
+#Zhang et al., (2012) provides photochemical rates at 68 km to be used for test case
+#Thermochemitry and three body reaction rates are taken from Zhang et al., (2012)
+- equation: '1.0 CO2 => 1.0 CO + 1.0 O'
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 Cl + 1.0 CO + M => 1.0 ClCO + M ' #Zhang (2012)
+  type: three-body
+  rate-constant: {A: 1.3e-33,T0: 300.0,b: -3.8,Ea: 0.0}
+- equation: '1.0 ClCO + 1.0 O2 + M => 1.0 ClCO3 + M ' #Zhang (2012)
+  type: three-body
+  rate-constant: {A: 5.7e-32,T0: 1.0,b: 0.0,Ea: -500.0}
+- equation: '1.0 ClCO3 + 1.0 Cl => 1.0 CO2 + 1.0 ClO + 1.0 Cl ' #Zhang (2012)
+  rate-constant: {A: 1.0e-11 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 ClO + 1.0 O => 1.0 Cl + 1.0 O2 ' #Zhang (2012)
+  rate-constant: {A: 3.0e-11 ,T0: 300 ,b: 0 ,Ea: -70.0 }
+- equation: '1.0 ClCO3 + 1.0 O => 1.0 CO2 + 1.0 Cl + 1.0 O2 ' #Zhang (2012)
+  rate-constant: {A: 1.0e-11 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 ClCO3 => 1.0 CO2 + 1.0 ClO ' #Zhang (2012)
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }

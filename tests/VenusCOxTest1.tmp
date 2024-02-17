@@ -1,0 +1,27 @@
+<problem>
+pres = 0.3 #bar
+temp = 250 #K
+network = VenusBoxCOx.yaml
+photochem = true
+
+<init>
+species = CO2, N2, CO, O2, ClO
+
+<integrator>
+dt = 1E-8
+Tmax = 700
+
+<Jrates>
+CO2 -> CO + O = 4.3E-13           
+ClCO3 -> CO2 + ClO = 7.4E-3         
+
+
+<radtran>
+solar = sun_spec.inp #spectral irradiance file
+radius = 0.7 #semi-major axis to the planet from the star (AU)
+reference = 1 #semi-major axis to the reference point from the star (AU)
+
+
+
+<output>
+file = VenusCOxTest1.nc

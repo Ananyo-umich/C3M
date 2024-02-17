@@ -40,7 +40,7 @@ def plot_reaction_graph(G):
     plt.show()
 
 if __name__ == "__main__":
-    cantera_yaml_file = "../tests/VenusMVP.yaml"
+    cantera_yaml_file = "../tests/VenusBoxSOx.yaml"
     chemistry_data = load_cantera_yaml(cantera_yaml_file)
     reaction_graph = create_reaction_graph(chemistry_data)
     plot_reaction_graph(reaction_graph)

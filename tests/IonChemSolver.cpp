@@ -204,9 +204,9 @@ std::cout << "Boundary conditions loaded" << std::endl;
       ChemMoleFrac.col(i) = mole_fractions;
     }
 
-
 //Chemical species profiles from input file
   if(profile_file != "nan"){
+  std::cout << "Setting initial condition from input profile" << std::endl;
   std::string input_species_list = pinput->GetString("profile", "species");
   std::regex pattern ("[a-zA-Z0-9_+-]+");
   int chemP = 0;
@@ -222,6 +222,7 @@ std::cout << "Boundary conditions loaded" << std::endl;
   getline(InFile, inp1);
   while(i < nSize){
     int chem_inx = 0;
+    gas->setState_TP(AtmData(iTemp,i), (AtmData(iPress,i)/1.0132E5)*OneAtm);
     input_species_list = pinput->GetString("profile", "species");
     while (std::regex_search (input_species_list,m,pattern)) {
     for (auto x:m){
@@ -236,14 +237,22 @@ std::cout << "Boundary conditions loaded" << std::endl;
        ChemMoleFrac(species_inx,i) = atof(inp2.c_str());
        }
    
-       
      chem_inx++;
+
     }
     
     input_species_list = m.suffix().str();
     }
+    gas->setMoleFractions(&ChemMoleFrac.col(i)[0]);
+    //std::cout << ChemMoleFrac.col(i).transpose() << std::endl;
+    // std::cout << i << " " << nSize << std::endl;
+     gas->getConcentrations(&ChemConc.col(i)[0]);
+   //std::cout << "Got the concentrations" << std::endl;
+
     i++;
-  }}
+  }
+  
+  }
  InFile.close();
 
 std::cout << "Extracting Ion kinetics reaction rates" << std::endl;
@@ -371,6 +380,41 @@ std::cout << "All inputs loaded into C3M " << std::endl;
     absorber_species_list = m.suffix().str();
   }
   std::cout << "!! Obtaining Photochemical Cross Sections !!" << std::endl;
+
+//Input Wavelength and Cross Section Data for all the absorbers 
+  int ScatSize = 0;
+  std::string scatter_species_list = pinput->GetString("scatcross", "scatterers");
+  while (std::regex_search (scatter_species_list,m,pattern)) {
+    for (auto x:m){
+     ScatSize++;
+    }
+    scatter_species_list = m.suffix().str();
+  }
+  Eigen::MatrixXd scat_cross_data(stellar_input.row(0).size(), ScatSize);
+  std::cout << "!! Initiating absorbers  !!" << std::endl;
+
+//Reading the scattering cross section for atmospheric constituents as per database
+//structure
+  int sc_inx = 0;
+  scatter_species_list = pinput->GetString("scatcross", "scatterers");
+  while (std::regex_search (scatter_species_list,m,pattern)) {
+    for (auto x:m){
+    std::string scat_cross_info = pinput->GetString("scatcross", x);
+    std::string scat_cross_database = scat_cross_info.substr(0,scat_cross_info.find(","));
+    std::string scat_cross_file = scat_cross_info.substr(scat_cross_info.find(",")+1,scat_cross_info.length()-1);
+    
+//Reading the absorption cross section for absorber as per the database structure
+//Interpolating the cross sections to reference grid
+   if(scat_cross_database == "VULCAN"){
+     MatrixXd sccross_info = ReadVULCANScatCrossSection(scat_cross_file);
+     MatrixXd sccross_section_data = InterpolateCrossSection(stellar_input.row(0), sccross_info.row(0), sccross_info.row(1));
+     scat_cross_data.col(sc_inx) = sccross_section_data;
+   }
+   sc_inx++;}
+   scatter_species_list = m.suffix().str();
+}
+
+ 
 //Storing the photochemical cross section data
   int PhotoRxn = 0;   
   
@@ -563,6 +607,8 @@ while(Ttot  < Tmax) {
    if(j != 0){
 //For each absorber, find the total absorption 
    dh = (AtmData(iAlt,j-1) - AtmData(iAlt,j));
+
+//Atomic and Molecular absorption
    int Absorber = 0; 
    std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
    while (std::regex_search (absorber_species_list,m,pattern)) {
@@ -574,6 +620,19 @@ while(Ttot  < Tmax) {
      }
       absorber_species_list = m.suffix().str();
     }
+
+//Rayleigh scattering
+    int Scatter = 0;
+    std::string scat_species_list = pinput->GetString("scatcross", "scatterers");
+    while (std::regex_search (absorber_species_list,m,pattern)) {
+     for (auto x:m){
+      species_inx = gas2->speciesIndex(x);
+      double number_density = Press/(Kb*Temp);
+      Opacity.col(j) = Opacity.col(j) - (mole_fractions(species_inx)*number_density*scat_cross_data.col(Scatter)*dh/cos(sz_angle*3.14/180));
+      Scatter++;
+     }
+      scat_species_list = m.suffix().str();
+      }
     
 //The transmission coefficient from opacity
     Opacity.col(j) = Opacity.col(j).array().exp().matrix();    

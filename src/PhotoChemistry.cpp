@@ -188,7 +188,7 @@ Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName){
   
 }
 
-
+//Function to read cross section from Max Planck Mainz database
 Eigen::MatrixXd ReadMPCrossSection(string MPFileName){
   fstream InFile;
   InFile.open(MPFileName);
@@ -217,6 +217,7 @@ Eigen::MatrixXd ReadMPCrossSection(string MPFileName){
 
 }
 
+//Function to read QY from VULCAN photochemistry database
 Eigen::MatrixXd ReadQYield(string FileName){
 
 fstream InFile;
@@ -295,6 +296,9 @@ fstream InFile;
 
 }
 
+
+//Function to read cross section from CalTech/JPL KINETIC7 corrected cross sections
+//and converted to netCDF file
 Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex){
 #if NETCDFOUTPUT
   int fileid, dimid, varid, err;
@@ -340,6 +344,8 @@ Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex){
 }
 
 
+
+//Function to introduce custom opacity for a given atmosphere
 Eigen::VectorXd handleCustomOpacity(string PlanetName,Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav){
 
 Eigen::VectorXd Output;
@@ -352,6 +358,8 @@ if(PlanetName == "Venus"){
 return Output;
 }
 
+
+//Function to add opacity due to unknown UV absorber on Venus
 Eigen::VectorXd VenusUV(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav){
 
 
@@ -372,4 +380,31 @@ if((Alt <= 67) && (Alt > 58)){
 return COpacity;
 }
 
+// Function to read the Rayleigh scattering cross sections from VULCAN database
+Eigen::MatrixXd ReadVULCANScatCrossSection(string VULCAN_ID){
+  fstream InFile;
+  InFile.open(VULCAN_ID);
+  string wavlength;
+  string scatcross;
+  int num = 0;
+  int rows = 0;
+  while (getline(InFile, wavlength))
+  rows++;
+  InFile.close();
+
+  Eigen::MatrixXd Output(2, rows-1);
+  InFile.open(VULCAN_ID);
+  getline(InFile, wavlength);
+  while(getline(InFile,wavlength, ',')){
+  getline(InFile,scatcross,'\n');
+
+
+  Output(0, num) = atof(wavlength.c_str())*1E-9; //nm to m
+  Output(1, num) = atof(scatcross.c_str())*1E-4; //cm^2 to m^2
+
+  num++;
+  }
+  InFile.close();
+  return Output;
+}
 

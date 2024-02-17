@@ -34,6 +34,7 @@ double QPhotoChemRate(Eigen::MatrixXd wavelengths_, Eigen::MatrixXd d_wavelength
 Eigen::MatrixXd ReadJPLCrossSection(string JPL_FileName, string Reactant);
 Eigen::MatrixXd ReadVULCANPhotoIonCrossSection(string VULCAN_ID);
 Eigen::MatrixXd ReadVULCANPhotoDissCrossSection(string VULCAN_ID);
+Eigen::MatrixXd ReadVULCANScatCrossSection(string VULCAN_ID);
 Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName);
 Eigen::MatrixXd ReadMPCrossSection(string MPFileName);
 Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex);

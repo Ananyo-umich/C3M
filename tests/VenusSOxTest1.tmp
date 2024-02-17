@@ -1,0 +1,32 @@
+<problem>
+pres = 0.3 #bar
+temp = 250 #K
+network = VenusBoxSOx.yaml
+photochem = true
+
+<init>
+species = CO2, N2, SO2, H2O, CO, O2
+CO2 = 0.96
+N2 = 0.3
+SO2 = 1E-7 #Vandaele (2017)
+H2O = 1E-6 #Vandaele (2017)
+CO = 4.5E-5 #Vandaele (2017)
+O2 = 1E=5 #Zhang (2012)
+
+<integrator>
+dt = 1E-8
+Tmax = 700
+
+<Jrates>
+SO3 -> O + SO2 = 3.7E-5
+SO2 -> SO + O = 7.2E-5
+
+
+<radtran>
+solar = sun_spec.inp #spectral irradiance file
+radius = 0.7 #semi-major axis to the planet from the star (AU)
+reference = 1 #semi-major axis to the reference point from the star (AU)
+
+
+<output>
+file = VenusSOxTest1.nc

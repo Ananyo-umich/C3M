@@ -112,14 +112,24 @@ H2 = 0.0
 He = 0.0
 
 <lowerboundaryMixRat>
-species = H2, He, H, E, CH4, H+, H3+
-H2 = 8.89E-1
-He = 1.10E-1
+species = H2, He, H, CH4, CH3, C, C2, C2H2, C2H, C2H3, C2H4, C2H5, C2H6, C3H6, H+, H3+, E
+H2 = 0.8622221993865918
+He = 0.13596818219389134
 H = 2.486680917200128e-18
-E = 0.0
-CH4 = 0.0018
+CH4 = 0.0018096173862573281
+CH3 = 8.486438970340471e-21
+C = 0.0
+C2 = 3.7389707114416415e-36
+C2H2 = 3.450123188669326e-12
+C2H = 2.8736625342476532e-30
+C2H3 = 3.8111825921347205e-25
+C2H4 = 5.805341451274362e-13
+C2H5 = 6.085548236185967e-22
+C2H6 = 1.0257790231786083e-09
+C3H6 = 9.035743020057054e-18
 H+ = 0.0
 H3+ = 0.0
+E = 0.0
 
 <radtran>
 solar = sun_spec.inp #spectral irradiance file
@@ -135,6 +145,11 @@ CH4 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
 He = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/He/He_cross.csv
 C2H4 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_cross.csv
 C2H6 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
+
+<scatcross>
+scatterers = H2, He
+H2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/H2_scat.txt
+He = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/He_scat.txt
 
 <output>
 species = H2, H2+, H+, H, E, H3+, CH4, CH3+, CH4+, CH5+, He, CH3, CH2, He+, CH2+, CH+, HeH+, CH, C2H6, C2H5, C2H4, C2H3, C2H2, C4H6, C, C4H5, C3H6, C2, C2H
