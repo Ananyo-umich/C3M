@@ -1,6 +1,6 @@
 <problem>
-pres = 0.1 #bar
-temp = 250 #K
+pres = 2.5E-3 #bar
+temp = 251 #K
 network = chapman.yaml
 photochem = true
 
@@ -9,14 +9,14 @@ species = N2, O2
 N2 = 0.78
 O2 = 0.21
 
-
 <integrator>
 dt = 1E-8
-Tmax = 700
+Tmax = 21600000
 
 <Jrates>
 O2 -> 2 O = 5.0E-10 
-O3 -> O + O2 = 1.9E-3
+O3 -> O + O2 = 9.0E-4
+O3 -> O2 + O_1D = 1.0E-3 
 
 
 <radtran>

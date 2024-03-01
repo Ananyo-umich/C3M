@@ -23,10 +23,12 @@
 #include <cantera/zeroD/Reactor.h>
 #include <cantera/zeroD/ReactorNet.h>
 #include <cantera/numerics/Integrator.h>
+#include <cantera/numerics/CVodesIntegrator.h>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <regex>
+
 
 // Athena++ header
 #include <parameter_input.hpp>
@@ -120,26 +122,36 @@ int main(int argc, char **argv) {
 
   std::cout << "Starting chemical evolution " << std::endl;
 //Setting up Cantera reactor object
-  
+  gas->setState_TP(temp, (pres)*OneBar);
+  gas->setMoleFractions(&mole_fractions[0]);
   ReactorNet sim;
   Reactor reactor;
   reactor.setThermoMgr(*gas);
   reactor.setKineticsMgr(*gas_kin);
-  gas->setState_TP(temp, (pres)*OneBar);
-  gas->setMoleFractions(&mole_fractions[0]);
+  reactor.setEnergy(false);
+  reactor.initialize(0.0);
+  double rtol = 1.0e-15;  // relative tolerance
+  double atol = 1.0e-30; // absolute tolerance
   sim.addReactor(reactor);
-
+  sim.setTolerances(rtol, atol);
+  sim.setSensitivityTolerances(rtol, atol);
+  int nmax = 1E9;
+  Integrator& integrator = sim.integrator();
+  integrator.setMaxSteps(nmax);
+  sim.initialize();
 
 //Setting photochemical reaction rates
   if(photochem == "true"){
   for(int irxn = 0; irxn < nrxn; irxn++){
     auto& rxnObj = *(gas_kin->reaction(irxn));
     std::string rxnEqn = rxnObj.equation();
+    std::cout << rxnEqn << std::endl;
     int pos = rxnEqn.find("=");
     rxnEqn.replace(pos, 2, "->");
     std::string jrate = pinput->GetOrAddString("Jrates", rxnEqn, "nan");
     if(jrate != "nan"){
     gas_kin->setMultiplier(irxn, atof(jrate.c_str()));
+    std::cout << rxnEqn << std::endl;
     }
 
     } }
@@ -150,17 +162,35 @@ int main(int argc, char **argv) {
   std::ofstream outfile (OutFileName);
 //Integrating the reaction rates
   while(Ttot  < Tmax) {
-    std::cout << mole_fractions.transpose() << std::endl;
+    init_species_list = pinput->GetString("init", "species");
+    while (std::regex_search (init_species_list,m,pattern)) {
+      for (auto x:m){
+        std::string species_init_condition = pinput->GetString("init", x);
+        species_inx = gas->speciesIndex(x);
+        mole_fractions(species_inx) = atof(species_init_condition.c_str());
+    }
+    init_species_list = m.suffix().str();
+  }
+
+    gas->setState_TP(temp, (pres)*OneBar);
     gas->setMoleFractions(&mole_fractions[0]);
+    std::cout << mole_fractions.transpose() << std::endl;
+    reactor.initialize();
+    sim.initialize();
     sim.advance(dt);
     double rho_new = gas->density();
     cout << "Time: " << sim.time() << " s" << endl;
     dt = dt*1.25;
     gas->getMoleFractions(&mole_fractions[0]);
-    std::cout << mole_fractions.transpose() << std::endl;
+    //std::cout << mole_fractions.transpose() << std::endl;
+    VectorXd krate(nrxn);
+    gas_kin->getFwdRateConstants(&krate[0]);
+    std::cout << krate.transpose() << std::endl;
     outfile << Ttot << " " << mole_fractions.transpose()  << std::endl;
     Ttot = Ttot + dt;
    }
+  double totalDensity = gas->density();
+  std::cout << totalDensity << std::endl;
   std::cout << "Simulation Complete!" << std::endl;
 }
 

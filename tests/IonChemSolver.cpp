@@ -291,20 +291,20 @@ std::cout << "Number of reactions" << ion_rxn << std::endl;
   std::string inp3, inp4;
   int ih = 0;
   getline(InFile, inp3);
-  std::cout << inp3 << std::endl;
   while(ih < nSize){
     for(int ixn = 0; ixn < ion_rxn; ixn++){
-      if(ixn != ion_rxn){
+      if(ixn < ion_rxn-1){
        getline(InFile,inp4,',');
+      // std::cout << inp4 << std::endl;
        ion_rate(ixn,ih) = atof(inp4.c_str());
        }
 
      if(ixn == ion_rxn-1){
        getline(InFile,inp4, '\n');
-       ion_rate(ixn,ih) = atof(inp4.c_str());}
-    
+      // std::cout << inp4 << std::endl;
+       ion_rate(ixn,ih) = atof(inp4.c_str());} 
     }
-    
+    //std::cout << AtmData(iAlt, ih)/1E3  << " " << ion_rate.col(ih).transpose() << std::endl;
     ih++;
    }
   InFile.close();
@@ -573,6 +573,30 @@ int ftime = 0;
 std::cout << "!! Starting the Simulation !!" << std::endl;
 //Cantera::Kinetics *gasRawPtr = sol->kinetics().get();
 
+std::string grav_str = pinput->GetString("grav", "g");
+double g = atof(grav_str.c_str()); 
+
+//Correct for the atmospheric scattering and absorption above the model boundary
+//Using column density of species to determine the absorption and scattering not
+//accounted for
+int clden = 0;
+std::string clden_species_list = pinput->GetOrAddString("coldensity", "species", "nan");
+std::cout << clden_species_list << std::endl;
+Eigen::VectorXd cldMag = VectorXd::Zero(gas->nSpecies()); //Stores the magnitude of column density difference for TOA
+Eigen::VectorXd cldMag_diff = VectorXd::Zero(gas->nSpecies()); //Stores the magnitude of column density difference for each species
+while (std::regex_search (clden_species_list,m,pattern)) {
+     for (auto x:m){
+//Column density at top of atmosphere [From input file]
+       std::string clden_toa = pinput->GetOrAddString("coldensity", x, "nan");
+       if(clden_toa != "nan"){
+       species_inx = gas->speciesIndex(x);
+       cldMag(species_inx) = atof(clden_toa.c_str())*1e4; //1/cm^2 -> 1/m^2
+       }
+       clden++;
+     }
+      clden_species_list = m.suffix().str();
+      }
+
 while(Ttot  < Tmax) {
   MatrixXd Opacity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
   Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
@@ -580,6 +604,7 @@ while(Ttot  < Tmax) {
   n_conc = ChemConc;
   for (int j = 0; j < nSize; j++) {
 //Setting T, P, X for each grid point
+  //  std::cout << "Setting T, P, X" << std::endl;
     Temp = AtmData(iTemp,j);
     Press = AtmData(iPress,j);
     auto sol2 = newSolution(network_file);
@@ -594,13 +619,13 @@ while(Ttot  < Tmax) {
     
 //Setting the multiplier for each reaction involving electron impact process
     std::vector<double> fwd_rates(gas_kin2->nReactions());
-    
+  //  std::cout << "Setting rates for electron impact process" << std::endl;
       for(int ionx = 0; ionx < ion_rxn; ionx++){
         gas_kin2->setMultiplier(ion_rxnid(ionx), ion_rate(ionx, j));
         gas_kin2->getFwdRatesOfProgress(fwd_rates.data());
-    //    std::cout << ion_rate(ionx, j) << std::endl;
+       // std::cout << AtmData(iAlt, j)/1e3 << " " <<  ion_rate(ionx, j) << std::endl;
     }
-
+   // std::cout << "Setting rates for electron impact process done" << std::endl;
 //Calculating the photochemical reaction rate
     
 //Opacity at the given altitude 
@@ -641,8 +666,58 @@ while(Ttot  < Tmax) {
     Stellar_activity.col(j) = (Stellar_activity.col(j-1).array()*Opacity.col(j).array()).transpose().matrix();
      }
    if(j == 0){
-     Stellar_activity.col(j) = (stellar_input.row(1).transpose());
+    // std::cout << "starting TOA opacity" << std::endl;
+     clden_species_list = pinput->GetOrAddString("coldensity", "species", "nan");
+     if(clden_species_list != "nan"){
+      // std::cout << "Modification of absorbers" << std::endl;
+//Scale height and column density at upper boundary
+       double number_density = Press/(Kb*Temp); //m^3
+       double mean_molecular_mass = (gas->meanMolecularWeight())/(1E3*6.022E23); //kg/kmol-> kg/molecule
+       double Hs =  Kb*Temp/(mean_molecular_mass*g); //Scale height
+//Updating the difference in column density
+       cldMag_diff = (Hs*number_density*mole_frac) - cldMag; //1/m^2
+//Atomic and molecular absorption
+       int Absorber = 0;
+       std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
+      while (std::regex_search (absorber_species_list,m,pattern)) {
+        for (auto x:m){
+         species_inx = gas2->speciesIndex(x);
+         double number_density = Press/(Kb*Temp);
+         Opacity.col(j) = Opacity.col(j) - (absorber_cross_data.col(Absorber)*cldMag_diff(species_inx)/cos(sz_angle*3.14/180));
+         Absorber++;
      }
+         absorber_species_list = m.suffix().str();
+    }
+    //std::cout << "Absorption done! " << std::endl;
+//Rayleigh scattering
+      int Scatter = 0;
+      std::string scat_species_list = pinput->GetString("scatcross", "scatterers");
+      while (std::regex_search (absorber_species_list,m,pattern)) {
+      for (auto x:m){
+        species_inx = gas2->speciesIndex(x);
+        double number_density = Press/(Kb*Temp);
+        Opacity.col(j) = Opacity.col(j) - (scat_cross_data.col(Scatter)*cldMag_diff(species_inx)/cos(sz_angle*3.14/180));
+        Scatter++;
+     }
+        scat_species_list = m.suffix().str();
+      }
+     //std::cout << "Scattering done! " << std::endl;
+//Updating the stellar activity at upper boundary
+//The transmission coefficient from opacity
+    Opacity.col(j) = Opacity.col(j).array().exp().matrix();
+//    Opacity.col(j) =  (Opacity.col(j).array()*Opacity.col(j-1).array()).matrix();
+//Stellar spectrum at each altitude
+    Stellar_activity.col(j) = (Stellar_activity.col(j-1).array()*Opacity.col(j).array()).transpose().matrix();
+    
+    //std::cout << "TOA" << std::endl;
+    }
+
+    if(clden_species_list == "nan"){
+    Stellar_activity.col(j) = (stellar_input.row(1).transpose());}
+   // std::cout << "Setting TOA opacity" << std::endl;
+     }
+
+
    for(int rx = 0; rx < PhotoRxn; rx++){
      double j_rate = QPhotoChemRate(stellar_input.row(0),d_wavelength, photo_cross_data.col(rx), qyield_data.col(rx), Stellar_activity.col(j));
      gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
@@ -681,7 +756,6 @@ while(Ttot  < Tmax) {
     }
 
 //Backward Euler Scheme (Li and Chen, 2019)
-   //std::cout << "Pre: " << mole_frac.transpose() << std::endl;
     mat2 = ((mat1) - (m_wjac*dt/gas2->molarDensity() ));
     mat2 = mat2.inverse();
     mat2 = dt*mat2*((m_wdot ) - flux1);
@@ -693,8 +767,7 @@ while(Ttot  < Tmax) {
     conv.col(j) =  (isnan(abs(conv.col(j).array())) ).select(0, conv.col(j));
     VectorXd krate(nrxn);
     gas_kin2->getFwdRateConstants(&krate[0]);
-    //std::cout << "Post: " << mole_frac.transpose() << std::endl;
-    //std::cout << AtmData(iAlt, j)<< " " << krate.transpose() << std::endl;   
+    
 /*   
 //Upper boundary mixing ratio
     if (j == 0){
@@ -893,41 +966,64 @@ while(Ttot  < Tmax) {
 }
 //Writing output into NetCDF file
 
+//std::vector<Eigen::MatrixXd> matrix3d(Time.size(), Eigen::MatrixXd(nsp, nSize));
+
 VectorXd cPress = AtmData.row(iPress);
 VectorXd cTemp = AtmData.row(iTemp);
 VectorXd cHeight = AtmData.row(iAlt);
 VectorXd cKzz = AtmData.row(iKzz);
+MatrixXd dPRates = ProdRates;
+MatrixXd dDRates = DiffRates;
 #if NETCDFOUTPUT
 int ifile;
 string fname = pinput->GetString("output", "out_file");
 int status = nc_create(fname.c_str(), NC_NETCDF4, &ifile);
-int alt, iPres, iTem, iKeddy, iAltz, iChem;
+int dimids[3];
+int alt, iPres, iTem, iKeddy, iAltz, iChem, isp, iProd, iDiff, iTs;
+
+
 // Atmospheric Properties (All in SI units!)
-nc_def_dim(ifile, "Pressure", nSize, &alt);
-nc_def_var(ifile, "Pressure", NC_DOUBLE, 1, &alt, &iPres);
+nc_def_dim(ifile, "Pressure", nSize, &dimids[2]);
+
+nc_def_dim(ifile, "Species", nsp, &dimids[1]);
+
+
+nc_def_var(ifile, "Pressure", NC_DOUBLE, 1, &dimids[2], &iPres);
 nc_put_var_double(ifile, iPres, &cPress[0]);
 
-nc_def_var(ifile, "Keddy", NC_DOUBLE, 1, &alt, &iKeddy);
+nc_def_var(ifile, "Keddy", NC_DOUBLE, 1, &dimids[2], &iKeddy);
 nc_put_var_double(ifile, iKeddy, &cKzz[0]);
 
-nc_def_var(ifile, "Temp", NC_DOUBLE, 1, &alt, &iTem);
+nc_def_var(ifile, "Temp", NC_DOUBLE, 1, &dimids[2], &iTem);
 nc_put_var_double(ifile, iTem, &cTemp[0]);
 
-nc_def_var(ifile, "Altitude", NC_DOUBLE, 1, &alt, &iAltz);
+nc_def_var(ifile, "Altitude", NC_DOUBLE, 1, &dimids[2], &iAltz);
 nc_put_var_double(ifile, iAltz, &cHeight[0]);
-
-
 
 init_species_list = pinput->GetString("output", "species");
   while (std::regex_search (init_species_list,m,pattern)) {
     for (auto x:m){
     std::string species = x;
+    std::string prod = "Prod";
+    std::string diff = "Diff";
+    std::string prod_species = prod + species;
+    std::string diff_species = diff + species;
     species_inx = gas->speciesIndex(x);
-    VectorXd cChem = ChemConc.row(species_inx)*6.022E23*1E3*1E-6;
+    VectorXd cChem = ChemConc.row(species_inx); // #/cm^-3
+    VectorXd pChem = ProdRates.row(species_inx); // kmol/m^3s (Cantera units)
+    VectorXd dChem = DiffRates.row(species_inx); // kmol/m^3s (Cantera units)
     const char* ccx = &species[0];
-    nc_def_var(ifile, ccx, NC_DOUBLE, 1, &alt, &iChem);
+    const char* prodx = &prod_species[0];
+    const char* diffx = &diff_species[0];
+    nc_def_var(ifile, ccx, NC_DOUBLE, 1, &dimids[2], &iChem);
     nc_put_var_double(ifile, iChem, &cChem[0]);
-    
+
+    nc_def_var(ifile, prodx, NC_DOUBLE, 1, &dimids[2], &iProd);
+    nc_put_var_double(ifile, iProd, &pChem[0]);
+
+    nc_def_var(ifile, diffx, NC_DOUBLE, 1, &dimids[2], &iDiff);
+    nc_put_var_double(ifile, iDiff, &dChem[0]);
+
     }
     init_species_list = m.suffix().str();
   }
