@@ -612,10 +612,10 @@ while(Ttot  < Tmax) {
     auto gas_kin2 = sol2->kinetics();
     Cantera::Kinetics *gasRawPtr = sol2->kinetics().get();
     Cantera::ThermoPhase *gasThermo = gas2.get(); 
-    gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     mole_frac = ChemMoleFrac.col(j);
     //std::cout << mole_frac.transpose() << std::endl;
     gas2->setMoleFractions(&mole_frac[0]);
+    gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     
 //Setting the multiplier for each reaction involving electron impact process
     std::vector<double> fwd_rates(gas_kin2->nReactions());
@@ -804,6 +804,7 @@ while(Ttot  < Tmax) {
   
 //Setting the mole fractions and concentrations
     gas2->setMoleFractions(&mole_frac[0]);
+    gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     gas2->getMoleFractions(&ChemMoleFrac.col(j)[0]);  
     gas2->getConcentrations(&ChemConc.col(j)[0]);  
 
@@ -860,9 +861,9 @@ while(Ttot  < Tmax) {
     auto sol2 = newSolution(network_file);
     auto gas2 = sol2->thermo();
     auto gas_kin2 = sol2->kinetics();  
-    gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     mole_frac = ChemMoleFrac.col(j);
     gas2->setMoleFractions(&mole_frac[0]);   
+    gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     Cantera::Kinetics *gasRawPtr = sol2->kinetics().get();
     Cantera::ThermoPhase *gasThermo = gas2.get(); 
 //Setting the multiplier for each reaction based Ion kinetics
@@ -945,6 +946,7 @@ while(Ttot  < Tmax) {
   
 //Setting the mole fractions and concentrations
     gas->setMoleFractions(&mole_frac[0]);
+    gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     gas->getMoleFractions(&ChemMoleFrac.col(j)[0]);  
     gas->getConcentrations(&ChemConc.col(j)[0]);
 } 
@@ -1009,7 +1011,7 @@ init_species_list = pinput->GetString("output", "species");
     std::string prod_species = prod + species;
     std::string diff_species = diff + species;
     species_inx = gas->speciesIndex(x);
-    VectorXd cChem = ChemConc.row(species_inx); // #/cm^-3
+    VectorXd cChem = ChemConc.row(species_inx)*1E3*6.022E23*1E-6; // #/cm^-3
     VectorXd pChem = ProdRates.row(species_inx); // kmol/m^3s (Cantera units)
     VectorXd dChem = DiffRates.row(species_inx); // kmol/m^3s (Cantera units)
     const char* ccx = &species[0];

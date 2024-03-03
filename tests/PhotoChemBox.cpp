@@ -10,7 +10,7 @@
 
 // ThermoPhase object stores the thermodynamic state
 #include <cantera/thermo.h>
-
+#include <cantera/thermo/Phase.h>
 // Kinetics object stores the chemical kinetics information
 #include <cantera/kinetics.h>
 #include <cantera/kinetics/Reaction.h>
@@ -21,6 +21,7 @@
 #include <cantera/numerics/eigen_dense.h>
 #include <cantera/numerics/eigen_sparse.h>
 #include <cantera/zeroD/Reactor.h>
+#include <cantera/zeroD/IdealGasConstPressureReactor.h>
 #include <cantera/zeroD/ReactorNet.h>
 #include <cantera/numerics/Integrator.h>
 #include <cantera/numerics/CVodesIntegrator.h>
@@ -73,6 +74,8 @@ int main(int argc, char **argv) {
   std::cout << "Network imported" << std::endl;
 //Initial condition for mole fraction
   VectorXd mole_fractions = VectorXd::Zero(nsp);
+  VectorXd ChemConc = VectorXd::Zero(nsp);
+  VectorXd m_wdot = VectorXd::Zero(nsp);
 
 //Loading the input parameters for initial condition
   std::string init_species_list = pinput->GetString("init", "species");
@@ -122,10 +125,18 @@ int main(int argc, char **argv) {
 
   std::cout << "Starting chemical evolution " << std::endl;
 //Setting up Cantera reactor object
-  gas->setState_TP(temp, (pres)*OneBar);
   gas->setMoleFractions(&mole_fractions[0]);
+  gas->setState_TP(temp, (pres)*OneBar);
+  double P = gas->pressure();
+  //std::cout << mole_fractions.transpose() << std::endl;
+  //gas->setMoleFractions(&mole_fractions[0]);
+  P = gas->pressure();
+ // std::cout << "Pressure: " << P/1E5 << ", " << pres << std::endl;
+ double totalDensity = gas->molarDensity();
+ // std::cout << totalDensity*1e3*6.022e23*1e-6 << std::endl;
+  //gas->setMoleFractions(&mole_fractions[0]);
   ReactorNet sim;
-  Reactor reactor;
+  IdealGasConstPressureReactor reactor;
   reactor.setThermoMgr(*gas);
   reactor.setKineticsMgr(*gas_kin);
   reactor.setEnergy(false);
@@ -151,7 +162,7 @@ int main(int argc, char **argv) {
     std::string jrate = pinput->GetOrAddString("Jrates", rxnEqn, "nan");
     if(jrate != "nan"){
     gas_kin->setMultiplier(irxn, atof(jrate.c_str()));
-    std::cout << rxnEqn << std::endl;
+    std::cout << rxnEqn << " " << jrate << std::endl;
     }
 
     } }
@@ -161,7 +172,28 @@ int main(int argc, char **argv) {
   std::string OutFileName = pinput->GetString("output", "file");
   std::ofstream outfile (OutFileName);
 //Integrating the reaction rates
-  while(Ttot  < Tmax) {
+
+/*
+reactor.initialize();
+sim.initialize();
+totalDensity = gas->molarDensity();
+//std::cout << totalDensity*1e3*6.022e23*1e-6 << std::endl;
+sim.advance(Tmax);
+gas->getMoleFractions(&mole_fractions[0]);
+gas->getConcentrations(&ChemConc[0]);
+gas_kin->getNetProductionRates(&m_wdot[0]);
+std::cout << mole_fractions.transpose() << std::endl;
+//std::cout << ChemConc.transpose()*1e3*6.022e23*1e-6 << std::endl;
+//std::cout << m_wdot.transpose() << std::endl;
+double mm  = gas->meanMolecularWeight();
+P = gas->pressure();
+double T = gas->temperature();
+std::cout << mm << std::endl;
+std::cout << P/1E5 << std::endl;
+std::cout << T << std::endl;
+*/
+
+while(Ttot  < Tmax) {
     init_species_list = pinput->GetString("init", "species");
     while (std::regex_search (init_species_list,m,pattern)) {
       for (auto x:m){
@@ -172,9 +204,8 @@ int main(int argc, char **argv) {
     init_species_list = m.suffix().str();
   }
 
-    gas->setState_TP(temp, (pres)*OneBar);
     gas->setMoleFractions(&mole_fractions[0]);
-    std::cout << mole_fractions.transpose() << std::endl;
+    gas->setState_TP(temp, (pres)*OneBar);
     reactor.initialize();
     sim.initialize();
     sim.advance(dt);
@@ -186,11 +217,17 @@ int main(int argc, char **argv) {
     VectorXd krate(nrxn);
     gas_kin->getFwdRateConstants(&krate[0]);
     std::cout << krate.transpose() << std::endl;
+    std::cout << mole_fractions.transpose() << std::endl;
     outfile << Ttot << " " << mole_fractions.transpose()  << std::endl;
     Ttot = Ttot + dt;
    }
-  double totalDensity = gas->density();
-  std::cout << totalDensity << std::endl;
+ //  double R = GasConstant;
+//   double NA = Avogadro;
+//   double n_total = (pres*1e5/(R*temp))*NA;
+//  totalDensity = gas->density();
+//  std::cout << R << " " << NA << " " << pres << " " << temp <<  std::endl;
+//  std::cout << n_total*1e-6 << std::endl;
+//  std::cout << totalDensity << std::endl;
   std::cout << "Simulation Complete!" << std::endl;
 }
 
