@@ -30,6 +30,6 @@ using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-void handleCustomTransport(string PlanetName, Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double diff);
+VectorXd handleCustomMolecularDiffusion(string PlanetName, Cantera::ThermoPhase* NetworkName, double Pres, double Temp, VectorXd mWt);
 
-void JupiterMolDiff(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double diff);
+VectorXd JupiterMolDiff(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, VectorXd mWt);

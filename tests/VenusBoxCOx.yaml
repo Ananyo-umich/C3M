@@ -113,7 +113,7 @@ species:
 reactions:
 #Zhang et al., (2012) provides photochemical rates at 68 km to be used for test case
 #Thermochemitry and three body reaction rates are taken from Zhang et al., (2012)
-- equation: '1.0 CO2 => 1.0 CO + 1.0 O'
+- equation: '1.0 CO2 => 1.0 CO + 1.0 O '
   rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
 - equation: '1.0 Cl + 1.0 CO + M => 1.0 ClCO + M ' #Zhang (2012)
   type: three-body

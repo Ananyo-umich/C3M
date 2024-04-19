@@ -1,0 +1,38 @@
+units: {length: cm, quantity: molec, activation-energy: K}
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, H, E, He]
+  species: [H2, He]
+  kinetics: gas
+  reactions: all
+  skip-undeclared-elements: true
+
+species:
+- name: H2
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: He
+  composition: {He: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+reactions:
+- equation: '1.0 H2 => 1.0 H2'
+  rate-constant: {A: 0.0, T0: 300, b: 0.0, Ea: 0.0}
+- equation: '1.0 He => 1.0 He'
+  rate-constant: {A: 0.0, T0: 300, b: 0.0, Ea: 0.0}

@@ -10,6 +10,7 @@ phases:
   species: [CO2, N2, SO2, OCS, H2O, H2S, CO, O2, SO3, H2, S, S2, S4, S6, S8, H2SO4, S3, SO, S2O, O, H, cS2O2, tS2O2, rS2O2, OH, SH, HO2, O3, O_1D, O2_1D]
   kinetics: gas
   reactions: all
+  transport: mixture-averaged
   skip-undeclared-elements: true
   
 species:
@@ -24,6 +25,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: N2
   composition: {N: 2.0}
   enthalpy: 0
@@ -35,6 +43,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: SO2
   composition: {S: 1.0, O: 2.0}
   enthalpy: 0
@@ -46,6 +61,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: OCS
   composition: {C: 1.0, O: 1.0, S: 1.0}
   enthalpy: 0
@@ -57,6 +79,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: H2O
   composition: {H: 2.0, O: 1.0}
   enthalpy: 0
@@ -68,6 +97,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: H2S
   composition: {H: 2.0, S: 1.0}
   enthalpy: 0
@@ -79,6 +115,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: CO
   composition: {C: 1.0, O: 1.0}
   enthalpy: 0
@@ -90,6 +133,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: O2
   composition: {O: 2.0}
   enthalpy: 0
@@ -101,6 +151,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: SO3
   composition: {S: 1.0, O: 3.0}
   enthalpy: 0
@@ -112,6 +169,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: H2
   composition: {H: 2.0}
   enthalpy: 0
@@ -123,6 +187,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: S
   composition: {S: 1.0}
   enthalpy: 0
@@ -134,6 +205,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: S2
   composition: {S: 2.0}
   enthalpy: 0
@@ -145,6 +223,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: S4
   composition: {S: 4.0}
   enthalpy: 0
@@ -156,6 +241,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: S6
   composition: {S: 6.0}
   enthalpy: 0
@@ -167,6 +259,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: S8
   composition: {S: 8.0}
   enthalpy: 0
@@ -178,6 +277,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: H2SO4
   composition: {H: 2.0, S: 1.0, O: 4.0}
   enthalpy: 0
@@ -189,6 +295,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: S3
   composition: {S: 3.0}
   thermo:
@@ -199,6 +312,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: HO2
   composition: {H: 1.0, O: 2.0}
   enthalpy: 0
@@ -210,6 +330,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
   thermo:
     model: NASA7
     temperature-ranges: [200.0, 1000.0, 3500.0]
@@ -229,6 +356,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: S2O
   composition: {S: 2.0, O: 1.0}
   enthalpy: 0
@@ -240,6 +374,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: O
   composition: {O: 1.0}
   enthalpy: 0
@@ -251,6 +392,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: H
   composition: {H: 1.0}
   enthalpy: 0
@@ -262,6 +410,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: cS2O2
   composition: {S: 2.0, O: 2.0}
   enthalpy: 0
@@ -273,6 +428,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: tS2O2
   composition: {S: 2.0, O: 2.0}
   enthalpy: 0
@@ -284,6 +446,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: rS2O2
   composition: {S: 2.0, O: 2.0}
   enthalpy: 0
@@ -295,6 +464,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: OH
   composition: {O: 1.0, H: 1.0}
   enthalpy: 0
@@ -306,6 +482,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: SH
   composition: {S: 1.0, H: 1.0}
   enthalpy: 0
@@ -317,6 +500,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: O3
   composition: {O: 3.0}
   enthalpy: 0
@@ -328,6 +518,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: O_1D
   composition: {O: 1.0}
   enthalpy: 0
@@ -339,6 +536,13 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 - name: O2_1D
   composition: {O: 2.0}
   enthalpy: 0
@@ -350,14 +554,21 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
 reactions:
 #Photochemical reactions
 - equation: '1.0 CO2 => 1.0 CO + 1.0 O '
-  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+  rate-constant: {A: 0.0,T0: 300, b: 0 ,Ea: 0 }
 - equation: '1.0 SO2 => 1.0 SO + 1.0 O ' #Bierson et al., (2020)
-  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+  rate-constant: {A: 0.0 ,T0: 300 ,b: 0 ,Ea: 0 }
 - equation: '1.0 SO3 => 1.0 O + 1.0 SO2 '
-  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+  rate-constant: {A: 0.0 ,T0: 300 ,b: 0 ,Ea: 0 }
 #Thermochemical and pressure-dependent reactions
 - equation: '1.0 SO2 + 1.0 O (+ M) => 1.0 SO3 (+ M) ' #Burkholder et al., 2015 - JPL Evaluation
   type: falloff

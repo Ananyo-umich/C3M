@@ -110,6 +110,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v1 => 2 H2"){
    int vVal = 1;
    double rateValue = 1.0;
+   //std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -125,6 +126,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v2 => H2 + H2_v1"){
    int vVal = 2;
    double rateValue = 1.0;
+  // std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -140,6 +142,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v3 => H2 + H2_v2"){
    int vVal = 3;
    double rateValue = 1.0;
+  // std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -155,6 +158,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v4 => H2 + H2_v3"){
    int vVal = 4;
    double rateValue = 1.0;
+ //  std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -170,6 +174,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v5 => H2 + H2_v4"){
    int vVal = 5;
    double rateValue = 1.0;
+  // std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -185,6 +190,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v6 => H2 + H2_v5"){
    int vVal = 6;
    double rateValue = 1.0;
+  // std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -200,6 +206,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v7 => H2 + H2_v6"){
    int vVal = 7;
    double rateValue = 1.0;
+ //  std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -215,6 +222,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
   if(Equation == "H2 + H2_v8 => H2 + H2_v7"){
    int vVal = 8;
    double rateValue = 1.0;
+ //  std::cout << "calculation is happening" << std::endl;
    if(Temp < 500){
    rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
    }
@@ -230,6 +238,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
 
   if(Equation == "H + H2_v1 => H + H2"){
    int vVal = 1;
+ //  std::cout << "calculation is happening" << std::endl;
    double rateValue = 1.4E-13*exp( (Temp/125) - pow((Temp/577), 2));
    rateValue = rateValue*exp(0.714*(vVal - 1));
    NetworkName->setMultiplier(inumRxn, rateValue);
@@ -237,6 +246,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
 
   if(Equation == "H + H2_v2 => H + H2_v1"){
    int vVal = 2;
+ //  std::cout << "calculation is happening" << std::endl;
    double rateValue = 1.4E-13*exp( (Temp/125) - pow((Temp/577), 2));
    rateValue = rateValue*exp(0.714*(vVal - 1));
    NetworkName->setMultiplier(inumRxn, rateValue);
@@ -244,6 +254,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
  
   if(Equation == "H + H2_v3 => H + H2_v2"){
    int vVal = 3;
+ //  std::cout << "calculation is happening" << std::endl;
    double rateValue = 1.4E-13*exp( (Temp/125) - pow((Temp/577), 2));
    rateValue = rateValue*exp(0.714*(vVal - 1));
    NetworkName->setMultiplier(inumRxn, rateValue);
@@ -251,6 +262,7 @@ H2_v1 + H2_v5 => H2 + H2_v6
 
   if(Equation == "H + H2_v4 => H + H2_v3"){
    int vVal = 4;
+//   std::cout << "calculation is happening" << std::endl;
    double rateValue = 1.4E-13*exp( (Temp/125) - pow((Temp/577), 2));
    rateValue = rateValue*exp(0.714*(vVal - 1));
    NetworkName->setMultiplier(inumRxn, rateValue);

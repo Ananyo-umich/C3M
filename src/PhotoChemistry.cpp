@@ -69,8 +69,6 @@ double h = 6.626e-34;
 double c = 3e8;
 Spectral_radiance = (Spectral_radiance.array()*wavelengths_.array().transpose()/(h*c)).matrix();
 MatrixXd integrd = (QYield.array()*crossSection_.array()*Spectral_radiance.array()).matrix();
-//MatrixXd integrd = (crossSection_.array()*Spectral_radiance.array()).matrix();
-//std::cout << QYield.transpose() << std::endl;
 sum = (integrd.array()*d_wavelength.array()).sum(); //Bhattacharya (5-1-23)
 
 /*
@@ -87,7 +85,7 @@ return sum;
 }
 
 // Function to read the photoionization cross sections from VULCAN database
-// The output file will contain wavelength (nm) and photoionization cross section (cm^2)
+// The output variable will contain wavelength (m) and photoionization cross section (m^2)
 Eigen::MatrixXd  ReadVULCANPhotoIonCrossSection(string VULCAN_ID){
   fstream InFile;
   InFile.open(VULCAN_ID); 
@@ -122,7 +120,7 @@ Eigen::MatrixXd  ReadVULCANPhotoIonCrossSection(string VULCAN_ID){
 
 
 // Function to read the photodissociation cross sections from VULCAN database
-// The output file will contain wavelength (nm) and photodissociation cross section (cm^2)
+// The output variable will contain wavelength (m) and photodissociation cross section (m^2)
 Eigen::MatrixXd  ReadVULCANPhotoDissCrossSection(string VULCAN_ID){
   fstream InFile;
   InFile.open(VULCAN_ID); 
@@ -155,7 +153,7 @@ Eigen::MatrixXd  ReadVULCANPhotoDissCrossSection(string VULCAN_ID){
 }
 
 // Function to read cross section from VPL photochemical database
-// The output file contains the wavelength (Angstroms) and cross section (cm^2)
+// The output variable contains the wavelength (m) and cross section (m^2)
 Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName){
   fstream InFile;
   InFile.open(AtmosFileName); 
@@ -205,7 +203,7 @@ Eigen::MatrixXd ReadMPCrossSection(string MPFileName){
   InFile.open(MPFileName);
   while(InFile >> wavlength >> photoabs){
 
-  Output(0, num) = atof(wavlength.c_str())*1E-10; 
+  Output(0, num) = atof(wavlength.c_str())*1E-10; //Angstrom to m 
   Output(1, num) = atof(photoabs.c_str())*1E-4; //cm^2 to m^2
 
   num++;
@@ -347,8 +345,8 @@ Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex){
 
 //Function to introduce custom opacity for a given atmosphere
 Eigen::VectorXd handleCustomOpacity(string PlanetName,Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav){
-
-Eigen::VectorXd Output;
+int size = wav.size();
+Eigen::VectorXd Output = VectorXd::Zero(size);
 
 if(PlanetName == "Venus"){
    Output = VenusUV(NetworkName, Pres, Temp, Alt, wav);
@@ -364,7 +362,7 @@ Eigen::VectorXd VenusUV(Cantera::ThermoPhase* NetworkName, double Pres, double T
 
 
 int size = wav.size();
-Eigen::VectorXd COpacity(size);
+Eigen::VectorXd COpacity = VectorXd::Zero(size);
 //Altitude in km
 if(Alt > 67){
   for(int i = 0; i < size; i++){

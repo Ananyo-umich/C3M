@@ -29,20 +29,41 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 
-void handleCustomTransport(string PlanetName, Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double diff){
+VectorXd handleCustomMolecularDiffusion(string PlanetName, Cantera::ThermoPhase* NetworkName, double Pres, double Temp, VectorXd mWt){
+ int nsp = NetworkName->nSpecies();
+ VectorXd DiffConst = VectorXd::Zero(nsp);
 
   if(PlanetName == "JupiterAurora")
-    {JupiterMolDiff(NetworkName, Pres, Temp, diff);
+    { 
+      DiffConst = JupiterMolDiff(NetworkName, Pres, Temp, mWt);
     }
-
+ return DiffConst;
 }
 
 
-void JupiterMolDiff(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double diff){
-//Molecular diffusion in Hydrogen atmosphere [Egert et al., 2017]
- double Ndensity =  NetworkName->molarDensity()*1E3*6.022E23/1E6; // kmol/m^3 -> #/cm^3 conversion
- double MolDiff = 1.98E20*pow(Temp, 0.51)/(pow(log(5.34E6/Temp), 2)*Ndensity); //cm^2/s
- MolDiff = MolDiff*1E-4; //cm^2/s -> m^2/s
- diff = diff + MolDiff; 
+VectorXd JupiterMolDiff(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, VectorXd mWt){
+ int nsp = NetworkName->nSpecies();
+ VectorXd DiffConst = VectorXd::Zero(nsp);
+ VectorXd col_freq = VectorXd::Zero(nsp);
+ VectorXd mol_fr = VectorXd::Zero(nsp);
+ VectorXd I = VectorXd::Ones(nsp);
+ int elementIndex = 0; //NetworkName->elementIndex("H2");
+ NetworkName->getMoleFractions(&mol_fr[0]);
+ double r = 2.7E-10; //Collision radius of H2 (m)
+//Get total number density of H2
+ double totalDensity = NetworkName->molarDensity(); //kmol/m^3
+ double nH2 = totalDensity*1E3*6.022E23*mol_fr(elementIndex); //kmol/m^3 -> #/m^3
+//Compute collision frequency
+ col_freq = 6.022e23*2*3.14*1.38E-23*Temp*(mWt + (I*mWt(elementIndex)))/(mWt(elementIndex)*1E-3);
+ col_freq = (col_freq.array()/mWt.array()).sqrt().matrix();
+//Compute binary diffusion coefficient
+ col_freq = col_freq*2*nH2*r*r;
+ DiffConst = (1/col_freq.array()).matrix();
+ DiffConst = (DiffConst.array()/mWt.array()).matrix()*1E3*1.38E-23*6.022e23*Temp;
+// DiffConst(1) = 3.13E-5*7.339E11*pow(Temp, 0.765);
+ DiffConst(0) = 0.0;
+// std::cout << "Diffusion constant" << std::endl;
+// std::cout << DiffConst << std::endl;
+ return DiffConst;
 }
 

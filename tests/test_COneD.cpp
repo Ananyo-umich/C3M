@@ -23,7 +23,7 @@
 #include <sstream>
 #include <regex>
 #include <cantera/oneD/Sim1D.h>
-#include <cantera/oneD/Atm.h>
+#include <cantera/oneD/StFlow.h>
 #include <cantera/oneD/Boundary1D.h>
 #include <cantera/oneD/DomainFactory.h>
 #include <cantera/base/stringUtils.h>
@@ -232,7 +232,7 @@ std::cout << "Boundary conditions loaded" << std::endl;
 
 //Feeding the inputs to Cantera One-D objects
 
-  auto flow = newDomain<Atm>("gas-flow", sol, "flow");
+  auto flow = newDomain<StFlow>("gas-flow", sol, "flow");
   flow->setupGrid(AtmData.row(iAlt).size(),  &AtmData.row(iAlt).reverse()[0]);
   double massFlowRate = 0.0; //Inlet flow rate
 
@@ -242,10 +242,10 @@ std::cout << "Boundary conditions loaded" << std::endl;
 for (int i = 0; i < nSize; i++) {
       std::vector<double> data((1 + nsp), 1);
       flow->setTemperature(i, AtmData(iTemp,nSize -1 - i));
-      flow->setPressure(i, AtmData(iPress,nSize -1 - i));
-      std::cout << AtmData(iTemp,nSize -1 - i) << " " << AtmData(iPress,nSize -1 - i) << std::endl;
-      gas->setState_TP(AtmData(iTemp,nSize -1 - i), (AtmData(iPress,nSize -1 - i)/1.0132E5)*OneAtm);
+    //  flow->setPressure(i, AtmData(iPress,nSize -1 - i));
+    //  std::cout << AtmData(iTemp,nSize -1 - i) << " " << AtmData(iPress,nSize -1 - i) << std::endl;
       gas->setMoleFractions(&ChemMoleFrac.col(nSize -1 - i)[0]);
+      gas->setState_TP(AtmData(iTemp,nSize -1 - i), (AtmData(iPress,nSize -1 - i)/1.0132E5)*OneAtm);
       gas->getMassFractions(ChemMassFrac.col(nSize -1 - i).data());
       AtmData(iU, nSize -1 - i) = massFlowRate;
     }
@@ -253,8 +253,8 @@ for (int i = 0; i < nSize; i++) {
 ///  flow->setMassFrac(ChemMoleFrac);
 
 flow->setKinetics(gas_kin);
-  flow->setTransport(gas_tp);
-  flow->doEnergy(0);
+flow->setTransport(gas_tp);
+flow->doEnergy(0);
 
 /*Setting up the boundary conditions
 As the domain starts from TOA, the outer refers to the upper boundary, and inlet will refer to the lower boundary or surface
@@ -262,20 +262,23 @@ depending upon the application
 */
 
 //Inlet condition with T, mole fraction and total mass flow rate
+//auto inlet = std::make_shared<Inlet1D>();
 auto inlet = newDomain<Inlet1D>("inlet", sol);
-inlet->setTemperature(AtmData(iTemp,nSize-1));
+std::cout << "Inlet set up done! " << std::endl;
 inlet->setMoleFractions(&ChemMoleFrac.col(nSize-1)[0]);
+inlet->setTemperature(AtmData(iTemp,nSize-1));
 inlet->setMdot(massFlowRate);
 
-//Outlet condition
-auto outlet = newDomain<OutletRes1D>("outlet-reservoir", sol);
-outlet->setTemperature(AtmData(iTemp,0));
-outlet->setMoleFractions(&ChemMoleFrac.col(0)[0]);
 
-std::cout << "All inputs loaded into Cantera OneD objects " << std::endl;
+//Outlet condition
+auto outlet = newDomain<Outlet1D>("outlet", sol);
+//outlet->setMoleFractions(&ChemMoleFrac.col(0)[0]);
+outlet->setTemperature(AtmData(iTemp,0));
+
 
 //Setting up solution domain
-std::vector<std::shared_ptr<Cantera::Domain1D>> domains = {inlet, flow, outlet};
+vector<shared_ptr<Domain1D>> domains { inlet, flow, outlet };
+//std::vector<std::shared_ptr<Cantera::Domain1D>> domains = {inlet, flow, outlet};
 Sim1D sim(domains);
 
 std::cout << "Simulation object has been set up" << std::endl;
@@ -311,13 +314,14 @@ for (int ij = 0; ij < gas->nSpecies(); ++ij) {
     Eigen::Map<Eigen::RowVectorXd>(&Xvalues[0], AtmData.cols()) = ChemMassFrac.row(ij);
     sim.setInitialGuess(gas->speciesName(ij), locs, Xvalues);
 }
+
 //gas_kin->disableAllReactions();
 flow->solveEnergyEqn();
-//sim.fixedTemperature();
+sim.fixedTemperature();
 std::cout << "Transport conditions have been set up" << std::endl;
 
 //sim.setInitialGuess("auto");
-sim.solve(1, true);
+//sim.solve(1, true);
 
 //Setting up the integrator
 //CVodesIntegrator integrator;

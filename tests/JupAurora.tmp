@@ -4,7 +4,7 @@ planetName = JupiterAurora
 network = JupiterIon23.yaml
 photochem = true
 ionkinetics_man = false
-ionkinetics = JupIonRate_UVS.txt
+ionkinetics = PJ7_JEDI.txt
 equilibrate = false
 chemInp = JupAur_ChemP.txt
 
@@ -153,11 +153,6 @@ C2H6 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_cross.csv
 scatterers = H2, He
 H2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/H2_scat.txt
 He = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/He_scat.txt
-
-<coldensity>
-species = H2, He
-H2 = 1e16  
-He = 1e15
 
 <output>
 species = H2, H2+, H+, H, E, H3+, CH4, CH3+, CH4+, CH5+, He, CH3, CH2, He+, CH2+, CH+, HeH+, CH, C2H6, C2H5, C2H4, C2H3, C2H2, C4H6, C, C4H5, C3H6, C2, C2H

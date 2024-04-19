@@ -5,7 +5,7 @@ phases:
 - name: gas
   thermo: ideal-gas
   elements: [C, N, S, O, H, Cl, Ar]
-  species: [CO2, N2, SO2, SO3, SO, O, H2O, H2SO4, CO, O2]
+  species: [CO2, N2, SO2, SO3, SO, O, H2O, H2SO4, CO, O2, S]
   kinetics: gas
   reactions: all
   skip-undeclared-elements: true
@@ -121,29 +121,70 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
+- name: S
+  composition: {S: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
 reactions:
+#Reactions are taken from Zhang et al., 2010
+#- equation: '1.0 SO => 1.0 O + 1.0 S '
+#  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 SO2 => 1.0 O2 + 1.0 S '
+#  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 SO2 => 1.0 O + 1.0 SO '
+  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
 - equation: '1.0 SO3 => 1.0 O + 1.0 SO2 '
   rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
-- equation: '1.0 SO + 1.0 O2 => 1.0 SO2 + 1.0 O ' #Bierson et al., (2020)
-  rate-constant: {A: 1.6e-13,T0: 300.0,b: 0.0,Ea: 2280.0 }
-- equation: '1.0 SO2 => 1.0 SO + 1.0 O ' #Bierson et al., (2020)
-  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
-- equation: '1.0 CO2 => 1.0 CO + 1.0 O'
-  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
-- equation: '1.0 SO3 + 1.0 H2O + M => 1.0 H2SO4 + M ' #Bierson et al., (2020)
+- equation: '1.0 S + 1.0 O2 => 1.0 O + 1.0 SO '
+  rate-constant: {A: 2.3E-12 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 SO + 1.0 O + M => 1.0 SO2 + M '
   type: three-body
-  rate-constant: {A: 2.3e-33,T0: 1.0,b: 1.0,Ea: -6540.0}
-- equation: '1.0 H2SO4 + 1.0 H2O => 1.0 SO3 + 2.0 H2O '
-  rate-constant: {A: 7.0e-14,T0: 300.0,b: 0.0,Ea: 5170.0 }
-- equation: '1.0 SO2 + 1.0 CO => 1.0 SO + 1.0 CO2' #Krasnopolsky 2013 with modifications from Frankland 2017
-  rate-constant: {A: 4.5e-12 ,T0: 300 ,b: 0 ,Ea: 29468.36 }
+  rate-constant: {A: 4.5e-27,T0: 1.0,b: -1.6,Ea: 0.0}
 - equation: '1.0 SO2 + 1.0 O (+ M) => 1.0 SO3 (+ M) ' #Burkholder et al., 2015 - JPL Evaluation
   type: falloff
   low-P-rate-constant: {A: 1.8E-33,T0: 298, b: 2.0,Ea: 0.0}
   high-P-rate-constant: {A: 4.1E-14,T0: 298,b: 1.8,Ea: 0.0}
   Troe: {A: 1, T3: 94.0, T1: 10000.0}
-- equation: '2.0 O (+ M) => 1.0 O2 (+ M)' #Bierson et al., (2020)
-  type: falloff
-  low-P-rate-constant: {A: 5.2e-28,T0: 1.0,b: -2.0,Ea: 0.0}
-  high-P-rate-constant: {A: 0.0,T0: 1.0,b: 0.0,Ea: 0.0}
-  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 O + 1.0 SO3 => 1.0 SO2 + 1.0 O2 ' #Bierson et al., (2020)
+  rate-constant: {A: 2.32e-16,T0: 300.0,b: 0.0,Ea: 487.0 }
+- equation: '1.0 SO + 1.0 SO3 => 2.0 SO2 '
+  rate-constant: {A: 2.0E-15 ,T0: 300 ,b: 0 ,Ea: 0 }
+#End of reactions
+#- equation: '1.0 SO3 => 1.0 O + 1.0 SO2 '
+#  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 SO + 1.0 O2 => 1.0 SO2 + 1.0 O ' #Bierson et al., (2020)
+#  rate-constant: {A: 1.6e-13,T0: 300.0,b: 0.0,Ea: 2280.0 }
+#- equation: '1.0 SO2 => 1.0 SO + 1.0 O ' #Bierson et al., (2020)
+#  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 CO2 => 1.0 CO + 1.0 O'
+#  rate-constant: {A: 1.0 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 SO3 + 1.0 H2O + M => 1.0 H2SO4 + M ' #Bierson et al., (2020)
+#  type: three-body
+#  rate-constant: {A: 2.3e-33,T0: 1.0,b: 1.0,Ea: -6540.0}
+#- equation: '1.0 O + 1.0 SO3 => 1.0 SO2 + 1.0 O2 ' #Bierson et al., (2020)
+#  rate-constant: {A: 2.32e-16,T0: 300.0,b: 0.0,Ea: 487.0 }
+#- equation: '1.0 H2SO4 + 1.0 H2O => 1.0 SO3 + 2.0 H2O '
+#  rate-constant: {A: 7.0e-14,T0: 300.0,b: 0.0,Ea: 5170.0 }
+#- equation: '1.0 H2SO4 => 1.0 SO3 + 1.0 H2O '
+#  rate-constant: {A: 1.0,T0: 300.0,b: 0.0,Ea: 0.0 }
+#- equation: '1.0 SO3 + 1.0 CO => 1.0 CO2 + 1.0 SO2 ' #Bierson et al., (2020)
+#  rate-constant: {A: 1.0e-11,T0: 300.0,b: 0.0,Ea: 13000.0 }
+#- equation: '1.0 SO2 + 1.0 CO => 1.0 SO + 1.0 CO2' #Krasnopolsky 2013 with modifications from Frankland 2017
+#  rate-constant: {A: 4.5e-12 ,T0: 300 ,b: 0 ,Ea: 29468.36 }
+#- equation: '1.0 SO2 + 1.0 O (+ M) => 1.0 SO3 (+ M) ' #Burkholder et al., 2015 - JPL Evaluation
+#  type: falloff
+#  low-P-rate-constant: {A: 1.8E-33,T0: 298, b: 2.0,Ea: 0.0}
+#  high-P-rate-constant: {A: 4.1E-14,T0: 298,b: 1.8,Ea: 0.0}
+#  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+#- equation: '2.0 O (+ M) => 1.0 O2 (+ M)' #Bierson et al., (2020)
+#  type: falloff
+#  low-P-rate-constant: {A: 5.2e-28,T0: 1.0,b: -2.0,Ea: 0.0}
+#  high-P-rate-constant: {A: 0.0,T0: 1.0,b: 0.0,Ea: 0.0}
+#  Troe: {A: 1, T3: 94.0, T1: 10000.0}

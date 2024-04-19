@@ -22,6 +22,7 @@ foreach(_test ${_tests})
       ${CANTERA_INCLUDE_DIR}
       ${NETCDF_INCLUDES}
       ${HDF5_INCLUDE_DIRS}
+      OpenMP::OpenMP_CXX
       ${ATHENAPP_INCLUDE_DIR}
       ${CMAKE_BINARY_DIR}
       )
@@ -39,6 +40,7 @@ foreach(_test ${_tests})
       ${HDF5_LIBRARIES}
       ${CMAKE_DL_LIBS}
       stdc++fs
+      OpenMP::OpenMP_CXX
       ${ATHENAPP_LIBRARY_${build}}
       python3.9
       )

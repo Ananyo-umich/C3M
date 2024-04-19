@@ -12,7 +12,6 @@
 // Kinetics object stores the chemical kinetics information
 #include <cantera/kinetics.h>
 #include <cantera/kinetics/Reaction.h>
-#include <cantera/transport/Transport.h>
 
 // output stream
 #include <iostream>
@@ -46,107 +45,97 @@ using Eigen::VectorXd;
 using namespace Cantera;
 using namespace std;
 
-//Function for Eddy diffusion [Hu et al., 2012]
-MatrixXd Kflux(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, double Kzz, double Kzz_prev, double Kzz_next, double dx1, double dx2){
-  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns);
-  double Nn, Nnext, Nprev; 
-  double beta1, beta2;
+//Eddy diffusion derivative w.r.t. mole fraction
+MatrixXd Kflux_dX(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, double Kzz, double Kzz_prev, double Kzz_next, double dx1, double dx2){
+  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns), Nn(ns), Nnext(ns), Nprev(ns); 
+  VectorXd beta1(ns), beta2(ns);
+  VectorXd I = VectorXd::Ones(ns);
   Xn = Sp.col(inxn); //mole fraction
   Xnext = Sp.col(inxNext); //mole fraction
   Xprev = Sp.col(inxPrev); //mole fraction
-  Nn = Np.colwise().sum()(inxn); //concentration (kmol/m^3)
-  Nnext = Np.colwise().sum()(inxNext); //concentration (kmol/m^3)
-  Nprev = Np.colwise().sum()(inxPrev); //concentration (kmol/m^3)
-  beta1 = -1*((Kzz + Kzz_prev)/2)*((Nn + Nprev)/2); //j-1/2
-  beta2 = -1*((Kzz + Kzz_next)/2)*((Nn + Nnext)/2); //j+1/2
+  Nn = Np.col(inxn).colwise().sum(); //concentration (kmol/m^3)
+  Nnext = Np.col(inxPrev).colwise().sum(); //concentration (kmol/m^3)
+  Nprev = Np.col(inxNext).colwise().sum(); //concentration (kmol/m^3)
   double dx = (dx1 + dx2)/2;
-  diff_flux =   -1*(((((Xnext - Xn)*beta2)/dx2) - (((Xn - Xprev))*beta1/dx1))/dx);
+  diff_flux =  -1*I*((Kzz_next*Nnext) + (Kzz_prev*Nprev) - (2*Kzz*Nn))/(4*dx*dx); 
+return diff_flux;
+}
+
+//Function for Eddy diffusion [Hu et al., 2012]
+MatrixXd Kflux(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, double Kzz, double Kzz_prev, double Kzz_next, double dx1, double dx2){
+  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns), Nn(ns), Nnext(ns), Nprev(ns); 
+  VectorXd beta1(ns), beta2(ns);
+  Xn = Sp.col(inxn); //mole fraction
+  Xnext = Sp.col(inxNext); //mole fraction
+  Xprev = Sp.col(inxPrev); //mole fraction
+  Nn = Np.col(inxn).colwise().sum(); //concentration (kmol/m^3)
+  Nnext = Np.col(inxPrev).colwise().sum(); //concentration (kmol/m^3)
+  Nprev = Np.col(inxNext).colwise().sum(); //concentration (kmol/m^3)
+  beta1 = ((Kzz + Kzz_prev)/2)*((Nn + Nprev)/2); //j-1/2
+  beta2 = ((Kzz + Kzz_next)/2)*((Nn + Nnext)/2); //j+1/2
+  double dx = (dx1 + dx2)/2;
+  diff_flux =   (((-1*((Xnext - Xn)*beta2)/dx2) + (((Xn - Xprev))*beta1/dx1))/dx);
 return diff_flux;
 }
 
 
 
 //Function for Molecular, and thermodiffusion [Hu et al., 2012]
-MatrixXd Dflux(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, VectorXd D_this, VectorXd D_prev, VectorXd D_next, double dx1, double dx2, MatrixXd mW, double T_prev, double T_this, double T_next, double mWav, double ga){
-  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns);
-  double Nn, Nnext, Nprev; 
+MatrixXd Dflux(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, double D_this, double D_prev, double D_next, double dx1, double dx2, MatrixXd mW, double T_prev, double T_this, double T_next, double mWav, double ga){
+  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns), Nn(ns), Nnext(ns), Nprev(ns); 
   VectorXd beta1(ns), beta2(ns), Hs_prev(ns), Hs_next(ns);
-  VectorXd phi_prev(ns), phi_next(ns);
-  double Hs0_prev = 2*mWav*ga*1e-3/(6.022e23*1.38e-23*(T_prev + T_this)); //scale height of atmosphere -> 1/m
-  double Hs0_next = 2*mWav*ga*1e-3/(6.022e23*1.38e-23*(T_next + T_this)); //scale height of atmosphere -> 1/m
-  double dTdz1 = 2*(T_this - T_prev)/(dx1*(T_prev + T_this)); //Thermodiffusion
-  double dTdz2 = 2*(T_next - T_this)/(dx2*(T_next + T_this)); //Thermodiffusion
+  VectorXd phi1(ns), phi2(ns);
+  double Hs0_prev = 2*mWav*ga*1e-3/(1.38e-23*(T_prev + T_this)); //scale height of atmosphere -> 1/m
+  double Hs0_next = 2*mWav*ga*1e-3/(1.38e-23*(T_next + T_this)); //scale height of atmosphere -> 1/m
+  double dTdz1 = 2*(T_this - T_prev)/(dx2*(T_prev + T_this)); //Thermodiffusion
+  double dTdz2 = 2*(T_next - T_this)/(dx1*(T_next + T_this)); //Thermodiffusion
   double dx = (dx1 + dx2)/2;
   VectorXd I = VectorXd::Ones(ns);
-  Hs_prev = 2*mW*ga*1e-3/(6.022e23*1.38e-23*(T_prev + T_this)); //scale height of species -> 1/m
-  Hs_next = 2*mW*ga*1e-3/(6.022e23*1.38e-23*(T_next + T_this)); //scale height of species -> 1/m
+  Hs_prev = 2*mW*ga*1e-3/(1.38e-23*(T_prev + T_this)); //scale height of species -> 1/m
+  Hs_next = 2*mW*ga*1e-3/(1.38e-23*(T_next + T_this)); //scale height of species -> 1/m
   Xn = Sp.col(inxn); //mole fraction
   Xnext = Sp.col(inxNext); //mole fraction
   Xprev = Sp.col(inxPrev); //mole fraction
-  Nn = Np.colwise().sum()(inxn); //concentration (kmol/m^3)
-  Nnext = Np.colwise().sum()(inxNext); //concentration (kmol/m^3)
-  Nprev = Np.colwise().sum()(inxPrev); //concentration (kmol/m^3)
-  beta1 = -1*((D_this + D_prev)/2)*((Nn + Nprev)/2); //j-1/2
-  beta2 = -1*((D_this + D_next)/2)*((Nn + Nnext)/2); //j+1/2
-  phi_prev = -0.5*(((I*Hs0_prev) - Hs_prev - (I*dTdz1)).array()*beta1.array()).matrix();
-  phi_next = -0.5*(((I*Hs0_next) - Hs_next - (I*dTdz2)).array()*beta2.array()).matrix();
-  diff_flux =   -1*(((((Xnext - Xn).array()*beta2.array()).matrix()/dx2) - (((Xn - Xprev).array()*beta1.array()).matrix()/dx1))/dx); 
-  diff_flux = diff_flux - ((phi_next - phi_prev)/dx);
+  Nn = Np.col(inxn).colwise().sum(); //concentration (kmol/m^3)
+  Nnext = Np.col(inxPrev).colwise().sum(); //concentration (kmol/m^3)
+  Nprev = Np.col(inxNext).colwise().sum(); //concentration (kmol/m^3)
+  beta1 = ((D_this + D_prev)/2)*((Nn + Nprev)/2); //j-1/2
+  beta2 = ((D_this + D_next)/2)*((Nn + Nnext)/2); //j+1/2
+  phi1 = beta1*((I*Hs0_prev) - Hs_prev - (I*dTdz1));
+  phi2 = beta2*((I*Hs0_next) - Hs_next - (I*dTdz2));
+  diff_flux =   (((-1*((Xnext - Xn)*beta2)/dx2) + (((Xn - Xprev))*beta1/dx1))/dx); //
+  diff_flux = diff_flux + ((phi2 - phi1)/dx);
 return diff_flux;
 }
 
 
-
+//Function for Molecular, and thermodiffusion derivative w.r.t. mole fraction
+MatrixXd Dflux_dX(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, double D_this, double D_prev, double D_next, double dx, MatrixXd mW, double T_prev, double T_this, double T_next, double mWav, double ga){
+  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns), Nn(ns), Nnext(ns), Nprev(ns); 
+  VectorXd beta1(ns), beta2(ns), Hs_prev(ns), Hs_next(ns);
+  double Hs0_prev = mWav*ga*1e-3/(1.38e-23*T_prev);
+  double Hs0_next = mWav*ga*1e-3/(1.38e-23*T_next);
+  double dTdz = (T_next - T_prev)/(2*dx*T_this);
+  VectorXd I = VectorXd::Ones(ns);
+  Hs_prev = mW*ga*1e-3/1.38e-23*T_prev;
+  Hs_next = mW*ga*1e-3/1.38e-23*T_next;
+  Xn = Sp.col(inxn); //mole fraction
+  Xnext = Sp.col(inxNext); //mole fraction
+  Xprev = Sp.col(inxPrev); //mole fraction
+  Nn = Np.col(inxn).colwise().sum(); //concentration (kmol/m^3)
+  Nnext = Np.col(inxPrev).colwise().sum(); //concentration (kmol/m^3)
+  Nprev = Np.col(inxNext).colwise().sum(); //concentration (kmol/m^3)
+  diff_flux =   -1*I*((D_next*Nnext) + (D_prev*Nprev) - (2*D_this*Nn))/(dx*dx); 
+return diff_flux;
+}
 
 //Function for ambipolar diffusion
-MatrixXd Aflux(int inxn, int inxNext, int inxPrev, MatrixXd Sp, MatrixXd Np, int ns, VectorXd D_this, VectorXd D_prev, VectorXd D_next, double dx1, double dx2, MatrixXd mW, double T_prev, double T_this, double T_next, double mWav, double ga, int iE, VectorXd alph){
-  VectorXd diff_flux(ns), Xn(ns), Xnext(ns), Xprev(ns);
-  double Nn, Nnext, Nprev; 
-  VectorXd beta1(ns), beta2(ns), Hs_prev(ns), Hs_next(ns);
-  VectorXd phi_prev(ns), phi_next(ns);
-  double Ne_prev, Ne_this, Ne_next; //Electron concentrtaion (kmol/m^3)
-//Mean scale height
-  double Hs0_prev = 2*mWav*ga*1e-3/(6.022e23*1.38e-23*(T_prev + T_this)); //scale height of atmosphere -> 1/m
-  double Hs0_next = 2*mWav*ga*1e-3/(6.022e23*1.38e-23*(T_next + T_this)); //scale height of atmosphere -> 1/m
-//Lapse rate for thermodiffusion  
-  double dTdz1 = 2*(T_this - T_prev)/(dx1*(T_prev + T_this)); //Thermodiffusion
-  double dTdz2 = 2*(T_next - T_this)/(dx2*(T_next + T_this)); //Thermodiffusion
-  double dx = (dx1 + dx2)/2;
-  VectorXd I = VectorXd::Ones(ns);
-//Scale unit for all the species
-  Hs_prev = 2*mW*ga*1e-3/(6.022e23*1.38e-23*(T_prev + T_this)); //scale height of species -> 1/m
-  Hs_next = 2*mW*ga*1e-3/(6.022e23*1.38e-23*(T_next + T_this)); //scale height of species -> 1/m
-//Mole fraction array
-  Xn = Sp.col(inxn); //mole fraction
-  Xnext = Sp.col(inxNext); //mole fraction
-  Xprev = Sp.col(inxPrev); //mole fraction
-//Electron density
-  Ne_prev = Np.col(inxPrev)(iE);
-  Ne_this = Np.col(inxn)(iE);
-  Ne_next = Np.col(inxNext)(iE);
-//Ambipolar diffusion term
-  double dNedz1 = 2*((Ne_this*T_this) - (Ne_prev*T_prev))/(dx1*((Ne_prev*T_prev) + (Ne_this*T_this)));
-  double dNedz2 = 2*((Ne_next*Ne_next) - (Ne_this*T_this))/(dx2*((Ne_next*T_next) + (Ne_this*T_this)));
-  if (std::isnan(std::abs(dNedz1))) {
-    dNedz1 = 0.0;
-  }
-  if (std::isnan(std::abs(dNedz2))) {
-    dNedz2 = 0.0;
-  }
-//Total number density
-  Nn = Np.colwise().sum()(inxn); //concentration (kmol/m^3)
-  Nnext = Np.colwise().sum()(inxNext); //concentration (kmol/m^3)
-  Nprev = Np.colwise().sum()(inxPrev); //concentration (kmol/m^3)
-  beta1 = -1*((D_this + D_prev)/2)*((Nn + Nprev)/2); //j-1/2
-  beta2 = -1*((D_this + D_next)/2)*((Nn + Nnext)/2); //j+1/2
-//Total flux due to diffusion of ions
-  phi_prev = -0.5*(((I*Hs0_prev) - Hs_prev - (I*dNedz1) - ((I + alph)*dTdz1)).array()*beta1.array()).matrix();
-  phi_next = -0.5*(((I*Hs0_next) - Hs_next - (I*dNedz2) - ((I + alph)*dTdz2)).array()*beta2.array()).matrix();
-  diff_flux =   -1*(((((Xnext - Xn).array()*beta2.array()).matrix()/dx2) - (((Xn - Xprev).array()*beta1.array()).matrix()/dx1))/dx); 
-  diff_flux = diff_flux - ((phi_next - phi_prev)/dx);
-  //std::cout << diff_flux.transpose() << std::endl;
-return diff_flux;
-}
+
+
+
+
+//Function for ambipolar diffusion derivative w.r.t. mole fraction
+
 
 
 int main(int argc, char **argv) {
@@ -169,8 +158,7 @@ int main(int argc, char **argv) {
 //Reading the chemical kinetics network
   auto sol = newSolution(network_file);
   auto gas = sol->thermo();
-  auto gas_kin = sol->kinetics(); 
-  auto gas_tr  = sol->transport(); 
+  auto gas_kin = sol->kinetics();  
   int nsp = gas->nSpecies();
   int nrxn = gas_kin->nReactions();
   std::cout << "Number of reactions: " << nrxn << std::endl;
@@ -228,7 +216,6 @@ std::cout << "Boundary conditions loaded" << std::endl;
   std::string precp_time = pinput->GetString("integrator", "Tprecp");
   double dt = atof(time_step.c_str());
   double Tmax = atof(max_time.c_str());
-  double Tmin = dt;
   double Ttot = 0.0;
   double Tstart = atof(start_time.c_str());
   double Tprecp = atof(precp_time.c_str());
@@ -285,7 +272,6 @@ std::cout << "Boundary conditions loaded" << std::endl;
 //Setting initial condition for chemical species
   MatrixXd ChemMoleFrac(nsp, nSize);
   MatrixXd ChemConc(nsp, nSize);
-  VectorXd MolDCoeff(nsp);
   MatrixXd a(nsp, nSize);
   MatrixXd n_conc(nsp, nSize);
   MatrixXd conv(nsp, nSize);
@@ -384,7 +370,7 @@ std::cout << "Number of reactions" << ion_rxn << std::endl;
   std::string inp3, inp4;
   int ih = 0;
   getline(InFile, inp3);
-    while(ih < nSize){
+  while(ih < nSize){
     for(int ixn = 0; ixn < ion_rxn; ixn++){
       if(ixn < ion_rxn-1){
        getline(InFile,inp4,',');
@@ -403,9 +389,16 @@ std::cout << "Number of reactions" << ion_rxn << std::endl;
   InFile.close();
 
 
-  std::cout << "All inputs loaded into C3M " << std::endl;
+std::cout << "All inputs loaded into C3M " << std::endl;
+
+//Condition to turn on photochemistry
+  std::string photochem = pinput->GetString("problem", "photochem");
+  if(photochem == "true")
+  {
   
-  //Reading the Stellar Irradiance Input
+  std::cout << "Starting photochemistry calculations" << std::endl;
+
+//Reading the Stellar Irradiance Input
   std::string stellar_input_file = pinput->GetString("radtran", "solar");
   std::string radius = pinput->GetString("radtran", "radius");
   std::string reference =   pinput->GetString("radtran", "reference");
@@ -416,15 +409,7 @@ std::cout << "Number of reactions" << ion_rxn << std::endl;
   MatrixXd stellar_input = ReadStellarRadiationInput(stellar_input_file, rad, ref);
   MatrixXd d_wavelength(stellar_input.row(0).size(), 1);
   MatrixXd wavelength = stellar_input.row(0);
-
-  MatrixXd OpacityStorage = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
-//Condition to turn on photochemistry
-  std::string photochem = pinput->GetString("problem", "photochem");
-  if(photochem == "true")
-  {
   
-  std::cout << "Starting photochemistry calculations" << std::endl;
-
 //Modification of solar flux based on SZA input, along with conversion from deg. to radians
   stellar_input.row(1) = stellar_input.row(1)*cos(sz_angle*3.14/180);
   
@@ -626,9 +611,11 @@ int iPrev, iNext;
 
    
 //Initiating Matrices for Time Evolution
-Eigen::SparseMatrix<double>  m_wjac;
-m_wjac.resize(nsp, nsp);
+Eigen::SparseMatrix<double>  m_wjac(nsp, nsp);
 MatrixXd mat1(nsp, nsp);
+MatrixXd ProdC(nsp, nSize);
+MatrixXd LossC(nsp, nSize);
+MatrixXd DiffC(nsp, nSize);
 mat1 = MatrixXd::Identity(nsp, nsp);
 MatrixXd mat2(nsp, nsp);
 VectorXd Un(nsp);
@@ -638,58 +625,32 @@ VectorXd fluxT(nsp); //Total flux due to diffusion
 VectorXd fluxM(nsp); //Flux due to molecular diffusion
 VectorXd fluxK(nsp); //Flux due to eddy diffusion
 VectorXd fluxA(nsp); //Flux due to ambipolar diffusion
-
-VectorXd Source(nsp);
-VectorXd Loss(nsp);
-VectorXd D_j(nsp);
-VectorXd D_prev(nsp);
-VectorXd D_next(nsp);
 VectorXd mWt(nsp); //Molecular weight
-VectorXd Qn(nsp); //Charge number for filtering ions and neutrals
-VectorXd Qe(nsp); //Charge number for filtering ions from neutrals and electron
-VectorXd alpha = VectorXd::Zero(nsp); //Thermal diffusion coefficient
+VectorXd Qn(nsp); //Charge number
 VectorXd oem = Eigen::VectorXd::Ones(nsp);
 VectorXd dQ(nsp);
 double Keddy_j, Keddy_prev, Keddy_next;
+double D_j, D_prev, D_next = 0;
 double Temp, Press, Kzz;
 double charge;
 double mm;
 VectorXd m_wdot(nsp);
 VectorXd mole_frac(nsp);
-VectorXd m_subcycle(nsp);
 
-std::string a_species_list = pinput->GetString("thermaldiff", "species");
-  while (std::regex_search (a_species_list,m,pattern)) {
-    for (auto x:m){
-    std::string species_thermaldiff_condition = pinput->GetString("thermaldiff", x);
-    species_inx = gas->speciesIndex(x);
-    alpha(species_inx) = atof(species_thermaldiff_condition.c_str());
-    }
-    a_species_list = m.suffix().str();
-  }
 
-int iE = gas->speciesIndex("E");
-//std::cout << "alpha: " << alpha.transpose() << std::endl;
-
-//Filters for charged particles, and neutrals
 for (int insp = 0; insp < nsp; insp++) {
   mWt(insp) = gas->molecularWeight(insp); // Kg/kml
   int elementIndex = gas->elementIndex("E");
   charge = gas->nAtoms(insp, elementIndex);
   if(charge == 0){
   Qn(insp) = 0;
-  Qe(insp) = 0;
   }
   else if(charge != 0){
   Qn(insp) = 1;
-  Qe(insp) = 1;
-  if(charge == 1){
-  Qe(insp) = 0;
-  }
-
   }
 
 }
+
 
 double Kb = 1.38E-23;
 int i = 0;
@@ -712,19 +673,12 @@ std::cout << "!! Atmosphere in thermochemical equilibrium !! \n" << std::endl;
 int niter = 0;
 int tol = 0;
 int ftime = 0;
-double t_chem;
-int num_chem = 1;
 std::cout << "!! Starting the Simulation !!" << std::endl;
+//Cantera::Kinetics *gasRawPtr = sol->kinetics().get();
 
-
-//Acceleration due to gravity (m/s)
 std::string grav_str = pinput->GetString("grav", "g");
 double g = atof(grav_str.c_str()); 
 
-//Scale height (km)
-std::string scale_height = pinput->GetString("grav", "H0");
-double H0 = atof(scale_height.c_str())*1E3; //km -> m
-double D_Max;
 //Correct for the atmospheric scattering and absorption above the model boundary
 //Using column density of species to determine the absorption and scattering not
 //accounted for
@@ -748,7 +702,7 @@ while (std::regex_search (clden_species_list,m,pattern)) {
 
 while(Ttot  < Tmax) {
   MatrixXd Opacity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
-  //Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
+  Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
   a = ChemMoleFrac;
   n_conc = ChemConc;
   for (int j = 0; j < nSize; j++) {
@@ -758,9 +712,7 @@ while(Ttot  < Tmax) {
     Press = AtmData(iPress,j);
     auto sol2 = newSolution(network_file);
     auto gas2 = sol2->thermo();
-    //sol2->setTransportModel("mixture-averaged");
     auto gas_kin2 = sol2->kinetics();
-    auto gas_tr2 = sol2->transport();
     Cantera::Kinetics *gasRawPtr = sol2->kinetics().get();
     Cantera::ThermoPhase *gasThermo = gas2.get(); 
     mole_frac = ChemMoleFrac.col(j);
@@ -774,7 +726,7 @@ while(Ttot  < Tmax) {
       for(int ionx = 0; ionx < ion_rxn; ionx++){
         gas_kin2->setMultiplier(ion_rxnid(ionx), ion_rate(ionx, j));
         gas_kin2->getFwdRatesOfProgress(fwd_rates.data());
-       //std::cout << AtmData(iAlt, j)/1e3 << " " <<  ion_rate(ionx, j) << std::endl;
+       // std::cout << AtmData(iAlt, j)/1e3 << " " <<  ion_rate(ionx, j) << std::endl;
     }
    // std::cout << "Setting rates for electron impact process done" << std::endl;
 //Calculating the photochemical reaction rate
@@ -812,17 +764,22 @@ while(Ttot  < Tmax) {
     
 //The transmission coefficient from opacity
     Opacity.col(j) = Opacity.col(j) - (dh*handleCustomOpacity(PlanetName, gasThermo, Press, Temp, AtmData(iAlt,j), stellar_input.row(0)));
-    //OpacityStorage.col(j) = Opacity.col(j);
     Opacity.col(j) = Opacity.col(j).array().exp().matrix();    
     Opacity.col(j) =  (Opacity.col(j).array()*Opacity.col(j-1).array()).matrix();
 //Stellar spectrum at each altitude
     Stellar_activity.col(j) = (Stellar_activity.col(j-1).array()*Opacity.col(j).array()).transpose().matrix();
      }
    if(j == 0){
+    // std::cout << "starting TOA opacity" << std::endl;
      clden_species_list = pinput->GetOrAddString("coldensity", "species", "nan");
      if(clden_species_list != "nan"){
+      // std::cout << "Modification of absorbers" << std::endl;
+//Scale height and column density at upper boundary
+       double number_density = Press/(Kb*Temp); //m^3
+       double mean_molecular_mass = (gas->meanMolecularWeight())/(1E3*6.022E23); //kg/kmol-> kg/molecule
+       double Hs =  Kb*Temp/(mean_molecular_mass*g); //Scale height
 //Updating the difference in column density
-       cldMag_diff = cldMag; //1/m^2
+       cldMag_diff = (Hs*number_density*mole_frac) - cldMag; //1/m^2
 //Atomic and molecular absorption
        int Absorber = 0;
        std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
@@ -831,13 +788,10 @@ while(Ttot  < Tmax) {
          species_inx = gas2->speciesIndex(x);
          double number_density = Press/(Kb*Temp);
          Opacity.col(j) = Opacity.col(j) - (absorber_cross_data.col(Absorber)*cldMag_diff(species_inx)/cos(sz_angle*3.14/180));
-         //std::cout << absorber_cross_data.col(Absorber).transpose()*cldMag_diff(species_inx)/cos(sz_angle*3.14/180) << std::endl;
-        // std::cout << Opacity.col(j).transpose() << std::endl;
          Absorber++;
      }
          absorber_species_list = m.suffix().str();
     }
-    
     //std::cout << "Absorption done! " << std::endl;
 //Rayleigh scattering
       int Scatter = 0;
@@ -851,19 +805,18 @@ while(Ttot  < Tmax) {
      }
         scat_species_list = m.suffix().str();
       }
-   // std::cout << "Scattering done at TOA!" << std::endl;
+     //std::cout << "Scattering done! " << std::endl;
 //Updating the stellar activity at upper boundary
 //The transmission coefficient from opacity
-   // std::cout << Opacity.col(j) << std::endl;
-   // OpacityStorage.col(j) = Opacity.col(j);
     Opacity.col(j) = Opacity.col(j).array().exp().matrix();
+//    Opacity.col(j) =  (Opacity.col(j).array()*Opacity.col(j-1).array()).matrix();
 //Stellar spectrum at each altitude
-    Stellar_activity.col(j) = (stellar_input.row(1).transpose().array()*Opacity.col(j).array()).transpose().matrix(); 
+    Stellar_activity.col(j) = (Stellar_activity.col(j-1).array()*Opacity.col(j).array()).transpose().matrix();
+    
     //std::cout << "TOA" << std::endl;
     }
 
     if(clden_species_list == "nan"){
-    //Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
     Stellar_activity.col(j) = (stellar_input.row(1).transpose());}
    // std::cout << "Setting TOA opacity" << std::endl;
      }
@@ -872,7 +825,7 @@ while(Ttot  < Tmax) {
    for(int rx = 0; rx < PhotoRxn; rx++){
      double j_rate = QPhotoChemRate(stellar_input.row(0),d_wavelength, photo_cross_data.col(rx), qyield_data.col(rx), Stellar_activity.col(j));
      gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
-    //std::cout<< RxnIndex(rx) << " " << j_rate << std::endl;
+     //std::cout<< RxnIndex(rx) << " " << j_rate << std::endl;
       
    }
 
@@ -880,142 +833,64 @@ while(Ttot  < Tmax) {
    handleCustomChemistry(PlanetName, gasRawPtr, Press, Temp);
    
    ftime++;
+   
+  
 //Solving the net production for each species
     gas_kin2->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera 
     m_wjac = gas_kin2->netProductionRates_ddX(); //Extracting Jacobian from Cantera
     mm  = gas->meanMolecularWeight(); //Mean molcular weight
+
+
+
 //Upper boundary flux
     if (j == 0){
     fluxT = flux_upper;
-    D_Max = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j), AtmData(iTemp,j), mWt).maxCoeff();
+    std::cout << "Done " << std::endl;
+    m_wdot = m_wdot - fluxT;
     }
     
     if ((j > 0) && (j < nSize-1)) {
     iPrev = j-1;
     iNext = j+1;
     dh = 0.5*(AtmData(iAlt,j-1) - AtmData(iAlt,j+1));
-
     Keddy_j = AtmData(iKzz, j);
-
-//Update the total diffusion coefficient in terms of scale height
-    D_j = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j), AtmData(iTemp,j), mWt);
     Keddy_prev = AtmData(iKzz, j-1);
-    D_prev = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j-1), AtmData(iTemp,j-1), mWt);
     Keddy_next = AtmData(iKzz, j+1);
-    D_next = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j+1), AtmData(iTemp,j+1), mWt);
-//Diffusion terms (central difference scheme)
 
 //Molecular diffusion 
-    fluxM = Dflux(j,iNext,iPrev,a,n_conc,nsp,D_j,D_prev,D_next,AtmData(iAlt,j-1) - AtmData(iAlt,j), AtmData(iAlt,j) - AtmData(iAlt,j+1), mWt,AtmData(iTemp,j-1),AtmData(iTemp,j), AtmData(iTemp,j+1), mm, g);
+//    fluxM = Dflux(j,iNext,iPrev,a,n_conc,nsp,D_j,D_prev,D_next,dh, mWt,AtmData(iTemp,j-1),AtmData(iTemp,j), AtmData(iTemp,j+1), mm, g);
 
-//Ambipolar diffusion
-    fluxA = Aflux(j, iNext, iPrev, a, n_conc, nsp, D_j, D_prev, D_next, AtmData(iAlt,j-1) - AtmData(iAlt,j), AtmData(iAlt,j) - AtmData(iAlt,j+1), mWt, AtmData(iTemp,j-1), AtmData(iTemp,j), AtmData(iTemp,j+1), mm, g, iE, alpha);
 
-//Eddy diffusion
     fluxK = Kflux(j,iNext,iPrev,a,n_conc,nsp,Keddy_j,Keddy_prev,Keddy_next,AtmData(iAlt,j-1) - AtmData(iAlt,j), AtmData(iAlt,j) - AtmData(iAlt,j+1));
-
-/*
-std::cout << "Flux K" << std::endl;
-std::cout << fluxK.transpose() << std::endl;
-std::cout << "Flux M" << std::endl;
-std::cout << fluxM.transpose() << std::endl;
-std::cout << "Flux A" << std::endl;
-std::cout << fluxA.transpose() << std::endl;
-
 //Total diffusion
-    fluxT = ((oem - Qn).array()*(fluxM + fluxK).array()).matrix();
-    fluxT = fluxT + (Qe.array()*fluxA.array()).matrix();
-
-std::cout << "Flux T" << std::endl;
-std::cout << fluxT.transpose() << std::endl;
-*/ 
- }
+    fluxT = ((oem - Qn).array()*(fluxK).array()).matrix();
+    fluxK = Kflux_dX(j,iNext,iPrev,a,n_conc,nsp,Keddy_j,Keddy_prev,Keddy_next,AtmData(iAlt,j-1) - AtmData(iAlt,j), AtmData(iAlt,j) - AtmData(iAlt,j+1));
+    fluxM = m_wjac.diagonal() - ((oem - Qn).array()*(fluxK).array()).matrix();
+    m_wjac.setIdentity();
+    m_wjac.diagonal() = fluxM;
+    m_wdot = m_wdot - fluxT;
+    }
 
 //Lower boundary flux
     if (j == nSize - 1){
     fluxT = flux_lower;
+    m_wdot = m_wdot - fluxT;
     }
 
-    t_chem = dt;
-    num_chem = 1;
-    m_subcycle = mole_frac;
+
+    
 
 /*
-//Semi-implicit scheme (private communication with Aaron Ridley)
- 
-//Source term 
-  gas_kin2->getCreationRates(&Source[0]); //Extracting source term from Cantera
-
-//Adding diffusion to the source term
-  Source = Source - fluxT;
-
-//Loss term and normalized loss
-  gas_kin2->getDestructionRates(&Loss[0]); //Extracting loss term from Cantera
-  ProdRates.col(j) = Source;
-  DiffRates.col(j) = Loss;
-  Loss = (Loss.array()/n_conc.col(j).array()).matrix(); //Normalizing the loss term
-  Source =  (isnan(abs(Loss.array())) ).select(0, Source);
-  Loss =  (isnan(abs(Loss.array())) ).select(0, Loss);
-//New concentration
-  VectorXd Ix = VectorXd::Ones(nsp);
-  n_conc.col(j) = (((Source*dt) + n_conc.col(j)).array()/(Ix - (Loss*dt)).array()).matrix();
-  double N_this = n_conc.colwise().sum()(j);
-  mole_frac = n_conc.col(j)/N_this;
-  std::cout << mole_frac.transpose() << std::endl;
-
-*/
-
-
 //Backward Euler Scheme (Li and Chen, 2019)
     mat2 = ((mat1) - (m_wjac*dt/gas2->molarDensity() ));
     mat2 = mat2.inverse();
-    mat2 = dt*mat2*((m_wdot ) + fluxT);
-    //std::cout << fluxT.transpose() << std::endl;
+    mat2 = dt*mat2*((m_wdot ) - fluxT);
     dQ = mat2/gas2->molarDensity();
-    ProdRates.col(j) = m_wdot;
-    DiffRates.col(j) = fluxT;
-    conv.col(j) = (abs(dQ.array()/mole_frac.array())).matrix();
-    conv.col(j) =  (isnan(abs(conv.col(j).array())) ).select(0, conv.col(j));   
     mole_frac = mole_frac + dQ;
-//    std::cout << mole_frac.transpose() << std::endl;
-
-
-/*
-//Subcycling Mechanism (Ridley et al., 2006)
-   do{   
-    for(int num_check = 1; num_check <= num_chem; num_check++){
-    mat2 = ((mat1) - (m_wjac*t_chem/gas2->molarDensity() ));
-    mat2 = mat2.inverse();
-    mat2 = t_chem*mat2*((m_wdot ) - fluxT);
-    dQ = mat2/gas2->molarDensity();
-//    std::cout << "dt: " << t_chem << std::endl;
     ProdRates.col(j) = m_wdot;
     DiffRates.col(j) = fluxT;
-    conv.col(j) = (abs(dQ.array()/mole_frac.array())).matrix();
-    conv.col(j) =  (isnan(abs(conv.col(j).array())) ).select(0, conv.col(j));   
-    m_subcycle = m_subcycle + dQ;
-    if(dt == Tmin){
-      conv.col(j) = (abs(conv.col(j).array()).isInf()).select(0, conv.col(j));
-    }
-    
-//   std::cout << "outside the update loop: " << conv.col(j).maxCoeff() << std::endl;
-
-    if(conv.col(j).maxCoeff() >= 0.25){
-      t_chem = t_chem/10;
-      num_chem = num_chem*10;
-      num_check =  1;
-      m_subcycle = mole_frac;
-      std::cout << "Inside the update loop: " << t_chem << std::endl;
-    } }
-//     std::cout << conv.col(j).maxCoeff() << std::endl;
-    } 
-    while(conv.col(j).maxCoeff() >= 0.25 );
-*/
-
-//Testing the change in mole fraction
-// std::cout << "came out of loop" << std::endl;
-//Update the mole fractions
-//    mole_frac = m_subcycle;
+    conv.col(j) = m_wdot - fluxT ;//(dQ.array()/mole_frac.array()).matrix();
+    conv.col(j) =  (isnan(abs(conv.col(j).array())) ).select(0, conv.col(j));
     VectorXd krate(nrxn);
     gas_kin2->getFwdRateConstants(&krate[0]);
     
@@ -1038,14 +913,13 @@ std::cout << fluxT.transpose() << std::endl;
 //Lower boundary mixing ratio
     if (j == nSize-1){
     std::string l_species_list = pinput->GetOrAddString("lowerboundaryMixRat", "species", "nan");
-    mole_frac = VectorXd::Ones(nsp);
-    mole_frac = mole_frac*1e-30;
     if(l_species_list != "nan"){
     while (std::regex_search (l_species_list,m,pattern)) {
       for (auto x:m){
         std::string species_lowerboundary_MixRat = pinput->GetString("lowerboundaryMixRat", x);
         species_inx = gas2->speciesIndex(x);
-        mole_frac(species_inx) = atof(species_lowerboundary_MixRat.c_str());
+       // mole_frac(species_inx) = atof(species_lowerboundary_MixRat.c_str());
+        m_wdot(species_inx) = 0;
     }
       l_species_list = m.suffix().str();
 
@@ -1054,29 +928,30 @@ std::cout << fluxT.transpose() << std::endl;
      conv.col(nSize -1) = VectorXd::Zero(gas2->nSpecies());
   }
  
-  
+//Solution [Wilson and Atreya, 2004]
+    mat2 = m_wjac;
+    Eigen::VectorXd dX = mat2.inverse()*(-1*m_wdot);  
+    std::cout << dX.transpose() << std::endl;
+//    mole_frac = mole_frac + dX;
 //Setting the mole fractions and concentrations
     gas2->setMoleFractions(&mole_frac[0]);
     gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     gas2->getMoleFractions(&ChemMoleFrac.col(j)[0]);  
     gas2->getConcentrations(&ChemConc.col(j)[0]);  
     
+    //AtmData(iMlDf, j) = D_j; 
 //Update the pressure in storage
     //AtmData(iPress,j) = gas->pressure();
 } 
-   
-    std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
-  //  std::cout << D_Max  << std::endl;
-//Limit set by Explicit diffusion
-
-    if(6E8*dt/(dh*dh) < 0.01){
-      dt = dt*(1.25);
-     }
-    Ttot = Ttot + dt;
-    OpacityStorage = Opacity;
+  std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
+    
+    if(kmax*dt/(dh*dh) < 0.1){
+    dt = dt*(1.25);
+    }
+    Ttot = Ttot + dt; 
+    
 } 
-   
-
+      
 //This is where the photochemistry definition ends (Anything beyond is not defined in the scope of photochemistry)  
   }
 
@@ -1203,7 +1078,7 @@ std::cout << fluxT.transpose() << std::endl;
 
     Ttot = Ttot + dt;
 
-    if(kmax*dt/(dh*dh) < 0.01){
+    if(kmax*dt/(dh*dh) < 0.1){
     dt = dt*1.25;
     }
     if((Ttot > Tstart)  && (iSource == 0)){
@@ -1226,15 +1101,13 @@ VectorXd cHeight = AtmData.row(iAlt);
 VectorXd cKzz = AtmData.row(iKzz);
 MatrixXd dPRates = ProdRates;
 MatrixXd dDRates = DiffRates;
-MatrixXd OP = OpacityStorage;
-VectorXd Wavelength = stellar_input.row(0);
+VectorXd cMolDiff = AtmData.row(iMlDf);
 #if NETCDFOUTPUT
 int ifile;
 string fname = pinput->GetString("output", "out_file");
 int status = nc_create(fname.c_str(), NC_NETCDF4, &ifile);
 int dimids[3];
-int dWav[2], iWav;
-int alt, iPres, iTem, iKeddy, iMolDiff, iAltz, iChem, isp, iOpacity, iProd, iDiff, iTs;
+int alt, iPres, iTem, iKeddy, iMolDiff, iAltz, iChem, isp, iProd, iDiff, iTs;
 
 
 // Atmospheric Properties (All in SI units!)
@@ -1242,11 +1115,6 @@ nc_def_dim(ifile, "Pressure", nSize, &dimids[2]);
 
 nc_def_dim(ifile, "Species", nsp, &dimids[1]);
 
-nc_def_dim(ifile, "Wavelength", Wavelength.size() ,  &dWav[0]);
-nc_def_dim(ifile, "Altitude", nSize ,  &dWav[1]);
-
-nc_def_var(ifile, "Wavelength", NC_DOUBLE, 1, &dWav[0], &iWav);
-nc_put_var_double(ifile, iWav, &Wavelength[0]);
 
 nc_def_var(ifile, "Pressure", NC_DOUBLE, 1, &dimids[2], &iPres);
 nc_put_var_double(ifile, iPres, &cPress[0]);
@@ -1254,14 +1122,14 @@ nc_put_var_double(ifile, iPres, &cPress[0]);
 nc_def_var(ifile, "Keddy", NC_DOUBLE, 1, &dimids[2], &iKeddy);
 nc_put_var_double(ifile, iKeddy, &cKzz[0]);
 
+nc_def_var(ifile, "MolDiff", NC_DOUBLE, 1, &dimids[2], &iMolDiff);
+nc_put_var_double(ifile, iMolDiff, &cMolDiff[0]);
+
 nc_def_var(ifile, "Temp", NC_DOUBLE, 1, &dimids[2], &iTem);
 nc_put_var_double(ifile, iTem, &cTemp[0]);
 
 nc_def_var(ifile, "Altitude", NC_DOUBLE, 1, &dimids[2], &iAltz);
 nc_put_var_double(ifile, iAltz, &cHeight[0]);
-
-nc_def_var(ifile, "Opacity", NC_DOUBLE, 2, dWav, &iOpacity);
-nc_put_var_double(ifile, iOpacity, OP.data());
 
 init_species_list = pinput->GetString("output", "species");
   while (std::regex_search (init_species_list,m,pattern)) {

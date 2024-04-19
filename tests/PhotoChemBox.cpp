@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
   //std::cout << mole_fractions.transpose() << std::endl;
   //gas->setMoleFractions(&mole_fractions[0]);
   P = gas->pressure();
- // std::cout << "Pressure: " << P/1E5 << ", " << pres << std::endl;
+ std::cout << "Pressure: " << P/1E5 << ", " << pres << std::endl;
  double totalDensity = gas->molarDensity();
  // std::cout << totalDensity*1e3*6.022e23*1e-6 << std::endl;
   //gas->setMoleFractions(&mole_fractions[0]);
@@ -194,16 +194,6 @@ std::cout << T << std::endl;
 */
 
 while(Ttot  < Tmax) {
-    init_species_list = pinput->GetString("init", "species");
-    while (std::regex_search (init_species_list,m,pattern)) {
-      for (auto x:m){
-        std::string species_init_condition = pinput->GetString("init", x);
-        species_inx = gas->speciesIndex(x);
-        mole_fractions(species_inx) = atof(species_init_condition.c_str());
-    }
-    init_species_list = m.suffix().str();
-  }
-
     gas->setMoleFractions(&mole_fractions[0]);
     gas->setState_TP(temp, (pres)*OneBar);
     reactor.initialize();
@@ -213,10 +203,22 @@ while(Ttot  < Tmax) {
     cout << "Time: " << sim.time() << " s" << endl;
     dt = dt*1.25;
     gas->getMoleFractions(&mole_fractions[0]);
+    init_species_list = pinput->GetString("init", "species");
+    while (std::regex_search (init_species_list,m,pattern)) {
+      for (auto x:m){
+        std::string species_init_condition = pinput->GetString("init", x);
+        species_inx = gas->speciesIndex(x);
+        mole_fractions(species_inx) = atof(species_init_condition.c_str());
+    }
+    init_species_list = m.suffix().str();
+  }
+    gas->setMoleFractions(&mole_fractions[0]);
+    gas->setState_TP(temp, (pres)*OneBar);
+    gas->getMoleFractions(&mole_fractions[0]);
     //std::cout << mole_fractions.transpose() << std::endl;
     VectorXd krate(nrxn);
     gas_kin->getFwdRateConstants(&krate[0]);
-    std::cout << krate.transpose() << std::endl;
+   // std::cout << krate.transpose() << std::endl;
     std::cout << mole_fractions.transpose() << std::endl;
     outfile << Ttot << " " << mole_fractions.transpose()  << std::endl;
     Ttot = Ttot + dt;
@@ -227,8 +229,11 @@ while(Ttot  < Tmax) {
 //  totalDensity = gas->density();
 //  std::cout << R << " " << NA << " " << pres << " " << temp <<  std::endl;
 //  std::cout << n_total*1e-6 << std::endl;
-//  std::cout << totalDensity << std::endl;
-  std::cout << "Simulation Complete!" << std::endl;
+  totalDensity = gas->molarDensity();
+  std::cout << totalDensity*1e3*6.022e23*1e-6 << std::endl;
+//std::cout << totalDensity << std::endl;
+
+std::cout << "Simulation Complete!" << std::endl;
 }
 
 

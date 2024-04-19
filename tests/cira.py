@@ -41,7 +41,8 @@ pnew = pfunc(zgrid)
 tnew = tfunc(zgrid)
 kzznew = kzzfunc(zgrid)
 inx = len(kzznew)
+Ndnew = 1e-6*pnew*1e2/(1.38e-23*tnew)
 for i in range(inx):
-  print(pnew[inx - i -1], tnew[inx - i -1], kzznew[inx - i -1], zgrid[inx - i -1])
+  print(pnew[inx - i -1], tnew[inx - i -1], kzznew[inx - i -1], zgrid[inx - i -1], Ndnew[inx - i -1])
 
 

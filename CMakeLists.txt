@@ -39,6 +39,7 @@ message(STATUS "Set up project system libraries ...")
 find_package(Eigen3 3.3 REQUIRED)
 find_package(Cantera REQUIRED)
 find_package(HDF5 REQUIRED)
+find_package(OpenMP REQUIRED)  # Find the OpenMP package
 if (${UseNetCDF})
   find_package(NetCDF REQUIRED)
 endif()
