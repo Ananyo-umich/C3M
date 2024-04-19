@@ -4,13 +4,19 @@
 The code is developed by the Planetary Science Laboratory at the University of Michigan, Ann Arbor. It is an atmospheric photochemistry model that can be used as a standalone photochemistry model,
 and can be coupled with hydrodynamic models for chemical transport in planetary environments. It is built using the Athena++ Magnetohydrodynamics Solver (https://github.com/PrincetonUniversity/athena), and Cantera (https://cantera.org/), a heritage chemical kinetics code for combustion applications. C3M leverages chemical kinetics information from peer-review sources of atmospheric chemistry, open source databases, and legacy models like CalTech/JPL KINETICS.
 
+## Installing C3M
+
+### Pre-requisites
 Following are the pre-requisites for running C3M. You can install them on your system.
-'''
+```
 Cantera
 Athena++
 Eigen
 CMake
-'''
+```
+### Installing Cantera
+
+### 
 
 The code currently has following capabilities:
 
