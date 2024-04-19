@@ -1,6 +1,7 @@
 # ignore folder
-build
+build/
 external/CARMA30
 data/KINETICS
 examples/kindata3master.inp
-chemkin
+chemkin/
+old/
