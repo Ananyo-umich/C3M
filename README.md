@@ -7,7 +7,7 @@ and can be coupled with hydrodynamic models for chemical transport in planetary 
 ## Installing C3M
 
 ### Pre-requisites
-Following are the pre-requisites for running C3M. You can install them on your system.\
+Following are the pre-requisites for running C3M. You can install them on your system.
 
 [Cantera](https://cantera.org/)\
 [Athena++](https://github.com/PrincetonUniversity/athena)\
