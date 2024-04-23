@@ -16,19 +16,24 @@ CMake
 ```
 ### Installing Cantera
 
-### 
-
+### C3M Capabilities
+'''
 The code currently has following capabilities:
 
-i) Solving zero dimensional photochemistry, thermochemistry with electron impact processes
-ii) One dimensional gas phase neutral photochemistry and thermochemistry
-iii) One dimensional gas phase ion-electron chemistry with electron impact processes
-iv) Formulation of custom reaction expressions, transport variables and atmospheric opacity for photochemistry
+* Solving box photochemistry, thermochemistry with ion-neutral reactions
+* One dimensional gas phase neutral photochemistry and thermochemistry
+* One dimensional gas phase ion-electron chemistry with electron impact processes
+* Formulation of custom reaction expressions, transport variables and atmospheric opacity for photochemistry
+'''
 
+### Structure of C3M
+#### src
 
-With applications to Earth, Venus, Jupiter ionosphere
+#### tests
 
+#### data
 
+#### tools
 
 Code Structure
 -> src
