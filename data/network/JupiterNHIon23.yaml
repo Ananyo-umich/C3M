@@ -1,0 +1,783 @@
+units: {length: cm, quantity: molec, activation-energy: K}
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, H, E, He]
+  species: [H2, H2+, H+, H, E, H3+, CH4, CH3+, CH4+, CH5+, He, CH3, CH2, He+, CH2+, CH+, HeH+, CH, C2H6, C2H5, C2H4, C2H3, C2H2, C4H6, C, C4H5, C3H6, C2, C2H, Ecr, H2_v1, H2_v2, H2_v3, H2_v4, H2_v5, H2_v6, H2_v7, H2_v8, H-]
+  kinetics: gas
+  reactions: all
+  skip-undeclared-elements: true
+  
+species:
+- name: H2
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2+
+  composition: {H: 2.0, E: -1.0}
+  enthalpy: 0
+  charge: 1
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H+
+  composition: {H: 1.0, E: -1.0}
+  enthalpy: 0
+  charge: 1
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H
+  composition: {H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: E
+  composition: {E: 1.0}
+  enthalpy: 0
+  charge: -1
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H3+
+  composition: {H: 3.0, E: -1.0}
+  enthalpy: 0
+  charge: 1
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH4
+  composition: {C: 1.0, H: 4.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH3+
+  composition: {C: 1.0, H: 3.0, E: -1.0}
+  enthalpy: 0
+  charge: 1
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH4+
+  composition: {C: 1.0, H: 4.0, E: -1.0}
+  charge: 1
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH5+
+  composition: {C: 1.0, H: 5.0, E: -1.0}
+  charge: 1
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: He
+  composition: {He: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH3
+  composition: {C: 1.0, H: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH2
+  composition: {C: 1.0, H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: He+
+  composition: {He: 1.0, E: -1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH2+
+  composition: {C: 1.0, H: 2.0, E: -1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH+
+  composition: {C: 1.0, H: 1.0, E: -1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: HeH+
+  composition: {He: 1.0, H: 1.0, E: -1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: CH
+  composition: {C: 1.0, H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H6
+  composition: {C: 2.0, H: 6.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H5
+  composition: {C: 2.0, H: 5.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H4
+  composition: {C: 2.0, H: 4.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H3
+  composition: {C: 2.0, H: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H2
+  composition: {C: 2.0, H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C4H6
+  composition: {C: 4.0, H: 6.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C
+  composition: {C: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C4H5
+  composition: {C: 4.0, H: 5.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C3H6
+  composition: {C: 3.0, H: 6.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2
+  composition: {C: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: C2H
+  composition: {C: 2.0, H: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v1
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v2
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v3
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v4
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v5
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v6
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v7
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H2_v8
+  composition: {H: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: Ecr
+  composition: {}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: H-
+  composition: {H: 1.0, E: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+reactions:
+- equation: '1.0 H2 => 1.0 H2+ + 1.0 E + 1.0 Ecr ' #Electron impact ionization
+  type: Arrhenius
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+  orders:
+   H2: 1.0
+- equation: '1.0 H2 => 1.0 H+ + 1.0 H + 1.0 E + 1.0 Ecr ' #Electron impact ionization
+  type: Arrhenius
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+  orders:
+   H2: 1.0
+# H2 + e => H2_v + e
+- equation: '1.0 H2 => 1.0 H2_v1 + 1.0 Ecr ' #Egert 2016
+  type: Arrhenius
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+  orders:
+   H2: 1.0
+- equation: '1.0 H2 => 1.0 H2_v2 + 1.0 Ecr ' #Egert 2016
+  type: Arrhenius
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+  orders:
+   H2: 1.0
+- equation: '1.0 H2 => 1.0 H2_v3 + 1.0 Ecr ' #Egert 2016
+  type: Arrhenius
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+  orders:
+   H2: 1.0
+- equation: '1.0 H2 => 1.0 H2+ + 1.0 E ' #photoionization
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 He => 1.0 He+ + 1.0 E ' #photoionization
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 H2 => 2.0 H ' #photodissociation
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 H2 => 1.0 H+ + 1.0 H + 1.0 E ' #photoionization
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 H + 1.0 E => 1.0 H- ' #UMIST Database
+  rate-constant: {A: 3.37e-16,T0: 300, b: 0.64 ,Ea: 9.2 }
+- equation: '1.0 H2 + 1.0 E => 2.0 H + 1.0 E ' #KIDA Astrochem
+  rate-constant: {A: 2.0e-9,T0: 300, b: 0.5 ,Ea: 1.16e5 }
+- equation: '1.0 H + 1.0 H- => 1.0 H2 + 1.0 E ' #KIDA Astrochem
+  rate-constant: {A: 1.3e-9,T0: 300, b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H+ + 1.0 H- => 2.0 H ' #KIDA Astrochem
+  rate-constant: {A: 2.3e-7,T0: 300, b: -0.5 ,Ea: 0.0 }
+- equation: '1.0 CH4 => 1.0 CH3 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }  
+- equation: '1.0 CH4 => 1.0 CH2 + 2.0 H ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 CH4 => 1.0 CH2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 } 
+- equation: '1.0 CH4 => 1.0 CH + 1.0 H2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H2 => 1.0 C2H + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H4 => 1.0 C2H2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H4 => 1.0 C2H2 + 2.0 H ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H6 => 1.0 C2H4 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H6 => 1.0 C2H4 + 2.0 H ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H6 => 1.0 C2H2 + 2.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H6 => 1.0 CH4 + 1.0 CH2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 C2H6 => 2.0 CH3 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 H2+ + 1.0 H2 => 1.0 H3+ + 1.0 H ' #Nakamura 2022
+  rate-constant: {A: 2.0e-9,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 H2+ + 1.0 E => 2.0 H ' #Nakamura 2022
+  rate-constant: {A: 2.3e-7,T0: 300,b: -0.4 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2 + 1.0 H ' #Nakamura 2022
+  rate-constant: {A: 4.4e-8,T0: 300,b: -0.5 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 3.0 H ' #Nakamura 2022
+  rate-constant: {A: 5.6E-8,T0: 300,b: -0.5 ,Ea: 0 }
+- equation: '1.0 H2+ + 1.0 H => 1.0 H+ + 1.0 H2 ' #Nakamura 2022
+  rate-constant: {A: 6.4E-10,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 CH4 => 1.0 CH3+ + 1.0 H2 ' #Nakamura 2022
+  rate-constant: {A: 3.69E-9,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 CH4 => 1.0 CH4+ + 1.0 H ' #Nakamura 2022
+  rate-constant: {A: 0.81E-9,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 CH4 => 1.0 CH5+ + 1.0 H2 ' #Nakamura 2022
+  rate-constant: {A: 2.4E-9,T0: 300,b: 0 ,Ea: 0 }
+- equation: '2.0 H + M => 1.0 H2 + M' #Nakamura 2022
+  type: three-body
+  rate-constant: {A: 2.7E-31,T0: 300,b: -0.6,Ea: 0.0 }
+- equation: '1.0 H => 1.0 H+ + 1.0 E ' #Nakamura 2022
+  rate-constant: {A: 1.0,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 E => 1.0 H ' #Nakamura 2022
+  rate-constant: {A: 4.0E-12,T0: 250,b: -0.7 ,Ea: 0 }
+- equation: '1.0 H2+ + 1.0 CH4 => 1.0 CH5+ + 1.0 H ' #Nakamura 2022
+  rate-constant: {A: 1.1E-10,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 H2+ + 1.0 CH4 => 1.0 CH4+ + 1.0 H2 ' #Nakamura 2022
+  rate-constant: {A: 1.41E-9,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 H2+ + 1.0 CH4 => 1.0 CH3+ + 1.0 H + 1.0 H2 ' #Nakamura 2022
+  rate-constant: {A: 2.28E-9,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 CH4+ + 1.0 E => 1.0 CH3 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.609E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH4+ + 1.0 E => 1.0 CH2 + 2.0 H ' #Egert 2016
+  rate-constant: {A: 1.247E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH4+ + 1.0 E => 1.0 CH2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 0.261E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH4+ + 1.0 E => 1.0 CH + 1.0 H2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.725E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH4+ + 1.0 E => 1.0 C + 2.0 H2 ' #Egert 2016
+  rate-constant: {A: 0.058E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH5+ + 1.0 E => 1.0 CH4 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.145E-12,T0: 300,b: -0.46 ,Ea: 0 }
+- equation: '1.0 CH5+ + 1.0 E => 1.0 CH3 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 0.145E-12,T0: 300,b: -0.46 ,Ea: 0 }
+- equation: '1.0 CH5+ + 1.0 E => 1.0 CH3 + 2.0 H ' #Egert 2016
+  rate-constant: {A: 2.03E-12,T0: 300,b: -0.46 ,Ea: 0 }
+- equation: '1.0 CH5+ + 1.0 E => 1.0 CH2 + 1.0 H2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.522E-12,T0: 300,b: -0.46 ,Ea: 0 }
+- equation: '1.0 CH5+ + 1.0 E => 1.0 CH + 2.0 H2 ' #Egert 2016
+  rate-constant: {A: 0.087E-12,T0: 300,b: -0.46 ,Ea: 0 }
+- equation: '1.0 CH3+ + 1.0 E => 1.0 CH2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.28E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH3+ + 1.0 E => 1.0 CH + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 0.448E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH3+ + 1.0 E => 1.0 CH + 2.0 H ' #Egert 2016
+  rate-constant: {A: 0.512E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 CH3+ + 1.0 E => 1.0 C + 1.0 H2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.96E-12,T0: 300,b: -0.53 ,Ea: 0 }
+- equation: '1.0 He+ + 1.0 E => 1.0 He ' #Egert 2016
+  rate-constant: {A: 1.77E-10,T0: 300,b: -0.65 ,Ea: 0 }
+- equation: '1.0 CH4 => 1.0 CH4+ + 1.0 E ' #Nakamura 2022
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+#- equation: '1.0 CH4 => 1.0 CH3+ + 1.0 E + 1.0 H' #Nakamura 2022
+#  rate-constant: {A: 1.0, b: 0 ,Ea: 0 }
+- equation: '1.0 H + 1.0 CH3 (+ M) => 1.0 CH4 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 5.8E-29,T0: 300,b: 0.0,Ea: -355.0}
+  high-P-rate-constant: {A: 2.37E-12,T0: 300,b: 0.0,Ea: -523.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 CH2 (+ M) => 1.0 CH3 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 5.8E-30,T0: 300,b: 0.0,Ea: -355.0}
+  high-P-rate-constant: {A: 2.37E-12,T0: 300,b: 0.0,Ea: -523.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 C2H2 (+ M) => 1.0 C2H3 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 2.6E-31,T0: 300,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 3.8E-11,T0: 300,b: 0.0,Ea: 1374.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 C2H3 (+ M) => 1.0 C2H2 + 1.0 H2 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 1.49E-27,T0: 300,b: 0.0,Ea: 0.0}
+  high-P-rate-constant: {A: 1.55E-10,T0: 300,b: 0.0,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H + 1.0 C2H4 (+ M) => 1.0 C2H5 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 2.15E-29,T0: 300,b: 0.0,Ea: 349.0}
+  high-P-rate-constant: {A: 4.95E-11,T0: 300,b: 0.0,Ea: 1051.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H2 + 1.0 CH (+ M) => 1.0 CH3 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 4.7E-26,T0: 1.0, b: -1.6,Ea: 0.0}
+  high-P-rate-constant: {A: 2.5E-10,T0: 1.0, b: -0.08,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 H2 + 1.0 CH + M => 1.0 CH2 + 1.0 H + M' #Egert 2016
+  type: three-body
+  rate-constant: {A: 2.38E-11,T0: 1,b: 0.0,Ea: 1760.0 }
+- equation: '1.0 H2 + 1.0 C2H3 + M => 1.0 C2H4 + 1.0 H + M' #Egert 2016
+  type: three-body
+  rate-constant: {A: 5.0E-20,T0: 1,b: 2.63,Ea: 4298.0 }
+- equation: '1.0 CH + 1.0 CH4 + M => 1.0 C2H4 + 1.0 H + M' #Egert 2016
+  type: three-body
+  rate-constant: {A: 2.5E-11,T0: 300,b: 0.0,Ea: 200.0 }
+- equation: '2.0 CH3 (+ M) => 1.0 C2H6 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 2.22E-16,T0: 1,b: -3.75,Ea: 494.0}
+  high-P-rate-constant: {A: 3.78E-9,T0: 1,b: -0.69,Ea: 88.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 CH3 + 1.0 C2H3 + M => 1.0 C3H6 + M' #Egert 2016
+  type: three-body
+  rate-constant: {A: 1.1E-28,T0: 1,b: 8.52,Ea: -1248.0 }
+- equation: '1.0 C2H2 + 1.0 C2H3 (+ M) => 1.0 C4H5 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 6.4E-24,T0: 1,b: -2.00,Ea: 1200.0}
+  high-P-rate-constant: {A: 3.1E-12,T0: 1,b: 0.00,Ea: 2495.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '2.0 C2H3 (+ M) => 1.0 C4H6 (+ M)' #Egert 2016
+  type: falloff
+  low-P-rate-constant: {A: 8.76E-6,T0: 1,b: -7.03,Ea: 1390.0}
+  high-P-rate-constant: {A: 8.2E-11,T0: 300,b: 0.00,Ea: 0.0}
+  Troe: {A: 1, T3: 94.0, T1: 10000.0}
+- equation: '1.0 C2H3 + 1.0 C2H3 + M => 1.0 C2H4 + 1.0 C2H2 + M' #Egert 2016
+  type: three-body
+  rate-constant: {A: 2.4E-11,T0: 300,b: 0.0,Ea: 0.0 }
+- equation: '1.0 H + 1.0 CH => 1.0 C + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.4E-11,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 CH2 => 1.0 CH + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 2.33E-10,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 CH3 => 1.0 CH2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.0E-10,T0: 300,b: 0.0 ,Ea: 7600.0 }
+- equation: '1.0 H + 1.0 CH4 => 1.0 CH3 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 3.73E-20,T0: 300,b: 3.0 ,Ea: 4406.0 }
+- equation: '1.0 H + 1.0 C2H3 => 1.0 C2H2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 2.0E-11,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H + 1.0 C2H4 => 1.0 C2H3 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 9.0E-10,T0: 300,b: 0.0 ,Ea: 7500.0 }
+- equation: '1.0 H + 1.0 C2H6 => 1.0 C2H5 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 2.35E-15,T0: 300,b: -1.5 ,Ea: 3725.0 }
+- equation: '1.0 H2 + 1.0 CH => 1.0 CH2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 3.1E-10,T0: 300,b: 0.0 ,Ea: 1650.0 }
+- equation: '1.0 H2 + 1.0 CH2 => 1.0 CH3 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 9.24E-11,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 H2 + 1.0 CH2 => 1.0 CH2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.26E-11,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 H2 => 1.0 H+ + 1.0 He + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.83E-13,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 H2 => 1.0 H2+ + 1.0 He ' #Egert 2016
+  rate-constant: {A: 0.17E-13,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 H2 => 1.0 HeH+ + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.21E-13,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 CH4 => 1.0 H+ + 1.0 He + 1.0 CH3 ' #Egert 2016
+  rate-constant: {A: 0.44E-9,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 CH4 => 1.0 CH+ + 1.0 He + 1.0 H2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.2445E-9,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 CH4 => 1.0 CH2+ + 1.0 He + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 0.8476E-9,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 CH4 => 1.0 CH3+ + 1.0 He + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.0815E-9,T0: 300,b: 0.0 ,Ea: 0.0 }
+- equation: '1.0 He+ + 1.0 CH4 => 1.0 CH4+ + 1.0 He ' #Egert 2016
+  rate-constant: {A: 0.0326E-9,T0: 300,b: 0.0 ,Ea: 0.0 }
+#Hydrocarbon ion reactions and vibrationally excited states of hydrogen are added in the following reactions
+# 2H + H2 => H2_v + H2
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v1 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v3 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v4 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v5 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v6 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v7 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+- equation: '2.0 H + 1.0 H2 => 1.0 H2_v8 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 8.0E-33,T0: 300,b: -0.6 ,Ea: 0 }
+# H+ + H2(v) => H2+ + H
+- equation: '1.0 H2_v4 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
+  rate-constant: {A: 0.6E-9, T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v5 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.3E-9, T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v6 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.3E-9, T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v7 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.3E-9, T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v8 + 1.0 H+ => 1.0 H2+ + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.3E-9, T0: 300, b: 0.0 ,Ea: 0 }
+# H3+ + e => H2(v) + H
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v1 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v3 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v4 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v5 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v6 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v7 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+- equation: '1.0 H3+ + 1.0 E => 1.0 H2_v8 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.93E-8,T0: 300,b: -1.0 ,Ea: 0 }
+# H2(v) + H => H2(v-1) + H
+- equation: '1.0 H2_v1 + 1.0 H => 1.0 H2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 3.0E-13,T0: 300,b: 0.5 ,Ea: 0 }
+- equation: '1.0 H2_v2 + 1.0 H => 1.0 H2_v1 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 6.1E-13,T0: 300,b: 0.5 ,Ea: 0 }
+- equation: '1.0 H2_v3 + 1.0 H => 1.0 H2_v2 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.25E-12,T0: 300,b: 0.5 ,Ea: 0 }
+- equation: '1.0 H2_v4 + 1.0 H => 1.0 H2_v3 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 2.55E-12,T0: 300,b: 0.5 ,Ea: 0 }
+- equation: '1.0 H2_v5 + 1.0 H => 1.0 H2_v4 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 5.2E-12,T0: 300,b: 0.5 ,Ea: 0 }
+- equation: '1.0 H2_v6 + 1.0 H => 1.0 H2_v5 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 1.0E-11,T0: 300,b: 0.5 ,Ea: 0 }
+- equation: '1.0 H2_v7 + 1.0 H => 1.0 H2_v6 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 2.17E-11,T0: 300,b: 0.5 ,Ea: 0 }
+- equation: '1.0 H2_v8 + 1.0 H => 1.0 H2_v7 + 1.0 H ' #Egert 2016
+  rate-constant: {A: 4.4E-11,T0: 300,b: 0.5 ,Ea: 0 }
+# H+ + H2(v) => H+ + H2(v-1)
+- equation: '1.0 H+ + 1.0 H2_v1 => 1.0 H+ + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.2E-9,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 H2_v2 => 1.0 H+ + 1.0 H2_v1 ' #Egert 2016
+  rate-constant: {A: 1.8E-9,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 H2_v3 => 1.0 H+ + 1.0 H2_v2 ' #Egert 2016
+  rate-constant: {A: 1.8E-9,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 H2_v4 => 1.0 H+ + 1.0 H2_v3 ' #Egert 2016
+  rate-constant: {A: 1.5E-9,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 H2_v5 => 1.0 H+ + 1.0 H2_v4 ' #Egert 2016
+  rate-constant: {A: 1.2E-9,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 H2_v6 => 1.0 H+ + 1.0 H2_v5 ' #Egert 2016
+  rate-constant: {A: 1.2E-9,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 H2_v7 => 1.0 H+ + 1.0 H2_v6 ' #Egert 2016
+  rate-constant: {A: 1.2E-9,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H+ + 1.0 H2_v8 => 1.0 H+ + 1.0 H2_v7 ' #Egert 2016
+  rate-constant: {A: 1.2E-9,T0: 300, b: 0.0 ,Ea: 0 }
+# H2 + H2(v) <-> H2 + H2(v-1)
+- equation: '1.0 H2 + 1.0 H2_v1 => 1.0 H2 + 1.0 H2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v2 => 1.0 H2 + 1.0 H2_v1 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v3 => 1.0 H2 + 1.0 H2_v2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v4 => 1.0 H2 + 1.0 H2_v3 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v5 => 1.0 H2 + 1.0 H2_v4 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v6 => 1.0 H2 + 1.0 H2_v5 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v7 => 1.0 H2 + 1.0 H2_v6 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2 + 1.0 H2_v8 => 1.0 H2 + 1.0 H2_v7 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+# H2(v) + H2(w) <-> H2(v-1) + H2(w+1)
+- equation: '1.0 H2_v1 + 1.0 H2 => 1.0 H2 + 1.0 H2_v1 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v1 => 1.0 H2 + 1.0 H2_v2 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v2 => 1.0 H2 + 1.0 H2_v3 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v3 => 1.0 H2 + 1.0 H2_v4 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v4 => 1.0 H2 + 1.0 H2_v5 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }
+- equation: '1.0 H2_v1 + 1.0 H2_v5 => 1.0 H2 + 1.0 H2_v6 ' #Egert 2016
+  rate-constant: {A: 1.0,T0: 300, b: 0.0 ,Ea: 0 }

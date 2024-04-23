@@ -1,0 +1,85 @@
+units: {length: cm, quantity: molec, activation-energy: K}
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [C, H, O, N]
+  species: [O2, O, O_1D, O3, N2]
+  kinetics: gas
+  reactions: all
+  skip-undeclared-elements: true
+
+species:
+- name: O2
+  composition: {O: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O_1D
+  composition: {O: 1.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: O3
+  composition: {O: 3.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+- name: N2
+  composition: {N: 2.0}
+  enthalpy: 0
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+
+reactions:
+- equation: '1.0 O2 => 2.0 O '
+  rate-constant: {A: 1.0,T0: 1.0, b: 0 ,Ea: 0 }
+- equation: '1.0 O + 1.0 O2 + M => 1.0 O3 + M '
+  type: three-body
+  rate-constant: {A: 6.0e-34,T0: 298.0, b: -2.4,Ea: 0.0}
+- equation: '1.0 O3 => 1.0 O + 1.0 O2 '
+  rate-constant: {A: 1.0,T0: 1.0,b: 0 ,Ea: 0 }
+#- equation: '1.0 O3 => 1.0 O_1D + 1.0 O2 '
+#  rate-constant: {A: 1.0,T0: 1.0,b: 0 ,Ea: 0 }
+- equation: '1.0 O + 1.0 O3 => 2.0 O2'
+  rate-constant: {A: 8.0e-12,T0: 1.0,b: 0.0,Ea: 2060}
+#- equation: '1.0 O_1D + 1.0 N2 => 1.0 O + 1.0 N2 '
+#  type: three-body
+#  rate-constant: {A: 1.8e-11,T0: 1.0,b: 0.0,Ea: -110.0}
+#- equation: '1.0 O_1D + 1.0 O2 => 1.0 O + 1.0 O2 '
+#  type: three-body
+#  rate-constant: {A: 3.2e-11,T0: 1.0,b: 0.0,Ea: -70.0}

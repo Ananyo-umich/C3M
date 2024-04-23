@@ -1,0 +1,83 @@
+<problem>
+planet = JupAuroral_AB.txt
+planetName = JupiterAurora
+network = H2Diffusion.yaml
+photochem = true
+equilibrate = false
+top = Dirichlet
+bot = Dirichlet
+
+<init>
+species = H2
+H2 = 1.0
+
+<photocross>
+
+
+<qyield>
+
+<integrator>
+dt = 0.1
+Tmax = 1e15
+
+<upperboundaryflux>
+species = H2, He
+H2 = 0.0
+He = 0.0
+
+
+<lowerboundaryflux>
+species = H2, He
+H2 = 0.0
+He = 0.0
+
+<upperboundaryMixRat>
+species = H2, He
+H2 = 0.99
+He = 0.01;
+
+<lowerboundaryMixRat>
+species = H2, He
+H2 = 0.6
+He = 0.4
+
+
+<thermaldiff>
+species = He
+He = 0.0
+
+
+<grav>
+g = -24.7 #Acceleration due to gravity (m/s^2)
+
+
+<radtran>
+solar = sun_spec.inp #spectral irradiance file
+radius = 5 #semi-major axis to the planet from the star (AU)
+reference = 1 #semi-major axis to the reference point from the star (AU)
+SZA = 60 #solar zenith angle
+
+<abscross>
+absorbers = H2, He
+H2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/H2/H2_cross.csv
+H = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/H/H_cross.csv
+CH4 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/CH4/CH4_cross.csv
+He = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/He/He_cross.csv
+
+<scatcross>
+scatterers = H2, He
+H2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/H2_scat.txt
+He = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/He_scat.txt
+
+
+<output>
+species = H2, He
+out_file = DTest_DD_CaseII_noThermo.nc
+
+
+
+
+
+
+
+

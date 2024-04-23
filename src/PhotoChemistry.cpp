@@ -6,12 +6,19 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
+// Athena++ header
+#include <parameter_input.hpp>
+
 //NetCDF
 #if NETCDFOUTPUT
   #include <netcdf.h>
 #endif
 
+//Cantera header
+#include <cantera/base/Solution.h>
 
+// ThermoPhase object stores the thermodynamic state
+#include <cantera/thermo.h>
 
 //Print wavelengths
 void printWavelength(Eigen::VectorXd wavelengths_)
@@ -62,8 +69,6 @@ double h = 6.626e-34;
 double c = 3e8;
 Spectral_radiance = (Spectral_radiance.array()*wavelengths_.array().transpose()/(h*c)).matrix();
 MatrixXd integrd = (QYield.array()*crossSection_.array()*Spectral_radiance.array()).matrix();
-//MatrixXd integrd = (crossSection_.array()*Spectral_radiance.array()).matrix();
-//std::cout << QYield.transpose() << std::endl;
 sum = (integrd.array()*d_wavelength.array()).sum(); //Bhattacharya (5-1-23)
 
 /*
@@ -80,7 +85,7 @@ return sum;
 }
 
 // Function to read the photoionization cross sections from VULCAN database
-// The output file will contain wavelength (nm) and photoionization cross section (cm^2)
+// The output variable will contain wavelength (m) and photoionization cross section (m^2)
 Eigen::MatrixXd  ReadVULCANPhotoIonCrossSection(string VULCAN_ID){
   fstream InFile;
   InFile.open(VULCAN_ID); 
@@ -115,7 +120,7 @@ Eigen::MatrixXd  ReadVULCANPhotoIonCrossSection(string VULCAN_ID){
 
 
 // Function to read the photodissociation cross sections from VULCAN database
-// The output file will contain wavelength (nm) and photodissociation cross section (cm^2)
+// The output variable will contain wavelength (m) and photodissociation cross section (m^2)
 Eigen::MatrixXd  ReadVULCANPhotoDissCrossSection(string VULCAN_ID){
   fstream InFile;
   InFile.open(VULCAN_ID); 
@@ -148,7 +153,7 @@ Eigen::MatrixXd  ReadVULCANPhotoDissCrossSection(string VULCAN_ID){
 }
 
 // Function to read cross section from VPL photochemical database
-// The output file contains the wavelength (Angstroms) and cross section (cm^2)
+// The output variable contains the wavelength (m) and cross section (m^2)
 Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName){
   fstream InFile;
   InFile.open(AtmosFileName); 
@@ -181,7 +186,7 @@ Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName){
   
 }
 
-
+//Function to read cross section from Max Planck Mainz database
 Eigen::MatrixXd ReadMPCrossSection(string MPFileName){
   fstream InFile;
   InFile.open(MPFileName);
@@ -198,7 +203,7 @@ Eigen::MatrixXd ReadMPCrossSection(string MPFileName){
   InFile.open(MPFileName);
   while(InFile >> wavlength >> photoabs){
 
-  Output(0, num) = atof(wavlength.c_str())*1E-10; 
+  Output(0, num) = atof(wavlength.c_str())*1E-10; //Angstrom to m 
   Output(1, num) = atof(photoabs.c_str())*1E-4; //cm^2 to m^2
 
   num++;
@@ -210,6 +215,7 @@ Eigen::MatrixXd ReadMPCrossSection(string MPFileName){
 
 }
 
+//Function to read QY from VULCAN photochemistry database
 Eigen::MatrixXd ReadQYield(string FileName){
 
 fstream InFile;
@@ -288,6 +294,9 @@ fstream InFile;
 
 }
 
+
+//Function to read cross section from CalTech/JPL KINETIC7 corrected cross sections
+//and converted to netCDF file
 Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex){
 #if NETCDFOUTPUT
   int fileid, dimid, varid, err;
@@ -330,5 +339,70 @@ Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex){
 #endif
   return Output;
 
+}
+
+
+
+//Function to introduce custom opacity for a given atmosphere
+Eigen::VectorXd handleCustomOpacity(string PlanetName,Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav){
+int size = wav.size();
+Eigen::VectorXd Output = VectorXd::Zero(size);
+
+if(PlanetName == "Venus"){
+   Output = VenusUV(NetworkName, Pres, Temp, Alt, wav);
+  }
+
+
+return Output;
+}
+
+
+//Function to add opacity due to unknown UV absorber on Venus
+Eigen::VectorXd VenusUV(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav){
+
+
+int size = wav.size();
+Eigen::VectorXd COpacity = VectorXd::Zero(size);
+//Altitude in km
+if(Alt > 67){
+  for(int i = 0; i < size; i++){
+  COpacity(i) = 0.056*1E-3*exp( ((67E3-Alt)/3E3) - ((wav(i) - 3600E-10)/1000E-10));}
+}
+
+if((Alt <= 67) && (Alt > 58)){
+  for(int i = 0; i < size; i++){
+  COpacity(i) = 0.056*1E-3*exp( -1*((wav(i) - 3600E-10)/1000E-10));}
+}
+
+
+return COpacity;
+}
+
+// Function to read the Rayleigh scattering cross sections from VULCAN database
+Eigen::MatrixXd ReadVULCANScatCrossSection(string VULCAN_ID){
+  fstream InFile;
+  InFile.open(VULCAN_ID);
+  string wavlength;
+  string scatcross;
+  int num = 0;
+  int rows = 0;
+  while (getline(InFile, wavlength))
+  rows++;
+  InFile.close();
+
+  Eigen::MatrixXd Output(2, rows-1);
+  InFile.open(VULCAN_ID);
+  getline(InFile, wavlength);
+  while(getline(InFile,wavlength, ',')){
+  getline(InFile,scatcross,'\n');
+
+
+  Output(0, num) = atof(wavlength.c_str())*1E-9; //nm to m
+  Output(1, num) = atof(scatcross.c_str())*1E-4; //cm^2 to m^2
+
+  num++;
+  }
+  InFile.close();
+  return Output;
 }
 

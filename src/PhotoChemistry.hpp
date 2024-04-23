@@ -5,6 +5,9 @@
 #include <iostream>
 #include <fstream>
 
+// Athena++ header
+#include <parameter_input.hpp>
+
 // Cantera headers
 #include <cantera/kinetics/Kinetics.h>
 #include <cantera/base/ct_defs.h>
@@ -13,6 +16,11 @@
 #include <cantera/kinetics/MultiRate.h>
 // C3M headers
 #include <configure.hpp>
+#include <cantera/base/Solution.h>
+
+// ThermoPhase object stores the thermodynamic state
+#include <cantera/thermo.h>
+
 
 using namespace std;
 using Eigen::MatrixXd;
@@ -26,9 +34,13 @@ double QPhotoChemRate(Eigen::MatrixXd wavelengths_, Eigen::MatrixXd d_wavelength
 Eigen::MatrixXd ReadJPLCrossSection(string JPL_FileName, string Reactant);
 Eigen::MatrixXd ReadVULCANPhotoIonCrossSection(string VULCAN_ID);
 Eigen::MatrixXd ReadVULCANPhotoDissCrossSection(string VULCAN_ID);
+Eigen::MatrixXd ReadVULCANScatCrossSection(string VULCAN_ID);
 Eigen::MatrixXd ReadAtmosCrossSection(string AtmosFileName);
 Eigen::MatrixXd ReadMPCrossSection(string MPFileName);
 Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex);
 Eigen::MatrixXd ReadQYield(string FileName);
-  
+
+
+Eigen::VectorXd handleCustomOpacity(string PlanetName, Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav);
+Eigen::VectorXd VenusUV(Cantera::ThermoPhase* NetworkName, double Pres, double Temp, double Alt, Eigen::VectorXd wav);
 

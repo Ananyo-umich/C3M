@@ -1,0 +1,29 @@
+<problem>
+pres = 2.5E-3 #bar
+temp = 251 #K
+network = chapman.yaml
+photochem = true
+
+<init>
+species = N2, O2
+N2 = 0.78
+O2 = 0.21
+
+<integrator>
+dt = 1E-8
+Tmax = 21600000
+
+<Jrates>
+O2 -> 2 O = 5.0E-10 
+O3 -> O + O2 = 9.0E-4
+O3 -> O2 + O_1D = 1.0E-3 
+
+
+<radtran>
+solar = sun_spec.inp #spectral irradiance file
+radius = 1 #semi-major axis to the planet from the star (AU)
+reference = 1 #semi-major axis to the reference point from the star (AU)
+
+
+<output>
+file = ChapmanBoxTest.txt
