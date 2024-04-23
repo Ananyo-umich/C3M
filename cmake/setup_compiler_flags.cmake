@@ -18,14 +18,14 @@
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR
     CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
   set(CMAKE_CXX_FLAGS_RELEASE 
-    "-O2 -funroll-loops -funroll-all-loops -fstrict-aliasing"
+    "-O2 -funroll-loops -funroll-all-loops -fstrict-aliasing -fopenmp"
     )
 
   set(CMAKE_CXX_FLAGS_DEBUG
     "-g3"
     )
   set(CMAKE_C_FLAGS_RELEASE 
-    "-O2 -funroll-loops -funroll-all-loops -fstrict-aliasing"
+    "-O2 -funroll-loops -funroll-all-loops -fstrict-aliasing -fopenmp"
     )
 
   set(CMAKE_C_FLAGS_DEBUG

@@ -3,7 +3,7 @@ phases:
 - name: gas
   thermo: ideal-gas
   elements: [C, H, O, N, S, Ar]
-  species: [OH, H2, H2O, H, O, CH, C, CH2, CH3, CH4, C2, C2H2, C2H, C2H3, C2H4, C2H5, C2H6, CO, CO2, CH2OH, H2CO, HCO, CH3O, CH3OH, CH3CO, O2, H2CCO, HCCO, CH3O2, HO2, CH3OOH, N, NH, CN, HCN, NH2, N2, NH3, NO, N2H2, N2H, N2H3, N2H4, HNO, H2CN, HNCO, NO2, N2O, C4H2, CH2NH2, CH2NH, CH3NH2, CH3CHO, O3, NO3, HNO3, HNO2, NCO, N2O5, S, SH, S2, SO, H2S, CS, COS, CS2, NS, HS2, SO2, S4, S8, HCS, S3, H2O2, SO3, HSO3, HSO, H2SO4, HC3N, CH3CN, CH2CN, C2H3CN, CH3SH, CH3S, C3H3, C3H2, C3H4, C6H5, C6H6, C4H3, C4H5, S2O, O_1, CH2_1, N_2D, Ar]
+  species: [OH, H2, H2O, H, O, CH, C, CH2, CH3, CH4, C2, C2H2, C2H, C2H3, C2H4, C2H5, C2H6, CO, CO2, CH2OH, H2CO, HCO, CH3O, CH3OH, CH3CO, O2, H2CCO, HCCO, CH3O2, HO2, CH3OOH, N, NH, CN, HCN, NH2, N2, NH3, NO, N2H2, N2H, N2H3, N2H4, HNO, H2CN, HNCO, NO2, N2O, C4H2, CH2NH2, CH2NH, CH3NH2, CH3CHO, O3, NO3, HNO3, HNO2, NCO, N2O5, S, SH, S2, SO, H2S, CS, COS, CS2, NS, HS2, SO2, S4, S8, HCS, S3, H2O2, SO3, HSO3, HSO, H2SO4, HC3N, CH3CN, CH2CN, C2H3CN, CH3SH, CH3S, C3H3, C3H2, C3H4, C6H5, C6H6, C4H3, C4H5, S2O, O_1, CH2_1, Ar]
   kinetics: gas
   reactions: all
   skip-undeclared-elements: true
@@ -1054,17 +1054,6 @@ species:
       -917.935173, 0.683010238]
     - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
       -950.158922, -3.20502331]
-- name: N_2D
-  composition: {N: 1.0}
-  enthalpy: 0
-  thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
 - name: Ar
   composition: {Ar: 1.0}
   enthalpy: 0
@@ -1094,8 +1083,6 @@ reactions:
   rate-constant: {A: 2.2e-20,b: 3.0,Ea: 4040.0 }
 - equation: '1.0 C + 1.0 CH => 1.0 C2 + 1.0 H '
   rate-constant: {A: 1.05e-12,b: 0.5,Ea: 0.0 }
-- equation: '1.0 CH3 + 1.0 C => 1.0 H + 1.0 C2H2 '
-  rate-constant: {A: 1e-10,b: 0.0,Ea: 0.0 }
 - equation: '1.0 H2 + 1.0 C2H => 1.0 H + 1.0 C2H2 '
   rate-constant: {A: 9.2e-18,b: 2.17,Ea: 478.0 }
 - equation: '1.0 CH + 1.0 CH2 => 1.0 H + 1.0 C2H2 '
@@ -1118,8 +1105,6 @@ reactions:
   rate-constant: {A: 1.05e-17,b: 1.5,Ea: -250.0 }
 - equation: '1.0 CH + 1.0 CH3 => 1.0 H2 + 1.0 C2H2 '
   rate-constant: {A: 1e-11,b: 0.0,Ea: 0.0 }
-- equation: '1.0 C2 + 1.0 O => 1.0 C + 1.0 CO '
-  rate-constant: {A: 1.05e-12,b: 0.0,Ea: 0.0 }
 - equation: '1.0 CH2 + 1.0 CH2 => 1.0 C2H2 + 1.0 H + 1.0 H '
   rate-constant: {A: 1.8e-10,b: 0.0,Ea: 400.0 }
 - equation: '1.0 CH2 + 1.0 CH2 => 1.0 CH + 1.0 CH3 '
@@ -1302,8 +1287,6 @@ reactions:
   rate-constant: {A: 2.77e-10,b: -0.09,Ea: 0.0 }
 - equation: '1.0 N + 1.0 CH2 => 1.0 NH + 1.0 CH '
   rate-constant: {A: 1.05e-12,b: 0.5,Ea: 10000.0 }
-- equation: '1.0 N + 1.0 CH2 => 1.0 HCN + 1.0 H '
-  rate-constant: {A: 4.3e-10,b: 0.0,Ea: 420.0 }
 - equation: '1.0 N + 1.0 C2 => 1.0 CN + 1.0 C '
   rate-constant: {A: 2.9e-12,b: 0.5,Ea: 0.0 }
 - equation: '1.0 H + 1.0 NH => 1.0 H2 + 1.0 N '
@@ -1344,11 +1327,7 @@ reactions:
   rate-constant: {A: 3.32e-15,b: 1.2,Ea: 0.0 }
 - equation: '1.0 OH + 1.0 CN => 1.0 O + 1.0 HCN '
   rate-constant: {A: 1e-11,b: 0.0,Ea: 1000.0 }
-- equation: '1.0 OH + 1.0 HCN => 1.0 H2O + 1.0 CN '
-  rate-constant: {A: 6.47e-18,b: 1.83,Ea: 5180.0 }
-- equation: '1.0 OH + 1.0 HCN => 1.0 NH2 + 1.0 CO '
-  rate-constant: {A: 1.07e-13,b: 0.0,Ea: 5890.0 }
-- equation: '1.0 OH + 1.0 NH => 1.0 O + 1.0 NH2 '
+- equation: '1.0 OH + 1.0  H + 1.0 NH => 1.0 O + 1.0 NH2 '
   rate-constant: {A: 1.66e-12,b: 0.1,Ea: 5800.0 }
 - equation: '1.0 NH2 + 1.0 OH => 1.0 H2O + 1.0 NH '
   rate-constant: {A: 1.49e-16,b: 1.5,Ea: -230.0 }
@@ -1422,8 +1401,6 @@ reactions:
   rate-constant: {A: 2e-11,b: 0.0,Ea: 0.0 }
 - equation: '1.0 N2H + 1.0 H => 1.0 N2 + 1.0 H2 '
   rate-constant: {A: 4e-16,b: 1.5,Ea: -450.0 }
-- equation: '1.0 N2H + 1.0 OH => 1.0 N2 + 1.0 H2O '
-  rate-constant: {A: 0.0397,b: -2.88,Ea: 1230.0 }
 - equation: '1.0 N2H + 1.0 O => 1.0 N2 + 1.0 OH '
   rate-constant: {A: 2.83e-08,b: -1.23,Ea: 250.0 }
 - equation: '1.0 N2H + 1.0 NH2 => 1.0 N2 + 1.0 NH3 '
@@ -1478,8 +1455,6 @@ reactions:
   rate-constant: {A: 6.71e-19,b: 0.09,Ea: 5370.0 }
 - equation: '1.0 NO2 + 1.0 O => 1.0 NO + 1.0 O2 '
   rate-constant: {A: 6.51e-12,b: 0.0,Ea: -120.0 }
-- equation: '1.0 N2O + 1.0 O => 1.0 N2 + 1.0 O2 '
-  rate-constant: {A: 6.13e-12,b: 0.0,Ea: 8020.0 }
 - equation: '1.0 N2O + 1.0 H => 1.0 N2 + 1.0 OH '
   rate-constant: {A: 1.6e-10,b: 0.0,Ea: 7600.0 }
 - equation: '1.0 NH + 1.0 NO => 1.0 N2O + 1.0 H '
@@ -1914,8 +1889,6 @@ reactions:
   rate-constant: {A: 4e-09,b: 0.0,Ea: 34200.0 }
 - equation: '1.0 O + 1.0 C2H4 => 1.0 H2CO + 1.0 CH2 '
   rate-constant: {A: 9.63e-18,b: 1.99,Ea: 1439.0 }
-- equation: '1.0 O + 1.0 C2H3 => 1.0 HCO + 1.0 CH2 '
-  rate-constant: {A: 2.5e-11,b: 0.0,Ea: 0.0 }
 - equation: '1.0 CH3SH + 1.0 H => 1.0 CH3S + 1.0 H2 '
   rate-constant: {A: 2.29e-16,b: 1.73,Ea: 496.0 }
 - equation: '1.0 CH3SH + 1.0 H => 1.0 CH3 + 1.0 H2S '
@@ -2036,20 +2009,6 @@ reactions:
   rate-constant: {A: 6.64e-11,b: 0.0,Ea: 0.0 }
 - equation: '1.0 OH + 1.0 CH3 => 1.0 CH2_1 + 1.0 H2O '
   rate-constant: {A: 8.84e-08,b: -1.27,Ea: 186.0 }
-- equation: '1.0 N_2D + 1.0 H2 => 1.0 NH + 1.0 H '
-  rate-constant: {A: 4.2e-11,b: 0.0,Ea: 880.0 }
-- equation: '1.0 N_2D + 1.0 H2O => 1.0 NH + 1.0 OH '
-  rate-constant: {A: 4e-11,b: 0.0,Ea: 0.0 }
-- equation: '1.0 N_2D + 1.0 NH3 => 1.0 NH + 1.0 NH2 '
-  rate-constant: {A: 5e-11,b: 0.0,Ea: 0.0 }
-- equation: '1.0 N_2D + 1.0 O2 => 1.0 NO + 1.0 O '
-  rate-constant: {A: 9.7e-12,b: 0.0,Ea: 185.0 }
-- equation: '1.0 N_2D + 1.0 N2O => 1.0 N2 + 1.0 NO '
-  rate-constant: {A: 1.5e-11,b: 0.0,Ea: 570.0 }
-- equation: '1.0 N_2D + 1.0 CH3 => 1.0 H2CN + 1.0 H '
-  rate-constant: {A: 2.3e-10,b: 0.0,Ea: 0.0 }
-- equation: '1.0 N_2D + 1.0 HCN => 1.0 N2 + 1.0 CH '
-  rate-constant: {A: 6.8e-11,b: 0.0,Ea: 0.0 }
 - equation: '1.0 Ar => 1.0 Ar '
   rate-constant: {A: 0.0,b: 0.0,Ea: 0.0 }
 - equation: '1.0 H + 1.0 H (+ M) => 1.0 H2 (+ M)'
@@ -2232,11 +2191,6 @@ reactions:
   low-P-rate-constant: {A: 1.3e-23,b: -2.87,Ea: 781.0}
   high-P-rate-constant: {A: 5.45e-12,b: 0.3,Ea: 0.0}
   Troe: {A: 1, T3: 94.0, T1: 10000.0}
-- equation: '1.0 N2O (+ M) => 1.0 N2 + 1.0 O (+ M)'
-  type: falloff
-  low-P-rate-constant: {A: 6.64e-10,b: 0.0,Ea: 28200.0}
-  high-P-rate-constant: {A: 130000000000.0,b: 0.0,Ea: 30000.0}
-  Troe: {A: 1, T3: 94.0, T1: 10000.0}
 - equation: '1.0 N2H (+ M) => 1.0 N2 + 1.0 H (+ M)'
   type: falloff
   low-P-rate-constant: {A: 2.15e-10,b: -0.11,Ea: 2510.0}
@@ -2251,11 +2205,6 @@ reactions:
   type: falloff
   low-P-rate-constant: {A: 1.4e-24,b: -2.51,Ea: -34.0}
   high-P-rate-constant: {A: 3.31e-12,b: -0.05,Ea: 363.0}
-  Troe: {A: 1, T3: 94.0, T1: 10000.0}
-- equation: '1.0 C + 1.0 C (+ M) => 1.0 C2 (+ M)'
-  type: falloff
-  low-P-rate-constant: {A: 4.87e-27,b: -1.6,Ea: 0.0}
-  high-P-rate-constant: {A: 2.16e-11,b: 0.0,Ea: 0.0}
   Troe: {A: 1, T3: 94.0, T1: 10000.0}
 - equation: '1.0 H + 1.0 SH (+ M) => 1.0 H2S (+ M)'
   type: falloff
@@ -2410,9 +2359,6 @@ reactions:
 - equation: '1.0 C2H + M => 1.0 C2 + 1.0 H + M'
   type: three-body
   rate-constant: {A: 292000000000.0,b: -5.16,Ea: 57400.0 }
-- equation: '1.0 O + 1.0 C + M => 1.0 CO + M'
-  type: three-body
-  rate-constant: {A: 9.1e-22,b: -3.1,Ea: 2114.0 }
 - equation: '1.0 O + 1.0 N + M => 1.0 NO + M'
   type: three-body
   rate-constant: {A: 5.46e-33,b: 0.0,Ea: -155.0 }
@@ -2425,9 +2371,6 @@ reactions:
 - equation: '1.0 HNCO + M => 1.0 H + 1.0 NCO + M'
   type: three-body
   rate-constant: {A: 1.66e-07,b: 0.0,Ea: 56400.0 }
-- equation: '1.0 N_2D + M => 1.0 N + M'
-  type: three-body
-  rate-constant: {A: 1.7e-14,b: 0.0,Ea: 0.0 }
 - equation: '1.0 H + 1.0 S2 + M => 1.0 HS2 + M'
   type: three-body
   rate-constant: {A: 3.17e-23,b: -2.84,Ea: 838.0 }
@@ -2545,10 +2488,10 @@ reactions:
   rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
 - equation: '1.0 N2H4 => 1.0 N2H3 + 1.0 H '
   rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-- equation: '1.0 HNCO => 1.0 NH + 1.0 CO '
-  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-- equation: '1.0 HNCO => 1.0 H + 1.0 NCO '
-  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 HNCO => 1.0 NH + 1.0 CO '
+#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 HNCO => 1.0 H + 1.0 NCO '
+#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
 - equation: '1.0 SO => 1.0 S + 1.0 O '
   rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
 - equation: '1.0 SO2 => 1.0 SO + 1.0 O '

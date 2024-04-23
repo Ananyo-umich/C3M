@@ -1,5 +1,6 @@
 # ignore folder
 build/
+build2/
 external/CARMA30
 data/KINETICS
 examples/kindata3master.inp

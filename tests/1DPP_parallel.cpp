@@ -51,8 +51,8 @@ int main(int argc, char **argv) {
  
 //Setting number of threads
   Eigen::initParallel();
-  Eigen::setNbThreads(10);
-  omp_set_num_threads(10); // Setting the number of threads to 10
+  Eigen::setNbThreads(30);
+  omp_set_num_threads(30); // Setting the number of threads to 10
 
     #ifdef _OPENMP
     std::cout << "OpenMP is enabled." << std::endl;
@@ -270,7 +270,6 @@ std::cout << "All inputs loaded into C3M " << std::endl;
   MatrixXd stellar_input = ReadStellarRadiationInput(stellar_input_file, rad, ref);
   MatrixXd d_wavelength(stellar_input.row(0).size(), 1);
   MatrixXd wavelength = stellar_input.row(0);
-
 //Modification of solar flux based on SZA input, along with conversion from deg. to radians
   stellar_input.row(1) = stellar_input.row(1)*cos(sz_angle*3.14/180);
 
@@ -604,7 +603,6 @@ while(Ttot < Tmax) {
     gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     Cantera::Kinetics *gasRawPtr = sol2->kinetics().get();
     Cantera::ThermoPhase *gasThermo = gas2.get(); 
-
 //Radiative transfer (Beer-Lambert law) for actinic flux, and rate calculation
     if(j != 0){
 //For each absorber, find the total absorption 
@@ -700,7 +698,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
      gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
      auto& rxnObj = *(gas_kin->reaction(RxnIndex(rx)));
      std::string rxnEquation = rxnObj.equation();
-     //std::cout<< AtmData(iAlt, j)/1e3 << " " << rxnEquation << " " << j_rate << std::endl;
+    // std::cout<< AtmData(iAlt, j)/1e3 << " " << rxnEquation << " " << j_rate << std::endl;
 
    }
 
@@ -1049,7 +1047,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 }   
     
 //Inverting the matrix
-
+   
    auto start = std::chrono::high_resolution_clock::now();
    Eigen::PartialPivLU<Eigen::MatrixXd> lu_decomp(BlockMatrix);
    MatrixXd InvertedMatrix = lu_decomp.inverse();
