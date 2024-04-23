@@ -2,18 +2,18 @@
 
 ## Description
 The code is developed by the Planetary Science Laboratory at the University of Michigan, Ann Arbor. It is an atmospheric photochemistry model that can be used as a standalone photochemistry model,
-and can be coupled with hydrodynamic models for chemical transport in planetary environments. It is built using the Athena++ Magnetohydrodynamics Solver (https://github.com/PrincetonUniversity/athena), and Cantera (https://cantera.org/), a heritage chemical kinetics code for combustion applications. C3M leverages chemical kinetics information from peer-review sources of atmospheric chemistry, open source databases, and legacy models like CalTech/JPL KINETICS.
+and can be coupled with hydrodynamic models for chemical transport in planetary environments. It is built using the [Athena++ Magnetohydrodynamics Solver](https://github.com/PrincetonUniversity/athena), and [Cantera](https://cantera.org/), a heritage chemical kinetics code for combustion applications. C3M leverages chemical kinetics information from peer-review sources of atmospheric chemistry, open source databases, and legacy models like CalTech/JPL KINETICS.
 
 ## Installing C3M
 
 ### Pre-requisites
 Following are the pre-requisites for running C3M. You can install them on your system.
-
-Cantera(https://cantera.org/)
-Athena++(https://github.com/PrincetonUniversity/athena)
-Eigen(https://eigen.tuxfamily.org/index.php?title=Main_Page)
-CMake(https://cmake.org/)
-
+```
+[Cantera](https://cantera.org/)
+[Athena++](https://github.com/PrincetonUniversity/athena)
+[Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page)
+[CMake](https://cmake.org/)
+```
 
 ### C3M Capabilities
 ```
@@ -28,7 +28,7 @@ The code currently has following capabilities:
 ### Structure of C3M
 #### src
 ```
-It contains the functions for performing radiative transfer calculations, and including custom transport, and rates for a given planet type or system of reactions. C3M leverages heritage photochemical cross sections from MPI-Mainz(https://uv-vis-spectral-atlas-mainz.org/uvvis/cross_sections/Sulfur%20compounds/Inorganic%20S-compounds/S3.spc) database, Leiden Observatory(https://home.strw.leidenuniv.nl/~ewine/photo/), and CalTech/JPL KINETICS.
+It contains the functions for performing radiative transfer calculations, and including custom transport, and rates for a given planet type or system of reactions. C3M leverages heritage photochemical cross sections from [MPI-Mainz](https://uv-vis-spectral-atlas-mainz.org/uvvis/cross_sections/Sulfur%20compounds/Inorganic%20S-compounds/S3.spc) database, [Leiden Observatory](https://home.strw.leidenuniv.nl/~ewine/photo/), and CalTech/JPL KINETICS.
 ```
 #### tests
 ```
