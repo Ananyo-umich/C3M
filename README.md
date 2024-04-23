@@ -38,12 +38,12 @@ It contains the functions for performing radiative transfer calculations, and in
 
 #### data
 
-This directory contains important datasets corresponding to chemical reaction networks, photochemical cross sections and absorption cross sections from heritage atmospheric chemistry models.
-VULCAN: This folder contains selected photochemical cross sections from Leiden Observatory stored in VULCAN exoplanet chemical kinetics package
-MPIUV: This folder stores photochemical cross sections from MPI-Mainz database
-planet: It contains the atmospheric structure profiles, chemical composition profiles, and electron impact rates for ionospheric chemistry (Jupiter only)
-network: This folder stores Cantera and C3M compatible reaction networks in two formats (.c3m) and (.yaml)
-stellar: It includes stellar intensity spectrum for various Sun and other stars
+This directory contains important datasets corresponding to chemical reaction networks, photochemical cross sections and absorption cross sections from heritage atmospheric chemistry models.\
+**VULCAN:** This folder contains selected photochemical cross sections from Leiden Observatory stored in VULCAN exoplanet chemical kinetics package\
+**MPIUV:** This folder stores photochemical cross sections from MPI-Mainz database\
+**planet:** It contains the atmospheric structure profiles, chemical composition profiles, and electron impact rates for ionospheric chemistry (Jupiter only)\
+**network:** This folder stores Cantera and C3M compatible reaction networks in two formats (.c3m) and (.yaml)\
+**stellar:** It includes stellar intensity spectrum for various Sun and other stars
 
 #### tools
 
