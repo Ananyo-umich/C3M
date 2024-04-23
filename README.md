@@ -33,10 +33,9 @@ It contains the functions for performing atmospheric chemistry and enhancing cod
 ```
 #### tests
 ```
--- Contains file for running test case, and model validation
-   -- BoxChemSolver.cpp - Code for zero dimensional chemistry
-   -- ChemSolver.cpp - One dimensional photochemistry model
-   -- IonChemSolver.cpp - One dimensional photochemistry model with provision for ion impact process in atmosphere introduced artificially
+PhotoChemBox.cpp - It runs the box chemistry solver for a given system of chemical reactions
+IonChemSolver.cpp - It solves one dimesional continuity equations for ion-neutral reactions. It includes custom reactions, and electron impact processes using second order explicit diffusion in space, and first order implicit time marching. Actinic flux calculation is based on Beer-Lambert law
+1DPP.cpp - It is a modular, one dimensional photochemistry model using fully-implicit solver for a given set of chemical reactions
 ```
 #### data
 ```
