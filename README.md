@@ -17,33 +17,32 @@ CMake
 ### Installing Cantera
 
 ### C3M Capabilities
-'''
+```
 The code currently has following capabilities:
 
 * Solving box photochemistry, thermochemistry with ion-neutral reactions
 * One dimensional gas phase neutral photochemistry and thermochemistry
 * One dimensional gas phase ion-electron chemistry with electron impact processes
 * Formulation of custom reaction expressions, transport variables and atmospheric opacity for photochemistry
-'''
+```
 
 ### Structure of C3M
 #### src
-
+```
+It contains the functions for performing atmospheric chemistry and enhancing code modularity
+```
 #### tests
-
-#### data
-
-#### tools
-
-Code Structure
--> src
-   -- It contains the functions for performing atmospheric chemistry and enhancing code modularity
--> tests
-   -- Contains file for running test case, and model validation
+```
+-- Contains file for running test case, and model validation
    -- BoxChemSolver.cpp - Code for zero dimensional chemistry
    -- ChemSolver.cpp - One dimensional photochemistry model
    -- IonChemSolver.cpp - One dimensional photochemistry model with provision for ion impact process in atmosphere introduced artificially
--> data
-   -- This directory contains important datasets corresponding to chemical reaction networks, photochemical cross sections and absorption cross sections from heritage atmospheric chemistry models
--> tools
-   -- It contains important tools to handle chemical file format, and visualization of chemical reaction networks
+```
+#### data
+```
+This directory contains important datasets corresponding to chemical reaction networks, photochemical cross sections and absorption cross sections from heritage atmospheric chemistry models
+```
+#### tools
+```
+It contains important tools to handle chemical file format, and visualization of chemical reaction networks
+```
