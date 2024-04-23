@@ -32,20 +32,20 @@ It contains the functions for performing radiative transfer calculations, and in
 
 #### tests
 
-PhotoChemBox.cpp - It runs the box chemistry solver for a given system of chemical reactions\
-IonChemSolver.cpp - It solves one dimesional continuity equations for ion-neutral reactions. It includes custom reactions, and electron impact processes using second order explicit diffusion in space, and first order implicit time marching. Actinic flux calculation is based on Beer-Lambert law\
-1DPP.cpp - It is a modular, one dimensional photochemistry model using fully-implicit solver for a given set of chemical reactions\
+**PhotoChemBox.cpp** - It runs the box chemistry solver for a given system of chemical reactions\
+**IonChemSolver.cpp** - It solves one dimesional continuity equations for ion-neutral reactions. It includes custom reactions, and electron impact processes using second order explicit diffusion in space, and first order implicit time marching. Actinic flux calculation is based on Beer-Lambert law\
+**1DPP.cpp** - It is a modular, one dimensional photochemistry model using fully-implicit solver for a given set of chemical reactions\
 
 #### data
-```
+
 This directory contains important datasets corresponding to chemical reaction networks, photochemical cross sections and absorption cross sections from heritage atmospheric chemistry models.
 VULCAN: This folder contains selected photochemical cross sections from Leiden Observatory stored in VULCAN exoplanet chemical kinetics package
 MPIUV: This folder stores photochemical cross sections from MPI-Mainz database
 planet: It contains the atmospheric structure profiles, chemical composition profiles, and electron impact rates for ionospheric chemistry (Jupiter only)
 network: This folder stores Cantera and C3M compatible reaction networks in two formats (.c3m) and (.yaml)
 stellar: It includes stellar intensity spectrum for various Sun and other stars
-```
+
 #### tools
-```
+
 It contains important tools to handle chemical file format, and visualization of chemical reaction networks
-```
+
