@@ -1,6 +1,8 @@
-// C/C++ headers
-#include <stdlib.h>
+#ifndef SRC_INTERPOLATION_HPP_
+#define SRC_INTERPOLATION_HPP_
 
+// C/C++ headers
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -19,3 +21,5 @@ Eigen::MatrixXd InterpolateCrossSection(Eigen::MatrixXd reference_wavelength,
 Eigen::MatrixXd InterpolateQYield(Eigen::MatrixXd reference_wavelength,
                                   Eigen::MatrixXd input_wavelength,
                                   Eigen::MatrixXd qyield);
+
+#endif  // SRC_INTERPOLATION_HPP_

@@ -3,15 +3,11 @@
 // Email: ananyo@umich.edu
 
 // C/C++ headers
-#include <stdlib.h>
-
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
-
-// Athena++ header
-#include <parameter_input.hpp>
 
 // Cantera headers
 #include <cantera/base/Solution.h>
@@ -24,8 +20,6 @@
 #include <cantera/thermo.h>
 
 // C3M headers
-#include <configure.hpp>
-
 #include "CustomRate.hpp"
 
 using namespace std;

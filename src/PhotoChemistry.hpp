@@ -1,24 +1,20 @@
-// C/C++ headers
-#include <stdlib.h>
+#ifndef SRC_PHOTO_CHEMISTRY_HPP_
+#define SRC_PHOTO_CHEMISTRY_HPP_
 
+// C/C++ headers
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
-// Athena++ header
-#include <parameter_input.hpp>
-
 // Cantera headers
+#include <cantera/base/Solution.h>
 #include <cantera/base/ct_defs.h>
 #include <cantera/kinetics/Kinetics.h>
 #include <cantera/kinetics/MultiRate.h>
 #include <cantera/kinetics/ReactionData.h>
 #include <cantera/kinetics/ReactionRate.h>
-// C3M headers
-#include <cantera/base/Solution.h>
-
-#include <configure.hpp>
 
 // ThermoPhase object stores the thermodynamic state
 #include <cantera/thermo.h>
@@ -51,3 +47,5 @@ Eigen::VectorXd handleCustomOpacity(string PlanetName,
                                     Eigen::VectorXd wav);
 Eigen::VectorXd VenusUV(Cantera::ThermoPhase* NetworkName, double Pres,
                         double Temp, double Alt, Eigen::VectorXd wav);
+
+#endif  // SRC_PHOTO_CHEMISTRY_HPP_

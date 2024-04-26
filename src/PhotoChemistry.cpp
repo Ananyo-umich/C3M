@@ -1,24 +1,23 @@
 // C/C++ headers
 #include <fstream>
 #include <iostream>
+
 // C3M headers
 #include "PhotoChemistry.hpp"
+
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
-
-// Athena++ header
-#include <parameter_input.hpp>
-
-// NetCDF
-#if NETCDFOUTPUT
-#include <netcdf.h>
-#endif
 
 // Cantera header
 #include <cantera/base/Solution.h>
 
 // ThermoPhase object stores the thermodynamic state
 #include <cantera/thermo.h>
+
+// NetCDF
+#if NETCDFOUTPUT
+#include <netcdf.h>
+#endif
 
 // Print wavelengths
 void printWavelength(Eigen::VectorXd wavelengths_) {
@@ -253,7 +252,7 @@ Eigen::MatrixXd ReadQYield(string FileName) {
         Output(ix2, ix) = atof(wavlength.c_str());
         // std::cout << Output(ix2, ix) << std::endl;
       }
-      if ((ix2 == (col - 1) / (rows - 2))) {
+      if (ix2 == (col - 1) / (rows - 2)) {
         getline(InFile, wavlength, '\n');
         // std::cout << wavlength << std::endl;
         Output(ix2, ix) = atof(wavlength.c_str());
@@ -316,9 +315,10 @@ Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex) {
     // std::cout << Output(0, i) << " cross:  " << Output(1, i) << std::endl;
   }
   nc_close(fileid);
-
-#endif
   return Output;
+#else
+  throw std::runtime_error("NetCDF not enabled");
+#endif
 }
 
 // Function to introduce custom opacity for a given atmosphere

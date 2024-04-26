@@ -1,17 +1,16 @@
-// @sec3{Include files}
+#ifndef SRC_CUSTOMTRANSPORT_HPP_
+#define SRC_CUSTOMTRANSPORT_HPP_
+
 // Author: Ananyo Bhattacharya
 // Affiliation: University of Michigan
 // Email: ananyo@umich.edu
-// C/C++ headers
-#include <stdlib.h>
 
+// C/C++ headers
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
-
-// Athena++ header
-#include <parameter_input.hpp>
 
 // Cantera headers
 #include <cantera/base/Solution.h>
@@ -21,9 +20,6 @@
 #include <cantera/kinetics/ReactionData.h>
 #include <cantera/kinetics/ReactionRate.h>
 #include <cantera/thermo.h>
-
-// C3M headers
-#include <configure.hpp>
 
 using namespace std;
 using Eigen::MatrixXd;
@@ -35,3 +31,5 @@ VectorXd handleCustomMolecularDiffusion(string PlanetName,
 
 VectorXd JupiterMolDiff(Cantera::ThermoPhase* NetworkName, double Pres,
                         double Temp, VectorXd mWt);
+
+#endif  // SRC_CUSTOMTRANSPORT_HPP_

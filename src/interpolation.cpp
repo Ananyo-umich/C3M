@@ -7,9 +7,8 @@
 #include <vector>
 
 // C3M headers
-#include <configure.hpp>
-
 #include "Vapors.hpp"
+
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
