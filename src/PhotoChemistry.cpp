@@ -15,9 +15,7 @@ using Eigen::VectorXd;
 #include <cantera/thermo.h>
 
 // NetCDF
-#if NETCDFOUTPUT
 #include <netcdf.h>
-#endif
 
 // Print wavelengths
 void printWavelength(Eigen::VectorXd wavelengths_) {
@@ -283,7 +281,6 @@ Eigen::MatrixXd ReadQYield(string FileName) {
 // Function to read cross section from CalTech/JPL KINETIC7 corrected cross
 // sections and converted to netCDF file
 Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex) {
-#if NETCDFOUTPUT
   int fileid, dimid, varid, err;
   string fname =
       "/home/ananyo/models/C3M/data/KINETICS/KINETICS7_Bhattacharya.nc";
@@ -316,9 +313,6 @@ Eigen::MatrixXd ReadKINETICSCrossSection(int RxnIndex) {
   }
   nc_close(fileid);
   return Output;
-#else
-  throw std::runtime_error("NetCDF not enabled");
-#endif
 }
 
 // Function to introduce custom opacity for a given atmosphere

@@ -31,10 +31,12 @@ target_include_directories(${namel}_${buildl}
   ${CMAKE_BINARY_DIR}
   ${EIGEN3_INCLUDE_DIR}
   ${CANTERA_INCLUDE_DIR}
+  ${NETCDF_INCLUDES}
   )
 
 target_link_libraries(${namel}_${buildl}
   ${CANTERA_LIBRARY}
+  ${NETCDF_LIBRARIES}
   )
 
 add_library(c3m::c3m ALIAS ${namel}_${buildl})

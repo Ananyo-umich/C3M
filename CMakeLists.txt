@@ -31,8 +31,7 @@ message(STATUS "2. Set up project system libraries ...")
 
 find_package(Eigen3 REQUIRED)
 find_package(Cantera REQUIRED)
-#find_package(HDF5 REQUIRED)
-#find_package(OpenMP REQUIRED)  # Find the OpenMP package
+find_package(NetCDF REQUIRED)
 
 ## 3. set up project system libraries ##
 message(STATUS "3. Set up system libraries ...")
@@ -42,5 +41,5 @@ message(STATUS "4. Set up project libraries")
 add_subdirectory(src)
 
 ## 5. set up examples and tests
-message(STATUS "6. Set up unit tests")
+message(STATUS "5. Set up unit tests")
 #add_subdirectory(tests)
