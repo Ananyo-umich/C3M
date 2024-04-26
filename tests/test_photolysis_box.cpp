@@ -14,9 +14,17 @@
 #include <cantera/kinetics.h>
 #include <cantera/kinetics/Reaction.h>
 
+// ZeroDim object stores the reactor information
+#include <cantera/zerodim.h>
+
+// c3m
+#include <c3m/RadTran.hpp>
+
 TEST(ZeroDim, OxygenPhotolysisBox) {
+  auto app = Application::GetInstance();
+
   // Reading the chemical kinetics network
-  auto sol = Cantera::newSolution("photolysis_box.yaml");
+  auto sol = Cantera::newSolution("test_photolysis_box.yaml");
 
   // Initial condition for mole fraction
   sol->thermo()->setState_TPX(250., 0.1 * Cantera::OneAtm, "O2:0.21, N2:0.78");
@@ -49,13 +57,14 @@ TEST(ZeroDim, OxygenPhotolysisBox) {
     time = network.time() + time_step;
     network.advance(time);
   }
-
 }
 
 int main(int argc, char **argv) {
   Application::Start(argc, argv);
   
-  int result = testing::InitGoogleTest(&argc, argv);
+  testing::InitGoogleTest(&argc, argv);
+
+  int result = RUN_ALL_TESTS();
 
   Application::Destroy();
 

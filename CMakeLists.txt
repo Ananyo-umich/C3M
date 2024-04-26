@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+cmake_policy(SET CMP0115 NEW)
+
 project(
   C3M
   LANGUAGES CXX
@@ -24,7 +26,14 @@ if (PYTHON_BINDINGS)
 endif()
 
 # load all modules
-LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
+
+# load all macros
+file(GLOB _macro_files "${CMAKE_SOURCE_DIR}/cmake/macros/*.cmake")
+foreach(_file ${_macro_files})
+  message(STATUS "Include ${_file}")
+  include(${_file})
+endforeach()
 
 ## 1. set up compiler flags
 message(STATUS "1. Set up project configuration ...")
@@ -45,8 +54,8 @@ message(STATUS "3. Set up project libraries")
 add_subdirectory(src)
 
 ## 4. set up examples and tests
-message(STATUS "4. Set up unit tests")
-#add_subdirectory(tests)
+message(STATUS "4. Set up examples and unit tests")
+add_subdirectory(tests)
 
 set(C3M_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
   CACHE INTERNAL "C3M include directory")

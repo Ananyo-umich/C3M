@@ -9,23 +9,21 @@ macro(setup_test namel)
   add_executable(${namel}.${buildl} ${namel}.cpp globals.cpp)
 
   set_target_properties(${namel}.${buildl}
-                        PROPERTIES COMPILE_FLAGS ${CMAKE_CXX_FLAGS_${buildu}})
+            PROPERTIES COMPILE_FLAGS ${C3M_CXX_FLAGS})
 
-  target_include_directories(
-    ${namel}.${buildl}
-    PRIVATE $<$<BOOL:${PVFMM}>:${PVFMM_SOURCE_DIR}/SCTL/include>
-            ${CMAKE_BINARY_DIR}
-            ${CANOE_INCLUDE_DIR}
-            ${EIGEN3_INCLUDE_DIR}
-            ${MPI_CXX_INCLUDE_PATH}
-            ${NETCDF_INCLUDES}
-            ${PNETCDF_INCLUDE_DIR}
-            ${OpenMP_CXX_INCLUDE_DIR}
-            ${FFTW_INCLUDE_DIRS})
+  target_include_directories(${namel}.${buildl}
+            PRIVATE 
+            ${CMAKE_SOURCE_DIR}
+            ${CANTERA_INCLUDE_DIR}
+            )
 
-  target_link_libraries(
-    ${namel}.${buildl} gtest_main $<$<BOOL:${PVFMM}>:pvfmmStatic>
-    ${CANOE_LIBRARY_${buildu}})
+  target_link_libraries(${namel}.${buildl} 
+            PRIVATE
+            gtest_main
+            ${CANTERA_LIBRARY}
+            application_${buildl}
+            c3m::c3m
+            )
 
   add_test(NAME ${namel}.${buildl} COMMAND ${namel}.${buildl})
 endmacro()
