@@ -2,7 +2,7 @@ phases:
   - name: gas
     thermo: ideal-gas
     elements: [O, N]
-    species: [N2, O, O2, O3]
+    species: [N2, O, O(1D), O2, O3]
     kinetics: gas
 
 species:
@@ -12,6 +12,11 @@ species:
       model: constant-cp
 
   - name: O
+    composition: {O: 1}
+    thermo:
+      model: constant-cp
+
+  - name: O(1D)
     composition: {O: 1}
     thermo:
       model: constant-cp
@@ -27,14 +32,26 @@ species:
       model: constant-cp
 
 reactions:
-  - equation: O2 => 2 O
+  - equation: O2 => O + O(1D)
     type: photolysis
+    branches:
+      - name: b1
+        product: "O:2"
+      - name: b2
+        product: "O:1 O(1):1"
     cross-section:
-      - format: VULCAN_Diss
-        file: VULCAN/O2/O2_cross.csv
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O2/O2_cross.csv, VULCAN/O2/O2_branch.csv]
 
-  - equation: O3 => O + O2
+  - equation: O3 => O2 + O + O(1D)
     type: photolysis
+    branches:
+      - name: b1
+        product: "O2:1 O:1"
+      - name: b2
+        product: "O2:1 O(1D):1"
     cross-section:
-      - format: VULCAN_Diss
-        file: VULCAN/O3/O3_cross.csv
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
