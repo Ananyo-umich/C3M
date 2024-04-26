@@ -31,13 +31,12 @@ TEST(ZeroDim, OxygenPhotolysisBox) {
 
   // Calculating photochemical reaction rate
   auto stellar_input_file = app->FindResource("stellar/sun.ir");
-  auto stellar_input =
-      ReadStellarRadiationInput(stellar_input_file, 1., 1.);
+  auto stellar_input = ReadStellarRadiationInput(stellar_input_file, 1., 1.);
   std::cout << "Radiation Input Complete!" << std::endl;
 
   // Updating the actinic flux within yaml file [All in SI units]
   sol->kinetics()->setWavelength(stellar_input.row(0).data(),
-                         stellar_input.row(0).size());
+                                 stellar_input.row(0).size());
   sol->kinetics()->updateActinicFlux(stellar_input.row(1).data());
 
   // Reactor
@@ -61,7 +60,7 @@ TEST(ZeroDim, OxygenPhotolysisBox) {
 
 int main(int argc, char **argv) {
   Application::Start(argc, argv);
-  
+
   testing::InitGoogleTest(&argc, argv);
 
   int result = RUN_ALL_TESTS();
