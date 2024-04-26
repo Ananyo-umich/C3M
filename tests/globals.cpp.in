@@ -1,0 +1,13 @@
+// used by Application
+
+namespace Globals {
+
+const char* search_paths = "@CMAKE_SOURCE_DIR@/data";
+
+const char* banner =
+    "\
+######################################################\n\
+##              C3M MODEL STARTS                    ##\n\
+######################################################";
+
+} // namespace Globals

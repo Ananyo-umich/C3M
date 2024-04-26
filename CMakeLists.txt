@@ -33,6 +33,8 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/compilers.cmake)
 
 ## 2. set up project system libraries ##
 message(STATUS "2. Set up project system libraries ...")
+include(${CMAKE_SOURCE_DIR}/cmake/gtest.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/application.cmake)
 
 find_package(Eigen3 REQUIRED)
 find_package(Cantera REQUIRED)
