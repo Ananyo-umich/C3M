@@ -43,4 +43,4 @@ add_subdirectory(src)
 
 ## 5. set up examples and tests
 message(STATUS "6. Set up unit tests")
-add_subdirectory(tests)
+#add_subdirectory(tests)

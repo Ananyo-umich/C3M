@@ -1,9 +1,10 @@
 // C/C++ headers
-#include <vector>
-#include <string>
 #include <stdlib.h>
-#include <iostream>
+
 #include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 
 // C3M headers
 #include <configure.hpp>
@@ -13,5 +14,5 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 Eigen::MatrixXd ReadVULCANPhotoAbsCrossSection(string Cross_Section_File);
-Eigen::MatrixXd ReadStellarRadiationInput(string Solar_Input_File, double rad, double ref);
-
+Eigen::MatrixXd ReadStellarRadiationInput(string Solar_Input_File, double rad,
+                                          double ref);

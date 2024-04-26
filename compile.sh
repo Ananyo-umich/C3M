@@ -1,6 +1,6 @@
 rm -rf build
 mkdir build
-cd build 
+cd build
 cmake ..
 make -j8
 cd bin

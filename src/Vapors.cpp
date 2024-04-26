@@ -1,9 +1,10 @@
 // C/C++ headers
-#include <vector>
-#include <string>
 #include <stdlib.h>
-#include <iostream>
+
 #include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 
 // C3M headers
 #include <configure.hpp>
