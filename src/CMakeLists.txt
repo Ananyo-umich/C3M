@@ -3,12 +3,6 @@
 set(namel c3m)
 string(TOUPPER ${namel} nameu)
 
-if (PYTHON_BINDINGS)
-  set(compile_flags_ "${C3M_C_FLAGS} -fPIC")
-else()
-  set(compile_flags_ "${C3M_C_FLAGS}")
-endif()
-
 file(GLOB _src_files
   *.cpp
   )
@@ -23,7 +17,7 @@ add_library(${namel}_${buildl}
 
 set_target_properties(${namel}_${buildl}
   PROPERTIES
-  COMPILE_FLAGS ${compile_flags_}
+  COMPILE_FLAGS ${C3M_CXX_FLAGS}
   )
 
 target_include_directories(${namel}_${buildl}
@@ -40,6 +34,3 @@ target_link_libraries(${namel}_${buildl}
   )
 
 add_library(c3m::c3m ALIAS ${namel}_${buildl})
-
-set(C3M_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
-  CACHE INTERNAL "C3M include directory")

@@ -6,7 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(
   C3M
-  LANGUAGES C CXX
+  LANGUAGES CXX
   )
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -16,6 +16,11 @@ if(NOT CMAKE_BUILD_TYPE)
 else()
   message(STATUS "Build Type = ${CMAKE_BUILD_TYPE}")
   message(STATUS "")
+endif()
+
+option(PYTHON_BINDINGS "Build Python Bindings" ON)
+if (PYTHON_BINDINGS)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
 # load all modules
@@ -33,13 +38,13 @@ find_package(Eigen3 REQUIRED)
 find_package(Cantera REQUIRED)
 find_package(NetCDF REQUIRED)
 
-## 3. set up project system libraries ##
-message(STATUS "3. Set up system libraries ...")
-
-## 4. set up project configure file and library ##
-message(STATUS "4. Set up project libraries")
+## 3. set up project configure file and library ##
+message(STATUS "3. Set up project libraries")
 add_subdirectory(src)
 
-## 5. set up examples and tests
-message(STATUS "5. Set up unit tests")
+## 4. set up examples and tests
+message(STATUS "4. Set up unit tests")
 #add_subdirectory(tests)
+
+set(C3M_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+  CACHE INTERNAL "C3M include directory")
