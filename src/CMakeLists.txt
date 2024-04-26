@@ -4,9 +4,9 @@ set(namel c3m)
 string(TOUPPER ${namel} nameu)
 
 if (PYTHON_BINDINGS)
-  set(compile_flags_ "${${PROJECT_NAME}_C_FLAGS} -fPIC")
+  set(compile_flags_ "${C3M_C_FLAGS} -fPIC")
 else()
-  set(compile_flags_ "${${PROJECT_NAME}_C_FLAGS}")
+  set(compile_flags_ "${C3M_C_FLAGS}")
 endif()
 
 file(GLOB _src_files

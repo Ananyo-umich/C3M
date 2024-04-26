@@ -2,13 +2,13 @@
 #
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(${PROJECT_NAME}_CXX_FLAGS
+    set(C3M_CXX_FLAGS
         "-g3"
-        CACHE INTERNAL "${PROJECT_NAME} CXX compiler flags")
+        CACHE INTERNAL "C3M CXX compiler flags")
   elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(${PROJECT_NAME}_CXX_FLAGS
+    set(C3M_CXX_FLAGS
         "-O3"
-        CACHE INTERNAL "${PROJECT_NAME} CXX compiler flags")
+        CACHE INTERNAL "C3M CXX compiler flags")
   else()
     message(FATAL_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
   endif()
@@ -18,13 +18,13 @@ endif()
 
 if(CMAKE_C_COMPILER_ID MATCHES "GNU")
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(${PROJECT_NAME}_C_FLAGS
+    set(C3M_C_FLAGS
         "-g3"
-        CACHE INTERNAL "${PROJECT_NAME} C compiler flags")
+        CACHE INTERNAL "C3M C compiler flags")
   elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(${PROJECT_NAME}_C_FLAGS
+    set(C3M_C_FLAGS
         "-O3"
-        CACHE INTERNAL "${PROJECT_NAME} C compiler flags")
+        CACHE INTERNAL "C3M C compiler flags")
   else()
     message(FATAL_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
   endif()
@@ -36,13 +36,13 @@ endif()
 #
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(${PROJECT_NAME}_CXX_FLAGS
+    set(C3M_CXX_FLAGS
         "-g3"
-        CACHE INTERNAL "${PROJECT_NAME} CXX compiler flags")
+        CACHE INTERNAL "C3M CXX compiler flags")
   elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(${PROJECT_NAME}_CXX_FLAGS
+    set(C3M_CXX_FLAGS
         "-O3"
-        CACHE INTERNAL "${PROJECT_NAME} CXX compiler flags")
+        CACHE INTERNAL "C3M CXX compiler flags")
   else()
     message(FATAL_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
   endif()
@@ -52,13 +52,13 @@ endif()
 
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(${PROJECT_NAME}_C_FLAGS
+    set(C3M_C_FLAGS
         "-g3"
-        CACHE INTERNAL "${PROJECT_NAME} C compiler flags")
+        CACHE INTERNAL "C3M C compiler flags")
   elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(${PROJECT_NAME}_C_FLAGS
+    set(C3M_C_FLAGS
         "-O3"
-        CACHE INTERNAL "${PROJECT_NAME} C compiler flags")
+        CACHE INTERNAL "C3M C compiler flags")
   else()
     message(FATAL_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
   endif()
@@ -70,13 +70,13 @@ endif()
 #
 if(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(${PROJECT_NAME}_CXX_FLAGS
+    set(C3M_CXX_FLAGS
         "-g3"
-        CACHE INTERNAL "${PROJECT_NAME} CXX compiler flags")
+        CACHE INTERNAL "C3M CXX compiler flags")
   elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(${PROJECT_NAME}_CXX_FLAGS
+    set(C3M_CXX_FLAGS
         "-O3"
-        CACHE INTERNAL "${PROJECT_NAME} CXX compiler flags")
+        CACHE INTERNAL "C3M CXX compiler flags")
   else()
     message(FATAL_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
   endif()
@@ -86,13 +86,13 @@ endif()
 
 if(CMAKE_C_COMPILER_ID MATCHES "Intel")
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(${PROJECT_NAME}_C_FLAGS
+    set(C3M_C_FLAGS
         "-g3"
-        CACHE INTERNAL "${PROJECT_NAME} C compiler flags")
+        CACHE INTERNAL "C3M C compiler flags")
   elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(${PROJECT_NAME}_C_FLAGS
+    set(C3M_C_FLAGS
         "-O3"
-        CACHE INTERNAL "${PROJECT_NAME} C compiler flags")
+        CACHE INTERNAL "C3M C compiler flags")
   else()
     message(FATAL_ERROR "Unknown build type: ${CMAKE_BUILD_TYPE}")
   endif()
