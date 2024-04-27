@@ -32,7 +32,7 @@ target_link_libraries(${namel}_${buildl}
   ${CANTERA_LIBRARY}
   ${NETCDF_LIBRARIES}
   ${CMAKE_DL_LIBS}
-  stdc++fs
+  #stdc++fs
   )
 
 add_library(c3m::c3m ALIAS ${namel}_${buildl})
