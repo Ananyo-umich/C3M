@@ -28,11 +28,15 @@ target_include_directories(${namel}_${buildl}
   ${NETCDF_INCLUDES}
   )
 
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  set(extra_flag stdc++fs)
+endif()
+
 target_link_libraries(${namel}_${buildl}
   ${CANTERA_LIBRARY}
   ${NETCDF_LIBRARIES}
   ${CMAKE_DL_LIBS}
-  #stdc++fs
+  ${extra_flag}
   )
 
 add_library(c3m::c3m ALIAS ${namel}_${buildl})

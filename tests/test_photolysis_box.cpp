@@ -20,16 +20,16 @@
 // c3m
 #include <c3m/RadTran.hpp>
 
-class MethanePhotolysis : public testing::Test {
+class PhotolysisCH4 : public testing::Test {
  public:
   // data
   shared_ptr<Cantera::ThermoPhase> phase;
   shared_ptr<Cantera::Kinetics> kin;
 
   // constructor
-  MethanePhotolysis() {
-    phase = Cantera::newThermo("../data/ch4_photolysis.yaml");
-    kin = Cantera::newKinetics({phase}, "../data/ch4_photolysis.yaml");
+  PhotolysisCH4() {
+    phase = Cantera::newThermo("photolysis_ch4.yaml");
+    kin = Cantera::newKinetics({phase}, "photolysis_ch4.yaml");
 
     // set the initial state
     std::string X = "CH4:0.02 N2:0.98";
@@ -49,19 +49,19 @@ class MethanePhotolysis : public testing::Test {
   }
 };
 
-TEST_F(MethanePhotolysis, check_phase) {
+TEST_F(PhotolysisCH4, check_phase) {
   ASSERT_EQ(phase->nElements(), 3);
   ASSERT_EQ(phase->nSpecies(), 8);
 }
 
-TEST_F(MethanePhotolysis, check_kinetics) {
+TEST_F(PhotolysisCH4, check_kinetics) {
   ASSERT_EQ(kin->nReactions(), 2);
   ASSERT_EQ(kin->nTotalSpecies(), 8);
   ASSERT_EQ(kin->nPhases(), 1);
   ASSERT_EQ(kin->nWavelengths(), 10);
 }
 
-TEST_F(MethanePhotolysis, check_fwd_rate_constants) {
+TEST_F(PhotolysisCH4, check_fwd_rate_constants) {
   std::vector<double> kfwd(kin->nReactions());
 
   kin->getFwdRateConstants(kfwd.data());
@@ -111,11 +111,11 @@ TEST_F(MethanePhotolysis, check_fwd_rate_constants) {
               4.0, 1.0e-14);
 }
 
-TEST(ZeroDim, OxygenPhotolysisBox) {
+TEST(ZeroDim, PhotolysisO2) {
   auto app = Application::GetInstance();
 
   // Reading the chemical kinetics network
-  auto sol = Cantera::newSolution("test_photolysis_box.yaml");
+  auto sol = Cantera::newSolution("photolysis_o2.yaml");
 
   // Initial condition for mole fraction
   sol->thermo()->setState_TPX(250., 0.1 * Cantera::OneAtm, "O2:0.21, N2:0.78");
@@ -131,22 +131,42 @@ TEST(ZeroDim, OxygenPhotolysisBox) {
   sol->kinetics()->updateActinicFlux(stellar_input.row(1).data());
 
   // Reactor
-  Cantera::Reactor reactor(sol);
+  Cantera::IdealGasReactor reactor(sol);
+  reactor.setEnergy(false);
   reactor.initialize();
+
+  std::cout << "T = " << reactor.temperature() << std::endl;
+  std::cout << "rho = " << reactor.density() << std::endl;
+  std::cout << "mass fractions = ";
+  for (size_t i = 0; i < sol->thermo()->nSpecies(); i++) {
+    std::cout << sol->thermo()->speciesName(i) << ":"
+              << sol->thermo()->massFraction(i) << " ";
+  }
+  std::cout << std::endl;
 
   // Reactor Network
   Cantera::ReactorNet network;
   network.addReactor(reactor);
   network.initialize();
 
-  double time_step = 1.e-5;
-  double max_time = 1.e-2;
+  double time_step = 10.;
+  double max_time = 1000.;
 
   double time = 0.;
   while (network.time() < max_time) {
     time = network.time() + time_step;
     network.advance(time);
   }
+  std::cout << "Time = " << time << std::endl;
+
+  std::cout << "T = " << reactor.temperature() << std::endl;
+  std::cout << "rho = " << reactor.density() << std::endl;
+  std::cout << "mass fractions = ";
+  for (size_t i = 0; i < sol->thermo()->nSpecies(); i++) {
+    std::cout << sol->thermo()->speciesName(i) << ":"
+              << sol->thermo()->massFraction(i) << " ";
+  }
+  std::cout << std::endl;
 }
 
 int main(int argc, char **argv) {
