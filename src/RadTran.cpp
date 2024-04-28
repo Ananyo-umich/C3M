@@ -48,27 +48,30 @@ Eigen::MatrixXd ReadVULCANPhotoAbsCrossSection(string Cross_Section_File) {
 // Function to read stellar radiation input
 // The output matrix will contain reference wavelength (unit) and spectral
 // irradiance (unit)
-Eigen::MatrixXd ReadStellarRadiationInput(string Solar_Input_File, double rad,
-                                          double ref) {
+std::pair<std::vector<double>, std::vector<double>> ReadStellarRadiationInput(
+    string Solar_Input_File, double rad, double ref) {
   fstream InFile;
   InFile.open(Solar_Input_File);
-  string wavlength;
-  string irradiance;
+  string wav;
+  string irr;
   int num = 0;
   int rows = 0;
-  while (getline(InFile, wavlength)) rows++;
+  while (getline(InFile, wav)) rows++;
   InFile.close();
 
   Eigen::MatrixXd Output(2, rows - 1);
+
+  std::vector<double> wavelength, irradiance;
+
   InFile.open(Solar_Input_File);
-  getline(InFile, wavlength);
-  while (InFile >> wavlength >> irradiance) {
-    Output(0, num) = stof(wavlength.c_str()) * 1E-10;  // angstrom -> m
-    Output(1, num) = stof(irradiance.c_str()) * 1E10 * ref * ref /
-                     (rad * rad);  // Conversion to SI units (W/m^3)
+  getline(InFile, wav);
+  while (InFile >> wav >> irr) {
+    wavelength.push_back(stof(wav.c_str()) * 1E-10);  // angstrom -> m
+    irradiance.push_back(stof(irr.c_str()) * 1E10 * ref * ref /
+                         (rad * rad));  // Conversion to SI units (W/m^3)
     // std::cout << irradiance << " " << Output(1, num) << std::endl;
     num++;
   }
   InFile.close();
-  return Output;
+  return {std::move(wavelength), std::move(irradiance)};
 }

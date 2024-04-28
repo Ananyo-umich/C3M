@@ -108,7 +108,7 @@ TEST_F(PhotolysisCH4, check_fwd_rate_constants) {
               1.0e-14);
 }
 
-/*TEST(ZeroDim, PhotolysisO2) {
+TEST(ZeroDim, PhotolysisO2) {
   auto app = Application::GetInstance();
 
   // Reading the chemical kinetics network
@@ -123,9 +123,9 @@ TEST_F(PhotolysisCH4, check_fwd_rate_constants) {
   std::cout << "Radiation Input Complete!" << std::endl;
 
   // Updating the actinic flux within yaml file [All in SI units]
-  sol->kinetics()->setWavelength(stellar_input.row(0).data(),
-                                 stellar_input.row(0).size());
-  sol->kinetics()->updateActinicFlux(stellar_input.row(1).data());
+  sol->kinetics()->setWavelength(stellar_input.first.data(),
+                                 stellar_input.first.size());
+  sol->kinetics()->updateActinicFlux(stellar_input.second.data());
 
   // Reactor
   Cantera::IdealGasReactor reactor(sol);
@@ -146,8 +146,8 @@ TEST_F(PhotolysisCH4, check_fwd_rate_constants) {
   network.addReactor(reactor);
   network.initialize();
 
-  double time_step = 10.;
-  double max_time = 1000.;
+  double time_step = 100.;
+  double max_time = 1.e5;
 
   double time = 0.;
   while (network.time() < max_time) {
@@ -164,7 +164,7 @@ TEST_F(PhotolysisCH4, check_fwd_rate_constants) {
               << sol->thermo()->massFraction(i) << " ";
   }
   std::cout << std::endl;
-}*/
+}
 
 int main(int argc, char **argv) {
   Application::Start(argc, argv);
