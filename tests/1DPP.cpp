@@ -155,6 +155,7 @@ std::cout << "Boundary conditions loaded" << std::endl;
       AtmData(iKzz, inx) = atof(data3.c_str())*1E-4; //Kzz (cm^2/s) -> m^2/s
       AtmData(iAlt, inx) = atof(data4.c_str())*1E3; //Altitude (m) 
       AtmData(iNd, inx) = atof(data5.c_str())*1E6/(6.022E23*1E3); //Concentration (1/cm^3) -> kmol/m^3
+      //std::cout << data5 << " " << AtmData(iNd, inx) << std::endl;
       if(inx == 0)
       {kmax = AtmData(iKzz, inx); }
       if(inx != 0)
@@ -436,7 +437,7 @@ ph_inx = 0;
     std::string qyield_info = pinput->GetOrAddString("qyield", rxnEquation, "nan");
     if(qyield_info != "nan"){
       std::string QYType = qyield_info.substr(0,qyield_info.find(";")); 
-
+      
 //Quantum Yield for VULCAN database
       if(QYType == "VULCAN"){
       std::string col_str = qyield_info.substr(qyield_info.find(";")+1,qyield_info.find(",") - qyield_info.find(";")-1 );
@@ -444,6 +445,7 @@ ph_inx = 0;
       std::string qyield_file = qyield_info.substr(qyield_info.find(",")+1,qyield_info.length()-qyield_info.find(",") -1);
       MatrixXd QYield_info = ReadQYield(qyield_file);
       qyield_data.col(ph_inx) = InterpolateQYield(stellar_input.row(0), QYield_info.row(0), QYield_info.row(col_num));
+      std::cout << qyield_file << std::endl;
       }
 
 //Quantum Yield for KINETICS7 database (QY == 1)
@@ -487,6 +489,7 @@ VectorXd dQ(nsp);
 double Keddy_j;
 double Keddy_prev;
 double Keddy_next;
+double conv_old;
 double Temp, Press, Kzz;
 VectorXd m_wdot(nsp);
 VectorXd mole_frac(nsp);
@@ -883,7 +886,8 @@ for(int rx = 0; rx < PhotoRxn; rx++){
    std::string speciesName = gas->speciesName(sp);
    std::string speciesD  = pinput->GetOrAddString("upperboundaryMixRat", speciesName, "nan");
    if(speciesD != "nan")
-   {Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp) - (A(sp)*dt*N_next*mole_frac(sp));
+   {
+   Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp) - (A(sp)*dt*N_next*mole_frac(sp));
    BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  (B(sp)*dt) ;
    }
 //If boundary conditions are not specified, by default its a zero flux boundary
@@ -1052,21 +1056,40 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 }   
     
 //Inverting the matrix
+   Eigen::SparseMatrix<double> Am = BlockMatrix.sparseView();
+   Eigen::BiCGSTAB<Eigen::SparseMatrix<double>, Eigen::DiagonalPreconditioner<double>> cg;
+   cg.setMaxIterations(1E8);
+   cg.compute(Am);
+   Ufuture = cg.solve(Upresent);
 
-   Ufuture = BlockMatrix.inverse()*Upresent;
+//   Ufuture = BlockMatrix.inverse()*Upresent;
 
 //Checking for convergence
-
   double conv_factor = conv.maxCoeff();
   double tau = 1.1;
+  std::cout << "#iterations:     " << cg.iterations() << std::endl;
+  std::cout << "estimated error: " << cg.error()      << std::endl;
   std::cout << "convergence: " << conv_factor << std::endl;
   std::cout << "Chemical time scale: " << TChem.minCoeff() << std::endl;
   std::cout << "Dynamic time scale: " << TDyn.minCoeff() << std::endl;
-  if((conv_factor >= 1E-9)){
-  dt = 1E-4;
+//Condition number of matrix
+  double cd_num = (BlockMatrix.squaredNorm())*(BlockMatrix.inverse().squaredNorm());
+  std::cout << "Condition number (L^2): " << cd_num << std::endl;
+
+  if(counter >= 1){
+  if(conv_factor/conv_old >= 1){
+      if(dt < TDyn.minCoeff()){
+        dt = dt;}
+      if(dt >= TDyn.minCoeff()){
+        dt = TDyn.minCoeff()/100;
+      }
   }
-  if((conv_factor < 1E-9)){
-  dt = dt*2;}
+//  if((conv_factor/conv_old  >= 0.1)  &&  (conv_factor/conv_old < 0.9)){
+//      dt = dt;
+//  }
+
+  if(conv_factor/conv_old < 1){
+    dt = dt*2;}
 //Updating the solution
   for (int j = 0; j < nSize; j++) {
      for(int sp = 0; sp < nsp; sp++){
@@ -1075,6 +1098,22 @@ for(int rx = 0; rx < PhotoRxn; rx++){
      } }
   Ttot = Ttot + dt;
   std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
+}
+
+  if(counter == 0){
+   //Updating the solution
+  for (int j = 0; j < nSize; j++) {
+     for(int sp = 0; sp < nsp; sp++){
+         ChemMoleFrac(sp, j) = Ufuture(j*nsp + sp)/AtmData(iNd, j);;
+         ChemConc(sp, j) = Ufuture(j*nsp + sp);
+     } }
+  Ttot = Ttot + dt;
+  std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
+
+  }
+
+  counter++;
+  conv_old = conv_factor;
 /*  
   if(conv_factor >= tau){
 //Reject the solution, and reduce the step size

@@ -194,11 +194,20 @@ std::cout << T << std::endl;
 */
 
 while(Ttot  < Tmax) {
+    mole_fractions = VectorXd::Zero(nsp);
+    while (std::regex_search (init_species_list,m,pattern)) {
+      for (auto x:m){
+        std::string species_init_condition = pinput->GetString("init", x);
+        species_inx = gas->speciesIndex(x);
+        mole_fractions(species_inx) = atof(species_init_condition.c_str());
+    }
+    init_species_list = m.suffix().str();
+  } 
     gas->setMoleFractions(&mole_fractions[0]);
     gas->setState_TP(temp, (pres)*OneBar);
     reactor.initialize();
     sim.initialize();
-    sim.advance(dt);
+    sim.advance(Ttot);
     double rho_new = gas->density();
     cout << "Time: " << sim.time() << " s" << endl;
     dt = dt*1.25;
