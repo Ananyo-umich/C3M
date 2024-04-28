@@ -1,0 +1,16 @@
+// used by Application
+
+namespace Globals {
+
+int nranks = 1;
+int my_rank = 0;
+
+const char* search_paths = "@CMAKE_SOURCE_DIR@/data";
+
+const char* banner =
+    "\
+######################################################\n\
+##              C3M MODEL STARTS                    ##\n\
+######################################################";
+
+} // namespace Globals

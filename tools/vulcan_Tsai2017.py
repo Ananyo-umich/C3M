@@ -6,5 +6,5 @@ import cantera as ct
 
 T = 200.0
 P = 100000.0
-#Creatng chemistry network
+# Creatng chemistry network
 gas = ct.Solution("../tests/ch4_photolysis.yaml")

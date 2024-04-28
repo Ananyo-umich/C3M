@@ -48,4 +48,3 @@ This directory contains important datasets corresponding to chemical reaction ne
 #### tools
 
 It contains important tools to handle chemical file format, and visualization of chemical reaction networks
-

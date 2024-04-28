@@ -1,0 +1,31 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+        exclude: ^(data|patches)/.*$
+      - id: end-of-file-fixer
+        exclude: ^(data|patches)/.*$
+
+  - repo: local
+    hooks:
+      - id: clang-format
+        name: Fix *.c,*.cc,*.cpp,*.h,*.hpp
+        entry: clang-format
+        language: system
+        files: ^(src|python|tools|tests|examples)/.*\.(c|cc|cpp|h|hpp)$
+        args: ["-i", "-style=Google"]
+
+      - id: cmake-format
+        name: Fix *.cmake
+        entry: cmake-format
+        language: system
+        files: .*\.cmake$
+        args: ["-i"]
+
+      - id: black
+        name: Fix *.py
+        entry: black
+        language: system
+        files: ^(tools|examples)/.*\.(py|.py.in)$

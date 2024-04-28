@@ -1,81 +1,61 @@
-## 0.set up project ##
-
 cmake_minimum_required(VERSION 3.18)
-message(STATUS "Set up canoe project ...")
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+cmake_policy(SET CMP0115 NEW)
 
 project(
   C3M
-  VERSION 0.0.1
-  LANGUAGES C CXX Fortran
+  LANGUAGES CXX
   )
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+  message(STATUS "Default Build Type = Release")
+  message(STATUS "")
+else()
+  message(STATUS "Build Type = ${CMAKE_BUILD_TYPE}")
+  message(STATUS "")
+endif()
 
-# 1. set up compiler flags
-message(STATUS "")
-message(STATUS "Set up project configuration ...")
-message(STATUS "Include ${CMAKE_SOURCE_DIR}/cmake/setup_compiler_flags.cmake")
-include(${CMAKE_SOURCE_DIR}/cmake/setup_compiler_flags.cmake)
+option(PYTHON_BINDINGS "Build Python Bindings" ON)
+if (PYTHON_BINDINGS)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
 
-## 2. set up project configuration ##
-message(STATUS "")
-message(STATUS "Set up project configuration ...")
-message(STATUS "Include ${CMAKE_SOURCE_DIR}/cmake/setup_configure.cmake")
-include(${CMAKE_SOURCE_DIR}/cmake/setup_configure.cmake)
+# load all modules
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
 
-## 3. set up project paths ##
-message(STATUS "")
-message(STATUS "Set up project paths ...")
-set(EXECUTABLE_RELDIR "bin")
-set(INCLUDE_RELDIR "include")
-set(SOURCE_RELDIR "source")
+# load all macros
+file(GLOB _macro_files "${CMAKE_SOURCE_DIR}/cmake/macros/*.cmake")
+foreach(_file ${_macro_files})
+  message(STATUS "Include ${_file}")
+  include(${_file})
+endforeach()
 
-## 4. set up project system libraries ##
-message(STATUS "")
-message(STATUS "Set up project system libraries ...")
+## 1. set up compiler flags
+message(STATUS "1. Set up project configuration ...")
+message(STATUS "Include ${CMAKE_SOURCE_DIR}/cmake/compilers.cmake")
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/compilers.cmake)
 
-find_package(Eigen3 3.3 REQUIRED)
+## 2. set up project system libraries ##
+message(STATUS "2. Set up project system libraries ...")
+include(${CMAKE_SOURCE_DIR}/cmake/gtest.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/application.cmake)
+
+find_package(Eigen3 REQUIRED)
 find_package(Cantera REQUIRED)
-find_package(HDF5 REQUIRED)
-find_package(OpenMP REQUIRED)  # Find the OpenMP package
-if (${UseNetCDF})
-  find_package(NetCDF REQUIRED)
-endif()
-if (${UsePNetCDF})
-  find_package(PNetCDF REQUIRED)
-endif()
+find_package(NetCDF REQUIRED)
 
-if (${UseMPI})
-  find_package(MPI REQUIRED)
-  set(MPIOption MPI_PARALLEL)
-else()
-  set(MPIOption NOT_MPI_PARALLEL)
-endif()
-
-if (${UseCubedSphere})
-  set(CubedSphereOption CUBED_SPHERE)
-else()
-  set(CubedSphereOption NOT_CUBED_SPHERE)
-endif()
-
-## 5. set up project external libraries ##
-message(STATUS "")
-message(STATUS "Set up project external libraries ...")
-
-# compile athenapp
-if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
-  add_subdirectory(athenapp)
-endif()
-
-## 6. set up compilation and installation ##
-message(STATUS "")
-message(STATUS "Set up project complication and installation ...")
-
-# configure file
-configure_file(${CMAKE_SOURCE_DIR}/configure.hpp.in configure.hpp @ONLY)
-
-#add_subdirectory(external)
+## 3. set up project configure file and library ##
+message(STATUS "3. Set up project libraries")
 add_subdirectory(src)
+
+## 4. set up examples and tests
+message(STATUS "4. Set up examples and unit tests")
 add_subdirectory(tests)
+
+set(C3M_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+  CACHE INTERNAL "C3M include directory")

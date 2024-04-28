@@ -1,13 +1,12 @@
 // C/C++ headers
-#include <vector>
-#include <string>
-#include <stdlib.h>
-#include <iostream>
-#include <fstream>
-
-// C3M headers
-#include <configure.hpp>
-
 #include "Vapors.hpp"
+
+#include <stdlib.h>
+
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
 using Eigen::MatrixXd;
 using Eigen::VectorXd;

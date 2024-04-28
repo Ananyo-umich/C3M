@@ -1,23 +1,24 @@
-// The header contains the saturation vapor pressure corresponding to different vapors
+#ifndef SRC_VAPORS_HPP_
+#define SRC_VAPORS_HPP_
+
+// The header contains the saturation vapor pressure corresponding to different
+// vapors
 // C/C++ headers
-#include <vector>
-#include <string>
-#include <stdlib.h>
-#include <iostream>
+#include <cstdlib>
 #include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 
 // Cantera headers
-#include <cantera/kinetics/Kinetics.h>
 #include <cantera/base/ct_defs.h>
+#include <cantera/kinetics/Kinetics.h>
+#include <cantera/kinetics/MultiRate.h>
 #include <cantera/kinetics/ReactionData.h>
 #include <cantera/kinetics/ReactionRate.h>
-#include <cantera/kinetics/MultiRate.h>
-
-
-// C3M headers
-#include <configure.hpp>
 
 using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
+#endif  // SRC_VAPORS_HPP_

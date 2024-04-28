@@ -183,11 +183,3 @@ O2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/O2_scat.txt
 <output>
 out_file = ChapmanTest2.nc
 species = H, H2O, OH, H2, O, CH, C, CH2, CH3, CH4, C2, C2H, C2H2, C2H3, C2H4, C2H5, C2H6, CO, CO2, CH2OH, H2CO, HCO, CH3O, CH3OH, CH3CO, O2, H2CCO, HCCO, N, CN, HCN, NH2, NH, NH3, NO, N2, N2H2, N2H, H2CN, HNCO, N2H4, N2H3, HNO, NO2, N2O, C4H2, CH3NH, CH2NH, CH2NH2, CH3NH2, O3, HO2, H2O2, NO3, HNO3, HNO2, CH3O2, CH3OOH, NCO, N2O5, S, SH, S2, SO, H2S, CS, COS, CS2, NS, HS2, SO2, S4, S8, HCS, S3, SO3, H2SO4, O_1, CH2_1, N_2D, Ar
-
-
-
-
-
-
-
-

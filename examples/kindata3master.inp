@@ -61,7 +61,7 @@ NH2*            N = 1       H = 2                                               
 NH2CHO    O = 1 N = 1 C = 1 H = 3						       HF =  999.9
 NH3             N = 1       H = 3                                                      HF =  -11.0     ! jpl94
 N2H             N = 2       H = 1                                                      HF =  999.0
-N2H2		N = 2	    H = 2						       HF =  999.9 
+N2H2		N = 2	    H = 2						       HF =  999.9
 N2H3		N = 2	    H = 3						       HF =  999.9
 N2H4		N = 2	    H = 4						       HF =  999.9
 CL                                CL= 1                                                HF =   28.9     ! jpl94
@@ -120,7 +120,7 @@ CH3CCL3               C = 2 H = 3 CL= 3                                         
 CH3CFCL2              C = 2 H = 3 CL= 2       F = 1                                    HF =  999.0
 CH2CFCL2	      C = 2 H = 2 CL= 2       F = 1				       HF =    0.0     ! JPL02
 CH2CF2CL	      C = 2 H = 2 CL= 1       F = 2				       HF =    0.0     ! JPL02
-C2HF2CL2	      C = 2 H = 1 CL= 2       F = 2				       HF =    0.0     !CHCLCF2CL	    
+C2HF2CL2	      C = 2 H = 1 CL= 2       F = 2				       HF =    0.0     !CHCLCF2CL
 CH3CF2CL              C = 2 H = 3 CL= 1       F = 2                                    HF = -127.0     ! jpl94
 HCFC132b              C = 2 H = 2 CL= 2       F = 2                                    HF = -130.0     ! CH2CLCCLF2
 C2CL3F3               C = 2       CL= 3       F = 3                                    HF = -179.0
@@ -138,9 +138,9 @@ CFC114		      C = 2       CL= 2       F = 4				       HF =  999.9   ! CF2CLCF2CL
 C2F3CL2		      C = 2	  CL= 2	      F = 3				       HF =  999.9   ! CF2CLCFCL
 C2F4CL		      C = 2	  CL= 1	      F = 4				       HF =  999.9   ! CF2CLCF2
 CF2CF2		      C = 2		      F = 4				       HF =  999.9
-CF3CF2		      C = 2                   F = 5				       HF = -213.0   !  
-CF3CHCL		      C = 2 H = 1 CL= 1       F = 3				       HF =  999.9   ! 
-CF3CFCL		      C = 2       CL= 1       F = 4				       HF =    0.0   ! 
+CF3CF2		      C = 2                   F = 5				       HF = -213.0   !
+CF3CHCL		      C = 2 H = 1 CL= 1       F = 3				       HF =  999.9   !
+CF3CFCL		      C = 2       CL= 1       F = 4				       HF =    0.0   !
 HCFC122               C = 2 H = 1 CL= 3       F = 2                                    HF =  999.0   ! CHCL2CF2CL
 HCFC122a              C = 2 H = 1 CL= 3       F = 2                                    HF =  999.0   ! CHFCLCFCL2
 HCFC123a              C = 2 H = 1 CL= 2       F = 3                                    HF =  999.0   ! CHFCLCF2CL
@@ -195,9 +195,9 @@ CH3CH2F               C = 2 H = 5             F = 1                             
 CH3CHF2               C = 2 H = 4             F = 2                                    HF = -120.0     ! jpl94
 CH2FCHF		      C = 2 H = 3	      F = 2				       HF =   56.28    ! JPL02
 CH2FCH2F              C = 2 H = 4             F = 2                                    HF = -107.0     ! jpl97
-CH2FCF2		      C = 2 H = 2	      F = 3				       HF =  999.9 
+CH2FCF2		      C = 2 H = 2	      F = 3				       HF =  999.9
 CH2FCHF2              C = 2 H = 3             F = 3                                    HF = -159.0     ! jpl97
-CHFCHF2		      C = 2 H = 2	      F = 3				       HF =  999.9   
+CHFCHF2		      C = 2 H = 2	      F = 3				       HF =  999.9
 CHF2CHF2              C = 2 H = 2             F = 4                                    HF = -210.0     ! jpl97
 CF3CH3                C = 2 H = 3             F = 3                                    HF = -179.0     ! jpl94
 CF3CH2F               C = 2 H = 2             F = 4                                    HF = -214.0     ! jpl97
@@ -206,7 +206,7 @@ CF3CHF		      C = 2 H = 1             F = 4				       HF = -166.5     ! JPL02
 CF2CHF2		      C = 2 H = 1	      F = 4				       HF =  999.9     ! JPL02
 C2F5		      C = 2		      F = 5				       HF =  999.9
 C2F6                  C = 2                   F = 6                                    HF = -321.0
-CF3OCF2         O = 1 C = 2                   F = 5				       HF =  999.9     ! 
+CF3OCF2         O = 1 C = 2                   F = 5				       HF =  999.9     !
 CF2HOCF2	O = 1 C = 2 H = 1	      F = 4				       HF =  999.9     ! JPL02
 CH3OCF2		O = 1 C = 2 H = 3	      F = 2				       HF =  999.9
 CH3OCHF2        O = 1 C = 2 H = 4             F = 2                                    HF =    0.0
@@ -235,7 +235,7 @@ HFC236fa              C = 3 H = 2             F = 6                             
 HFC227ea              C = 3 H = 1             F = 6                                    HF =    0.0  ! CF3CHFCF3
 HFC356ff              C = 4 H = 4             F = 6                                    HF =    0.0  ! CF3CH2CH2CF3
 HFC338pc              C = 4 H = 2             F = 8                                    HF =    0.0  ! CHF2CF2CF2CHF2
-C4F8		      C = 4		      F = 8				       HF =  999.9 
+C4F8		      C = 4		      F = 8				       HF =  999.9
 C4F9		      C = 4		      F = 9				       HF =  999.9
 HFC4310m              C = 5 H = 2             F = 10                                   HF =    0.0  ! CF2CHFCHFCF2CF3
 C5F12                 C = 5                   F = 12                                   HF =    0.0
@@ -288,13 +288,13 @@ C2F4BR2               C = 2             BR= 2 F = 4                             
 CHBRO       C=1 H=1 BR=1 O=1                                                           HF =    0.0
 CH2BRO      C=1 H=2 BR=1 O=1                                                           HF =    0.0
 CH2BRO2     C=1 H=2 BR=1 O=2                                                           HF =    0.0
-CF3CHBR     	      C = 2 H = 1       BR= 1 F = 3				       HF =  999.9  
+CF3CHBR     	      C = 2 H = 1       BR= 1 F = 3				       HF =  999.9
 CF3CH2BR	      C = 2 H = 2	BR= 1 F = 3				       HF =  999.9
 CF3CF2BR	      C = 2		BR= 1 F = 5				       HF =  999.9
 CF3CFBR		      C = 2   	        BR= 1 F = 4				       HF =  999.9
 CHFBRCF3              C = 2 H = 1       BR= 1 F = 4                                    HF =    0.0
 ^1ETCLBRF	      C = 2 H = 1 CL= 1 BR= 1 F = 3				       HF =  999.9   ! CHCLBRCF3
-CF3CCLBR	      C = 2       CL= 1 BR= 1 F = 3				       HF =  999.9 
+CF3CCLBR	      C = 2       CL= 1 BR= 1 F = 3				       HF =  999.9
 ^3ETCLBRF	      C = 2       CL= 1 BR= 1 F = 3				       HF =  999.9   ! CF2BRCFCL
 HA113B1               C = 2 H = 1 CL= 1 BR= 1 F = 3                                    HF =    0.0   ! CF3CHCLBR
 HA113B1A              C = 2 H = 1 CL= 1 BR= 1 F = 3                                    HF =    0.0   ! CF2BRCHFCL
@@ -307,7 +307,7 @@ C3H6BR  	      C = 3 H = 6       BR= 1					       HF =  999.9   ! CH3CBRCH3
 ^2PROPBR	      C = 3 H = 7       BR= 1					       HF =  999.9   ! CH3CHBRCH3
 BRY      O = 3 N = 1                    BR= 1                                                        ! assigned mass of BRNO3
 I                                                               I = 1                  HF =   25.5      ! jpl97
-I*(2P1/2)                                                        I = 1		       HF =  999.9 
+I*(2P1/2)                                                        I = 1		       HF =  999.9
 I2                                                              I = 2                  HF =   14.9      ! jpl97
 HI                          H = 1                               I = 1                  HF =    6.3      ! jpl97
 IO       O = 1                                                  I = 1                  HF =   30.5      ! jpl97
@@ -349,7 +349,7 @@ CH3                   C = 1 H = 3                                               
 CH3*		      C = 1 H = 3						       HF =  999.9
 CH4                   C = 1 H = 4                                                      HF =  -17.9      ! jpl94
 CH5		      C = 1 H = 5						       HF =  999.9
-C2		      C = 2							       HF =  999.9 
+C2		      C = 2							       HF =  999.9
 C2H		      C = 2 H = 1						       HF =  999.9
 C2H2                  C = 2 H = 2                                                      HF =   54.3      ! jpl94
 C2H2*		      C = 2 H = 2						       HF =  999.9
@@ -383,7 +383,7 @@ C4H5		      C = 4 H = 5						       HF =  999.9
 ^13C4H6		      C = 4 H = 6						       HF =  999.9
 C4H8		      C = 4 H = 8						       HF =  999.9
 C4H9		      C = 4 H = 9						       HF =  999.9
-^1C4H9		      C = 4 H = 9						       HF =  999.9      ! (CH3)2CHCH2     
+^1C4H9		      C = 4 H = 9						       HF =  999.9      ! (CH3)2CHCH2
 ^22C4H9		      C = 4 H = 9						       HF =  999.9      ! (CH3)3C
 C4H10		      C = 4 H = 10						       HF =  -30.03     ! JPL02
 C5H2		      C = 5 H = 2						       HF =  999.9
@@ -405,9 +405,9 @@ C6H5		      C = 6 H = 5						       HF =  999.9      ! Phenyl radical
 C6H6		      C = 6 H = 6						       HF =  999.9      ! benzene
 nC6H6		      C = 6 H = 6						       HF =  999.9
 C6H7		      C = 6 H = 7						       HF =  999.9
-nC6H7		      C = 6 H = 7						       HF =  999.9 
+nC6H7		      C = 6 H = 7						       HF =  999.9
 C6H8		      C = 6 H = 8						       HF =  999.9     ! 1,3,5 hexatriene
-C6H9		      C = 6 H = 9						       HF =  999.9     
+C6H9		      C = 6 H = 9						       HF =  999.9
 C6H10		      C = 6 H = 10						       HF =  999.9
 C5H5CH3		      C = 6 H = 8						       HF =  999.9     ! methylcyclopenta-diene
 C5H6CH3		      C = 6 H = 9						       HF =  999.9     ! methylcyclopentene radical
@@ -444,7 +444,7 @@ CH3OH     O = 1       C = 1 H = 4                                               
 C2H5OH    O = 1       C = 2 H = 6                                                      HF =  -56.2      ! jpl94
 HOCHCH    O = 1       C = 2 H = 3                                                      HF =   30.0
 HOCH2CH2  O = 1       C = 2 H = 5                                                      HF =   -7.5	! JPL02
-CH2CHOH   O = 1       C = 2 H = 4 						       HF =  999.9   
+CH2CHOH   O = 1       C = 2 H = 4 						       HF =  999.9
 CH3OCH2   O = 1	      C = 2 H = 5						       HF =   -3.1	! JPL02
 CH3OCH3   O = 1	      C = 2 H = 6						       HF =  -44.0	! JPL02
 CH2O2     O = 2       C = 1 H = 2                                                      HF =    0.0
@@ -464,7 +464,7 @@ CH3CO2    O = 2       C = 2 H = 3                                               
 CH3CO2H   O = 2       C = 2 H = 4                                                      HF = -103.3      ! jpl94
 CH3CHO2*  O = 2       C = 2 H = 4                                                      HF =  999.0
 CH3CO3    O = 3       C = 2 H = 3                                                      HF =  -36.9      ! jpl02
-CH3CO3H   O = 3       C = 2 H = 4						       HF =  999.9      
+CH3CO3H   O = 3       C = 2 H = 4						       HF =  999.9
 CH3COCH2  O = 1       C = 3 H = 5                                                      HF =   -3.1      ! JPL02
 CH3COCH3  O = 1       C = 3 H = 6                                                      HF =  -44.0      ! jpl02
 CH3CHO    O = 1       C = 2 H = 4                                                      HF =  -39.7      ! jpl94
@@ -475,13 +475,13 @@ C2H4O2    O = 2       C = 2 H = 4                                               
 C2H5O     O = 1       C = 2 H = 5                                                      HF =   -4.1      ! jpl94
 C2H5O2H   O = 2       C = 2 H = 6                                                      HF =  -30.0
 C3H3O     O = 1       C = 3 H = 3						       HF =  999.9
-C3H4O	  O = 1	      C = 3 H = 4						       HF =  999.9 
+C3H4O	  O = 1	      C = 3 H = 4						       HF =  999.9
 C3H4O2    O = 2	      C = 3 H = 4						       HF =  999.9      ! CH3C(O)CHO
 C3H5O3    O = 3       C = 3 H = 5                                                      HF =    0.0      ! CH3COCH2O2
 C3H5O2OH  O = 3       C = 3 H = 6                                                      HF =    0.0      ! CH3COCH2OOH
 C3H6OH	  O = 1	      C = 3 H = 7						       HF =  999.9
 C3H6O2    O = 2       C = 3 H = 6						       HF =  999.9      ! CH3C(O)CH2OH
-C3H7O2	  O = 2	      C = 3 H = 7						       HF =  999.9 
+C3H7O2	  O = 2	      C = 3 H = 7						       HF =  999.9
 C4H6O3    O = 3	      C = 4 H = 6						       HF =  999.9      ! CH3C(O)OCH3C(O)
 C4H10O2   O = 2       C = 4 H = 10						       HF =  999.9	! JPL02
 ETCO3     O = 3       C = 3 H = 5						       HF =  999.9     ! CH3CH2C(O)O2
@@ -491,15 +491,15 @@ HCN             N = 1 C = 1 H = 1                                               
 HNC		N = 1 C = 1 H = 1						       HF =  999.9
 H2CN 		N = 1 C = 1 H = 2 						       HF =  999.9
 H2CNH		N = 1 C = 1 H = 3						       HF =  999.9
-CHCN		N = 1 C = 2 H = 1						       HF =  999.9 
+CHCN		N = 1 C = 2 H = 1						       HF =  999.9
 CH2CN           N = 1 C = 2 H = 2                                                      HF =   58.5      ! jpl97
 CH3CN           N = 1 C = 2 H = 3                                                      HF =   18.0      ! jpl97
 C2H3CN		      C = 3 H = 3 N = 1						       HF =  999.9
 NCC2CN		N = 2 C = 4							       HF =  999.9
-NCCHCHCN	N = 2 C = 4 H = 2						       HF =  999.9      
-C3H5CN		N = 1 C = 4 H = 5						       HF =  999.9 
+NCCHCHCN	N = 2 C = 4 H = 2						       HF =  999.9
+C3H5CN		N = 1 C = 4 H = 5						       HF =  999.9
 C4H5CN		N = 1 C = 5 H = 5						       HF =  999.9      ! H2CC(CN)CHCH2
-C2N		N = 1 C = 2							       HF =  999.9 
+C2N		N = 1 C = 2							       HF =  999.9
 C2N2		N = 2 C = 2							       HF =  999.9
 HC2N2		N = 2 C = 2 H = 1						       HF =  999.9
 H2C2N2		N = 2 C = 2 H = 2						       HF =  999.9
@@ -518,32 +518,32 @@ HC7N		N = 1 C = 7 H = 1						       HF =  999.9
 H5C5N		N = 1 C = 5 H = 5						       HF =  999.9
 H5C7N		N = 1 C = 7 H = 5						       HF =  999.9
 H5C9N		N = 1 C = 9 H = 5						       HF =  999.9
-CH2NH		N = 1 C = 1 H = 3						       HF =  999.9 
+CH2NH		N = 1 C = 1 H = 3						       HF =  999.9
 CH2NH2          N = 1 C = 1 H = 4 						       HF =  999.9
 CH3NH		N = 1 C = 1 H = 4						       HF =  999.9
 CH3NH2		N = 1 C = 1 H = 5						       HF =   -5.6      ! JPL02
 C2H2NH2		N = 1 C = 2 H = 4						       HF =  999.9      ! NH2 + C2H2 stablized adduct
 C2H4NH2		N = 1 C = 2 H = 6						       HF =  999.9	! NH2 + C2H4 stablized adduct
-CH3NHCH2	N = 1 C = 2 H = 6						       HF =  999.9 
+CH3NHCH2	N = 1 C = 2 H = 6						       HF =  999.9
 NCO       O = 1 N = 1 C = 1                                                            HF =   38.0      ! jpl94
 HNCO	  O = 1 N = 1 C = 1 H = 1						       HF =  999.9
 CH3COCN	  O = 1 N = 1 C = 3 H = 3						       HF =  999.9
 S                                                   S = 1                              HF =   66.22     ! jpl94, from Venus model
 S2                                                  S = 2                              HF = 30.72       ! JPL94 30.72
 S2*                                                  S = 2                              HF = 30.72       ! JPL94 30.72
-S3              				    S = 3 			       HF = 33.8        ! JANAF1985=33.8 RosingerEtal1983estimate=32 S&P=34  
-S4 						    S = 4 			       HF = 34.8 	! JANAF1985=34.8 Mills1997estimate=37 S&P94=35 
-S5 						    S = 5 			       HF = 26.1 	! JANAF1985=26.1 RosingerEtal1983estimate=31 S&P94=26 
-S6 						    S = 6 			       HF = 24.4 	! JANAF1985=24.4 RosingerEtal1983estimate=29 S&P94=24 
-S7 						    S = 7 			       HF = 27.2 	! JANAF1985=27.2 S&P94=27 noRingCorrection entropyNotKnown  
-S8 						    S = 8 			       HF = 24.0 	! JANAF1985=24.0 RosingerEtal1983estimate=31 S&P94=24 
+S3              				    S = 3 			       HF = 33.8        ! JANAF1985=33.8 RosingerEtal1983estimate=32 S&P=34
+S4 						    S = 4 			       HF = 34.8 	! JANAF1985=34.8 Mills1997estimate=37 S&P94=35
+S5 						    S = 5 			       HF = 26.1 	! JANAF1985=26.1 RosingerEtal1983estimate=31 S&P94=26
+S6 						    S = 6 			       HF = 24.4 	! JANAF1985=24.4 RosingerEtal1983estimate=29 S&P94=24
+S7 						    S = 7 			       HF = 27.2 	! JANAF1985=27.2 S&P94=27 noRingCorrection entropyNotKnown
+S8 						    S = 8 			       HF = 24.0 	! JANAF1985=24.0 RosingerEtal1983estimate=31 S&P94=24
 SO        O = 1                                     S = 1                              HF =    1.3      ! jpl94
 (SO)2     O = 2					    S = 2			       HF =  999.9	! from venus model
 SO2       O = 2                                     S = 1                              HF =  -71.0      ! jpl94
 SO2(1B)   O = 2                                     S = 1                              HF =  999.9 ! from early earth model
 SO2(3B)   O = 2                                     S = 1                              HF =  999.9 ! from early earth model
 SO3       O = 3                                     S = 1                              HF =  -94.6      ! jpl94
-S2O       O = 1                                     S = 2                              HF = -12         ! S&P94 -12 
+S2O       O = 1                                     S = 2                              HF = -12         ! S&P94 -12
 SH                          H = 1                   S = 1                              HF =   34.2      ! jpl97
 H2S                         H = 2                   S = 1                              HF =   -4.9      ! jpl94
 HSO       O = 1             H = 1                   S = 1                              HF =   -1.0      ! jpl94
@@ -643,7 +643,7 @@ SKCL                                                                            
 SKBR                                                                                   HF =    0.0
 RAIN                                                                                   HF =    0.0
 VSTRDUST                                                                               HF =    0.0
-MARSDUST									       HF =    0.0  ! from Mars model, v2   
+MARSDUST									       HF =    0.0  ! from Mars model, v2
 RAYEARTH                                                                               HF =    0.0
 RAYCO2                                                                                 HF =    0.0  ! from Mars model
 VENRAY  									       HF = 0
@@ -651,7 +651,7 @@ HV										       HF = 0		! dummy product species, light emission from early ea
 PROD                                                                                   HF =    0.0
 U                                                                                      HF =    0.0
 M                                                                                      HF =    0.0
-STOP 
+STOP
  O2      =2O                                                 0.00E+00   0.0       0.
  O2      = O       + O(1D)                                   0.00E+00   0.0       0.
  O3      = O2      + O                                       0.00E+00   0.0       0.
@@ -821,7 +821,7 @@ STOP
  CH3     = CH      + H2					     0.00E+00   0.0       0.  ! Moses et al. 2000
  CH3 	 =^1CH2    + H					     0.00E+00   0.0       0.	 ! 1.87E-4 0 0  from Kasting et al. JGR 106,1-21(2001)
  CH4 	 =^1CH2    + H2					     0.00E+00   0.0       0.  ! 1.38E-6  from Kasting et al. JGR 106,1-21(2001)
- CH4 	 =^1CH2    +2H					     0.00E+00   0.0       0.  ! from Moses et al. 2003 
+ CH4 	 =^1CH2    +2H					     0.00E+00   0.0       0.  ! from Moses et al. 2003
  CH4 	 = CH2     +2H					     0.00E+00   0.0       0.  ! early earth
  CH4	 = CH3	   + H					     0.00E+00   0.0       0.  ! early earth
  CH4	 = CH3*	   + H					     0.00E+00   0.0       0.  ! Lara et al. 1996
@@ -834,7 +834,7 @@ STOP
  C2H4 	 = C2H2    +2H					     0.00E+00   0.0       0.  ! early earth
  C2H4    = C2H3    + H					     0.00E+00   0.0       0.  ! Moses et al. 2000
  C2H5    = CH3     +^1CH2 				     0.00E+00   0.0       0.! Moses et al. 2000
- C2H6 	 = CH2    + CH2       + H2			     0.00E+00   0.0       0.  ! early earth 
+ C2H6 	 = CH2    + CH2       + H2			     0.00E+00   0.0       0.  ! early earth
  C2H6 	 = CH4 	   +^1CH2				     0.00E+00   0.0       0.  ! 6.35E-7 !from Kasting et al. JGR 106,1-21(2001)
  C2H6 	 = C2H4    +2H					     0.00E+00   0.0       0.  ! early earth
  C2H6 	 = C2H4    + H2					     0.00E+00   0.0       0.  ! early earth
@@ -890,8 +890,8 @@ STOP
  C4H8    = CH3C2H  + CH4				     0.00E+00   0.0       0.! Moses et al. 2000
  C4H8    = CH2CCH2 + CH4				     0.00E+00   0.0       0.! Moses et al. 2000
  C4H8    = C2H5    + C2H3				     0.00E+00   0.0       0.! Moses et al. 2000
- C4H8    =2C2H4						     0.00E+00   0.0       0.! Moses et al. 2000 
- C4H8    = C2H2    +2CH3				     0.00E+00   0.0       0.! Moses et al. 2000 
+ C4H8    =2C2H4						     0.00E+00   0.0       0.! Moses et al. 2000
+ C4H8    = C2H2    +2CH3				     0.00E+00   0.0       0.! Moses et al. 2000
  C4H8    = C3H6	   +^1CH2				     0.00E+00   0.0       0. ! Wilson and Atreya 2004
  C4H10   = C4H8    + H2					     0.00E+00   0.0       0.! Moses et al. 2000
  C4H10   = C3H8    +^1CH2				     0.00E+00   0.0       0.! Moses et al. 2000
@@ -981,30 +981,30 @@ STOP
  CO2     = CO      + O^+     + E                  	     0.000E+00  0.00      0.   ! Nair thesis
  O2^+    + E       = 2O                                      6.600E-05  -1.00     0.      ! Nair thesis
  CO2^+   + E       = CO      + O                             3.800E-07  0.0       0.      ! Nair thesis
- CO2H^+  + E       = CO2     + H                             3.000E-07  0.0       0.      ! 
+ CO2H^+  + E       = CO2     + H                             3.000E-07  0.0       0.      !
  O^+     + CO2     = O2^+    + CO                            9.600E-10  0.0       0.      ! Nair thesis
- H2O	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- CH4	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- C2H2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- C2H6	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- CO	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- CO2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- H2CO	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- HCOOH	 = M						     0.00E-00	0.0	  0.                             ! place holder for X = M reaction .      
- CH3OH	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
+ H2O	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ CH4	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ C2H2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ C2H6	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ CO	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ CO2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ H2CO	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ HCOOH	 = M						     0.00E-00	0.0	  0.                             ! place holder for X = M reaction .
+ CH3OH	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
  CH3CO2H = M						     0.00E-00	0.0	  0.	   ! placeholder rxn. for X = M comet rxn.
- CH3CHO	 = M						     0.00E-00	0.0	  0.				 ! placeholder rxn. for X = M 
- HCN	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- HNC	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- CH3CN	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- HC3N	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- S2	 = M						     0.00E-00   0.0       0.                              ! placeholder rxn. of X = M 
- SO2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- H2S	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- NS	 = M						     0.00E-00   0.0       0.                              ! placeholder rxn. of X = M 
- H2CS	 = M						     0.00E-00	0.0       0.				  ! placeholder rxn. of X = M 
- OCS	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
- CS2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
+ CH3CHO	 = M						     0.00E-00	0.0	  0.				 ! placeholder rxn. for X = M
+ HCN	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ HNC	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ CH3CN	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ HC3N	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ S2	 = M						     0.00E-00   0.0       0.                              ! placeholder rxn. of X = M
+ SO2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ H2S	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ NS	 = M						     0.00E-00   0.0       0.                              ! placeholder rxn. of X = M
+ H2CS	 = M						     0.00E-00	0.0       0.				  ! placeholder rxn. of X = M
+ OCS	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
+ CS2	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
  CH3SH   = M						     0.00E-00	0.0	  0.		     ! photodissociation reaction for CH3SH
  O(1D)   + O2      = O       + O2                            3.20E-11   0.0      70.                 ! jpl02
  O(1D)   + N2      = O       + N2                            1.80E-11   0.0     110.                 ! jpl02
@@ -1029,7 +1029,7 @@ STOP
  O2(1D)  + H2O     = O2      + H2O			     4.80E-18   0.0       0. ! JPL02
  O2(1D)  + N2      = O2	     + N2			     1.00E-20   0.0       0. ! JPL02
  O2(1D)  + CO      = O2      + CO                            1.00E-20   0.0       0. ! Mills1997estimateSlanger1997estimateSameAsN2quenching, venus rxn.
- O2(1D)  + CO2     = O2      + CO2			     2.00E-21   0.0       0. ! JPL02 value is 2.00E-20, xizhang 02/03/2010 modified it to 2.00E-21, from Kintgen 8   
+ O2(1D)  + CO2     = O2      + CO2			     2.00E-21   0.0       0. ! JPL02 value is 2.00E-20, xizhang 02/03/2010 modified it to 2.00E-21, from Kintgen 8
  O2(1D)  + U       = O2                                      2.58E-04   0.0       0.                 ! Badger et al.(1965) J.Chem.Phys.,43,4345-4350; Sandor et al.(1997) JGR,102,9013-9028
  O2(1S)  + H2O     = O2(1D)  + H2O			     4.86E-12   0.0       0. ! JPLO2
  O       + O       + CO2     = O2      + CO2                 5.20E-28 -2.0 0         !Hampson1980 relativeEfficiencyMorganSchiff1963inBaulchEtal1976 (Mills1997estimate)  !xizhang modified in 02/02/2010
@@ -1039,7 +1039,7 @@ STOP
  O       + O2      + N2      = O3      + N2                  5.60E-34  -2.5 0 2.80E-12 0 0 300.  ! Mills 1998
  O       + O2      + CO      = O3      + CO                  6.70E-34  -2.5       0. 2.80E-12 0.0 0. 300. 300. ! Mills1997 lowP=tempDependenceFromMeanM=N2andO2 relativeEfficiency=StuhlNiki1971FromBaulchEtal1976 highP=NIST94CrocedecobosTroe1984BorrellEtal1985, venus rxn.
  O       + O2      + CO2     = O3      + CO2                 1.40E-33 -2.5 0 2.80E-12 0 0 300         ! xizhang 02/03/2010 modified, from Mills1997 lowP=tempDependenceFromMeanM=N2andO2 relativeEfficiency=meanFromBaulchEtal1976OfKaufmanKelso1967andBevanJohnson1973 highP=NIST94CrocedecobosTroe1984BorrellEtal1985
- O	 + O2	   + M	     = O3 + M			     6.00E-34  -2.40 0.0 0.0 0.0 0.0 300. 0.0 ! JPL02 
+ O	 + O2	   + M	     = O3 + M			     6.00E-34  -2.40 0.0 0.0 0.0 0.0 300. 0.0 ! JPL02
  O2(1S)  + O2      = O2(1D)  + O2			     3.90E-11   0.0       0. ! JPL02
  H       + O2      + N2      = HO2     + N2                  5.7E-32   -1.6       0.      7.5E-11     0 0 300. 300.   ! jpl02, xizhang change M to N2 02/04/2010
  N       + O2      = NO      + O                             1.50E-11   0.0   -3600.                          ! jpl02
@@ -1052,7 +1052,7 @@ STOP
  O2(1S)  + O3      = 2O2     + O			     1.54E-11   0.0       0. ! JPL02
  O2(1S)  + O3      = O       +2O2			     6.60E-12   0.0       0. ! JPL02
  H       + O3      = OH      + O2                            1.40E-10   0.0    -470.                 ! jpl02
- H       + O3      = OH(V1)  + O2                            0.00E+00   0.0     0.    ! added by Kancy Aug 05, OH(v) branching ratio Adler-Golden97 
+ H       + O3      = OH(V1)  + O2                            0.00E+00   0.0     0.    ! added by Kancy Aug 05, OH(v) branching ratio Adler-Golden97
  H       + O3      = OH(V2)  + O2                            0.00E+00   0.0     0.
  H       + O3      = OH(V3)  + O2                            0.00E+00   0.0     0.
  H       + O3      = OH(V4)  + O2                            0.00E+00   0.0     0.
@@ -1221,7 +1221,7 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  N    	 + C2H3	   = CH3CN				     3.9E-12	0.0	  0.   ! Payne et al. 1996
  N    	 + C2H5	   = H2CN    + CH3			     3.9E-11    0.0	  0.   ! Stief et al. 1995
  N    	 + C2H5	   = NH      + C2H4			     7.1E-11	0.0	  0.   ! Stief et al. 1995
- N    	 + C2H6	   = NH      + C2H5			     4.0E-16	0.0	  0.   ! Lebonnois et al., Icarus, 152, 384 (2001) ref. Aleksandrov et al. 1990, estimated products based on N + C2H5 = NH + C2H4 of Wilson and Atreya J. Geo. Res., 109, E06002 (2004) ref. Stief et al. 1995 
+ N    	 + C2H6	   = NH      + C2H5			     4.0E-16	0.0	  0.   ! Lebonnois et al., Icarus, 152, 384 (2001) ref. Aleksandrov et al. 1990, estimated products based on N + C2H5 = NH + C2H4 of Wilson and Atreya J. Geo. Res., 109, E06002 (2004) ref. Stief et al. 1995
  N       + CN      = N2      + C   			     3.24E-13   0.0    1770.   ! Atakan and Wolfrum 1992
  N       + H2CN    = HCN     + NH   			     1.0E-10    0.0    -200.   ! Nesbitt et al. 1990
  N    	 + CHCN	   = C2N2    + H			     1.0E-12	0.0	  0.   ! Lara et al. 1996
@@ -1342,19 +1342,19 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  C2H4NH2 + M	   = NH2     + C2H4			     1.0E-11    0.0       0.			      ! net zero production of c2h4nh2
  CH3NHCH2+ M	   = C2H4NH2 + M			     1.0E-11	0.0	  0.			      ! pseudo loss process for CH3NHCH2
  NH2	 + C2H5	   = NH3     + C2H4			     4.2E-11    0.0       0.			      ! Wilson and Atreya, 2004 referencing Demissy and Lesclaux 1982, est. prod. based on NH2 + CH4.
- NH2	 + HCO	   = NH3     + CO			     1.E-11 	0.0	  0.			      ! from early earth 
+ NH2	 + HCO	   = NH3     + CO			     1.E-11 	0.0	  0.			      ! from early earth
  NH2* 	 + H2	   = NH3     + H			     3E-11 	0.0	  0.			      ! from early earth model
  NH2*	 + M	   = NH2     + M			     3E-11 	0.0	  0.			      ! from early earth model
- O	 + NH2CHO  = M					     0.00E-00	0.0	  0.			      ! placeholder rxn. of X + O = M 
- O(1D)	 + NH2CHO  = M					     0.00E-00	0.0	  0.			      ! placeholder rxn. of X + O(1D) 
- OH	 + NH2CHO  = M					     0.00E-00	0.0	  0.			      ! placeholder rxn. of X + OH= M 
- NH2CHO	 = M						     0.00E-00	0.0	  0.			      ! placeholder rxn. of X = M 
- O	 + NH3     = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M 
+ O	 + NH2CHO  = M					     0.00E-00	0.0	  0.			      ! placeholder rxn. of X + O = M
+ O(1D)	 + NH2CHO  = M					     0.00E-00	0.0	  0.			      ! placeholder rxn. of X + O(1D)
+ OH	 + NH2CHO  = M					     0.00E-00	0.0	  0.			      ! placeholder rxn. of X + OH= M
+ NH2CHO	 = M						     0.00E-00	0.0	  0.			      ! placeholder rxn. of X = M
+ O	 + NH3     = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M
  O(1D)   + NH3     = NH2     + OH                            2.50E-10   0.0       0.                          ! jpl02
- O(1D)	 + NH3	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M 
+ O(1D)	 + NH3	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M
  OH      + NH3     = NH2     + H2O                           1.70E-12   0.0    -710.                          ! jpl02
- OH	 + NH3	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M 
- NH3	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
+ OH	 + NH3	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M
+ NH3	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
  N2H     + U       = N2      + H                             2.82E-11   0.0   -7200.                  ! NIST database
  H	 + N2H2	   = N2H     + H2			     1.4E-19    2.63    115.  !	 Linder et al. 1996
  H	 + N2H3    =2NH2 				     2.7E-12 	0.0	  0.			      ! Ham et al. 1970
@@ -1378,12 +1378,12 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  CL	 + HO2NO2  = HCL     + O2      + NO2		     1.00E-13   0.0	  0.				! JPL02, ESTIMATED PRODUCTS
  CL      + CLNO    = CL2     + NO                            5.80E-11   0.0     100.                            ! jpl02
  CL      + CLNO3   = CL2     + NO3                           6.50E-12   0.0     135.                            ! jpl02
- CL      + CLOO    = CL2     + O2                            2.28E-10 0 0 ! JPL02 
+ CL      + CLOO    = CL2     + O2                            2.28E-10 0 0 ! JPL02
  CL      + CLOO    = CL2     + O2(1D)                        2.30E-12   0.0       0.				! JPL02 (ChooLeu1985YieldO2(1d)), venus rxn.
  CL      + CLOO    =2CLO                                     1.20E-11   0.0       0.                            ! jpl02
  CL      + OCLO    =2CLO                                     3.40E-11   0.0     160.                            ! jpl02
  CL      + CL2O    = CL2     + CLO                           6.20E-11   0.0     130.                            ! jpl02
- CL      + CL2O2   = CL2     + CLOO                          1.00E-10   0 0 ! JPL02 (Allen1995) 
+ CL      + CL2O2   = CL2     + CLOO                          1.00E-10   0 0 ! JPL02 (Allen1995)
  CL      + HOCL    = OH      + CL2                           6.0E-13    0.0    -130.                            ! jpl02
  CL      + HOCL    = HCL     + CLO                           1.9e-12   0.0    -130.				! jpl02
  CL      + CLCO    = CL2     + CO                            2.16E-09  0.0    -1670.                            ! xizhang 02/06/2010, BaulchEtal1981upperLimit
@@ -1417,7 +1417,7 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  CL      + CF3CHF2 = CF3CF2  + HCL			     2.40E-16   0.0       0.                            ! jpl02
  CL	 + CH3I    = CH2I    + HCL			     2.90E-11   0.0   -1000.				! JPL02
  CL      + CH4     = CH3     + HCL                           9.60E-12   0.0   -1360.                            ! jpl02
- CL      + C2H2    + M       = C2H2CL                        5.9E-30   -2.1       0.      2.1E-10 -1. 0 300. 300.  ! jpl02 
+ CL      + C2H2    + M       = C2H2CL                        5.9E-30   -2.1       0.      2.1E-10 -1. 0 300. 300.  ! jpl02
  CL      + C2H4    + M       = C2H4CL  + M                   1.6E-29   -3.3       0.      3.1E-10 -1. 0 300. 300.  ! jpl02
  CL 	 + C2CL4   + M 	     = C2CL5   + M		     1.40E-28  -8.5	  0.	  4.0E-11 -1.2 0 300. 300. ! JPL02
  CL      + C2H6    = C2H5    + HCL                           7.70E-11   0.0     -90.                            ! jpl02
@@ -1478,7 +1478,7 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  CLO     + OCLO    + M       = CL2O3   + M                   6.2E-32   -4.7       0.      2.4E-11 0 0 300. 300.      ! jpl02/update_chema
  CLO     + CH3O2   = CLOO    + CH3O                          1.65E-12   0.0    -115.                            ! jpl02
  CLO     + CH3O2   = CH3OCL  + O2                            1.65E-12   0.0    -115.                            ! jpl02
- CLO	 + OCS	   = OSCL    + CO		             2.00E-16   0.0       0.				! JPL02, products from pnas venus runs.  
+ CLO	 + OCS	   = OSCL    + CO		             2.00E-16   0.0       0.				! JPL02, products from pnas venus runs.
  CLO 	 + SO 	   = CL	     + SO2			     2.80E-11   0.0       0.				! JPL02
  CLO 	 + SO2 	   = CL	     + SO3			     4.00E-18   0.0	  0.				! JPL02
  CLO     + SO2     + M       = CL      + SO3     + M         1.00E-35   0.0       0.  4.00E-19 0.0 0.		! lowP=0.1*EiblingKaufman1983upperLimit highP=0.1*JPL97upperLimit, venus rxn.
@@ -1502,7 +1502,7 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  CLO3    + M       = CLO     + O2      + M                   3.10E-2 -2.0 -3700. 1.56E+19 -2.0 -3700. ! JPL02equilConstantupperLimit
 2CLO3    = CL2O2   +2O2                                      5.00E-13   0.0       0.				! PrasadLee1994estimate, venus rxn.
 2CLO3    + M       = CL2O4 + O2      + M                   4.00E-31  -4.7       0. 5.00E-11 0.0 0.0 300. 300. ! SanderEtal1989relativeEstimate2XrateFor clo+oclo+co2->cl2o3+co2 (effectiveProductsNIST94LopezSicre1990), venus rxn.
- CL2O2	 + O3	   = CLOO    + O2      + CLO                 1.00E-19   0.0	  0.				! JPL02, products from pnas venus runs.     
+ CL2O2	 + O3	   = CLOO    + O2      + CLO                 1.00E-19   0.0	  0.				! JPL02, products from pnas venus runs.
  NO      + CL2O2   = CL2O    + NO2                           2.00E-14   0.0       0.                            ! jpl02
 2CL2O2   =2CL2     +2O2                                      1.00E-20   0.0       0.				! DeMoreTschuikowRoux1990 upperLimit (Mills1996noYieldO2(1d)), venus rxn.
  CL2O2   + M       =2CLO     + M                             1.26E-5 -4.5 -8744. 1.57E15 -2.4 -8744. 300. 300.  ! jpl02
@@ -1537,7 +1537,7 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  O(1D)   + CHF2CL  = CHF2    + CLO                           5.50E-11   0.0       0.   			      ! JPL02
  O(1D)   + CHF2CL  = CF2     + HCL     + O		     4.50E-11   0.0       0.   			      ! JPL02
  OH      + CHF2CL  = CF2CL   + H2O                           1.05E-12   0.0   -1600.                            ! jpl02
- CH2CLCH2+ M	   = CL	     +2CO2     +2H2		     1.0E-11	0.0       0.				! pseudo. destruction rxn. 
+ CH2CLCH2+ M	   = CL	     +2CO2     +2H2		     1.0E-11	0.0       0.				! pseudo. destruction rxn.
  O(1D)   + CCL4    = CCL3    + CLO                           2.84E-10   0.0       0.                          ! jpl02
  O(1D)   + CCL4    = CCL4    + O                             4.62E-11   0.0       0.                          ! jpl02
  OH 	 + CCL4    = CHCL3   + CLO		             1.0E-12    0.0   -2300.				! JPL02, upper limit, estimated products
@@ -1555,10 +1555,10 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  OH	 + CH2CHCL = CH2CHOH + CL			     1.30E-12   0.0     500.				! JPL02, Howard, J. Chem. Phys., 65, 4771 (1976)
  C2H2CL  +2O2      = CLO     +2CO      + H2O                 1.0E-11    0.0       0.                            ! estimated destruction rxn. for C2H2CL
  C2H4CL  + M       = CL      + C2H4    + M                   1.00E-10   0.0       0.      ! ad hoc fast loss process
- C3H6CL	 + M	   = CL      +3CO2     +3H2O		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn., added this reaction to eliminate C3H6CL if necessary. 
-^1BUCL	 + M	   = CL      +4CO2     +5H2O		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn., added this reaction to eliminate C3H6CL if necessary. 
- OH 	 + CH2CCL2 = CH2CCLOH+ CL			     1.90E-12   0.0     530.				! JPL02, Howard, J. Chem. Phys., 65, 4771 (1976) 
- OH  	 + CH2CCLOH= CL      +2CO2     +2H2O  		     1.0e-11    0.0	  0.				! estimated loss process for CH2CCLOH	 
+ C3H6CL	 + M	   = CL      +3CO2     +3H2O		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn., added this reaction to eliminate C3H6CL if necessary.
+^1BUCL	 + M	   = CL      +4CO2     +5H2O		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn., added this reaction to eliminate C3H6CL if necessary.
+ OH 	 + CH2CCL2 = CH2CCLOH+ CL			     1.90E-12   0.0     530.				! JPL02, Howard, J. Chem. Phys., 65, 4771 (1976)
+ OH  	 + CH2CCLOH= CL      +2CO2     +2H2O  		     1.0e-11    0.0	  0.				! estimated loss process for CH2CCLOH
  OH	 + CH3CH2CL= C2H4CL  + H2O			     5.40E-12   0.0    -800.				! JPL02
  CH2CCL3 + M	   =3CL      +2CO2     + H2O		     1.0E-11    0.0       0.                                 ! pseudo rxn. for CH2CCL3
  OH      + CH3CCL3 = CH2CCL3 + H2O			     1.60E-12   0.0   -1520.		                ! jpl02
@@ -1591,8 +1591,8 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  O(1D)   + CF3CFCL2= CL      +4F       + CLO                 1.00E-10   0.0       0.                          ! jpl02 (Based on analogy to similar compounds)
  O(1D)   + CF3CF2CL= CF3CF2  + CLO                           1.50E-11   0.0       0.                          ! jpl02, estimated products
  O(1D)   + CF3CF2CL= O	     + CF3CF2CL   		     3.50E-11	0.0       0.                          ! jpl02
- C2F3CL2 + M	   =2CL      +3F       +2CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C2F4CL  + M	   = CL      +4F       +2CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C2F3CL2 + M	   =2CL      +3F       +2CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C2F4CL  + M	   = CL      +4F       +2CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  OH      + CF2CF2  = CF2HOCF2				     3.40E-12   0.0     320.				 ! JPL02, Orkin et al., J. Phys. Chem. A, 106, 10195 (2002)
  CF3CF2  + M	   =5F	     +2CO2			     1.0E-11    0.0       0.                                 ! pseudo rxn. for CF3CF2
  CF3CHCL + M	   =3F       + CL      +2CO2		     1.0E-11    0.0       0.                                 ! pseudo rxn. for CF3CHCL
@@ -1631,7 +1631,7 @@ OH      + O3      = HO2     + O2                            1.70E-12   0.0    -9
  CH2CLO2H+ M       = CH2CLO  + OH      + M                   4.00E+15   0.0  -21600.      ! by analogy to ch3o2h NIST ref.
  O       + CLCO3   = CL      + O2      + CO2                 1.00E-11   0.0       0.   ! Yung and DeMore (1982) (estimate)
  H       + CLCO3   = CL      + OH      + CO2                 1.00E-11   0.0       0.   ! Yung and DeMore (1982) (estimate)
- CLCO3   + HO2     = CLOO    + OH      + CO2                 1.00E-12   0.0       0.   ! Mills1996estimateSameAs clco3+clo->oclo+cl+co2, venus rxn. 
+ CLCO3   + HO2     = CLOO    + OH      + CO2                 1.00E-12   0.0       0.   ! Mills1996estimateSameAs clco3+clo->oclo+cl+co2, venus rxn.
  CLCO3   + HO2     = OCLO    + OH      + CO2                 1.00E-12   0.0       0.   ! Mills1996estimateSameAs clco3+clo->oclo+cl+co2, venus rxn.
  CL      + CLCO3   = CL      + CLO     + CO2                 1.00E-11   0.0       0.   ! Yung and DeMore (1982) (estimate)
  CLCO3   + CLO     = CLOO    + CL      + CO2                 1.00E-12   0.0       0.   ! DeMore1996emailEstimateSameAs clco3+clo->oclo+cl+co2, venus rxn.
@@ -1812,7 +1812,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  O(1D)   + CH2BR2  = O       + CH2BR2                        1.35E-11   0.0       0.                             ! jpl02
  OH      + CH2BR2  = CHBR2   + H2O			     2.00E-12   0.0    -840.                             ! jpl02
  CL      + CH2BR2  = CHBR2   + HCL			     6.70E-12   0.0    -825.                             ! jpl02
- CH2BRCH2+ M	   = BR	     +2CO2     +2H2O		     1.0E-11    0.0       0.                             ! pseudo. destruction rxn. 
+ CH2BRCH2+ M	   = BR	     +2CO2     +2H2O		     1.0E-11    0.0       0.                             ! pseudo. destruction rxn.
  O(1D)   + C2F4BR2 =4F       +2BR      +2CO2                 1.20E-10   0.0       0.                             ! jpl02
  O(1D)   + C2F4BR2 = O	     + C2F4BR2			     4.00E-11   0.0       0.                             ! jpl02
  O(1D)   + CHBR3   =3BR      + OH      + CO2                 4.49E-10   0.0       0.                             ! jpl02
@@ -1835,12 +1835,12 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  CF3CHBR + M	   = BR	    +3F	      +2CO2		     1.0E-11    0.0       0.                                 ! pseudo rxn. for CF3CHBR
  OH      + CF3CH2BR= CF3CHBR + H2O			     1.40E-12   0.0   -1340.                             ! jpl02
  CF3CFBR + M	   =4F	     + BR     +2CO2		     1.0E-11    0.0       0.                                 ! pseudo rxn. for CF3CFBR
- OH      + CHFBRCF3= CF3CFBR + H2O			     7.30E-13   0.0   -1120.                             ! jpl02 
+ OH      + CHFBRCF3= CF3CFBR + H2O			     7.30E-13   0.0   -1120.                             ! jpl02
  OH 	 +^1ETCLBRF= CF3CCLBR+ H2O			     1.10E-12   0.0    -940.				 ! JPL02
  CF3CCLBR+ M	   = BR      + CL     +3F		     1.0E-11    0.0       0.                                 ! pseudo rxn. for CF3CCLBR
 ^3ETCLBRF+ M	   = BR	     + CL     +3F		     1.0E-11    0.0       0.                                 ! pseudo rxn. for CF2BRCFCL
  OH	 + HA113B1A=^3ETCLBRF+ H2O			     8.40E-13   0.0   -1220.				 ! JPL02
- CF2BRCF2+ M       =4F       + BR     +2CO2		     0.00E-00   0.0       0.                            ! pseudo. destruction rxn. 
+ CF2BRCF2+ M       =4F       + BR     +2CO2		     0.00E-00   0.0       0.                            ! pseudo. destruction rxn.
  OH 	 + HA2402  = C2F4BR2 + H2O			     1.00E-12   0.0   -3600.				 ! JPL02, estimated products
  OH	 + CH3CHBR = BR	     +2CO2    +3H2O		     1.0E-11    0.0       0.				 ! pseudo loss process for CH3CH2BR
  OH 	 + CH3CH2BR= CH3CHBR + H2O			     2.90E-12   0.0    -640.				 ! JPL02, Herndon et al., Phys. Chem. Chem. Phys., 3, 4529 (2001)
@@ -1866,12 +1866,12 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
 2INO     = I2      +2NO                                      8.40E-11   0.0   -2620.                             ! jpl02
 2INO2    = I2      +2NO2                                     2.90E-11   0.0   -2600.                             ! jpl02
  OH      + CH3I    = CH2I    + H2O			     2.90E-12   0.0   -1100.                             ! jpl02
- CH3CI2  + M	   =2I	     +2CO2     + H2O		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- CF2I	 + M	   = I	     +2F       + CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ CH3CI2  + M	   =2I	     +2CO2     + H2O		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ CF2I	 + M	   = I	     +2F       + CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  OH      + CF3I    = CF3     + HOI                           2.50E-11   0.0   -2070.                             ! jpl02
- CF2ICF2 + M	   =4F       + I       +2CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ CF2ICF2 + M	   =4F       + I       +2CO2		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  CH2I    + M       = I       + CH2      		     1.0E-11    0.0       0.                                 ! pseudo rxn. for CH2I
- ICL	 + M	   = I	     + CL			     1.0E-11    0.0       0.                                 ! pseudo rxn. for ICL 
+ ICL	 + M	   = I	     + CL			     1.0E-11    0.0       0.                                 ! pseudo rxn. for ICL
  IBR	 + M	   = I	     + BR			     1.0E-11    0.0       0.                                 ! pseudo rxn. for IBR
  C	 + O2	   = CO      + O			     1.6e-12    0.0       0. 				 ! Baulch et al. 1992
  CH      + O2      = CO      + OH			     2.75E-11   0.0       0.				 ! Baulch et al. 1992
@@ -1906,7 +1906,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  CH2     + H2	   = CH3     + H 			     0          0.0       0.				 ! from early earth model
  CH3     + H2      = CH4     + H   			     1.14e-20   2.74  -4740.   				 ! Baulch et al. 1992
  C2      + H2      = C2H     + H			     1.77E-10 	0.0   -1469.				 ! Pitts et al. 1982
- C2H	 + H2	   = C2H2    + H			     1.2E-11    0.0    -998. 				 ! Opansky and Leone 1996    
+ C2H	 + H2	   = C2H2    + H			     1.2E-11    0.0    -998. 				 ! Opansky and Leone 1996
  C2H3	 + H2	   = C2H4     + H			     1.57e-20   2.56  -2529.   				 ! Knyazev et al. 1996
  C2H5    + H2      = C2H6    + H 			     5.1E-24    3.6   -4253.  				 ! Tsang and Hampson 1986
  C3      + H2      = C3H     + H   			     1.0E-14    0.0       0.  				 ! estimate from Moses et al. 2000
@@ -1950,7 +1950,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  O	 + CH2    = HCO     + H 			     1E-11      0.0       0.				 ! Huebner and Giguere 1980
  O	 + CH2    = CH	     + OH			     8.0E-12    0.0	  0.				 ! Huebner and Giguere 1980
  O	 + CH2	   = CO	     + H       + H		     1.2e-10    0.0       0. 				 ! Baulch et al. 1992
- O	 + CH2	   = CO      + H2  			     8.0E-11    0.0       0.  				 ! Baulch et al. 1992 
+ O	 + CH2	   = CO      + H2  			     8.0E-11    0.0       0.  				 ! Baulch et al. 1992
  H	 + CH2	   + M       = CH3     + M		     3.4e-32    0.0     736. 7.3e-12 0.0  0.             ! from Moses et al. 2000, est. based on 0.1*k for CH + H2 + M = CH3 + M, Becker et al. 1991
  H	 + CH2	   = CH	     + H2			     3.54e-11   0.32      0.    			 ! Fulle and Hippler 1997
 ^1CH2    + CH2    = C2H2    +2H  			     3.0E-11    0.0       0.   				 ! Tsang and Hampson 1986
@@ -1971,7 +1971,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  CH2	 + CH3	   = C2H4    + H			     7.E-11 	0.0	  0.				 ! Baulch et al. 1992
  CH3 	 + CH3     = C2H5    + H   		             8.28E-12   0.1   -5335.   				 ! Stewart et al. 1989
  CH3 	 + CH3     + M 	     = C2H6    + M		     1.7e-5    -7.25  -2172. 1.53e-7 -1.2 -295.          ! Du et al. 1996
- CH3*    + M       = CH3				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ CH3*    + M       = CH3				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  O       + CH4     = CH3     + OH                            1.15E-15   1.56  -4270.            ! Baulch et al. (1992)
  O(1D)   + CH4     = CH3     + OH                            1.13E-10   0.0       0.                             ! jpl02
  O(1D)   + CH4     = CH3O    + H                             3.00E-11   0.0       0.                             ! jpl02
@@ -2007,7 +2007,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  O3      + C2H2    = HCOOH   + CO                            5.00E-15   0.0   -4100.                             ! jpl02
  O3      + C2H2    = HCOHCO  + O                             5.00E-15   0.0   -4100.                             ! jpl02
  H	 + C2H2    = C2H     + H2  			     1.00E-10   0.0  -11200.				 ! Tsang and Hampson 1986
- H	 + C2H2    + M       = C2H3    + M		     3.3e-30    0.0    -740. 1.4e-11 0.0 -1300.          ! Baulch et al. 1992 
+ H	 + C2H2    + M       = C2H3    + M		     3.3e-30    0.0    -740. 1.4e-11 0.0 -1300.          ! Baulch et al. 1992
  OH	 + C2H2    = CO      + CH3			     1.91e-12   0.0    -233.				 ! Atkinson 1986
  OH	 + C2H2    + M	     = CH2CO   + H       + M	     5.8E-31 	0.0   -1258. 1.4E-12 0.0 388.		 ! from Kasting et al. JGR 106,1-21(2001)
  OH      + C2H2    + M       = HOCHCH  + M                   5.50E-30   0.0       0.      8.3E-13  2.0 0 300. 300.  ! jpl02
@@ -2100,7 +2100,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  C2H     + C2H5    = C3H3    + CH3   			     3.0E-11    0.0       0.   				 ! Tsang and Hampson 1986
  C2H     + C2H5    = C2H2    + C2H4     		     3.0E-12    0.0       0.   				 ! Tsang and Hampson 1986
  C2H3	 + C2H5    = C2H4     + C2H4			     3.0E-12	0.0       0.				 ! Lara et al. 1996
- C2H3	 + C2H5    = C2H6     + C2H2   			     6.0e-12	0.0	  0.				 ! Lara et al. 1996 
+ C2H3	 + C2H5    = C2H6     + C2H2   			     6.0e-12	0.0	  0.				 ! Lara et al. 1996
  C2H3	 + C2H5	   + M	      = C4H8    + M		     1.3E-22	0.0	  0. 9.1E-12 0.0 0.		 ! Lara et al. 1996
  C2H3	 + C2H5	   = C4H8				     2.5E-11	0.0	  0.				 ! Tsang and Hampson 1986
  C2H5	 + C2H5	   = C2H6    + C2H4			     1.7e-12	0.0	-90.				 ! Lara et al. 1996
@@ -2234,7 +2234,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  C3H5    + C3H7    = CH2CCH2 + C3H8  			     1.2E-12    0.0      66.   				 ! Tsang 1991
 2C3H7    = C3H8    + C3H6    				     2.8E-12    0.0       0.   				 ! Tsang 1988
 2C3H7	 = C6H14					     1.7E-11	0.0	  0.				 ! Tsang 1988
-^2C3H7   + H       = C3H6    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.      
+^2C3H7   + H       = C3H6    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  O	 + C3H8	   = C3H7    + OH 		 	     0.00e-00   0.0       0.				 ! from early earth model, handled in the code
  O(1D)   + C3H8	   = C3H7    + OH			     1.4e-10 	0.0	  0.				 ! from early earth model
  H	 + C3H8    = C3H7    + H2   			     2.2E-18    2.54  -3400.				 ! Tsang 1988
@@ -2251,7 +2251,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  H       + C4H     + M       = C4H2    + M  		     1.0e-30	0.0     457. 5.0e-11 0.0 0.		 ! Lara et al. 1996
  H  	 + C4H2    + M       = C4H3    + M 		     1.0E-28    0.0       0. 1.39E-10 0.0 -1184. 	 ! from Moses et al. 2000, ko est. based on Yung et al. 1984, kinf Nava et al. 1986
  CH2     + C4H2    = C4H     + CH3   			     2.16E-11   0.0   -2165.  				 ! Bohland et al. 1988
- C2H	 + C4H2	   = C6H2    + H			     8.6E-16    1.8     474.				 ! Lebonnois et al. 2001, est. based on k(C2H+C2H2) of Opansky and Leone 1996  
+ C2H	 + C4H2	   = C6H2    + H			     8.6E-16    1.8     474.				 ! Lebonnois et al. 2001, est. based on k(C2H+C2H2) of Opansky and Leone 1996
  C2H2*	 + C4H2	   = C6H2    + H2			     2.57E-13   0.0       0.  				 ! est., equal to C4H2* + C4H2 = C8H2 + H2 of Zwier and Allen 1996
  C4H     + C4H2    = C8H2    + H 			     2.9e-16    1.8     474.				 ! Lebonnois et al. 2001, est. based on k(C2H+C2H2)/3 of Opansky and Leone 1996
  C4H2*   + C4H2    = C6H2    + C2H2   			     8.17E-13   0.0       0.  				 ! Zwier and Allen 1996
@@ -2272,31 +2272,31 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  H	 + C4H5    + M       =^1C4H6   + M 		     6.0E-30    0.0    1680. 1.0e-10 0.0 0.  	         ! from Moses et al. 2000, ko est. based on 0.1*2CH3 + M = C2H6 + M of MacPherson et al. 1983, kinf from Gladstone et al. 1996
  CH3     + C4H5    = CH4     + C4H4  			     3.4E-11    0.0       0. 			  	 ! from Moses et al. 2000, est. based on CH3 + C2H3 = CH4 + C2H2 of Fahr et al. 1991
  CH3     + C4H5    + M       = C5H8    + M  		     0.00e-00   0.0       0. 0.00e-00 0.0 0.		 ! handled in code, estimated products
- C2H3    + C4H5	   = C6H6     + H2			     1.4E-30    5.63    951.				 ! Westmoreland et al. 1989 
+ C2H3    + C4H5	   = C6H6     + H2			     1.4E-30    5.63    951.				 ! Westmoreland et al. 1989
  C       +^1C4H6    = C3H3    + C2H3   			     1.1E-9     0.0       0.   				 ! Husain and Ioannou 1997
  CH3	 +^13C4H6  = C5H9				     1.35E-13   0.0   -2063.				 ! Kerr and Parsonage 1972
  C2H3	 +^13C4H6   = C6H8   + H			     2.45E-12  -0.17  -1630.				 ! Lebonnois et al., Icarus, 152, 384 (2001), ref. Westmoreland et al. 1989
  CH      + C4H8    = C5H9				     8.78E-9   -0.529   -33.5				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. Canosa et al. 1997
  H	 + C4H9    = C4H8    + H2			     1.5E-12 	0.0  	  0.				 ! Tsang 1990
  H	 + C4H9    + M       = C4H10   + M  		     6.0E-30    0.0    1680. 6.0E-11 0.0 0.  		 ! from Moses et al. 2000, ko est. based on 0.1*2CH3 + M = C2H6 + M of MacPherson et al. 1983, kinf from Tsang 1990
-^1C4H9   + H 	   = C4H8    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
-^22C4H9  + H	   = C4H8    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+^1C4H9   + H 	   = C4H8    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+^22C4H9  + H	   = C4H8    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  O	 + C4H10   = OH      + C4H9			     4.07E-21   3.43  -1166.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. Miyoshi et al. 1993
  H	 + C4H10   = H2	     + C4H9			     5.14E-10   0.0   -4318.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. Warnatz 1984
  CH	 + C4H10   = C5H11				     4.4E-10    0.0      28.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. Baulch et al. 1992, products from Berman and Lin, Chem. Phys., 82, 435 (1983)
  CH2	 + C4H10   = C5H12				     4.3E-12	0.0	  0.				 ! Halberstadt and Crump 1973
  C2H     + C4H10   = C2H2    + C4H9			     8.3E-11    0.0     112.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. Hoobler et al. 1997
  C5H2	 + C2H	   = PROD			     	     1.0E-11	0.0	  0.				 ! pseudo loss process for C5H2
- C5H3    + H 	   = C5H2    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C5H4    + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C5H5    + H	   = C5H4    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C5H6	 + H 	   = C5H5    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C5H3    + H 	   = C5H2    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C5H4    + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C5H5    + H	   = C5H4    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C5H6	 + H 	   = C5H5    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  C5H7	 + H	   = C5H6    + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C5H7
  C5H8	 + M	   = PROD				     1.0E-11	0.0	  0.				! pseudo loss process for C5H8
- C5H9	 + H	   = C5H8    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C5H10   + H 	   = C5H9    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C5H11	 + H	   = C5H10   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C5H12	 + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C5H9	 + H	   = C5H8    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C5H10   + H 	   = C5H9    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C5H11	 + H	   = C5H10   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C5H12	 + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  H	 + C6H	   + M	     = C6H2    + M		     1.26E-18  -3.1    -721. 3.0E-10 0.0 0.		 ! Wilson and Atreya est. on C2H analogue of Kiefer and von Drasek 1990
  H	 + C6H2    + M       = C6H3    + M  		     1.0E-28    0.0 	  0. 1.39E-10 0.0 -1184.  	 ! from Moses et al. 2000, est. based on H + C4H2 + M = C4H3 of Yung et al. 1984
  C2H     + C6H2    = C8H2    + H  			     1.1E-10    0.0      28.  				 ! from Moses et al. 2000, est. based on C2H + C2H2 = C4H2 + H of Pedersen et al. 1993
@@ -2310,23 +2310,23 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  C6H5	 + C6H6	   = C12H10  + H			     1.59E-12   0.0  -2168.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. Park et al. 1999
  H	 + nC6H6   = C6H6    + H			     1.44E-7   -1.34 -1762.				 ! Wang and Frenklach 1994
  H	 + nC6H6   + M	     = nC6H7   + M		     8.0e-31   -0.52  -504. 1.06e-14 0.86 -554.		 ! Wang and Frenklach 1994
- C6H7    + H	   = C6H6    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- nC6H7   + H 	   = nC6H6   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C6H7    + H	   = C6H6    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ nC6H7   + H 	   = nC6H6   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  C6H8	 + H	   = C6H7    + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C6H8
  C6H9	 + H	   = C6H8    + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C6H9
- C6H10   + H 	   = C6H9    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C6H10   + H 	   = C6H9    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  C5H5CH3 + M	   = PROD				     1.0E-11	0.0	  0.				! pseudo loss process for C5H5CH3
  H	 + C5H6CH3 = C5H5CH3 + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C5H6CH3
  C5H7CH3 + H	   = C5H6CH3 + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C5H7CH3
  C6H11	 + H	   = C6H10   + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C6H11
- C6H12   + H 	   = C6H11   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C6H12   + H 	   = C6H11   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  C6H13	 + H	   = C6H12   + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C6H13
- C6H14	 + H 	   = C6H13   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C7H2	 + C2H 	   = PROD				     1.0E-11	0.0	  0.				! pseudo loss process for C7H2 
+ C6H14	 + H 	   = C6H13   + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C7H2	 + C2H 	   = PROD				     1.0E-11	0.0	  0.				! pseudo loss process for C7H2
  C7H3	 + H	   = C7H2    + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C7H3
- C7H4	 + H 	   = C7H3    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C7H5	 + H	   = C7H4    + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C7H5 
- C7H6	 + H	   = C7H5    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C7H4	 + H 	   = C7H3    + H2			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C7H5	 + H	   = C7H4    + H2			     1.0E-11	0.0	  0.				! pseudo loss process for C7H5
+ C7H6	 + H	   = C7H5    + H2 			     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  C2H     + C8H2    = C10H2   + H			     9.53e-11   0.0      30.8				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. `Chastaing et al. 1998; est. from Kiefer and von Drasek 1990, estimated products
  C4H     + C8H2    = C12H2   + H			     1.1e-10    0.0      28.  				 ! from Moses et al. 2000, est. based on C2H + C2H2 = C4H4 + H of Pedersen et al. 1993, estimated products
  C6H     + C8H2    = C14H2   + H			     1.1E-10    0.0  	 28.  				 ! from Moses et al. 2000, est. based on C2H + C2H2 = C4H2 + H of Pedersen et al. 1993, estimated products
@@ -2466,7 +2466,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  CH3CO3  + CH3O2   = CH3CO2H + H2CO    + O2                  0.00E+00   0.0       0.  ! handled in subroutine update_chema
  C3H5O3  + CH3O2   = CH3CO   + H2CO    + CH3O 		     2.25E-13   0.0     500.  ! JPL02, also produces O2
  C3H5O3  + CH3O2   = C3H6O2  + H2CO    + O2		     1.50E-13   0.0     500.  ! JPL02
- C3H5O3  + CH3O2   = C3H4O2  + CH3OH   + O2	             3.75E-13   0.0     500.  ! JPL02	
+ C3H5O3  + CH3O2   = C3H4O2  + CH3OH   + O2	             3.75E-13   0.0     500.  ! JPL02
  OH      + CH3OOH  = CH3O2   + H2O                           2.66E-12   0.0     200.                             ! jpl02
  OH      + CH3OOH  = CH2OOH  + H2O                           1.14E-12   0.0     200.                             ! jpl02
  HO2     + C2H5O2  = C2H5O2H + O2                            7.50E-13   0.0     700.                             ! jpl02
@@ -2522,11 +2522,11 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  C2H4O2  + U       = C2H4    + O2      + U                   1.00E-10   0.0       0.       ! Moses et al.
  OH      + C2H5O2H = C2H5O2  + H2O                           3.00E-12   0.0     190.                  ! NIST database
  C3H3O	 + M	   =3CO2     +2H2O			     1.0E-11	0.0	  0.		      ! pseudo loss process for C3H3O
- C3H4O   + M	   =3CO2     +4H			     1.0E-11   0.0       0.                            ! pseudo. destruction rxn. 
+ C3H4O   + M	   =3CO2     +4H			     1.0E-11   0.0       0.                            ! pseudo. destruction rxn.
  C3H4O2  + M	   =3CO2     +4H			     1.0E-11    0.0       0.                                 ! pseudo rxn. for C3H4O2
  HO2     + C3H5O3  = O2      + C3H5O2OH                      9.00E-12   0.0       0.   ! NIST database
  C3H6O2	 + M	   =3CO2     +6H			     1.0E-11    0.0       0.                                 ! pseudo rxn. for C3H6O2
- C3H7O2  + M	   =3CO2     +4H2O			     1.0E-11	0.0	  0.				     ! pseudo loss process for C3H7O2 
+ C3H7O2  + M	   =3CO2     +4H2O			     1.0E-11	0.0	  0.				     ! pseudo loss process for C3H7O2
  C4H6O3  + M	   =4CO2     +6H			     1.0E-11    0.0       0.                                 ! pseudo rxn. for C4H6O3
  C4H10O2 + M	   =4CO2     +5H       +5H		     1.0E-11    0.0       0.                                 ! pseudo rxn. for C4H10O2
  NO      + CH3O2   = CH3O    + NO2                           2.80E-12   0.0     300.   ! JPL02
@@ -2582,23 +2582,23 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  C2H     + HCN     = HC3N    + H  			     5.26E-12   0.0    -770.   				 ! Hoobler and Leone 1997
  C2H3	 + HCN	   = C2H3CN   + H			     1.1E-12	0.0    -900.				 ! Monks et al. 1993
  CN      + HCN     = C2N2    + H   			     6.31e-17   1.57    -50.	   ! Lara et al. 1996
- O	 + HNC     = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M 
- O(1D)	 + HNC	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M 
- OH	 + HNC	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M 
+ O	 + HNC     = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M
+ O(1D)	 + HNC	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M
+ OH	 + HNC	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M
  H       + H2CN    = HCN     + H2     			     1.4E-10    0.0    -200.  ! Nesbitt et al. 1990
  HCN	 + H2CN	   = H2C2N2  + H			     1.1E-15    0.0    -900.	   ! Wilson and Atreya, Planet. Space Sci., 51, 1017 (2003), est. products based on HCN + C2H3 = C2H3CN + H
  H	 + H2CNH   = H2CN    + H2			     1.0E-11	0.0       0.	   ! pseudo loss process for H2CNH
- C3H5CN  + H       = CH3C2CN + H2      + H		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ C3H5CN  + H       = CH3C2CN + H2      + H		     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  C4H5CN	 + H	   = H3C5N   + H2      + H		     1.0E-11	0.0	  0.				! pseudo loss process for C4H5CN
  H	 + C2N2	   + M	     = HC2N2   + M		     6.4E-25   -2.0   -1200.  1.5E-15 0.0 0. ! Phillips 1978
  CN	 + C2N2	   = C3N3                                    2.19E-21   2.7    -325.	   ! Yang et al.,J. Chem. Phys., 97, 222 (1992)
  H	 + HC2N2   =2HCN				     1.7E-13    0.0    -110. ! Yung 1987
  H	 + H2C2N2  = HC2N2   + H2			     1.0E-11	0.0       0.   ! pseudo loss process for H2C2N2
  C3N3	 + M	   = C3N     + N2      + M		     1.0e-11	0.0	  0.   ! pseudo loss process for C3N3
- O	 + HC3N	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M 
- O(1D)	 + HC3N	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M 
+ O	 + HC3N	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M
+ O(1D)	 + HC3N	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M
  H	 + HC3N	   + M       = H2C3N   + M		     6.4E-25   -2.0   -1200. 9.2E-12 0.0 -1200. ! Wilson and Atreya, est. from analogy with H+C2H2 by Yung et al. 1984
- OH	 + HC3N	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M 
+ OH	 + HC3N	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M
  C2H	 + HC3N	   = HC5N    + H 			     3.3E-12    0.0   -2516.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) est. from k(C2H2+C2H) of Chastaing et al. 1998
  C2H3	 + HC3N	   = H3C5N   + H			     4.2E-19    1.9   -1058.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) est. k from k(C2H2+C2H3) and product of Weissman and Benson 1988
  C2H5    + HC3N	   = H5C5N   + H			     8.32E-14   0.0   -3520.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) est. from k(C2H2+C2H5) of Kerr and Parsonage 1972, est. product based on C2H3 + HC3N
@@ -2606,7 +2606,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  C6H5    + HC3N	   = H5C9N   + H			     3.7E-13    0.0  -1560.				 ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) est. k(C6H5+C2H2) of Kerr and Parsonage 1972, est. product based on C2H3 + HC3N
  CN	 + HC3N	   = H	     + C4N2			     1.7E-11	0.0       0.	   ! Wilson and Atreya, J. Geo. Res., 109, E06002 (2004) ref. Halpern et al. 1989
  C3N	 + HC3N	   = C6N2    + H			     8.6E-16    1.8	474.				 ! Lebonnois et al. 2001, est. from k(C2H+C2H2) of Opansky and Leone 1996
- HC3N*   + M	   = HC3N				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ HC3N*   + M	   = HC3N				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  CN	 + CH3C2CN = NCC2CN  + CH3			     1.0E-11	0.0	  0. ! pseudo loss process for CH3C2CN
  CN	 + CH2CCHCN= NCC2CN  + CH3			     1.0E-11	0.0	  0. ! pseudo loss process for CH2CCHCN
  H	 + H2C3N   = C2H2    + HCN			     1.5E-11    0.0       0. ! Wilson and Atreya, est. by analogy with H+C2H2 by Yung et al. 1984
@@ -2616,20 +2616,20 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  O	 + C2H3CN  = CH3COCN				     4.9E-13	0.0	  0.	   ! Wilson and Atreya, J. Geo. Res., 109 E06002 (2004) ref. Upadhyaya et al. 1997
  CN	 + C2H3CN  = NCCHCHCN+ H			     4.23E-11   0.0       0.	   ! Butterfield et al., Chem. Phys., 169, 129 (1993) products based on similar H extraction rxns. and observation that the CN greatly enhances the H extraction.
  H	 + NCCHCHCN= CH2CN   + CHCN			     1.0E-11	0.0	  0.	   ! Guess at loss reaction
- HC5N	 + C2H	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- H3C5N   + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- C6N2	 + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
- HC7N	 + C2H 	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn. 
+ HC5N	 + C2H	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ H3C5N   + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ C6N2	 + M	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
+ HC7N	 + C2H 	   = PROD				     1.0E-11    0.0       0.                            ! pseudo. destruction rxn.
  C2H	 + H5C5N   = H5C7N   + H			     1.0E-11	0.0	  0.				! pseudo loss process for H5C5N
  C2H	 + H5C7N   = H5C9N   + H			     1.0E-11	0.0	  0.				! pseudo loss process for H5C7N
  H5C9N	 + M	   = PROD				     1.0E-11	0.0	  0.				! pseudo loss process for H5C9N
  CH2NH	 + H       + M	     = CH3NH   + M		     1.0E-30	0.0	  0.				! pseudo loss process for CH2NH
  H	 + CH2NH2  + M	     = CH3NH2  + M		     1.E-28	0.0	  0.				! Guess at loss reaction
  O       + NCO     = NO      + CO                            1.48E-11   0.0       0.                 ! NIST94
- O	 + HNCO	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M 
- O(1D)	 + HNCO	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M 
- OH	 + HNCO	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M 
- HNCO	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M 
+ O	 + HNCO	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O = M
+ O(1D)	 + HNCO	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + O(1D) = M
+ OH	 + HNCO	   = M					     0.00E-00   0.0       0.                 ! placeholder reaction of X + OH = M
+ HNCO	 = M						     0.00E-00   0.0       0.                 ! placeholder reaction of X = M
  CH3COCN + M	   = CH3CN   + CO      + M		     1.0E-11    0.0	  0.		     ! pseudo loss process for CH3COCN
  S       + O       + M       = SO      + M                   1.50E-34   0.0     900.                 ! Moses2002estimate fromMuller(1979), venus rxn.
  S       + O2      = SO      + O                             2.30E-12   0.0       0.                               ! Sander2002
@@ -2720,61 +2720,61 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  SH	 + S	   = H 	     + S2			     2.2E-11 	0.0     120.				   ! from early earth model
 2S       + M       = S2      + M                             1.18E-29   0.0       0. 1.00E-10 0.0 0.		   ! lowP=NicholasEtal1978 highP=Mills1997estimateSameAs 2S2+M=S4+M, venus rxn.
  O       + S2      = SO      + S                             2.20E-11   0.0     -84.				  ! Craven and Murrell, J. Chem. Soc. Faraday Trans., 2, 83, 1733 (1987)
- S       + S2      + M       = S3      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al. Icarus, 156, 76-106 (2002)  Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M, ko= 1.00E-30 
+ S       + S2      + M       = S3      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al. Icarus, 156, 76-106 (2002)  Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M, ko= 1.00E-30
  CLO     + S2      = S2O     + CL  			     2.8E-11 	0.0  	  0. 				   ! estimate based on SO + CLO, Moses et al. Icarus, 156, 76-106 (2002)
-2S2      + M       = S4      + M                             2.2E-29    0.0       0. 1.00E-10 0.0 0.		   ! lowP estimate based on Fowles et al., JACS 89, 1352-1362 (1967), Nicholas et al., J. Chem. Soc. Faraday Trans. 1, 75, 1868-1875 (1979), Langford and Oldershaw, J. Chem. Soc. Faraday Trans. 1, 68, 1550-1558 (1972),  Langford and Oldershaw, J. Chem. Soc. Faraday Trans. 1, 69, 1389-1397 (1973) ; highP=FowlesEtal1967, venus rxn. : lowP=NicholasEtal1978 k = 2.20E-29 
- S2*	 + M	   = S2					     1.0E-11    0.0       0.                               ! pseudo. destruction rxn. 
+2S2      + M       = S4      + M                             2.2E-29    0.0       0. 1.00E-10 0.0 0.		   ! lowP estimate based on Fowles et al., JACS 89, 1352-1362 (1967), Nicholas et al., J. Chem. Soc. Faraday Trans. 1, 75, 1868-1875 (1979), Langford and Oldershaw, J. Chem. Soc. Faraday Trans. 1, 68, 1550-1558 (1972),  Langford and Oldershaw, J. Chem. Soc. Faraday Trans. 1, 69, 1389-1397 (1973) ; highP=FowlesEtal1967, venus rxn. : lowP=NicholasEtal1978 k = 2.20E-29
+ S2*	 + M	   = S2					     1.0E-11    0.0       0.                               ! pseudo. destruction rxn.
  O       + S3      = SO      + S2                            8.0E-11    0.0       0.				  ! Moses, estimate 1996, "The collision of comet Shoemaker-Levy 9 and Jupiter" Cambridge Univ. Press, pp. 243-268 : Mills1997estimateSameAs O+S2=SO+S, k = 2.00E-11, venus rxn.
  S       + S3      =2S2                                      8.00E-11   0.0       0. 				   ! Moses, estimate 1996, "The collision of comet Shoemaker-Levy 9 and Jupiter" Cambridge Univ. Press, pp. 243-268 : Mills1997estimate basedOnNicholasEtal1979nullFinding LangfordOldershaw1973exothermicityDiscussion, venus rxn. k = 3.00E-11
- S       + S3      + M       = S4      + M                   1.0e-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30 
- S2      + S3      + M       = S5      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) Mills1997estimate  highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30 
+ S       + S3      + M       = S4      + M                   1.0e-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30
+ S2      + S3      + M       = S5      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) Mills1997estimate  highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30
 2S3      + M       = S6      + M                             1.0E-30    0.0       0. 3.00E-11 0.0 0.		   ! Mills 1998
  O       + S4      = SO      + S3                            8.0E-11    0.0       0.				   ! Moses (2002)
  CL	 + S4      = CLS2    + S2                            2.00E-12   0.0       0.				   ! Mills1997estimate0.1*rateFor O+S2=SO+S, venus rxn.
  S       + S4      = S2      + S3                            8.0E-11    0.0       0. 				   ! Moses, estimate 1996, "The collision of comet Shoemaker-Levy 9 and Jupiter" Cambridge Univ. Press, pp. 243-268 : Mills1997estimate S+S3=2S2, venus rxn. k = 3.00E-11
  S3      + S4 	   = S2      + S5 			     4.0E-11    0.0    -200.				   ! Moses et al., Icarus 156, 76-106 (2002)
- S       + S4      + M       = S5      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) ; Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30 
+ S       + S4      + M       = S5      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) ; Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30
  S2      + S4      + M       = S6      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! lowP Moses, estimate 1996, "The collision of comet Shoemaker-Levy 9 and Jupiter" Cambridge Univ. Press, pp. 243-268 ; Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M K = 1.00E-30
  S3      + S4      + M       = S7      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.             		   ! estimate Moses et al., Icarus 156, 76-106 (2002)
  S4      + M       =2S2      + M                             2.71E-27   0.0   13100.				   ! equil. const. using in update_chema.f updated by xiz 11/1010 coef in updated_chema.f !Mills1997calculatedequilConstantFromJANAF1985, venus rxn.
 2S4      + M       = S8      + M                             1.0E-30    0.0       0. 3.00E-11 0.0 0.		   ! Mills 1998
  CL	 + S4	   = S2      + CLS2  			     1.0E-11    0.0       0. 				   ! estimate Moses et al., Icarus 156, 76-106 (2002)
  O       + S5      = S4      + SO                            8.00E-11   0.0    -200.				   ! Moses, estimate 1996, "The collision of comet Shoemaker-Levy 9 and Jupiter" Cambridge Univ. Press, pp. 243-268
- S       + S5      =2S3                                      3.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
+ S       + S5      =2S3                                      3.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
  S       + S5      = S2      + S4                            5.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) : Mills1997estimate S+S3=2S2, venus rxn. k = 3.00E-11
  S3 	 + S5  	   = S2      + S6			     4.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
  S4 	 + S5  	   = S2      + S7			     2.0E-12    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
  S4 	 + S5  	   = S3      + S6			     2.0E-12    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
- S       + S5      + M       = S6      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) ; Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30 
+ S       + S5      + M       = S6      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) ; Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30
  S2      + S5      + M       = S7      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) ; Mills1997estimate  highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M K = 1.00E-30
- S3      + S5      + M       = S8      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate Moses et al., Icarus 156, 76-106 (2002 ) 
+ S3      + S5      + M       = S8      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate Moses et al., Icarus 156, 76-106 (2002 )
  O       + S6      = S5      + SO                            8.00E-11   0.0    -300.				   ! Moses, estimate 1996, "The collision of comet Shoemaker-Levy 9 and Jupiter" Cambridge Univ. Press, pp. 243-268
  S       + S6      = S3      + S4                            3.0E-11    0.0    -300.				   ! estimate Moses et al. Icarus, 156, 76-106 (2002)
  S       + S6      = S2      + S5                            5.0E-11    0.0    -300.				   ! estimate Moses et al. Icarus, 156, 76-106 (2002): Mills1997estimate S+S3=2S2, venus rxn. k = 3.00E-11
  S3      + S6      = S2      + S7                            4.0E-12    0.0    -300.				   ! estimate Moses et al. Icarus, 156, 76-106 (2002)
  S4      + S6      = S2      + S8                            2.0E-12    0.0    -300.				   ! estimate Moses et al. Icarus, 156, 76-106 (2002)
  S4      + S6      =2S5                                      2.0E-12    0.0    -300.				   ! estimate Moses et al. Icarus, 156, 76-106 (2002)
- S       + S6      + M       = S7      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30 
+ S       + S6      + M       = S7      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002 ) Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30
  S2      + S6      + M       = S8      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! lowP Moses, estimate 1996, "The collision of comet Shoemaker-Levy 9 and Jupiter" Cambridge Univ. Press, pp. 243-268 ; Mills1997estimate  highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M K = 1.00E-30
  S6      + M       =2S3      + M                             2.41E-29   0.0  21483.				   ! equil. const. using in update_chema.f, updated by xiz 11/2010 coef in updated_chema.f !Mills1997calculatedequilConstantFromJANAF1985, venus rxn.
  O       + S7      = S6      + SO                            8.00E-11   0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
  S       + S7      = S2      + S6                            4.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) : Mills1997estimate S+S3=2S2, venus rxn. k = 3.00E-11
- S       + S7      = S3      + S5                            2.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S       + S7      =2S4                                      2.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S3      + S7      = S2      + S8	                     3.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S3      + S7      = S4      + S6	                     1.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S3      + S7      =2S5         	                     1.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S4      + S7      = S3      + S8	                     5.0E-12    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S4      + S7      = S5      + S6	                     5.0E-12    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S       + S7      + M       = S8      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002) Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30 
+ S       + S7      = S3      + S5                            2.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S       + S7      =2S4                                      2.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S3      + S7      = S2      + S8	                     3.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S3      + S7      = S4      + S6	                     1.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S3      + S7      =2S5         	                     1.0E-11    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S4      + S7      = S3      + S8	                     5.0E-12    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S4      + S7      = S5      + S6	                     5.0E-12    0.0    -200.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S       + S7      + M       = S8      + M                   1.0E-25   -2.0       0. 3.00E-11 0.0 0.		   ! estimate low P Moses et al., Icarus 156, 76-106 (2002) Mills1997estimate highP=0.3*rateFor 2S+M=S2+M, venus rxn. : Mills1997estimate lowP=0.1*rateFor 2S+m=S2+M 2s+M->s2+M k = 1.00E-30
  O       + S8      = S7      + SO                            8.00E-11   0.0    -400.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
  S       + S8      = S2      + S7                            4.0E-11    0.0    -400.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) : Mills1997estimateSameAs S+S3=2S2, venus rxn. k = 3.00E-11
- S       + S8      = S3      + S6                            2.0E-11    0.0    -400.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- S       + S8      = S4      + S5                            2.0E-11    0.0    -400.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
+ S       + S8      = S3      + S6                            2.0E-11    0.0    -400.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ S       + S8      = S4      + S5                            2.0E-11    0.0    -400.				   ! estimate Moses et al., Icarus, 156, 76-106 (2002)
  S2 	 + S8 	   =2S5					     1.0E-11    0.0   -1400.				   ! estimate, Moses et al., Icarus, 156, 76-106 (2002)
  S8      + M       =2S4      + M                             1.17E-29   0.0   22654.				   ! equil. const. using in update_chema.f updated by xiz 11/2010 coef in updated_chema.f !Mills1997calculatedequilConstantFromJANAF1985, venus rxn.
  O	 + SO      = S       + O2                            6.60E-13   0.0   -2760.				   ! LeenGraff1988estimate, venus rxn.
- O	 + SO      = SO2                                     0.00E-16   0.0       0.				   ! SingletonCvetanovic1988 , venus rxn. yly dec 2009	
+ O	 + SO      = SO2                                     0.00E-16   0.0       0.				   ! SingletonCvetanovic1988 , venus rxn. yly dec 2009
  O	 + SO      + M       = SO2     + M                   5.1E-31    0.0	  0. 5.30E-11 0.0 0. 		   ! Singleton and Cventanovic, J. Phys. Chem. Ref. Data 17, 1377-1437 (1988) for Ar and Grillo et al., J. Chem. Phys., 70, 1634-1636 (1979) (but for high TEMP, so not use it now), high pres from Mills98
  H	 + SO	   + M       = HSO     + M		     5.7E-32   -1.6       0. 7.5E-11 0.0 0. 300. 300.      ! from early earth model
  OH	 + SO      = SO2     + H                             8.60E-11   0.0       0.                               ! jpl02
@@ -2834,9 +2834,9 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  O	 + HSO3	   = OH	     + SO3			     0.0E-11 	0.0	  0.				   ! from early earth model, xiz turned off, orig: 1e-11
  H	 + HSO3    = H2      + SO3			     0.0E-11 	0.0	  0.				   ! from early earth model, xiz turned off. orig: 1e-11
  OH	 + HSO3	   = H2O     + SO3			     0.0E-11    0.0	  0.				   ! from early earth model, xiz turned off, orig: 1e-11
- O	 + NS	   = M					     0.00E-00   0.0       0.                              ! placeholder rxn. of X + O = M 
- O(1D)	 + NS	   = M					     0.00E-00   0.0       0.                              ! placeholder rxn. of X + O(1D) 
- OH	 + NS	   = M					     0.00E-00   0.0       0.                              ! placeholder rxn. of X + OH= M 
+ O	 + NS	   = M					     0.00E-00   0.0       0.                              ! placeholder rxn. of X + O = M
+ O(1D)	 + NS	   = M					     0.00E-00   0.0       0.                              ! placeholder rxn. of X + O(1D)
+ OH	 + NS	   = M					     0.00E-00   0.0       0.                              ! placeholder rxn. of X + OH= M
  NH3SO3	 + M	   = NH3     + SO3     + M		     1.0E-11    0.0       0.                                 ! pseudo rxn. for NH3SO3
  NH4HSO4 + M	   = NH3     + H2SO4   + M		     1.0E-11    0.0       0.                                 ! pseudo rxn. for NH4HSO4
  O       + CLS     = SO      + CL                            1.20E-10   0.0       0.				   ! Murrells, J. Chem. Soc. Faraday Trans. 2, 84, 85-94 (1988)
@@ -2853,7 +2853,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  CL	 + CLS2    = CL2     + S2                            1.00E-11   0.0       0.  				   ! Mills1997estimateBasedOnMurrells1988a, venus rxn.
  CLS	 + CLS2    = CL2S    + S2                            1.00E-12   0.0	  0.  				   ! Mills1997estimateBasedOnMurrells1988a, venus rxn.
  H	 + CL2S    = HCL     + CLS                           2.00E-11   0.0       0.				   ! Mills1997meanHildebrandtEtal1984SungSetser1978, venus rxn.
- CL      + CL2S    = CL2     + CLS                           1.00E-19   0.0       0.				   ! Mills1997estimate0.1*Murrells1988aupperLimit endothermic, venus rxn. 
+ CL      + CL2S    = CL2     + CLS                           1.00E-19   0.0       0.				   ! Mills1997estimate0.1*Murrells1988aupperLimit endothermic, venus rxn.
 2CL2S    = CL2S2   + CL2                                     1.00E-20   0.0       0.				   ! Mills1997estimateBasedOnMurrayEtal1976 endothermic, venus rxn.
  CL      + CL2S2   = CL2     + CLS2                          4.30E-12   0.0       0.				   ! KrasnoperovEtal1984upperLimit (Mills1997), venus rxn.
  O	 + OSCL    = SO2     + CL                            5.0E-11    0.0    -600.                               ! estimate Moses et al., Icarus, 156, 76-106 (2002)
@@ -2865,19 +2865,19 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  OSCL    + M       = SO      + CL      + M                   7.29E-21  -5.0       0.				   ! Mills 1998
  O	 + CLSO2   = SO2     + CLO                           1.00E-11   0.0       0.		! Yung1985estimateUsedForDeMoreEtal1985in24Oct1984run, venus rxn.
  H	 + CLSO2   = SO2     + HCL                           1.00E-11   0.0       0.		! Yung1985estimateUsedForDeMoreEtal1985in24Oct1984run, venus rxn.
- CL	 + CLSO2   = SO2     + CL2                           1.0E-20    0.0       0.		! estimate Moses et al., Icarus, 156, 76-106 (2002) : Yung1985estimateUsedForDeMoreEtal1985in24Oct1984run, venus rxn. k = 1.00E-11   
+ CL	 + CLSO2   = SO2     + CL2                           1.0E-20    0.0       0.		! estimate Moses et al., Icarus, 156, 76-106 (2002) : Yung1985estimateUsedForDeMoreEtal1985in24Oct1984run, venus rxn. k = 1.00E-11
  CL	 + CLSO2   + M       = SO2CL2  + M                   1.0E-23   -2.0       0.		! estimate Moses et al., Icarus, 156, 76-106 (2002) based on Goumri et al., J. Phys. Chem., 97, 5295-5297 (1993)
  CLS	 + CLSO2   = SO2     + CL2S                          5.00E-12   0.0       0.		! Mills1997estimate0.5*ClSO2+Cl=SO2+Cl, venus rxn.
- S  	 + CLSO2   = SO2     + CLS  			     1.0E-11    0.0       0.		! estimate based on O + ClSO2 Moses et al., Icarus, 156, 76-106 (2002) 
- S2  	 + CLSO2   = SO2     + CLS2  			     5.0E-11    0.0    -800.		! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- SO      + CLSO2   = OSCL    + SO2  		             5.0E-11    0.0    -800. 		! estimate Moses et al., Icarus, 156, 76-106 (2002) 
-2CLSO2   = CL2     +2SO2  				     5.0E-13    0.0       0.  	        ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
-2CLSO2   = SO2CL2  + SO2  				     5.0E-11    0.0       0.  	        ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
- CL      + SO2CL2  = CLSO2   + CL2   			     1.0E-11    0.0   -1000. 	        ! estimate Moses et al., Icarus, 156, 76-106 (2002) 
+ S  	 + CLSO2   = SO2     + CLS  			     1.0E-11    0.0       0.		! estimate based on O + ClSO2 Moses et al., Icarus, 156, 76-106 (2002)
+ S2  	 + CLSO2   = SO2     + CLS2  			     5.0E-11    0.0    -800.		! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ SO      + CLSO2   = OSCL    + SO2  		             5.0E-11    0.0    -800. 		! estimate Moses et al., Icarus, 156, 76-106 (2002)
+2CLSO2   = CL2     +2SO2  				     5.0E-13    0.0       0.  	        ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+2CLSO2   = SO2CL2  + SO2  				     5.0E-11    0.0       0.  	        ! estimate Moses et al., Icarus, 156, 76-106 (2002)
+ CL      + SO2CL2  = CLSO2   + CL2   			     1.0E-11    0.0   -1000. 	        ! estimate Moses et al., Icarus, 156, 76-106 (2002)
  O       + CS      = CO      + S                             2.70E-10   0.0    -760.                              ! jpl02
- O	 + H2CS	   = M					     0.00E-00	0.0       0.				  ! placeholder rxn. of X + O = M 
- O(1D)	 + H2CS	   = M					     0.00E-00	0.0       0.				  ! placeholder rxn. of X + O(1D) 
- OH	 + H2CS	   = M					     0.00E-00	0.0       0.				  ! placeholder rxn. of X + OH= M 
+ O	 + H2CS	   = M					     0.00E-00	0.0       0.				  ! placeholder rxn. of X + O = M
+ O(1D)	 + H2CS	   = M					     0.00E-00	0.0       0.				  ! placeholder rxn. of X + O(1D)
+ OH	 + H2CS	   = M					     0.00E-00	0.0       0.				  ! placeholder rxn. of X + OH= M
  O       + OCS     = SO      + CO                            1.60E-11   0.0   -2150.                              ! jpl02; yly
  OH      + OCS     = SH      + CO2                           1.10E-13   0.0   -1200.                               ! jpl02
  S       + OCS     = S2      + CO                            4.00E-12   0.0   -1830.				   ! NIST94tempDependence=KlemmDavis1974 rate=meanJakubowskiEtal1972KlemmDavis1974BreckenridgeTaube1970, venus rxn.
@@ -2918,7 +2918,7 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  O       + CH3SSCH3= CH3SO   + CH3S                          5.50E-11   0.0     250.                              ! jpl02
  OH      + CH3SSCH3= CH3S    + H2CS    + H2O                 1.80E-11   0.0     400.                               ! jpl02
  OH      + CH3SSCH3= CH3S    + CH3SOH                        4.20E-11   0.0     400.                               ! jpl02
- C2H6SO2 + U	   = C2H6    + SO2			     1.0E-4	0.0	  0.				   ! pseudo loss process for C2H6SO2 
+ C2H6SO2 + U	   = C2H6    + SO2			     1.0E-4	0.0	  0.				   ! pseudo loss process for C2H6SO2
  O3      + NA      = NAO     + O2   		             1.1E-9     0.0    -116.				! Plane et al., J. Phys. Chem., 97, 4459-4467 (1993)
  CLO 	 + NA 	   = NACL    + O 			     2.0E-10    0.0    -300.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002)
  CLS 	 + NA 	   = NACL    + S 			     2.0E-10    0.0       0. 				! estimate Moses et al., Icarus, 156, 76-106 (2002)
@@ -2950,15 +2950,15 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  CL 	 + NAOS    = NACL    + SO  			     1.0E-10    0.0    -800.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002)
  S 	 + NAOS    = NAS     + SO  			     7.0E-13    0.5       0.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
  O       + NASO2   = NAO     + SO2  			     8.5E-10    0.0    -800.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
- CL  	 + NASO2   = NACL    + SO2  			     1.0E-10    0.0    -800.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) 
+ CL  	 + NASO2   = NACL    + SO2  			     1.0E-10    0.0    -800.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002)
  S  	 + NASO2   = NAS     + SO2  			     7.2E-11    0.0    -800.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
  S2      + NASO2   = NAS2    + SO2 			     6.3E-11    0.0    -800.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
  SO      + NASO2   = NAOS    + SO2 			     6.3E-11    0.0    -800.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
  NA 	 + NASO2   = NA2     + SO2  			     1.0E-13    0.0       0. 				! estimate Moses et al., Icarus, 156, 76-106 (2002)
  O2 	 + NA  	   + M       = NAO2    + M 		     9.32E-27  -1.4       0.  				! DeMore et al., JPL Publication 97-4
- S 	 + NA      + M 	     = NAS     + M 		     1.6E-24   -2.0       0. 				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)	
- S2      + NA      + M 	     = NAS2    + M 		     1.6E-24   -2.0       0.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)	
- SO  	 + NA      + M 	     = NAOS    + M  		     1.6E-24   -2.0       0.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)	
+ S 	 + NA      + M 	     = NAS     + M 		     1.6E-24   -2.0       0. 				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
+ S2      + NA      + M 	     = NAS2    + M 		     1.6E-24   -2.0       0.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
+ SO  	 + NA      + M 	     = NAOS    + M  		     1.6E-24   -2.0       0.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Schofield and Steinberg, J. Phys. Chem., 96, 715-726 (1992)
  SO2  	 + NA      + M 	     = NASO2    + M  		     1.58E-23  -2.0       0.  				! estimate from Moses et al., Icarus, 156, 76-106 (2002) based on Shi and Marshall, J. Phys. Chem., 95, 1654-1658 (1991)
  H2O     + NACL    + M 	     = M 			     0.00E+00   0.0       0.   				! pseudo destruction reaction for NaCl, added by JDW 5-29-2007
  O3   	 + K 	   = KO      + O2  			     1.15E-9    0.0    -120.				! Plane and Helmer, Research in Chemical Kinetics, Vol. 2 pp. 313-367, Elsevier, NY (1994)
@@ -3117,18 +3117,18 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  SO2	 + HNO2	   + SH2SO4L = PROD			     0.00E-00   0.0	  0. ! special rxn handled in heterok
  SO2	 + HNO3	   + SH2SO4L = PROD			     0.00E-00   0.0	  0. ! special rxn handled in heterok
  SO3	 + SH2SO4L = PROD				     1.00E+00   0.0	  0. ! JPL02
- O2      = O2                                                0.00E+00   0.0       0. 
+ O2      = O2                                                0.00E+00   0.0       0.
  O3      = O3                                                0.00E+00   0.0       0.
- H2O     = H2O					             0.00E+00   0.0       0.   ! 
- N2      = N2 						     0.00E+00   0.0       0.   !  
+ H2O     = H2O					             0.00E+00   0.0       0.   !
+ N2      = N2 						     0.00E+00   0.0       0.   !
  NO2     = NO2                                               0.00E+00   0.0       0.
  NO3     = NO3                                               0.00E+00   0.0       0.   ! jpl97, needed for T-dep. calculation
  N2O5    = N2O5                                              0.00E+00   0.0       0.   ! jpl97, needed for T-dep. calculation
  PAN     = PAN                                               0.00E+00   0.0       0.   ! jpl97, needed for T-dep. calculation
  CLNO3   = CLNO3                                             0.00E+00   0.0       0.   ! jpl97, needed for T-dep. calculation
  CLCO3   = CLCO3                                             0.00E+00   0.0 	  0.   ! 12/14/03 96 118 Francisco2003Calc, venus rxn.
- CH4     = CH4                                               0.00E+00   0.0       0.   ! 
- CO2     = CO2                                               0.00E+00   0.0       0.   ! 
+ CH4     = CH4                                               0.00E+00   0.0       0.   !
+ CO2     = CO2                                               0.00E+00   0.0       0.   !
  H2CO    = H2CO                                              0.00E+00   0.0       0.   ! jpl97, needed for T-dep. calculation
  OCS     = OCS                                               0.00E+00   0.0       0.   ! jpl97, needed for T-dep. calculation
  VSTRDUST= VSTRDUST                                          0.00E+00   0.0       0.
@@ -3140,8 +3140,8 @@ CCL3CO  + M       = CCL3    + CO      + M                    1.00E-10   0.0     
  H2SO4   + U       = SO3     + H2O                           0.00E-05   0.        0.0  ! yly
  CL2     = CL2                                               0.00E+00   0.0 	  0.   ! 02/07/2010 xizhang added Cl2 photo (turns out no need)
  SO2     = SO2                                               0.00E+00   0.0 	  0.   ! 02/17/2010 xizhang added SO2 photo (essential for Sulfur)
- H2SO4   + U       = PROD                                    0.00E+00   0.0       0.   ! xiz  03/02/2010 xizhang add for the h2so4 loss (into aerosol) 
- U       + U       = SO3     + H2O                           0.00E+00   0.0       0.   ! xiz  03/14/2010 xizhang add for the h2so4 ice photolysis 
+ H2SO4   + U       = PROD                                    0.00E+00   0.0       0.   ! xiz  03/02/2010 xizhang add for the h2so4 loss (into aerosol)
+ U       + U       = SO3     + H2O                           0.00E+00   0.0       0.   ! xiz  03/14/2010 xizhang add for the h2so4 ice photolysis
  VARSL   = VARSL                                             0.00E+00   0.0       0.   ! xiz  03/17/2010 xizhang add for aerosol photolysis on Venus
  VARSL   = SO3     + H2O                                     0.00E+00   0.0       0.   ! xiz  03/17/2010 xizhang add for aerosol photolysis on Venus
  S2      + M       =2S       + M                             2.68E-25   0.0   50860.   ! xiz 11/2010 coef in updated_chema.f calculatedequilConstantFromJANAF1985, venus rxn.
