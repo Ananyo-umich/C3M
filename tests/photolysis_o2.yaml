@@ -32,28 +32,24 @@ species:
       model: constant-cp
 
 reactions:
-  - equation: O2 => O2 + O + O(1D)
+  - equation: O2 => O + O(1D)
     type: photolysis
     branches:
       - name: b1
-        product: "O2:1"
-      - name: b2
         product: "O:2"
-      - name: b3
+      - name: b2
         product: "O:1 O(1D):1"
     cross-section:
       - format: VULCAN
         temperature-range: [0., 1000.]
         filenames: [VULCAN/O2/O2_cross.csv, VULCAN/O2/O2_branch.csv]
 
-  - equation: O3 => O3 + O2 + O + O(1D)
+  - equation: O3 => O2 + O + O(1D)
     type: photolysis
     branches:
       - name: b1
-        product: "O3:1"
-      - name: b2
         product: "O2:1 O:1"
-      - name: b3
+      - name: b2
         product: "O2:1 O(1D):1"
     cross-section:
       - format: VULCAN
