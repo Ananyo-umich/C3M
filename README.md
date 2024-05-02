@@ -34,7 +34,7 @@ It contains the functions for performing radiative transfer calculations, and in
 
 **PhotoChemBox.cpp** - It runs the box chemistry solver for a given system of chemical reactions\
 **IonChemSolver.cpp** - It solves one dimesional continuity equations for ion-neutral reactions. It includes custom reactions, and electron impact processes using second order explicit diffusion in space, and first order implicit time marching. Actinic flux calculation is based on Beer-Lambert law\
-**1DPP.cpp** - It is a modular, one dimensional photochemistry model using fully-implicit solver for a given set of chemical reactions\
+**1DPP.cpp** - It is a modular, one dimensional photochemistry model using fully-implicit solver for a given set of chemical reactions
 
 #### data
 
