@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-void DiffusiveFlux(const std::vector<std::vector<double>>& Atm, const std::vector<std::vector<double>>& Ni, std::vector<std::vector<double>>& flux);
 
+void DiffusiveFlux(Eigen::MatrixXd Atm, Eigen::MatrixXd Xf, Eigen::MatrixXd flux, Eigen::VectorXd alpha, double grav, std::string PlanetName, std::string FileName);
 
 #endif  // SRC_CUSTOMRATE_HPP_
