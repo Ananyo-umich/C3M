@@ -17,18 +17,18 @@ Following are the pre-requisites for running C3M. You can install them on your s
 
 ### C3M Capabilities
 
-The code currently has following capabilities:\
+The code currently has following capabilities:
 
-* Solving box photochemistry, thermochemistry with ion-neutral reactions\
-* One dimensional gas phase neutral photochemistry and thermochemistry\
-* One dimensional gas phase ion-electron chemistry with electron impact processes\
+* Solving box photochemistry, thermochemistry with ion-neutral reactions
+* One dimensional gas phase neutral photochemistry and thermochemistry
+* One dimensional gas phase ion-electron chemistry with electron impact processes
 * Formulation of custom reaction expressions, transport variables and atmospheric opacity for photochemistry
 
 
 ### Structure of C3M
 #### src
 
-It contains the functions for performing radiative transfer calculations, and including custom transport, and rates for a given planet type or system of reactions. C3M leverages heritage photochemical cross sections from [MPI-Mainz](https://uv-vis-spectral-atlas-mainz.org/uvvis/cross_sections/Sulfur%20compounds/Inorganic%20S-compounds/S3.spc) database, [Leiden Observatory](https://home.strw.leidenuniv.nl/~ewine/photo/), and CalTech/JPL KINETICS.
+It contains the functions for performing radiative transfer calculations, and including custom transport, and rates for a given planet type or system of reactions. C3M leverages heritage photochemical cross sections from [MPI-Mainz](https://uv-vis-spectral-atlas-mainz.org) database, [Leiden Observatory](https://home.strw.leidenuniv.nl/~ewine/photo/), and CalTech/JPL KINETICS.
 
 #### tests
 
