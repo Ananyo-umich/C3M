@@ -7,7 +7,11 @@
 
 // cantera
 #include <cantera/base/Array.h>
+#include <cantera/base/Solution.h>
 #include <cantera/oneD/Domain1D.h>
+#include <cantera/thermo/ThermoPhase.h>
+
+class ActinicFlux;
 
 //! Domain1D is a lightweight class that holds information about a 1D domain.
 //! It does not contain the solution vector itself, but only information about
@@ -46,6 +50,16 @@ class AtmChemistry : public Cantera::Domain1D {
   //! Name of the nth component.
   std::string componentName(size_t n) const override;
 
+  //! Index of the species in the solution vector.
+  size_t speciesIndex(const std::string& name) const {
+    return componentIndex(name) - Offset::Y;
+  }
+
+  //! Pass actinic flux to kinetics object
+  void handleActinicFlux(std::shared_ptr<ActinicFlux> actinic_flux) {
+    solution()->kinetics()->handleActinicFlux(actinic_flux);
+  }
+
   //! Returns true if the specified component is an active part of the solver
   //! state
   virtual bool componentActive(size_t n) const { return m_do_species[n]; }
@@ -74,17 +88,26 @@ class AtmChemistry : public Cantera::Domain1D {
   void eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
             integer* diagGlobal, double rdt) override;
 
- protected:
-  //---------------------------------------------------------
-  //             physical functions
-  //---------------------------------------------------------
+  //! @return temperature at grid point `j`
+  double getT(double const* x, size_t j) const {
+    return x[index(Offset::T, j)];
+  }
 
-  virtual void updateProperties(size_t jg, double* x, size_t jmin, size_t jmax);
-  virtual void computeRadiation(double* x, size_t jmin, size_t jmax);
-  virtual void evalContinuity(double* x, double* rsd, int* diag, double rdt,
-                              size_t jmin, size_t jmax);
-  virtual void evalEnergy(double* x, double* rsd, int* diag, double rdt,
-                          size_t jmin, size_t jmax);
+  //! @return pressure at grid point `j`
+  double getP(double const* x, size_t j) const {
+    return x[index(Offset::P, j)];
+  }
+
+  //! @return mass fraction of species `k` at grid point `j`
+  double getY(const double* x, size_t k, size_t j) const {
+    return x[index(Offset::Y + k, j)];
+  }
+
+  //! @return mole fraction of species `k` at grid point `j`
+  double getX(const double* x, size_t k, size_t j) const {
+    double wt = solution()->thermo()->molecularWeight(k);
+    return m_wtm[j] * getY(x, k, j) / wt;
+  }
 
   /**
    * Update the thermodynamic properties from point j0 to point j1
@@ -98,9 +121,22 @@ class AtmChemistry : public Cantera::Domain1D {
    * * #m_wtm (mean molecular weight)
    * * #m_cp (specific heat capacity)
    * * #m_hk (species specific enthalpies)
-   * * #m_wdot (species production rates)
    */
   virtual void updateThermo(double const* x, size_t j0, size_t j1);
+
+ protected:
+  //---------------------------------------------------------
+  //             physical functions
+  //---------------------------------------------------------
+
+  virtual void updateProperties(size_t jg, double* x, size_t jmin, size_t jmax);
+  virtual void evalContinuity(double* x, double* rsd, int* diag, double rdt,
+                              size_t jmin, size_t jmax);
+  virtual void evalEnergy(double* x, double* rsd, int* diag, double rdt,
+                          size_t jmin, size_t jmax);
+
+  //! update #m_wdot (species production rates)
+  virtual void updateReactionRates(double const* x, size_t j0, size_t j1);
 
   //! Update the transport properties at grid points in the range from `j0`
   //! to `j1`, based on solution `x`.
@@ -109,21 +145,11 @@ class AtmChemistry : public Cantera::Domain1D {
   //! Update the diffusive mass fluxes.
   virtual void updateDiffFluxes(const double* x, size_t j0, size_t j1);
 
-  //! @return temperature at grid point `j`
-  double getT(double const* x, size_t j) const {
-    return x[index(Offset::T, j)];
-  }
-
   //! @return previous temperature at grid point `j`
   double getTprev(size_t j) const { return prevSoln(Offset::T, j); }
 
   //! @return The fixed temperature value at point j.
   double getTfixed(size_t j) const { return m_fixedtemp[j]; }
-
-  //! @return pressure at grid point `j`
-  double getP(double const* x, size_t j) const {
-    return x[index(Offset::P, j)];
-  }
 
   //! @return velocity at grid point `j`
   double getU(const double* x, size_t j) const {
@@ -138,20 +164,9 @@ class AtmChemistry : public Cantera::Domain1D {
     return m_rho[j] * x[index(Offset::U, j)];
   }
 
-  //! @return mass fraction of species `k` at grid point `j`
-  double getY(const double* x, size_t k, size_t j) const {
-    return x[index(Offset::Y + k, j)];
-  }
-
   //! @return previous mass fraction of species `k` at grid point `j`
   double getYprev(size_t k, size_t j) const {
     return prevSoln(Offset::Y + k, j);
-  }
-
-  //! @return mole fraction of species `k` at grid point `j`
-  double getX(const double* x, size_t k, size_t j) const {
-    double wt = solution()->thermo()->molecularWeight(k);
-    return m_wtm[j] * getY(x, k, j) / wt;
   }
 
   //! @return upwind mass fraction derivative at grid point `j` of species `k`

@@ -9,6 +9,8 @@
 // cantera
 #include <cantera/oneD/Sim1D.h>
 
+class ActinicFlux;
+
 //! AtmChemistrySimulator extends OneDim to enable simulation of atmospheric
 //! chemistry over a 1D domain (column).
 
@@ -23,6 +25,8 @@ class AtmChemistrySimulator : public Cantera::OneDim {
 
   //! Destructor.
   ~AtmChemistrySimulator() {}
+
+  void initFromFile(const std::string& filename);
 
   //! Resize the solution vector and the work array.
   void resize() override;
@@ -77,14 +81,14 @@ class AtmChemistrySimulator : public Cantera::OneDim {
    * @param loglevel controls amount of printed diagnostics [0-8]
    * @returns size of last timestep taken
    */
-  double timeStep(int nsteps, double dt, int loglevel) {
-    return OneDim::timeStep(nsteps, dt, m_state->data(), m_xnew.data(),
-                            loglevel);
-  }
+  double timeStep(int nsteps, double dt, int loglevel);
 
  protected:
   //! a work array used to hold the residual or the new solution
   std::vector<double> m_xnew;
+
+  //! actinic flux handler
+  std::shared_ptr<ActinicFlux> m_actinic_flux;
 };
 
 #endif  // SRC_ATM_CHEMISTRY_SIMULATOR_HPP_:

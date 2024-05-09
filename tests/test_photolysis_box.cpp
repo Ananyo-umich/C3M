@@ -19,6 +19,7 @@
 
 // c3m
 #include <c3m/RadTran.hpp>
+#include <c3m/actinic_flux.hpp>
 
 class PhotolysisCH4 : public testing::Test {
  public:
@@ -30,22 +31,6 @@ class PhotolysisCH4 : public testing::Test {
   PhotolysisCH4() {
     phase = Cantera::newThermo("photolysis_ch4.yaml");
     kin = Cantera::newKinetics({phase}, "photolysis_ch4.yaml");
-
-    // set the initial state
-    std::string X = "CH4:0.02 N2:0.98";
-    phase->setState_TPX(200.0, Cantera::OneAtm, X);
-
-    // set wavelength
-    std::vector<double> wavelength(10);
-    std::vector<double> actinic_flux(10);
-
-    for (int i = 0; i < 10; i++) {
-      wavelength[i] = 20.0e-9 + i * 20.0e-9;
-      actinic_flux[i] = 1.e18;
-    }
-
-    kin->setWavelength(wavelength.data(), wavelength.size());
-    kin->updateActinicFlux(actinic_flux.data());
   }
 };
 
@@ -58,10 +43,30 @@ TEST_F(PhotolysisCH4, check_kinetics) {
   ASSERT_EQ(kin->nReactions(), 2);
   ASSERT_EQ(kin->nTotalSpecies(), 8);
   ASSERT_EQ(kin->nPhases(), 1);
-  ASSERT_EQ(kin->nWavelengths(), 10);
 }
 
 TEST_F(PhotolysisCH4, check_fwd_rate_constants) {
+  // set wavelength
+  std::vector<double> wavelength(10);
+  std::vector<double> actinic_flux(10);
+
+  for (int i = 0; i < 10; i++) {
+    wavelength[i] = 20.0e-9 + i * 20.0e-9;
+    actinic_flux[i] = 1.e18;
+  }
+
+  shared_ptr<ActinicFlux> aflux = std::make_shared<ActinicFlux>();
+  aflux->setWavelength(wavelength);
+  aflux->setTOAFlux(actinic_flux);
+  aflux->initialize();
+  kin->handleActinicFlux(aflux);
+
+  ASSERT_EQ(kin->nWavelengths(), 10);
+
+  // set the initial state
+  std::string X = "CH4:0.02 N2:0.98";
+  phase->setState_TPX(200.0, Cantera::OneAtm, X);
+
   std::vector<double> kfwd(kin->nReactions());
 
   kin->getFwdRateConstants(kfwd.data());
@@ -123,9 +128,11 @@ TEST(ZeroDim, PhotolysisO2) {
   std::cout << "Radiation Input Complete!" << std::endl;
 
   // Updating the actinic flux within yaml file [All in SI units]
-  sol->kinetics()->setWavelength(stellar_input.first.data(),
-                                 stellar_input.first.size());
-  sol->kinetics()->updateActinicFlux(stellar_input.second.data());
+  std::shared_ptr<ActinicFlux> aflux = std::make_shared<ActinicFlux>();
+  aflux->setWavelength(stellar_input.first);
+  aflux->setTOAFlux(stellar_input.second);
+  aflux->initialize();
+  sol->kinetics()->handleActinicFlux(aflux);
 
   // Reactor
   Cantera::IdealGasReactor reactor(sol);

@@ -5,6 +5,7 @@
 #include <cantera/transport/Transport.h>
 
 // c3m
+#include "actinic_flux.hpp"
 #include "atm_chemistry.hpp"
 
 // Domain1D constructor will resize the solution vector to the correct size
@@ -52,7 +53,10 @@ void AtmChemistry::resetBadValues(double* xg) {
 }
 
 void AtmChemistry::resize(size_t components, size_t points) {
+  // debug
   std::cout << "I'm resizing the domain" << std::endl;
+  std::cout << "components: " << components << std::endl;
+  std::cout << "points: " << points << std::endl;
   Cantera::Domain1D::resize(components, points);
   m_rho.resize(points, 0.);
   m_wtm.resize(points, 0.);
@@ -88,6 +92,10 @@ void AtmChemistry::setMidpoint(const double* x, size_t j) {
 
 void AtmChemistry::eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
                         integer* diagGlobal, double rdt) {
+  std::cout << "I'm calling eval" << std::endl;
+  std::cout << "jGlobal: " << jGlobal << std::endl;
+  std::cout << "rdt: " << rdt << std::endl;
+
   // If evaluating a Jacobian, and the global point is outside the domain of
   // influence for this domain, then skip evaluating the residual
   if (jGlobal != Cantera::npos &&
@@ -110,9 +118,10 @@ void AtmChemistry::eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
     jmax = std::min(jpt + 1, m_points - 1);
   }
 
-  updateProperties(jGlobal, x, jmin, jmax);
+  std::cout << "jmin: " << jmin << std::endl;
+  std::cout << "jmax: " << jmax << std::endl;
 
-  computeRadiation(x, jmin, jmax);
+  updateProperties(jGlobal, x, jmin, jmax);
 
   evalContinuity(x, rsd, diag, rdt, jmin, jmax);
 
@@ -123,7 +132,9 @@ void AtmChemistry::eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
     size_t j1 = std::min(jmax, m_points - 2);
     for (size_t j = j0; j <= j1; j++) {
       rsd[index(Offset::T, j)] = 0.;
-      diag[index(Offset::T, j)] = 0.;
+      rsd[index(Offset::P, j)] = 0.;
+      diag[index(Offset::T, j)] = 0;
+      diag[index(Offset::P, j)] = 0;
     }
   }
 
@@ -137,11 +148,12 @@ void AtmChemistry::updateProperties(size_t jg, double* x, size_t jmin,
   size_t j1 = std::min(jmax + 1, m_points - 1);
 
   updateThermo(x, j0, j1);
+  updateReactionRates(x, j0, j1);
 
   if (jg == Cantera::npos || m_force_full_update) {
     // update transport properties only if a Jacobian is not being
     // evaluated, or if specifically requested
-    updateTransport(x, j0, j1);
+    // updateTransport(x, j0, j1);
   }
 
   int nsp = solution()->thermo()->nSpecies();
@@ -157,13 +169,12 @@ void AtmChemistry::updateProperties(size_t jg, double* x, size_t jmin,
 
   // update the species diffusive mass fluxes whether or not a
   // Jacobian is being evaluated
-  updateDiffFluxes(x, j0, j1);
+  // updateDiffFluxes(x, j0, j1);
 }
-
-void AtmChemistry::computeRadiation(double* x, size_t jmin, size_t jmax) {}
 
 void AtmChemistry::evalContinuity(double* x, double* rsd, int* diag, double rdt,
                                   size_t jmin, size_t jmax) {
+  std::cout << "I'm calling evalContinuity" << std::endl;
   // The left boundary has the same form for all cases.
   if (jmin == 0) {  // left boundary
     double dz = m_z[jmin + 1] - m_z[jmin];
@@ -190,6 +201,7 @@ void AtmChemistry::evalContinuity(double* x, double* rsd, int* diag, double rdt,
 
 void AtmChemistry::evalEnergy(double* x, double* rsd, int* diag, double rdt,
                               size_t jmin, size_t jmax) {
+  std::cout << "I'm calling evalEnergy" << std::endl;
   if (jmin == 0) {  // left boundary
     rsd[index(Offset::T, jmin)] = getT(x, jmin);
   }
@@ -223,6 +235,7 @@ void AtmChemistry::evalEnergy(double* x, double* rsd, int* diag, double rdt,
 
 void AtmChemistry::evalSpecies(double* x, double* rsd, int* diag, double rdt,
                                size_t jmin, size_t jmax) {
+  std::cout << "I'm calling evalSpecies" << std::endl;
   auto thermo = solution()->thermo();
   int nsp = thermo->nSpecies();
 
@@ -266,8 +279,8 @@ void AtmChemistry::evalSpecies(double* x, double* rsd, int* diag, double rdt,
 }
 
 void AtmChemistry::updateThermo(double const* x, size_t j0, size_t j1) {
+  std::cout << "I'm calling updateThermo" << std::endl;
   auto thermo = solution()->thermo();
-  auto kinetics = solution()->kinetics();
 
   for (size_t j = j0; j <= j1; j++) {
     thermo->setTemperature(getT(x, j));
@@ -281,11 +294,21 @@ void AtmChemistry::updateThermo(double const* x, size_t j0, size_t j1) {
     m_cp[j] = thermo->cp_mass();
 
     thermo->getPartialMolarEnthalpies(&m_hk(0, j));
+  }
+}
+
+void AtmChemistry::updateReactionRates(double const* x, size_t j0, size_t j1) {
+  std::cout << "I'm calling updateReactionRates" << std::endl;
+  auto kinetics = solution()->kinetics();
+
+  for (size_t j = j0; j <= j1; j++) {
+    kinetics->setActinicFluxLevel(j);
     kinetics->getNetProductionRates(&m_wdot(0, j));
   }
 }
 
 void AtmChemistry::updateTransport(double const* x, size_t j0, size_t j1) {
+  std::cout << "I'm calling updateTransport" << std::endl;
   auto trans = solution()->transport();
   auto thermo = solution()->thermo();
   int nsp = thermo->nSpecies();
@@ -308,6 +331,7 @@ void AtmChemistry::updateTransport(double const* x, size_t j0, size_t j1) {
 }
 
 void AtmChemistry::updateDiffFluxes(const double* x, size_t j0, size_t j1) {
+  std::cout << "I'm calling updateDiffFluxes" << std::endl;
   auto thermo = solution()->thermo();
   int nsp = thermo->nSpecies();
 
