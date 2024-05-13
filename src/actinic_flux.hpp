@@ -64,6 +64,12 @@ class ActinicFlux : public Cantera::Func1 {
   //! @param x global state vector
   double eval(double dt, double* x) override;
 
+  double getFlux(size_t j, size_t k) const {
+    return m_actinicFlux->at(j * m_wavelength->size() + k);
+  }
+
+  void show() const;
+
  protected:
   //! indicate if object is initialized
   bool m_initialized = false;
@@ -74,14 +80,11 @@ class ActinicFlux : public Cantera::Func1 {
   //! Cantera Kinetics object
   std::weak_ptr<Cantera::Kinetics> m_kin;
 
-  //! Cantera Domain1D object
+  //! AtmChemistry object
   std::weak_ptr<AtmChemistry> m_atm;
 
   //! TOA irradiance [photons/(s.m^2.m)] (nWaves)
   std::vector<double> m_toa_flux;
-
-  //! layer thickness [m] (nPoints)
-  std::vector<double> m_delta_z;
 
   //! wavelength grid [m] (nWaves), shared with Kinetics
   std::shared_ptr<std::vector<double>> m_wavelength;

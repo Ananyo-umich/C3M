@@ -5,6 +5,10 @@
 #include <memory>
 #include <string>
 
+// Eigen
+#include <Eigen/Core>
+#include <Eigen/Sparse>
+
 // cantera
 #include <cantera/base/Array.h>
 #include <cantera/base/Solution.h>
@@ -15,54 +19,78 @@ class ActinicFlux;
 
 //! Domain1D is a lightweight class that holds information about a 1D domain.
 //! It does not contain the solution vector itself, but only information about
-//! the domain, such as the number of grid points and the number of components.
-//! Domain1D holds a pointer to the solution vector (m_state), which is owned by
-//! OneDim. Domain1D has its own a Solution object (m_solution), which is a
-//! manger class for Thermo, Kinetics, etc.
+//! the domain, such as the number of grid points and the number of components
+//! (strides).
+//!
+//! Domain1D has its own a Solution object, accessed by solution(), which is a
+//! manger class for Thermo, Kinetics, Transport, etc.
+//!
+//! There are two kinds of domains, Bulk and Connector. Bulk is a domain that
+//! contains interior points, while Connector is a domain that contains boundary
+//! points. Both Bulk and Connector are derived from Domain1D and have their own
+//! implementations of physical functions.
+//!
+//! Bulk and Connector arranged as the following:
+//!
+//!             .----.----.----.---- Bulk 1 managed interior points
+//!             |    |    |    |
+//!        .----+----+----+----+-----.-------------------------.
+//!        |                         |                         |
+//! (Connector 0) -- (Bulk 1) -- (Connector 1) -- (Bulk 2) -- (Connector 2)
+//!        |                         |                         |
+//!        * -- + -- + -- + -- + --  * -- + -- + -- + -- + --  *
+//!        ^                         ^                         ^
+//!        |-- boundary point        |-- boundary point        |-- boundary
+//!
+//!
+//! Each Bulk object has a left and right boundary point (*). The boundary point
+//! is a point where the solution is managed by a Connector.
+//! The Bulk object manages the interior points (+) of the Domain1D object.
 
 //! \brief AtmChemistry extends Domain1D to represent a column of atmosphere.
 class AtmChemistry : public Cantera::Domain1D {
   //! Offsets of solution components in the 1D solution array.
   //! temperature, pressure, velocity, mass fractions
-  enum Offset { T, P, U, Y };
+  enum Offset { T, P, U };
 
  public:
   AtmChemistry(std::string const& id, std::shared_ptr<Cantera::Solution> sol,
-               size_t npoints = 1);
+               size_t npoints = 1, size_t stride = Cantera::npos);
 
   ~AtmChemistry() {}
 
+  //---------------------------------------------------------
+  //             overriden general functions
+  //---------------------------------------------------------
+  //! concrete type of the domain
   std::string domainType() const override;
 
-  //! reset bad values in the solution vector
+  //! reset bad values in the global solution vector
+  //! @param xg global mole fraction solution vector
   void resetBadValues(double* xg) override;
 
-  //! Change the grid size. Called after grid refinement.
-  void resize(size_t components, size_t points) override;
+  //! @return the size of the solution vector
+  size_t size() const override;
 
-  //! Set the state to be consistent with the solution at the midpoint
-  //! between j and j + 1.
-  void setMidpoint(const double* x, size_t j);
+  //! change the grid size. Called after grid refinement.
+  void resize(size_t stride, size_t points) override;
+
+  //! called to set up initial grid, and after grid refinement
+  void setupGrid(size_t n, const double* z) override;
 
   //! Initial value of solution component @e n at grid point @e j.
-  double initialValue(size_t n, size_t j) override { return 0.; }
+  double initialValue(size_t n, size_t j) override;
 
   //! Name of the nth component.
   std::string componentName(size_t n) const override;
 
-  //! Index of the species in the solution vector.
-  size_t speciesIndex(const std::string& name) const {
-    return componentIndex(name) - Offset::Y;
-  }
-
-  //! Pass actinic flux to kinetics object
-  void handleActinicFlux(std::shared_ptr<ActinicFlux> actinic_flux) {
-    solution()->kinetics()->handleActinicFlux(actinic_flux);
-  }
-
-  //! Returns true if the specified component is an active part of the solver
-  //! state
-  virtual bool componentActive(size_t n) const { return m_do_species[n]; }
+  //! Update the following thermo properties at levels
+  //! (1) Temperature
+  //! (2) Pressure
+  //! (3) Mean molecular weight
+  //! (4) specific molar enthalpies
+  //! @param x mole fraction vector
+  void update(double const* x) override;
 
   /**
    * Evaluate the residual functions for atmospheric chemistry
@@ -79,35 +107,103 @@ class AtmChemistry : public Cantera::Domain1D {
    * the values of the connected boundary object.
    *
    *  @param jGlobal  Global grid point at which to update the residual
-   *  @param[in] xGlobal  Global state vector
+   *  @param[in] yGlobal  Global state vector
    *  @param[out] rsdGlobal  Global residual vector
    *  @param[out] diagGlobal  Global boolean mask indicating whether each
    * solution component has a time derivative (1) or not (0).
    *  @param[in] rdt Reciprocal of the timestep (`rdt=0` implies steady-state.)
    */
-  void eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
+  void eval(size_t jGlobal, double* yGlobal, double* rsdGlobal,
             integer* diagGlobal, double rdt) override;
 
+ public:
+  //---------------------------------------------------------
+  //             special functions
+  //---------------------------------------------------------
+  //! @return number of species
+  size_t nSpecies() const { return solution()->thermo()->nSpecies(); }
+
+  //! Returns true if the specified component is an active part of the solver
+  //! state
+  virtual bool componentActive(size_t n) const { return m_do_species[n]; }
+
   //! @return temperature at grid point `j`
-  double getT(double const* x, size_t j) const {
-    return x[index(Offset::T, j)];
+  double getT(size_t j) const {
+    auto tmp = m_hydro.lock();
+    if (!tmp) {
+      throw Cantera::CanteraError("AtmChemistry::getT",
+                                  "Hydro not initialized. Call setHydro().");
+    }
+    return tmp->at(index_hydro(Offset::T, j));
   }
 
   //! @return pressure at grid point `j`
-  double getP(double const* x, size_t j) const {
-    return x[index(Offset::P, j)];
+  double getP(size_t j) const {
+    auto tmp = m_hydro.lock();
+    if (!tmp) {
+      throw Cantera::CanteraError("AtmChemistry::getP",
+                                  "Hydro not initialized. Call setHydro().");
+    }
+    return tmp->at(index_hydro(Offset::P, j));
+  }
+
+  //! @return velocity at grid point `j`
+  double getU(size_t j) const {
+    auto tmp = m_hydro.lock();
+    if (!tmp) {
+      throw Cantera::CanteraError("AtmChemistry::getP",
+                                  "Hydro not initialized. Call setHydro().");
+    }
+    return tmp->at(index_hydro(Offset::U, j));
   }
 
   //! @return mass fraction of species `k` at grid point `j`
+  //! @param x mole fraction array
   double getY(const double* x, size_t k, size_t j) const {
-    return x[index(Offset::Y + k, j)];
+    double wt = solution()->thermo()->molecularWeight(k);
+    return getX(x, k, j) * wt / m_wtm[j];
   }
 
   //! @return mole fraction of species `k` at grid point `j`
+  //! @param x mole fraction array
   double getX(const double* x, size_t k, size_t j) const {
-    double wt = solution()->thermo()->molecularWeight(k);
-    return m_wtm[j] * getY(x, k, j) / wt;
+    return x[index(k, j)];
   }
+
+  //! @return layer thickness
+  double getH(size_t j) const { return m_delta_z[j]; }
+
+ public:
+  //---------------------------------------------------------
+  //             hydro coupler
+  //---------------------------------------------------------
+  //! set const ptr to hydro dara array with stride
+  void setHydro(std::shared_ptr<std::vector<double>> hydro, size_t stride) {
+    m_hydro = hydro;
+    m_hydro_stride = stride;
+  }
+
+  //! cache state (hydro & composition) at half grid
+  //! between j and j + 1.
+  void setMidpoint(const double* x, size_t j);
+
+  //---------------------------------------------------------
+  //             kinetics coupler (actinic flux)
+  //---------------------------------------------------------
+  //! Pass actinic flux to kinetics object
+  void handleActinicFlux(std::shared_ptr<ActinicFlux> actinic_flux) {
+    solution()->kinetics()->handleActinicFlux(actinic_flux);
+  }
+
+ protected:
+  //---------------------------------------------------------
+  //             physical functions
+  //---------------------------------------------------------
+  //! This function calls all physical functions
+  //! It calls updateThermo(), updateReaction() and updateDiffusion()
+  //! for all interior points of a domain
+  //! After the call, sparse tri-diagonal matrices are set & compressed
+  void updateProperties(double const* x, double rdt, size_t j0, size_t j1);
 
   /**
    * Update the thermodynamic properties from point j0 to point j1
@@ -117,90 +213,20 @@ class AtmChemistry : public Cantera::Domain1D {
    * points from j0 to j1.
    *
    * Properties that are computed and cached are:
-   * * #m_rho (density)
    * * #m_wtm (mean molecular weight)
-   * * #m_cp (specific heat capacity)
    * * #m_hk (species specific enthalpies)
    */
-  virtual void updateThermo(double const* x, size_t j0, size_t j1);
-
- protected:
-  //---------------------------------------------------------
-  //             physical functions
-  //---------------------------------------------------------
-
-  virtual void updateProperties(size_t jg, double* x, size_t jmin, size_t jmax);
-  virtual void evalContinuity(double* x, double* rsd, int* diag, double rdt,
-                              size_t jmin, size_t jmax);
-  virtual void evalEnergy(double* x, double* rsd, int* diag, double rdt,
-                          size_t jmin, size_t jmax);
+  virtual void updateThermo(double const* x, double drt, size_t j0, size_t j1);
 
   //! update #m_wdot (species production rates)
-  virtual void updateReactionRates(double const* x, size_t j0, size_t j1);
+  virtual void updateReaction(double const* x, size_t j0, size_t j1);
 
-  //! Update the transport properties at grid points in the range from `j0`
+  //! Update the convection properties at grid points in the range from `j0`
   //! to `j1`, based on solution `x`.
-  virtual void updateTransport(double const* x, size_t j0, size_t j1);
+  virtual void updateConvection(double const* x, size_t j0, size_t j1);
 
   //! Update the diffusive mass fluxes.
-  virtual void updateDiffFluxes(const double* x, size_t j0, size_t j1);
-
-  //! @return previous temperature at grid point `j`
-  double getTprev(size_t j) const { return prevSoln(Offset::T, j); }
-
-  //! @return The fixed temperature value at point j.
-  double getTfixed(size_t j) const { return m_fixedtemp[j]; }
-
-  //! @return velocity at grid point `j`
-  double getU(const double* x, size_t j) const {
-    return x[index(Offset::U, j)];
-  }
-
-  //! @return density at grid point `j`
-  double getRho(size_t j) const { return m_rho[j]; }
-
-  //! @return density multiplied by velocity at grid point `j`
-  double getRhoU(double const* x, size_t j) const {
-    return m_rho[j] * x[index(Offset::U, j)];
-  }
-
-  //! @return previous mass fraction of species `k` at grid point `j`
-  double getYprev(size_t k, size_t j) const {
-    return prevSoln(Offset::Y + k, j);
-  }
-
-  //! @return upwind mass fraction derivative at grid point `j` of species `k`
-  double dYdz(const double* x, size_t k, size_t j) const {
-    size_t jloc = (getU(x, j) > 0.0 ? j : j + 1);
-    double dz = m_z[jloc] - m_z[jloc - 1];
-    return (getY(x, k, jloc) - getY(x, k, jloc - 1)) / dz;
-  }
-
-  //! @return upwind temperature derivative at grid point `j`
-  double dTdz(const double* x, size_t j) const {
-    size_t jloc = (getU(x, j) > 0.0 ? j : j + 1);
-    double dz = m_z[jloc] - m_z[jloc - 1];
-    return (getT(x, jloc) - getT(x, jloc - 1)) / dz;
-  }
-
-  //! @return upwind enthalpy derivative at grid point `j` of species `k`
-  double dhkdz(const double* x, size_t k, size_t j) const {
-    if (getU(x, j) > 0.0) {
-      double dz = m_z[j] - m_z[j - 1];
-      return (m_hk(k, j) - m_hk(k, j - 1)) / dz;
-    } else {
-      double dz = m_z[j + 1] - m_z[j];
-      return (m_hk(k, j + 1) - m_hk(k, j)) / dz;
-    }
-  }
-
-  //! @return conductive heat divergence at grid point `j`
-  double divHeatFlux(const double* x, size_t j) const {
-    double c1 = m_tcon[j - 1] * (getT(x, j) - getT(x, j - 1));
-    double c2 = m_tcon[j] * (getT(x, j + 1) - getT(x, j));
-    return -2.0 * (c2 / (z(j + 1) - z(j)) - c1 / (z(j) - z(j - 1))) /
-           (z(j + 1) - z(j - 1));
-  }
+  // virtual void updateDiffusion(const double* x, size_t j0, size_t j1);
 
   /**
    * Evaluate the species equations' residuals.
@@ -216,53 +242,74 @@ class AtmChemistry : public Cantera::Domain1D {
    *
    * For argument explanation, see evalContinuity().
    */
-  virtual void evalSpecies(double* x, double* rsd, int* diag, double rdt,
-                           size_t jmin, size_t jmax);
+  void evalResidual(double* y, double* rsd, int* diag, double rdt, size_t jmin,
+                    size_t jmax);
 
+ protected:
+  //---------------------------------------------------------
+  //             helper functions
+  //---------------------------------------------------------
+  //! @return number of variables in a layer
+  size_t stride() const { return m_nv; }
+
+  size_t index_hydro(size_t n, size_t j) const {
+    return m_hydro_stride * j + n;
+  }
+
+ protected:
   //---------------------------------------------------------
   //             member data
   //---------------------------------------------------------
-  //! active component indicator (nSpecies)
+  //! active species indicator (nSpecies)
   std::vector<bool> m_do_species;
 
-  //! cached density (nPoints)
-  std::vector<double> m_rho;
+  //! layer thickness [m] (nPoints)
+  std::vector<double> m_delta_z;
 
-  //! cached mean molecular weight (nPoints)
+  //! cached mean molecular weight [kg/mol] (nPoints)
   std::vector<double> m_wtm;
 
-  //! cached specific heat capacity (nPoints)
-  std::vector<double> m_cp;
-
-  //! cached thermal conductivity (nPoints)
-  std::vector<double> m_tcon;
-
-  //! cached species diffusion coefficients (nSpecies x nPoints)
-  std::vector<double> m_diff;
-
-  // fixed T
-  std::vector<double> m_fixedtemp;
-
-  //! cached species specific enthalpies (nSpecies x nPoints)
+  //! cached species molar enthalpies [J/mol] (nSpecies x nPoints)
   Cantera::Array2D m_hk;
+
+  //! cached species diffusion flux (nSpecies x (nPoints + 1))
+  Cantera::Array2D m_diff_flux;
+
+  //! cached species diffusion tendency (nSpecies x nPoints)
+  Cantera::Array2D m_diff_t;
+
+  //! cached eddy and binary diffusion coefficients (nPoints + 1)
+  // std::vector<double> m_Keddy;
+  // std::vector<Eigen::MatrixXd> m_Kbinary;
 
   //! cached species production rates (nSpecies x nPoints)
   Cantera::Array2D m_wdot;
 
-  //! cached species diffusive mass fluxes (nSpecies x nPoints)
-  Cantera::Array2D m_flux;
-
-  //! Index of species with a large mass fraction at each boundary, for which
-  //! the mass fraction may be calculated as 1 minus the sum of the other mass
-  //! fractions
-  size_t m_kExcessLeft = 0;
-  size_t m_kExcessRight = 0;
-
-  //! energy equation indicator
-  bool m_do_energy;
+  //! cached species convection tendency (nSpecies x nPoints)
+  Cantera::Array2D m_conv_t;
 
  private:
-  std::vector<double> m_ymid;
+  //---------------------------------------------------------
+  //             half grid member data
+  //---------------------------------------------------------
+
+  //! cached species mole fraction at half grid (nPoints)
+  std::vector<double> m_Xmid;
+
+  //! cached temperature at half grid (nPoints)
+  std::vector<double> m_Tmid;
+
+  //! cached pressure at half grid (nPoints)
+  std::vector<double> m_Pmid;
+
+  //! cached molecular weight difference at half grid (nSpecies x nPoints)
+  Cantera::Array2D m_dwtm;
+
+  //! cached pointer to hydro
+  std::weak_ptr<std::vector<double> const> m_hydro;
+
+  //! stride between two levels in hydro
+  size_t m_hydro_stride = 0;
 };
 
 #endif  // SRC_ATM_CHEMISTRY_HPP

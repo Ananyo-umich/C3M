@@ -34,12 +34,11 @@ void AtmChemistrySimulator::initFromFile(const std::string& filename) {
     actinic_flux[i] = 1.e25;
   }
 
-  auto iatm = domainIndex("atm");
+  auto atm = find<AtmChemistry>("atm");
   m_actinic_flux = std::make_shared<ActinicFlux>();
 
-  m_actinic_flux->setKinetics(domain(iatm).solution()->kinetics());
-  m_actinic_flux->setAtmosphere(
-      std::dynamic_pointer_cast<AtmChemistry>(m_dom[iatm]));
+  m_actinic_flux->setKinetics(atm->solution()->kinetics());
+  m_actinic_flux->setAtmosphere(atm);
   // m_actinic_flux->setWavelength(stellar_input.first);
   m_actinic_flux->setWavelength(wavelength);
   // m_actinic_flux->setTOAFlux(stellar_input.second);
@@ -47,33 +46,84 @@ void AtmChemistrySimulator::initFromFile(const std::string& filename) {
   m_actinic_flux->initialize();
   setTimeStepCallback(m_actinic_flux.get());
 
-  std::static_pointer_cast<AtmChemistry>(m_dom[iatm])
-      ->handleActinicFlux(m_actinic_flux);
+  atm->handleActinicFlux(m_actinic_flux);
 }
 
 void AtmChemistrySimulator::resize() {
-  std::cout << "total size = " << size() << std::endl;
   OneDim::resize();
   m_xnew.resize(size(), 0.);
 }
 
-void AtmChemistrySimulator::setValue(size_t dom, size_t comp, size_t localPoint,
+int AtmChemistrySimulator::solve(double* x0, double* x1, int loglevel) {
+  // x0 is the previous state
+  // x1 is the residual
+  eval(Cantera::npos, x0, x1, m_rdt, 1);
+
+  auto p = left();
+  while (p != nullptr) {
+    double* X = x1 + p->loc();
+    if (p->isConnector()) {
+      p = p->right();
+    } else {
+      p = p->forwardSweep(X);
+    }
+  }
+
+  p = right();
+  while (p != nullptr) {
+    double* X = x1 + p->loc();
+    if (p->isConnector()) {
+      p = p->left();
+    } else {
+      p = p->backwardSweep(X);
+    }
+  }
+
+  bool good = true;
+  for (size_t n = 0; n < size(); n++) {
+    if (x0[n] + x1[n] < 0.) {
+      good = false;
+    }
+  }
+
+  if (good) {
+    m_successiveSteps++;
+    for (size_t n = 0; n < size(); n++) x1[n] += x0[n];
+    if (m_successiveSteps > 3)
+      return 100;
+    else
+      return 1;
+  }
+
+  m_successiveSteps = 0;
+  return -1;
+}
+
+void AtmChemistrySimulator::setValue(std::shared_ptr<Cantera::Domain1D> pdom,
+                                     size_t comp, size_t localPoint,
                                      double value) {
-  size_t iloc = domain(dom).loc() + domain(dom).index(comp, localPoint);
-  AssertThrowMsg(iloc < m_state->size(), "AtmChemistrySimulator::setValue",
-                 "Index out of bounds: {} > {}", iloc, m_state->size());
+  size_t iloc = pdom->loc() + pdom->index(comp, localPoint);
+  if (iloc > m_state->size()) {
+    throw Cantera::CanteraError("AtmChemistrySimulator::setValue",
+                                "Index out of bounds: {} > {}", iloc,
+                                m_state->size());
+  }
   (*m_state)[iloc] = value;
 }
 
-double AtmChemistrySimulator::value(size_t dom, size_t comp,
-                                    size_t localPoint) const {
-  size_t iloc = domain(dom).loc() + domain(dom).index(comp, localPoint);
-  AssertThrowMsg(iloc < m_state->size(), "AtmChemistrySimulator::value",
-                 "Index out of bounds: {} > {}", iloc, m_state->size());
+double AtmChemistrySimulator::value(std::shared_ptr<Cantera::Domain1D> pdom,
+                                    size_t comp, size_t localPoint) const {
+  size_t iloc = pdom->loc() + pdom->index(comp, localPoint);
+  if (iloc > m_state->size()) {
+    throw Cantera::CanteraError("AtmChemistrySimulator::value",
+                                "Index out of bounds: {} > {}", iloc,
+                                m_state->size());
+  }
   return (*m_state)[iloc];
 }
 
-void AtmChemistrySimulator::setProfile(size_t dom, size_t comp,
+void AtmChemistrySimulator::setProfile(std::shared_ptr<Cantera::Domain1D> pdom,
+                                       size_t comp,
                                        const std::vector<double>& pos,
                                        const std::vector<double>& values) {
   if (pos.front() != 0.0 || pos.back() != 1.0) {
@@ -83,21 +133,22 @@ void AtmChemistrySimulator::setProfile(size_t dom, size_t comp,
         "[{}, {}] instead.",
         pos.front(), pos.back());
   }
-  Cantera::Domain1D& d = domain(dom);
-  double z0 = d.zmin();
-  double z1 = d.zmax();
-  for (size_t n = 0; n < d.nPoints(); n++) {
-    double zpt = d.z(n);
+
+  double z0 = pdom->zmin();
+  double z1 = pdom->zmax();
+  for (size_t n = 0; n < pdom->nPoints(); n++) {
+    double zpt = pdom->z(n);
     double frac = (zpt - z0) / (z1 - z0);
     double v = Cantera::linearInterp(frac, pos, values);
-    setValue(dom, comp, n, v);
+    setValue(pdom, comp, n, v);
   }
 }
 
-void AtmChemistrySimulator::setFlatProfile(size_t dom, size_t comp, double v) {
-  size_t np = domain(dom).nPoints();
+void AtmChemistrySimulator::setFlatProfile(
+    std::shared_ptr<Cantera::Domain1D> pdom, size_t comp, double v) {
+  size_t np = pdom->nPoints();
   for (size_t n = 0; n < np; n++) {
-    setValue(dom, comp, n, v);
+    setValue(pdom, comp, n, v);
   }
 }
 
@@ -110,21 +161,26 @@ void AtmChemistrySimulator::show() {
       domain(n).show(m_state->data() + start(n));
     }
   }
+
+  m_actinic_flux->show();
+}
+
+void AtmChemistrySimulator::update() {
+  if (m_actinic_flux == nullptr) {
+    throw Cantera::CanteraError("AtmChemistrySimulator::update",
+                                "Actinic flux not initialized.");
+  }
+
+  for (size_t n = 0; n < nDomains(); n++) {
+    domain(n).update(m_state->data() + start(n));
+  }
+
+  // update actinic flux
+  m_actinic_flux->eval(0., m_state->data());
 }
 
 double AtmChemistrySimulator::timeStep(int nsteps, double dt, int loglevel) {
-  std::cout << "nsteps = " << nsteps << std::endl;
-  std::cout << "dt = " << dt << std::endl;
-  std::cout << "loglevel = " << loglevel << std::endl;
-
-  // update atmospheric thermo properties
-  auto iatm = domainIndex("atm");
-  auto atm = std::dynamic_pointer_cast<AtmChemistry>(m_dom[iatm]);
-  atm->updateThermo(m_state->data(), atm->loc(),
-                    atm->loc() + atm->nPoints() - 1);
-
-  // update actinic flux
-  m_time_step_callback->eval(dt, m_state->data());
+  update();
 
   return OneDim::timeStep(nsteps, dt, m_state->data(), m_xnew.data(), loglevel);
 }

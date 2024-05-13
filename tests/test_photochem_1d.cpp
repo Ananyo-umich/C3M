@@ -18,7 +18,8 @@ class TestPhotochem1D : public testing::Test {
  public:
   // data
   AtmChemistrySimulator *pchem;
-  int iT, iP, iN2, iO, iO2, iO3;
+  int iN2, iO, iO2, iO3;
+  std::shared_ptr<std::vector<double>> hydro;
 
   // constructor
   TestPhotochem1D() {
@@ -26,17 +27,15 @@ class TestPhotochem1D : public testing::Test {
     auto mech = Cantera::newSolution("photolysis_o2.yaml");
     auto atm = std::make_shared<AtmChemistry>("atm", mech);
 
-    iT = atm->componentIndex("T");
-    iP = atm->componentIndex("P");
     iN2 = atm->componentIndex("N2");
     iO = atm->componentIndex("O");
     iO2 = atm->componentIndex("O2");
     iO3 = atm->componentIndex("O3");
 
     // grid
-    double uin = 0.;
-    double T = 300;
-    double P = 101325;
+    double T0 = 300;
+    double P0 = 0.01;
+    double U0 = 0.;
 
     int nz = 10;
     double height = 100.E3;
@@ -49,93 +48,91 @@ class TestPhotochem1D : public testing::Test {
     // resize function is called inside setupGrid
     atm->setupGrid(nz, z.data());
 
+    hydro = std::make_shared<std::vector<double>>(atm->nPoints() * 3);
+    for (size_t n = 0; n < atm->nPoints(); ++n) {
+      hydro->at(n * 3) = T0;
+      hydro->at(n * 3 + 1) = P0;
+      hydro->at(n * 3 + 2) = U0;
+    }
+
+    atm->setHydro(hydro, 3);
+
     // surface
     std::string X = "O2:0.21 N2:0.79";
     auto surface = std::make_shared<SurfaceBoundary>("surface", mech);
-    surface->setTemperature(T);
+    surface->setTemperature(T0);
 
     // space
     auto space = std::make_shared<SpaceBoundary>("space", mech);
-    surface->setTemperature(T);
+    surface->setTemperature(P0);
 
     // set up simulation
     // pchem = new AtmChemistrySimulator({surface, atm, space});
     pchem = new AtmChemistrySimulator({atm});
     pchem->initFromFile("stellar/sun.ir");
+
+    double vN2 = 0.70;
+    double vO = 0.1;
+    double vO2 = 0.21;
+    double vO3 = 0.1;
+
+    pchem->setFlatProfile(atm, iN2, vN2);
+    pchem->setFlatProfile(atm, iO, vO);
+    pchem->setFlatProfile(atm, iO2, vO2);
+    pchem->setFlatProfile(atm, iO3, vO3);
   }
 
   ~TestPhotochem1D() { delete pchem; }
 };
 
 TEST_F(TestPhotochem1D, check_domain_index) {
-  ASSERT_EQ(iT, 0);
-  ASSERT_EQ(iP, 1);
-  ASSERT_EQ(iN2, 3);
-  ASSERT_EQ(iO, 4);
-  ASSERT_EQ(iO2, 6);
-  ASSERT_EQ(iO3, 7);
+  ASSERT_EQ(iN2, 0);
+  ASSERT_EQ(iO, 1);
+  ASSERT_EQ(iO2, 3);
+  ASSERT_EQ(iO3, 4);
 
-  // int dom = static_cast<int>(pchem->domainIndex("surface"));
-  // ASSERT_EQ(dom, 0);
-  int iatm = pchem->domainIndex("atm");
-  ASSERT_EQ(iatm, 0);
-  int ncomp = pchem->domain(iatm).nComponents();
-  ASSERT_EQ(ncomp, 8);
-  int npoints = pchem->domain(iatm).nPoints();
+  auto atm = pchem->find<>("atm");
+  int ncomp = atm->nComponents();
+  ASSERT_EQ(ncomp, 5);
+  int npoints = atm->nPoints();
   ASSERT_EQ(npoints, 10);
   int size = pchem->size();
   ASSERT_EQ(size, npoints * ncomp);
-  // dom = static_cast<int>(pchem->domainIndex("space"));
-  // ASSERT_EQ(dom, 2);
 }
 
 TEST_F(TestPhotochem1D, check_profile) {
-  int iatm = pchem->domainIndex("atm");
+  auto atm = pchem->find<AtmChemistry>("atm");
+
   double vN2 = 0.70;
   double vO = 0.1;
   double vO2 = 0.21;
   double vO3 = 0.1;
 
-  pchem->setFlatProfile(iatm, iN2, vN2);
-  pchem->setFlatProfile(iatm, iO, vO);
-  pchem->setFlatProfile(iatm, iO2, vO2);
-  pchem->setFlatProfile(iatm, iO3, vO3);
-
-  for (int j = 0; j < pchem->domain(iatm).nPoints(); j++) {
-    ASSERT_DOUBLE_EQ(pchem->value(iatm, iN2, j), vN2);
-    ASSERT_DOUBLE_EQ(pchem->value(iatm, iO, j), vO);
-    ASSERT_DOUBLE_EQ(pchem->value(iatm, iO2, j), vO2);
-    ASSERT_DOUBLE_EQ(pchem->value(iatm, iO3, j), vO3);
+  for (int j = 0; j < atm->nPoints(); j++) {
+    ASSERT_DOUBLE_EQ(pchem->value(atm, iN2, j), vN2);
+    ASSERT_DOUBLE_EQ(pchem->value(atm, iO, j), vO);
+    ASSERT_DOUBLE_EQ(pchem->value(atm, iO2, j), vO2);
+    ASSERT_DOUBLE_EQ(pchem->value(atm, iO3, j), vO3);
   }
 }
 
 TEST_F(TestPhotochem1D, check_attenuation) {
-  int iatm = pchem->domainIndex("atm");
-  double T0 = 300.;
-  double P0 = 101325.;
+  auto atm = pchem->find<AtmChemistry>("atm");
 
-  pchem->setFlatProfile(iatm, iT, T0);
-  pchem->setFlatProfile(iatm, iP, P0);
+  pchem->update();
 }
 
 TEST_F(TestPhotochem1D, check_time_step) {
-  int iatm = pchem->domainIndex("atm");
-  double vN2 = 0.79;
-  double vO2 = 0.21;
-  double T0 = 300.;
-  double P0 = 0.01;
+  auto atm = pchem->find<AtmChemistry>("atm");
 
-  pchem->setFlatProfile(iatm, iN2, vN2);
-  pchem->setFlatProfile(iatm, iO2, vO2);
-  pchem->setFlatProfile(iatm, iT, T0);
-  pchem->setFlatProfile(iatm, iP, P0);
-
+  pchem->setMaxTimeStep(1.E9);
   pchem->show();
 
   int nsteps = 10;
   double dt = 1.0;
 
-  pchem->timeStep(1, dt, 8);
+  pchem->timeStep(200, dt, 8);
+  pchem->show();
 }
 
 int main(int argc, char **argv) {

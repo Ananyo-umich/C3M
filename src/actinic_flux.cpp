@@ -1,3 +1,6 @@
+// C/C++
+#include <iomanip>
+
 // cantera
 #include <cantera/kinetics/Photolysis.h>
 
@@ -33,18 +36,17 @@ void ActinicFlux::initialize() {
         "Wavelength grid is empty. Call setWavelength().");
   }
 
-  size_t nWaves = m_wavelength->size();
-  size_t nPoints = m_atm.lock() ? m_atm.lock()->nPoints() : 1;
+  size_t waves = m_wavelength->size();
+  size_t points = m_atm.lock() ? m_atm.lock()->nPoints() : 1;
 
-  if (m_toa_flux.size() != nWaves) {
+  if (m_toa_flux.size() != waves) {
     throw Cantera::CanteraError(
         "ActinicFlux::initialize",
         "TOA flux size does not match wavelength size.");
   }
 
-  m_actinicFlux = std::make_shared<std::vector<double>>(nPoints * nWaves);
-  m_delta_z.resize(nPoints);
-  m_dtau.resize(nPoints, nWaves);
+  m_actinicFlux = std::make_shared<std::vector<double>>(points * waves);
+  m_dtau.resize(points, waves);
 
   // populate photolysis reaction indices
   m_photo_reactions.clear();
@@ -56,19 +58,9 @@ void ActinicFlux::initialize() {
     }
   }
 
-  // populate layer thickness
-  auto atm = m_atm.lock();
-  if (atm) {
-    m_delta_z[0] = atm->z(1) - atm->z(0);
-    for (int j = 1; j < nPoints - 1; j++) {
-      m_delta_z[j] = (atm->z(j + 1) - atm->z(j - 1)) / 2.;
-    }
-    m_delta_z[nPoints - 1] = atm->z(nPoints - 1) - atm->z(nPoints - 2);
-  }
-
   // populate first TOA actinic flux
-  for (size_t k = 0; k < nWaves; k++) {
-    m_actinicFlux->at(k) = m_toa_flux[k];
+  for (size_t k = 0; k < waves; k++) {
+    m_actinicFlux->at((points - 1) * waves + k) = m_toa_flux[k];
   }
 
   m_initialized = true;
@@ -92,14 +84,15 @@ double ActinicFlux::eval(double dt, double *x) {
   size_t levels = atm->nPoints();
 
   for (size_t j = 0; j < levels; ++j) {
-    double temp = atm->getT(x, j);
-    double pres = atm->getP(x, j);
+    double temp = atm->getT(j);
+    double pres = atm->getP(j);
+    double delz = j == levels - 1 ? atm->getH(j) : atm->z(j + 1) - atm->z(j);
 
     // total number density
     double num_dens = pres / (temp * Cantera::Boltzmann);
 
     for (auto rxn : m_photo_reactions) {
-      size_t n = atm->speciesIndex(rxn->reactants.begin()->first);
+      size_t n = atm->componentIndex(rxn->reactants.begin()->first);
 
       // number density of the parent molecule
       double conc = atm->getX(x, n, j) * num_dens;
@@ -110,7 +103,7 @@ double ActinicFlux::eval(double dt, double *x) {
         auto &&cross =
             std::static_pointer_cast<Cantera::PhotolysisBase>(rxn->rate())
                 ->getCrossSection(temp, wave);
-        m_dtau(j, k) += conc * cross[0] * m_delta_z[j];
+        m_dtau(j, k) += conc * cross[0] * delz;
       }
     }
   }
@@ -118,7 +111,7 @@ double ActinicFlux::eval(double dt, double *x) {
   // calculate attenuation (simple)
   for (size_t k = 0; k < m_wavelength->size(); k++) {
     double tau = 0.;
-    for (size_t j = 0; j < levels; j++) {
+    for (int j = levels - 1; j >= 0; j--) {
       tau += m_dtau(j, k);
       m_actinicFlux->at(j * m_wavelength->size() + k) =
           m_toa_flux[k] * exp(-tau);
@@ -127,3 +120,18 @@ double ActinicFlux::eval(double dt, double *x) {
 
   return 0.;
 };
+
+void ActinicFlux::show() const {
+  size_t points = m_atm.lock() ? m_atm.lock()->nPoints() : 1;
+
+  std::cout << "==== Actinic Fluxes ====" << std::endl;
+
+  for (int j = points - 1; j >= 0; --j) {
+    std::cout << "j = " << j << ": ";
+    for (size_t i = 0; i < m_wavelength->size(); ++i) {
+      std::cout << std::setw(10) << std::setprecision(3) << getFlux(j, i)
+                << " ";
+    }
+    std::cout << std::endl;
+  }
+}
