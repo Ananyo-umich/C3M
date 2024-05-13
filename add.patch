@@ -1,0 +1,196 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 83347c9..f1ab1b8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -44,11 +44,14 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/compilers.cmake)
+ message(STATUS "2. Set up project system libraries ...")
+ include(${CMAKE_SOURCE_DIR}/cmake/gtest.cmake)
+ include(${CMAKE_SOURCE_DIR}/cmake/application.cmake)
++include(${CMAKE_SOURCE_DIR}/cmake/yamlcpp.cmake)
+ 
+ find_package(Eigen3 REQUIRED)
+ find_package(Cantera REQUIRED)
+ find_package(NetCDF REQUIRED)
+ 
++set(CT_USE_SYSTEM_YAMLCPP ON)
++
+ ## 3. set up project configure file and library ##
+ message(STATUS "3. Set up project libraries")
+ add_subdirectory(src)
+diff --git a/cmake/yamlcpp.cmake b/cmake/yamlcpp.cmake
+new file mode 100644
+index 0000000..67c1d15
+--- /dev/null
++++ b/cmake/yamlcpp.cmake
+@@ -0,0 +1,16 @@
++include(FetchContent)
++
++FetchContent_Declare(
++  yaml-cpp
++  GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
++  GIT_TAG master # Can be a tag (yaml-cpp-x.x.x), a commit hash, or a branch name (master)
++)
++FetchContent_GetProperties(yaml-cpp)
++
++if(NOT yaml-cpp_POPULATED)
++  message(STATUS "Fetching yaml-cpp...")
++  FetchContent_Populate(yaml-cpp)
++  add_subdirectory(${yaml-cpp_SOURCE_DIR} ${yaml-cpp_BINARY_DIR})
++endif()
++
++include_directories(${yaml-cpp_SOURCE_DIR}/include)
+diff --git a/src/yaml.h b/src/yaml.h
+new file mode 100644
+index 0000000..fb5742e
+--- /dev/null
++++ b/src/yaml.h
+@@ -0,0 +1,3 @@
++#include "cantera/base/ct_defs.h"
++#include "cantera/ext/yaml-cpp/yaml.h"
++
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index c12d1df..7eee5b1 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -9,6 +9,7 @@ enable_testing()
+ 
+ # Add test cases
+ setup_test(test_photolysis_box)
++setup_test(test_chapman)
+ 
+ # copy yaml files
+ file(GLOB inputs *.yaml)
+diff --git a/tests/chapman_box.yaml b/tests/chapman_box.yaml
+new file mode 100644
+index 0000000..98cad02
+--- /dev/null
++++ b/tests/chapman_box.yaml
+@@ -0,0 +1,51 @@
++problem:
++  - pres: 2.5E-3 #bar
++  - temp: 251 #K
++
++init:
++  - species: N2, O2
++  - N2: 0.78
++  - O2: 0.22
++  
++integrator:
++  - dt: 1E-8
++  - Tmax: 100000
++
++phases:
++  - name: gas
++    thermo: ideal-gas
++    elements: [O, N]
++    species: [N2, O, O2, O3]
++    kinetics: gas
++
++species:
++  - name: N2
++    composition: {N: 2}
++    thermo:
++      model: constant-cp
++
++  - name: O
++    composition: {O: 1}
++    thermo:
++      model: constant-cp
++
++  - name: O2
++    composition: {O: 2}
++    thermo:
++      model: constant-cp
++
++  - name: O3
++    composition: {O: 3}
++    thermo:
++      model: constant-cp
++
++reactions:
++- equation: '1.0 O2 => 2.0 O '
++  rate-constant: {A: 1.0, b: 0 ,Ea: 0 }
++- equation: '1.0 O + 1.0 O2 + M => 1.0 O3 + M '
++  type: three-body
++  rate-constant: {A: 6.0e-34,T0: 298.0, b: -2.4,Ea: 0.0}
++- equation: '1.0 O3 => 1.0 O + 1.0 O2 '
++  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
++- equation: '1.0 O + 1.0 O3 => 2.0 O2'
++  rate-constant: {A: 8.0e-12,b: 0.0,Ea: 2060}  
+\ No newline at end of file
+diff --git a/tests/test_chapman.cpp b/tests/test_chapman.cpp
+new file mode 100644
+index 0000000..44f187d
+--- /dev/null
++++ b/tests/test_chapman.cpp
+@@ -0,0 +1,58 @@
++// external
++#include <gtest/gtest.h>
++
++// application
++#include <application/application.hpp>
++
++// Solution class describes a phase consists of a mixture of chemical species
++#include <cantera/base/Solution.h>
++
++// ThermoPhase object stores the thermodynamic state
++#include <cantera/thermo.h>
++
++// Kinetics object stores the chemical kinetics information
++#include <cantera/kinetics.h>
++#include <cantera/kinetics/Reaction.h>
++
++// ZeroDim object stores the reactor information
++#include <cantera/zerodim.h>
++
++// c3m
++#include <c3m/RadTran.hpp>
++
++// YAML file IO
++#include "cantera/base/ct_defs.h"
++#include "cantera/ext/yaml-cpp/yaml.h"
++
++TEST(Input, ChapmanCycle) {
++
++// Reading the chemical kinetics network
++  auto sol = Cantera::newSolution("chapman_box.yaml");
++  YAML::Node config  = YAML::LoadFile("chapman_box.yaml");
++// Reading the temperature, and pressure for box input file
++
++
++// Reading the time scale for integration
++
++
++// Test 1: Earth's Ozone chemistry at 30 km
++
++
++
++// Test 2: Earth's Ozone chemistry at 40 km
++
++  
++}
++
++
++int main(int argc, char **argv) {
++  Application::Start(argc, argv);
++
++  testing::InitGoogleTest(&argc, argv);
++
++  int result = RUN_ALL_TESTS();
++
++  Application::Destroy();
++
++  return result;
++}
+diff --git a/tests/test_photolysis_box.cpp b/tests/test_photolysis_box.cpp
+index e6bb2d5..f5c70e3 100644
+--- a/tests/test_photolysis_box.cpp
++++ b/tests/test_photolysis_box.cpp
+@@ -17,6 +17,7 @@
+ // ZeroDim object stores the reactor information
+ #include <cantera/zerodim.h>
+ 
++
+ // c3m
+ #include <c3m/RadTran.hpp>
+ 
