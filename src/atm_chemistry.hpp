@@ -12,6 +12,7 @@
 // cantera
 #include <cantera/base/Array.h>
 #include <cantera/base/Solution.h>
+#include <cantera/kinetics/Kinetics.h>
 #include <cantera/oneD/Domain1D.h>
 #include <cantera/thermo/ThermoPhase.h>
 
@@ -85,10 +86,14 @@ class AtmChemistry : public Cantera::Domain1D {
   std::string componentName(size_t n) const override;
 
   //! Update the following thermo properties at levels
-  //! (1) Temperature
-  //! (2) Pressure
-  //! (3) Mean molecular weight
-  //! (4) specific molar enthalpies
+  //! (1) mean molecular weight, m_wtm
+  //! (2) molar enthalpy, m_hk
+  //! Update the following thermo properties at half-levels
+  //! (1) temperature, m_Tmid
+  //! (2) pressure, m_Pmid
+  //! (3) composition, m_Xmid
+  //! (4) molecular weight anomaly, m_dwtm
+  //!
   //! @param x mole fraction vector
   void update(double const* x) override;
 
@@ -120,12 +125,11 @@ class AtmChemistry : public Cantera::Domain1D {
   //---------------------------------------------------------
   //             special functions
   //---------------------------------------------------------
-  //! @return number of species
-  size_t nSpecies() const { return solution()->thermo()->nSpecies(); }
-
   //! Returns true if the specified component is an active part of the solver
   //! state
   virtual bool componentActive(size_t n) const { return m_do_species[n]; }
+
+  void setGraivty(double g) { m_grav = g; }
 
   //! @return temperature at grid point `j`
   double getT(size_t j) const {
@@ -183,10 +187,6 @@ class AtmChemistry : public Cantera::Domain1D {
     m_hydro_stride = stride;
   }
 
-  //! cache state (hydro & composition) at half grid
-  //! between j and j + 1.
-  void setMidpoint(const double* x, size_t j);
-
   //---------------------------------------------------------
   //             kinetics coupler (actinic flux)
   //---------------------------------------------------------
@@ -199,51 +199,16 @@ class AtmChemistry : public Cantera::Domain1D {
   //---------------------------------------------------------
   //             physical functions
   //---------------------------------------------------------
-  //! This function calls all physical functions
-  //! It calls updateThermo(), updateReaction() and updateDiffusion()
-  //! for all interior points of a domain
-  //! After the call, sparse tri-diagonal matrices are set & compressed
-  void updateProperties(double const* x, double rdt, size_t j0, size_t j1);
-
-  /**
-   * Update the thermodynamic properties from point j0 to point j1
-   * (inclusive), based on solution x.
-   *
-   * The gas state is set to be consistent with the solution at the
-   * points from j0 to j1.
-   *
-   * Properties that are computed and cached are:
-   * * #m_wtm (mean molecular weight)
-   * * #m_hk (species specific enthalpies)
-   */
-  virtual void updateThermo(double const* x, double drt, size_t j0, size_t j1);
-
   //! update #m_wdot (species production rates)
-  virtual void updateReaction(double const* x, size_t j0, size_t j1);
+  virtual void updateReaction(double rdt, double const* x, size_t j0,
+                              size_t j1);
 
   //! Update the convection properties at grid points in the range from `j0`
   //! to `j1`, based on solution `x`.
   virtual void updateConvection(double const* x, size_t j0, size_t j1);
 
   //! Update the diffusive mass fluxes.
-  // virtual void updateDiffusion(const double* x, size_t j0, size_t j1);
-
-  /**
-   * Evaluate the species equations' residuals.
-   *
-   * The function calculates the species equations as
-   * @f[
-   *    \rho u \frac{dY_k}{dz} + \frac{dj_k}{dz} = W_k\dot{\omega}_k
-   * @f]
-   *
-   * The species equations include terms for temporal and spatial variations
-   * of species mass fractions (@f$ Y_k @f$). The default boundary condition
-   * is zero flux for species at the left and right boundary.
-   *
-   * For argument explanation, see evalContinuity().
-   */
-  void evalResidual(double* y, double* rsd, int* diag, double rdt, size_t jmin,
-                    size_t jmax);
+  virtual void updateDiffusion(const double* x, size_t j0, size_t j1);
 
  protected:
   //---------------------------------------------------------
@@ -256,10 +221,32 @@ class AtmChemistry : public Cantera::Domain1D {
     return m_hydro_stride * j + n;
   }
 
+  Eigen::VectorXd dXdz(const double* x, size_t j) const {
+    size_t nsp = nSpecies();
+    Eigen::VectorXd dXdz(nsp);
+    for (size_t k = 0; k < nsp; ++k) {
+      dXdz(k) = (getX(x, k, j) - getX(x, k, j - 1)) / (m_z[j] - m_z[j - 1]);
+    }
+    return dXdz;
+  }
+
+  //! TODO(cli) move to transport
+  double getEddyDiffusionCoeff(double const* x, size_t j) const { return 1.E5; }
+
+  Eigen::MatrixXd getBinaryDiffusionCoeff(double const* x, size_t j) const {
+    size_t nsp = nSpecies();
+    Eigen::MatrixXd Kbinary(nsp, nsp);
+    Kbinary.setZero();
+    return Kbinary;
+  }
+
  protected:
   //---------------------------------------------------------
   //             member data
   //---------------------------------------------------------
+  //! cached gravity
+  double m_grav = 0.;
+
   //! active species indicator (nSpecies)
   std::vector<bool> m_do_species;
 
@@ -272,15 +259,17 @@ class AtmChemistry : public Cantera::Domain1D {
   //! cached species molar enthalpies [J/mol] (nSpecies x nPoints)
   Cantera::Array2D m_hk;
 
-  //! cached species diffusion flux (nSpecies x (nPoints + 1))
+  //! cached species diffusion flux (nSpecies x nPoints)
   Cantera::Array2D m_diff_flux;
 
   //! cached species diffusion tendency (nSpecies x nPoints)
   Cantera::Array2D m_diff_t;
 
-  //! cached eddy and binary diffusion coefficients (nPoints + 1)
-  // std::vector<double> m_Keddy;
-  // std::vector<Eigen::MatrixXd> m_Kbinary;
+  //! cached eddy diffusion coefficients (nPoints)
+  std::vector<double> m_Keddy;
+
+  //! cached binary diffusion coefficients (nPoints)
+  std::vector<Eigen::MatrixXd> m_Kbinary;
 
   //! cached species production rates (nSpecies x nPoints)
   Cantera::Array2D m_wdot;
@@ -302,8 +291,8 @@ class AtmChemistry : public Cantera::Domain1D {
   //! cached pressure at half grid (nPoints)
   std::vector<double> m_Pmid;
 
-  //! cached molecular weight difference at half grid (nSpecies x nPoints)
-  Cantera::Array2D m_dwtm;
+  //! cached molecular weight difference at half grid (nPoints)
+  std::vector<Eigen::VectorXd> m_dwtm;
 
   //! cached pointer to hydro
   std::weak_ptr<std::vector<double> const> m_hydro;

@@ -1,0 +1,18 @@
+phases:
+  - name: gas
+    thermo: ideal-gas
+    elements: [O, N]
+    species: [N2, O]
+    kinetics: gas
+    reactions: none
+
+species:
+  - name: N2
+    composition: {N: 2}
+    thermo:
+      model: constant-cp
+
+  - name: O
+    composition: {O: 1}
+    thermo:
+      model: constant-cp

@@ -124,7 +124,10 @@ double ActinicFlux::eval(double dt, double *x) {
 void ActinicFlux::show() const {
   size_t points = m_atm.lock() ? m_atm.lock()->nPoints() : 1;
 
-  std::cout << "==== Actinic Fluxes ====" << std::endl;
+  Cantera::writelog(
+      "\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
+      "Actinic Fluxes"
+      " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
 
   for (int j = points - 1; j >= 0; --j) {
     std::cout << "j = " << j << ": ";

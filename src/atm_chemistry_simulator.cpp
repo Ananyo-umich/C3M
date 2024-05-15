@@ -88,7 +88,9 @@ int AtmChemistrySimulator::solve(double* x0, double* x1, int loglevel) {
 
   if (good) {
     m_successiveSteps++;
-    for (size_t n = 0; n < size(); n++) x1[n] += x0[n];
+    for (size_t n = 0; n < size(); n++) {
+      x1[n] += x0[n];
+    }
     if (m_successiveSteps > 3)
       return 100;
     else
@@ -162,25 +164,20 @@ void AtmChemistrySimulator::show() {
     }
   }
 
-  m_actinic_flux->show();
+  if (m_actinic_flux != nullptr) m_actinic_flux->show();
 }
 
-void AtmChemistrySimulator::update() {
-  if (m_actinic_flux == nullptr) {
-    throw Cantera::CanteraError("AtmChemistrySimulator::update",
-                                "Actinic flux not initialized.");
-  }
-
+double AtmChemistrySimulator::timeStep(int nsteps, double dt, int loglevel) {
+  // update domain cached internal variable
   for (size_t n = 0; n < nDomains(); n++) {
     domain(n).update(m_state->data() + start(n));
   }
 
   // update actinic flux
-  m_actinic_flux->eval(0., m_state->data());
-}
+  if (m_actinic_flux != nullptr) m_actinic_flux->eval(0., m_state->data());
 
-double AtmChemistrySimulator::timeStep(int nsteps, double dt, int loglevel) {
-  update();
+  // update boundary conditions
+  eval(Cantera::npos, m_state->data(), m_xnew.data(), m_rdt, 1);
 
   return OneDim::timeStep(nsteps, dt, m_state->data(), m_xnew.data(), loglevel);
 }

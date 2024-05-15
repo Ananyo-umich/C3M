@@ -102,6 +102,13 @@ class AtmChemistrySimulator : public Cantera::OneDim {
    */
   double timeStep(int nsteps, double dt, int loglevel);
 
+  /**
+   * Advance the state of all reactors in the independent variable (time or
+   * space). Take as many internal steps as necessary to reach *t*.
+   * @param t Time/distance to advance to (s or m).
+   */
+  void advance(double t);
+
   //! downcast function
   //! @return a shared pointer to the domain of type T
   template <typename T = Cantera::Domain1D>
@@ -109,9 +116,6 @@ class AtmChemistrySimulator : public Cantera::OneDim {
     size_t index = domainIndex(name);
     return std::dynamic_pointer_cast<T>(m_dom[index]);
   }
-
-  //! calls the update function of each domain
-  void update();
 
  protected:
   //! a work array used to hold the residual or the new solution
