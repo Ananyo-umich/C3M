@@ -17,6 +17,7 @@
 // ZeroDim object stores the reactor information
 #include <cantera/zerodim.h>
 
+
 // c3m
 #include <c3m/RadTran.hpp>
 #include <c3m/actinic_flux.hpp>
@@ -114,25 +115,41 @@ TEST_F(PhotolysisCH4, check_fwd_rate_constants) {
 }
 
 TEST(ZeroDim, PhotolysisO2) {
+  //Universal constants
+  double h = 6.626e-34; //Planck's constant
+  double c = 3e8;  //Speed of light
   auto app = Application::GetInstance();
 
   // Reading the chemical kinetics network
   auto sol = Cantera::newSolution("photolysis_o2.yaml");
 
   // Initial condition for mole fraction
-  sol->thermo()->setState_TPX(250., 0.1 * Cantera::OneAtm, "O2:0.21, N2:0.78");
+  sol->thermo()->setState_TPX(250., 0.1 * Cantera::OneAtm, "O2:0.22, N2:0.78");
 
   // Calculating photochemical reaction rate
   auto stellar_input_file = app->FindResource("stellar/sun.ir");
   auto stellar_input = ReadStellarRadiationInput(stellar_input_file, 1., 1.);
   std::cout << "Radiation Input Complete!" << std::endl;
 
+  //Actinic flux from stellar irradiance
+  //std::vector<double> actinicFlux(stellar_input.first.size()), vec1(stellar_input.first.size());
+//  std::transform(stellar_input.first.begin(), stellar_input.first.end(), stellar_input.second.begin(), vec1.begin(), std::multiplies<double>());
+  
+  double factor = 1/(h*c);
+ // std::transform(vec1.begin(), vec1.end(), actinicFlux.begin(), [factor](double x) { return x * factor; });
+  Eigen::VectorXd wav = Eigen::Map<Eigen::VectorXd>(stellar_input.first.data(), stellar_input.first.size());;
+  Eigen::VectorXd irr = Eigen::Map<Eigen::VectorXd>(stellar_input.second.data(), stellar_input.second.size());;
+  Eigen::VectorXd actinicFlux = (wav.array()*irr.array()).matrix()*factor;
   // Updating the actinic flux within yaml file [All in SI units]
+
   std::shared_ptr<ActinicFlux> aflux = std::make_shared<ActinicFlux>();
   aflux->setWavelength(stellar_input.first);
   aflux->setTOAFlux(stellar_input.second);
   aflux->initialize();
   sol->kinetics()->handleActinicFlux(aflux);
+  //Merge conflict location
+  //sol->kinetics()->setWavelength(stellar_input.first.data(), stellar_input.first.size());
+  //sol->kinetics()->updateActinicFlux(actinicFlux.data());
 
   // Reactor
   Cantera::IdealGasReactor reactor(sol);
@@ -153,6 +170,16 @@ TEST(ZeroDim, PhotolysisO2) {
   network.addReactor(reactor);
   network.initialize();
 
+  //Check photolysis reaction rates for O2, and O3 at TOA
+  std::vector<double> kfwd(sol->kinetics()->nReactions());
+
+  sol->kinetics()->getFwdRateConstants(kfwd.data());
+  std::cout << "Computed rate: " << kfwd[0] << std::endl;
+  std::cout << "Computed rate: " << kfwd[1] << std::endl;
+  std::cout << "Number of reactions: " << sol->kinetics()->nReactions() << std::endl;
+  ASSERT_NEAR(kfwd[0], 0.00127603, 1.0e-6);
+  ASSERT_NEAR(kfwd[1], 0.0093951, 1.0e-6);
+
   double time_step = 100.;
   double max_time = 1.e5;
 
@@ -171,7 +198,12 @@ TEST(ZeroDim, PhotolysisO2) {
               << sol->thermo()->massFraction(i) << " ";
   }
   std::cout << std::endl;
+
+ //Check mole fraction of final products
+ //Numerical solution is compared to analytical solution
+
 }
+
 
 int main(int argc, char **argv) {
   Application::Start(argc, argv);

@@ -44,10 +44,13 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/compilers.cmake)
 message(STATUS "2. Set up project system libraries ...")
 include(${CMAKE_SOURCE_DIR}/cmake/gtest.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/application.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/yamlpp.cmake)
 
 find_package(Eigen3 REQUIRED)
 find_package(Cantera REQUIRED)
 find_package(NetCDF REQUIRED)
+
+set(CT_USE_SYSTEM_YAMLCPP ON)
 
 ## 3. set up project configure file and library ##
 message(STATUS "3. Set up project libraries")
