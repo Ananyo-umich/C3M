@@ -1,0 +1,41 @@
+upper_boundary:
+  fixed:
+    - name: H2
+      value: 0.0
+    - name: He
+      value: 0.0
+  flux:
+    - name: H2
+      value: 0.0
+    - name: He
+      value: 0.0
+
+interior:
+  mesh:
+    nx1: 100
+    x1min: 0.0
+    x1max: 1.0
+
+  hydro:
+    gravity: 0.0
+
+  transport:
+    eddy_diffusivity: 0.1
+    - name: H2
+      D: 1.0
+      V: 0.0
+    - name: He
+      D: 1.0
+      V: 0.0
+
+lower_boundary:
+  fixed:
+    - name: H2
+      value: 0.99
+    - name: He
+      value: 0.01
+  flux:
+    - name: H2
+      value: 0.0
+    - name: He
+      value: 0.0

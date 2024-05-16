@@ -9,8 +9,11 @@ enable_testing()
 
 # Add test cases
 setup_test(test_photolysis_box)
+setup_test(test_photochem_1d)
+setup_test(test_advection_diffusion)
 setup_test(test_chapman)
 setup_test(test_SOx_network)
+
 
 # copy yaml files
 file(GLOB inputs *.yaml)

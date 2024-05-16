@@ -11,8 +11,9 @@ macro(setup_test namel)
   set_target_properties(${namel}.${buildl} PROPERTIES COMPILE_FLAGS
                                                       ${C3M_CXX_FLAGS})
 
-  target_include_directories(${namel}.${buildl} PRIVATE ${CMAKE_SOURCE_DIR}
-                                                        ${CANTERA_INCLUDE_DIR})
+  target_include_directories(
+    ${namel}.${buildl} PRIVATE ${CMAKE_SOURCE_DIR} ${EIGEN3_INCLUDE_DIR}
+                               ${CANTERA_INCLUDE_DIR})
 
   target_link_libraries(${namel}.${buildl}
                         PRIVATE gtest_main application_${buildl} c3m::c3m)
