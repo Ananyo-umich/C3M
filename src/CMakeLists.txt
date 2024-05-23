@@ -25,6 +25,7 @@ target_include_directories(${namel}_${buildl}
   ${CMAKE_BINARY_DIR}
   ${EIGEN3_INCLUDE_DIR}
   ${CANTERA_INCLUDE_DIR}
+  ${HDF5_INCLUDE_DIR}
   ${NETCDF_INCLUDES}
   )
 
@@ -36,6 +37,7 @@ target_link_libraries(${namel}_${buildl}
   ${CANTERA_LIBRARY}
   ${NETCDF_LIBRARIES}
   ${CMAKE_DL_LIBS}
+  ${HDF5_LIBRARIES}
   ${extra_flag}
   )
 

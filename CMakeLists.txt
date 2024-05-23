@@ -46,9 +46,26 @@ include(${CMAKE_SOURCE_DIR}/cmake/gtest.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/application.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/yamlpp.cmake)
 
+# load custom task
+# load custom task
+message(STATUS "Load custom task = ${TASK}")
+if (NOT ${TASK} STREQUAL "")
+  if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/examples/${TASK}.cmake)
+    message(STATUS "Load custom setting - ${TASK} -")
+    message(STATUS "Include ${CMAKE_CURRENT_SOURCE_DIR}/cmake/examples/${TASK}.cmake")
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/examples/${TASK}.cmake)
+  else()
+    message(FATAL_ERROR "Cannot find custom file cmake/examples/${TASK}.cmake")
+  endif()
+  set(TASK ${TASK} CACHE STRING "Custom task to be performed")
+else()
+  set(TASK "default" CACHE STRING "Custom task to be performed")
+endif()
+
 find_package(Eigen3 REQUIRED)
 find_package(Cantera REQUIRED)
 find_package(NetCDF REQUIRED)
+find_package(HDF5 REQUIRED)
 
 set(CT_USE_SYSTEM_YAMLCPP ON)
 
@@ -58,7 +75,9 @@ add_subdirectory(src)
 
 ## 4. set up examples and tests
 message(STATUS "4. Set up examples and unit tests")
+add_subdirectory(examples)
 add_subdirectory(tests)
+
 
 set(C3M_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
   CACHE INTERNAL "C3M include directory")

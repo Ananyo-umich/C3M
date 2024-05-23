@@ -144,13 +144,14 @@ TEST(ZeroDim, PhotolysisO2) {
 
   std::shared_ptr<ActinicFlux> aflux = std::make_shared<ActinicFlux>();
   aflux->setWavelength(stellar_input.first);
-  aflux->setTOAFlux(stellar_input.second);
+  std::vector<double> actinicFluxVec(actinicFlux.data(), actinicFlux.data() + actinicFlux.size());
+
+// Call the setTOAFlux function with std::vector<double>
+  aflux->setTOAFlux(actinicFluxVec);
   aflux->initialize();
   sol->kinetics()->handleActinicFlux(aflux);
   //Merge conflict location
-  //sol->kinetics()->setWavelength(stellar_input.first.data(), stellar_input.first.size());
-  //sol->kinetics()->updateActinicFlux(actinicFlux.data());
-
+ 
   // Reactor
   Cantera::IdealGasReactor reactor(sol);
   reactor.setEnergy(false);

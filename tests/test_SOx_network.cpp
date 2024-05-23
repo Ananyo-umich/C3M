@@ -39,16 +39,23 @@ class SOxNet : public testing::Test {
   // data
   shared_ptr<Cantera::ThermoPhase> gas;
   shared_ptr<Cantera::Kinetics> gas_kin;
-
+  shared_ptr<Cantera::Solution> sol;
+  
   // constructor
   SOxNet() {
-    auto sol = Cantera::newSolution("SOx_box.yaml");
+    sol = Cantera::newSolution("SOx_box.yaml");
+    gas = sol->thermo();
+    gas_kin = sol->kinetics();
+   }};
+  
+TEST_F(SOxNet, check_photolysis) { 
+    sol = Cantera::newSolution("SOx_box.yaml");
     gas = sol->thermo();
     gas_kin = sol->kinetics();
     int nsp = gas->nSpecies();
     int nrxn = gas_kin->nReactions();
     YAML::Node config  = YAML::LoadFile("SOx_box.yaml");
- 
+     
   // Find the node corresponding to "press"
     YAML::Node pressNode = config["problem"][0]["pres"];
     double Pres = atof(pressNode.as<std::string>().c_str());
@@ -116,10 +123,20 @@ class SOxNet : public testing::Test {
   sim.initialize();
   sim.advance(Tmax);
   gas->getMoleFractions(&Output[0]); 
+  std::cout << "<<<<<<<<< Mole Fraction >>>>>>>>>>" << std::endl;
+  std::cout << Output.transpose() << std::endl;
 
-  }
+// Testing the abundances
+  ASSERT_NEAR(Output(3), 4.255e-09, 1E-10);
+  ASSERT_NEAR(Output(4), 4.9565e-09, 1E-10);
+  ASSERT_NEAR(Output(5), 7.659e-11, 1E-12);  
+  std::cout << "Mixing ratio test passed" << std::endl;
+
+// Testing achievement of steady state  
+
+
+ 
 };
-
 
 
 

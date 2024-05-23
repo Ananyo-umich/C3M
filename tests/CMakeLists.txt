@@ -13,7 +13,7 @@ setup_test(test_photochem_1d)
 setup_test(test_advection_diffusion)
 setup_test(test_chapman)
 setup_test(test_SOx_network)
-
+setup_test(PhotoChemBox)
 
 # copy yaml files
 file(GLOB inputs *.yaml)

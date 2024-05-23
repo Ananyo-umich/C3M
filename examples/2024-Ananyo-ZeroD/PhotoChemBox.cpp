@@ -130,9 +130,6 @@ int main(int argc, char** argv) {
    sim.addReactor(reactor);
    sim.setTolerances(rtol, atol);
    sim.setSensitivityTolerances(rtol, atol);
-   int nmax = 1E9;
-   Cantera::Integrator& integrator = sim.integrator();
-   integrator.setMaxSteps(nmax);
    reactor.initialize();
    sim.initialize();
    sim.advance(Tmax);
