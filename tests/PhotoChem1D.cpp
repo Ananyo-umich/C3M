@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
   std::string SurfaceBC = Surface_BC.as<std::string>();
 
   YAML::Node Space_BC = config["problem"][1]["Tmax"];
-  std::string init_species_list = species_list.as<std::string>();
+
 
 
 
