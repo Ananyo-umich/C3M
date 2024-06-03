@@ -231,7 +231,9 @@ class AtmChemistry : public Cantera::Domain1D {
   }
 
   //! TODO(cli) move to transport
-  double getEddyDiffusionCoeff(double const* x, size_t j) const { return 1.E5; }
+  virtual void setEddyDiffusionCoeff(double Kzz, size_t j);
+
+  double getEddyDiffusionCoeff(size_t j);
 
   Eigen::MatrixXd getBinaryDiffusionCoeff(double const* x, size_t j) const {
     size_t nsp = nSpecies();
