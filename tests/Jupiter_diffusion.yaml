@@ -1,0 +1,37 @@
+problem:
+ - planet: planet/JupAuroral_AB.txt
+ - name: JupiterAurora
+ - photochem: true
+ - equilibrate: false
+
+
+init:
+  - species: N2, O2
+  - N2: 0.78
+  - O2: 0.22
+
+hydro:
+  - grav: -9.8 #m/s^2
+
+units: {length: cm, quantity: molec, activation-energy: K}
+
+phases:
+  - name: gas
+    thermo: ideal-gas
+    elements: [H, He]
+    species: [H2, He]
+    kinetics: gas
+    reactions: none
+
+species:
+  - name: H2
+    composition: {H: 2}
+    thermo:
+      model: constant-cp
+
+  - name: He
+    composition: {He: 1}
+    thermo:
+      model: constant-cp
+~                         
+

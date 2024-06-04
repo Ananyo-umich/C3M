@@ -239,6 +239,11 @@ void AtmChemistry::setBinaryDiffusionCoeff(Eigen::MatrixXd BinDiff, size_t j){
    m_Kbinary[j] = BinDiff;
 }
 
+void AtmChemistry::setGravity(double grav){
+  m_grav = grav; 
+
+}
+
 void AtmChemistry::updateConvection(double const* x, size_t j0, size_t j1) {
   auto thermo = solution()->thermo();
   int nsp = thermo->nSpecies();
