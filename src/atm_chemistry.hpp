@@ -194,6 +194,26 @@ class AtmChemistry : public Cantera::Domain1D {
   void handleActinicFlux(std::shared_ptr<ActinicFlux> actinic_flux) {
     solution()->kinetics()->handleActinicFlux(actinic_flux);
   }
+  
+  //! @set the Eddy diffusion coefficient 'Kzz' at grid point `j`
+  //! @param Kzz value of Eddy diffusion coefficient
+  virtual void setEddyDiffusionCoeff(double Kzz, size_t j);
+
+  //! @return Eddy diffusion coefficient at grid point `j`
+  virtual double getEddyDiffusionCoeff(size_t j);
+
+  //! @set matrix of binary diffusion coefficients at grid point `j`
+  //! @param BinDiff Binary diffusion matrix
+  virtual void setBinaryDiffusionCoeff(Eigen::MatrixXd BinDiff, size_t j);
+
+  virtual Eigen::MatrixXd getBinaryDiffusionCoeff(size_t j) const {
+    size_t nsp = nSpecies();
+    Eigen::MatrixXd Kbinary(nsp, nsp);
+    Kbinary.setZero();
+    return Kbinary;
+  }
+
+  virtual void setGravity(double grav);
 
  protected:
   //---------------------------------------------------------
@@ -209,6 +229,7 @@ class AtmChemistry : public Cantera::Domain1D {
 
   //! Update the diffusive mass fluxes.
   virtual void updateDiffusion(const double* x, size_t j0, size_t j1);
+
 
  protected:
   //---------------------------------------------------------
@@ -231,21 +252,13 @@ class AtmChemistry : public Cantera::Domain1D {
   }
 
   //! TODO(cli) move to transport
-  double getEddyDiffusionCoeff(double const* x, size_t j) const { return 1.E5; }
-
-  Eigen::MatrixXd getBinaryDiffusionCoeff(double const* x, size_t j) const {
-    size_t nsp = nSpecies();
-    Eigen::MatrixXd Kbinary(nsp, nsp);
-    Kbinary.setZero();
-    return Kbinary;
-  }
 
  protected:
   //---------------------------------------------------------
   //             member data
   //---------------------------------------------------------
   //! cached gravity
-  double m_grav = 0.;
+  double m_grav = 0.0;
 
   //! active species indicator (nSpecies)
   std::vector<bool> m_do_species;

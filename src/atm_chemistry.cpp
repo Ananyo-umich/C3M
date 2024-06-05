@@ -226,6 +226,24 @@ void AtmChemistry::updateReaction(double rdt, double const* x, size_t j0,
   }
 }
 
+void AtmChemistry::setEddyDiffusionCoeff(double Kzz, size_t j){
+    m_Keddy[j] = Kzz; 
+}
+
+double AtmChemistry::getEddyDiffusionCoeff(size_t j){
+   double Kzz = m_Keddy[j];
+   return Kzz;
+}
+
+void AtmChemistry::setBinaryDiffusionCoeff(Eigen::MatrixXd BinDiff, size_t j){
+   m_Kbinary[j] = BinDiff;
+}
+
+void AtmChemistry::setGravity(double grav){
+  m_grav = grav; 
+
+}
+
 void AtmChemistry::updateConvection(double const* x, size_t j0, size_t j1) {
   auto thermo = solution()->thermo();
   int nsp = thermo->nSpecies();
@@ -255,13 +273,15 @@ void AtmChemistry::updateDiffusion(const double* x, size_t j0, size_t j1) {
   Eigen::MatrixXd identity = Eigen::MatrixXd::Identity(nsp, nsp);
 
   for (size_t j = j0; j <= j1 + 1; j++) {
-    m_Keddy[j] = getEddyDiffusionCoeff(x, j);
-    m_Kbinary[j] = getBinaryDiffusionCoeff(x, j);
+   //   m_Keddy[j] = getEddyDiffusionCoeff(j);
+   //   m_Kbinary[j] = getBinaryDiffusionCoeff(x, j);
+      Eigen::VectorXd Kflux = (m_Keddy[j] * identity + m_Kbinary[j]) * dXdz(x, j);
 
-    Eigen::VectorXd Kflux = (m_Keddy[j] * identity + m_Kbinary[j]) * dXdz(x, j);
     for (size_t k = 0; k < nsp; k++) {
       m_diff_flux(k, j) = Kflux(k);
     }
+  
+ 
   }
 
   for (size_t j = j0; j <= j1; j++) {
