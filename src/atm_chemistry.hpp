@@ -206,7 +206,7 @@ class AtmChemistry : public Cantera::Domain1D {
   //! @param BinDiff Binary diffusion matrix
   virtual void setBinaryDiffusionCoeff(Eigen::MatrixXd BinDiff, size_t j);
 
-  virtual Eigen::MatrixXd getBinaryDiffusionCoeff(double const* x, size_t j) const {
+  virtual Eigen::MatrixXd getBinaryDiffusionCoeff(size_t j) const {
     size_t nsp = nSpecies();
     Eigen::MatrixXd Kbinary(nsp, nsp);
     Kbinary.setZero();

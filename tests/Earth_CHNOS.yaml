@@ -39,26 +39,6 @@ radtran:
   - reference: 1.0
   - SZA: 57.0 #In degrees
 
-abscross:
-  - absorbers: N2, O2, O3, H2O, CO2, H2
-  - N2: VULCAN
-    temperature-range: [0., 1000.]
-    filename: [VULCAN/N2/N2_cross.csv]
-  - O2: VULCAN
-    temperature-range: [0., 1000.]
-    filename: [VULCAN/O2/O2_cross.csv]
-  - O3: VULCAN
-    temperature-range: [0., 1000.]
-    filename: [VULCAN/O3/O3_cross.csv]
-  - H2O: VULCAN
-    temperature-range: [0., 1000.]
-    filename: [VULCAN/H2O/H2O_cross.csv]
-  - CO2: VULCAN
-    temperature-range: [0., 1000.]
-    filename: [VULCAN/CO2/CO2_cross.csv]
-  - H2: VULCAN
-    temperature-range: [0., 1000.]
-    filename: [VULCAN/H2/H2_cross.csv]
 
 output:
   - File: EarthCHNOS.nc
@@ -94,860 +74,388 @@ species:
   composition: {H: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: O
   composition: {O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH
   composition: {C: 1.0,H: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C
   composition: {C: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH2
   composition: {C: 1.0,H: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH3
   composition: {C: 1.0,H: 3.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH4
   composition: {C: 1.0,H: 4.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C2
   composition: {C: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C2H
   composition: {C: 2.0,H: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C2H2
   composition: {C: 2.0,H: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C2H3
   composition: {C: 2.0,H: 3.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C2H4
   composition: {C: 2.0,H: 4.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C2H5
   composition: {C: 2.0,H: 5.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C2H6
   composition: {C: 2.0,H: 6.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CO
   composition: {C: 1.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CO2
   composition: {C: 1.0,O: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH2OH
   composition: {C: 1.0,H: 3.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: H2CO
   composition: {C: 1.0,H: 2.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
-- name: HCO
+    model: constant-cp
   composition: {C: 1.0,H: 1.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
-- name: CH3O
+    model: constant-cp
   composition: {C: 1.0,H: 3.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH3OH
   composition: {C: 1.0,H: 4.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH3CO
   composition: {C: 2.0,H: 3.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: O2
   composition: {O: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: H2CCO
   composition: {C: 2.0,H: 2.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HCCO
   composition: {C: 2.0,H: 1.0,O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
-- name: N
+    model: constant-cp
   composition: {N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CN
   composition: {C: 1.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HCN
   composition: {C: 1.0,H: 1.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: NH2
   composition: {H: 2.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: NH
   composition: {H: 1.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
-- name: NH3
+    model: constant-cp
   composition: {H: 3.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: NO
   composition: {O: 1.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N2
   composition: {N: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N2H2
   composition: {H: 2.0,N: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N2H
   composition: {H: 1.0,N: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: H2CN
   composition: {C: 1.0,H: 2.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HNCO
   composition: {C: 1.0,H: 1.0,O: 1.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N2H4
   composition: {H: 4.0,N: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N2H3
   composition: {H: 3.0,N: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HNO
   composition: {H: 1.0,O: 1.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: NO2
   composition: {O: 2.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N2O
   composition: {O: 1.0,N: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: C4H2
   composition: {C: 4.0,H: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH3NH
   composition: {C: 1.0,H: 4.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH2NH
   composition: {C: 1.0,H: 3.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH2NH2
   composition: {C: 1.0,H: 4.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH3NH2
   composition: {C: 1.0,H: 5.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: O3
   composition: {O: 3.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HO2
   composition: {H: 1.0,O: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: H2O2
   composition: {H: 2.0,O: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: NO3
   composition: {O: 3.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HNO3
   composition: {H: 1.0,O: 3.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HNO2
   composition: {H: 1.0,O: 2.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH3O2
   composition: {C: 1.0,H: 3.0,O: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH3OOH
   composition: {C: 1.0,H: 4.0,O: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: NCO
   composition: {C: 1.0,O: 1.0,N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N2O5
   composition: {O: 5.0,N: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: S
   composition: {S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: SH
   composition: {H: 1.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: S2
   composition: {S: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: SO
   composition: {O: 1.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: H2S
   composition: {H: 2.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CS
   composition: {C: 1.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: COS
   composition: {C: 1.0,O: 1.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CS2
   composition: {C: 1.0,S: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: NS
   composition: {N: 1.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HS2
   composition: {H: 1.0,S: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: SO2
   composition: {O: 2.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: S4
   composition: {S: 4.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: S8
   composition: {S: 8.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: HCS
   composition: {C: 1.0,H: 1.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: S3
   composition: {S: 3.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: SO3
   composition: {O: 3.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: H2SO4
   composition: {H: 2.0,O: 4.0,S: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: O_1
   composition: {O: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: CH2_1
   composition: {C: 1.0,H: 2.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: N_2D
   composition: {N: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 - name: Ar
   composition: {Ar: 1.0}
   enthalpy: 0
   thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
-      -917.935173, 0.683010238]
-    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
-      -950.158922, -3.20502331]
+    model: constant-cp
 
 reactions:
 - equation: '1.0 H + 1.0 H2O => 1.0 OH + 1.0 H2 '
@@ -1909,6 +1417,210 @@ reactions:
 - equation: '1.0 SO + M => 1.0 O + 1.0 S + M'
   type: three-body
   rate-constant: {A: 6.61e-10, T0: 1, b: 0.0,Ea: 53900.0 }
+
+#photochemical reactions
+- equation: O2 => O + O(1D)
+    type: photolysis
+    branches:
+      - name: b1
+        product: "O:2"
+      - name: b2
+        product: "O:1 O(1D):1"
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O2/O2_cross.csv, VULCAN/O2/O2_branch.csv]
+- equation: O3 => O2 + O + O(1D)
+    type: photolysis
+    branches:
+      - name: b1
+        product: "O2:1 O:1"
+      - name: b2
+        product: "O2:1 O(1D):1"
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product: 
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv] 
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+- equation: H2O => H2 + H + OH + O(1D) + O
+    type: photolysis
+    branches:
+      - name: b1
+      - product:
+      - name: b2
+      - product:
+    cross-section:
+      - format: VULCAN
+        temperature-range: [0., 1000.]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - equation: '1.0 H2O => 1.0 H + 1.0 OH '
   rate-constant: {A: 1 ,T0: 300 , b: 0 ,Ea: 0 }
 - equation: '1.0 H2O => 1.0 H2 + 1.0 O_1 '
