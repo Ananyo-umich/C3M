@@ -4,7 +4,12 @@
 // C/C++
 #include <vector>
 
+// Eigen
+#include <Eigen/Core>
+#include <Eigen/Sparse>
+
 // cantera
+#include <cantera/base/Array.h>
 #include <cantera/base/Solution.h>
 #include <cantera/oneD/Domain1D.h>
 
@@ -31,6 +36,13 @@ class Connector : public Cantera::Domain1D {
 
   //! Name of the nth component.
   std::string componentName(size_t n) const override;
+
+
+  //! Set the mole fractions by specifying a vector
+  void setDirichletBC(Eigen::VectorXd D_bc);
+
+  //! Set the mole fractions by specifying a vector
+  void setNeumannBC(Eigen::VectorXd N_bc);
 
   //! Set the mole fractions by specifying a string.
   void setSpeciesDirichlet(const std::string& xin);

@@ -14,8 +14,9 @@ setup_test(test_advection_diffusion)
 setup_test(test_chapman)
 setup_test(test_SOx_network)
 setup_test(test_Jupiter_diffusion)
+setup_test(test_Earth_photochem)
 setup_test(PhotoChemBox)
-setup_test(PhotoChem1D)
+
 
 # copy yaml files
 file(GLOB inputs *.yaml)

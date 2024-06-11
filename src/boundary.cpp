@@ -14,6 +14,33 @@ std::string Connector::componentName(size_t n) const {
   return solution()->thermo()->speciesName(n);
 }
 
+
+void Connector::setDirichletBC(Eigen::VectorXd D_bc){
+  auto mf = solution()->thermo();
+  size_t ns = mf->nSpecies();
+  for(size_t ins = 0; ins < ns; ins++){
+    DirichletBC bc;
+    bc.id = ins;
+    bc.value = D_bc(ins);
+    dirichlet.push_back(bc);
+  }
+
+}
+
+  
+void Connector::setNeumannBC(Eigen::VectorXd N_bc){
+  auto mf = solution()->thermo();
+  size_t ns = mf->nSpecies();
+  for(size_t ins = 0; ins < ns; ins++){
+    NeumannBC bc;
+    bc.id = ins;
+    bc.value = N_bc(ins);
+    neumann.push_back(bc);
+  } 
+
+
+}
+
 void Connector::setSpeciesDirichlet(const std::string& xin) {
   auto xmap = Cantera::parseCompString(xin);
   // will throw an exception if the species are not in the phase
