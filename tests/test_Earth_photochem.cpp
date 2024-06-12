@@ -40,7 +40,7 @@ class TestEarthChem : public testing::Test {
   // constructor
   TestEarthChem() {
     // atmosphere
-    auto mech = Cantera::newSolution("Earth_CHNOS.yaml");
+    auto mech = Cantera::newSolution("Earth_CHNO.yaml");
     auto atm = std::make_shared<AtmChemistry>("atm", mech);
     auto gas = mech->thermo();
     auto gas_kin = mech->kinetics();
