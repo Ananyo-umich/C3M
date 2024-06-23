@@ -31,6 +31,7 @@
 #include <interpolation.hpp>
 #include <CustomRate.hpp>
 #include <CustomTransport.hpp>
+#include <tridiagonal_solver.cpp>
 
 // NetCDF Output
 #if NETCDFOUTPUT
@@ -625,12 +626,10 @@ while(Ttot < Tmax) {
 
 //The transmission coefficient from opacity
     Opacity.col(j) = Opacity.col(j) - (dh*handleCustomOpacity(PlanetName, gasThermo, Press, Temp, AtmData(iAlt,j), stellar_input.row(0)));
-    //OpacityStorage.col(j) = Opacity.col(j);
     Opacity.col(j) = Opacity.col(j).array().exp().matrix();
     Opacity.col(j) =  (Opacity.col(j).array()*Opacity.col(j-1).array()).matrix();
 //Stellar spectrum at each altitude
     Stellar_activity.col(j) = (Stellar_activity.col(j-1).array()*Opacity.col(j).array()).transpose().matrix();
-    // std::cout << stellar_activity.col(j) << std::endl;
      }
    if(j == 0){
      clden_species_list = pinput->GetOrAddString("coldensity", "species", "nan");
@@ -645,14 +644,11 @@ while(Ttot < Tmax) {
          species_inx = gas2->speciesIndex(x);
          double number_density = Press/(Kb*Temp);
          Opacity.col(j) = Opacity.col(j) - (absorber_cross_data.col(Absorber)*cldMag_diff(species_inx)/cos(sz_angle*3.14/180));
-         //std::cout << absorber_cross_data.col(Absorber).transpose()*cldMag_diff(species_inx)/cos(sz_angle*3.14/180) << std::endl;
-        // std::cout << Opacity.col(j).transpose() << std::endl;
          Absorber++;
      }
          absorber_species_list = m.suffix().str();
     }
 
-    //std::cout << "Absorption done! " << std::endl;
 //Rayleigh scattering
       int Scatter = 0;
       std::string scat_species_list = pinput->GetString("scatcross", "scatterers");
@@ -665,21 +661,16 @@ while(Ttot < Tmax) {
      }
         scat_species_list = m.suffix().str();
       }
-   // std::cout << "Scattering done at TOA!" << std::endl;
 //Updating the stellar activity at upper boundary
 //The transmission coefficient from opacity
-   // std::cout << Opacity.col(j) << std::endl;
-   // OpacityStorage.col(j) = Opacity.col(j);
     Opacity.col(j) = Opacity.col(j).array().exp().matrix();
 //Stellar spectrum at each altitude
     Stellar_activity.col(j) = (stellar_input.row(1).transpose().array()*Opacity.col(j).array()).transpose().matrix();
-    //std::cout << "TOA" << std::endl;
     }
 
     if(clden_species_list == "nan"){
     Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
     Stellar_activity.col(j) = (stellar_input.row(1).transpose());}
-   // std::cout << "Setting TOA opacity" << std::endl;
      }
 
 for(int rx = 0; rx < PhotoRxn; rx++){
@@ -687,7 +678,6 @@ for(int rx = 0; rx < PhotoRxn; rx++){
      gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
      auto& rxnObj = *(gas_kin->reaction(RxnIndex(rx)));
      std::string rxnEquation = rxnObj.equation();
-     //std::cout<< j << " " << AtmData(iAlt, j)/1e3 << " " << rxnEquation << " " << j_rate << std::endl;
 
    }
 
@@ -706,7 +696,6 @@ for(int rx = 0; rx < PhotoRxn; rx++){
     TChem.col(j) = (isnan(abs(TChem.col(j).array())) ).select(1e20, TChem.col(j));
     TChem.col(j) = (isinf(abs(TChem.col(j).array())) ).select(1e20, TChem.col(j));
     TChem.col(j) = (TChem.col(j).array().abs() == 0).select(1e20, TChem.col(j));
-//    std::cout << TChem.col(j).transpose() << std::endl;
 //Solve for diffusion terms
     if ((j > 0) && (j < nSize-1)) {
 
@@ -729,10 +718,6 @@ for(int rx = 0; rx < PhotoRxn; rx++){
       VectorXd D_prev = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j-1), AtmData(iTemp,j-1), mWt);
       D_next = (D_next + D_this)/2;
       D_prev = (D_prev + D_this)/2;
-      //std::cout << AtmData(iAlt,j) << std::endl;
-      //std::cout << D_prev.transpose() << std::endl;
-      //std::cout << K_prev << std::endl;
-      //std::cout << "Averaging diffusion coefficient" << std::endl;
       double T_next = (AtmData(iTemp,j) + AtmData(iTemp,j+1))/2;
       double T_prev = (AtmData(iTemp,j) + AtmData(iTemp,j-1))/2;
       double dz = (AtmData(iAlt,j-1) - AtmData(iAlt,j+1))/2;
@@ -740,7 +725,6 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 //Dynamic Time Scales
       VectorXd Diff = AtmData(iKzz, j)*I + D_this;
       TDyn.col(j) = ((dz*dz)/Diff.array()).matrix();
-      //std::cout << "Identity matrix" << std::endl;
       VectorXd d_next = ((mm_next*I - mWt).array()*D_next.array()).matrix()*(1/(2*dz*dz))*(g*1e-3*dz/(6.022E23*1.38E-23*T_next));
       VectorXd d_prev = ((mm_prev*I - mWt).array()*D_prev.array()).matrix()*(1/(2*dz*dz))*(g*1e-3*dz/(6.022E23*1.38E-23*T_prev));
         
@@ -748,28 +732,23 @@ for(int rx = 0; rx < PhotoRxn; rx++){
       VectorXd dTdz_prev = alpha*(T_this - T_prev)*2/((T_this + T_prev)*dz);
       VectorXd dTdz_next = alpha*(T_next - T_this)*2/((T_this + T_next)*dz);
       d_next = d_next + ((dTdz_next.array()*D_next.array()).matrix()*(1/(2*dz*dz)));
-      d_prev = d_prev + ((dTdz_next.array()*D_next.array()).matrix()*(1/(2*dz*dz)));
+      d_prev = d_prev + ((dTdz_prev.array()*D_prev.array()).matrix()*(1/(2*dz*dz)));
       
-      //std::cout << "d complete" << std::endl;
       VectorXd k_next = (((K_next*I) + D_next)/(dz*dz));
       VectorXd k_prev = (((K_prev*I) + D_prev)/(dz*dz));
-      //std::cout << "k complete" << std::endl;
+
       double N_next = AtmData(iNd, j+1);
       double N_this = AtmData(iNd, j);
       double N_prev = AtmData(iNd, j-1);
       double N_n = (N_this + N_next)/2;
       double N_p = (N_this + N_prev)/2;
-     // std::cout << "Averaging densities complete" << std::endl;
 
 //Contribution of U_i
       B = ((k_next*N_n/N_this) + (d_next*N_n/N_this) + (k_prev*N_p/N_this) - (d_prev*N_p/N_this)) ;
-    //  std::cout << "U_i complete" << std::endl;
 //Contribution of U_i-1
       A = -1*((k_prev*N_p/N_prev) + (d_prev*N_p/N_prev));
-    //  std::cout << "U_i-1 complete" << std::endl;
 //Contribution of U_i+1
       C = -1*((k_next*N_n/N_next) - (d_next*N_n/N_next));
-    //  std::cout << "U_i+1 complete" << std::endl;
 //Check for dn/dt
    conv.col(j) = m_wdot - (B.array()*N_this*ChemMoleFrac.col(j).array()).matrix() - (A.array()*N_prev*ChemMoleFrac.col(j-1).array()).matrix() - (C.array()*N_prev*ChemMoleFrac.col(j+1).array()).matrix();
 
@@ -779,7 +758,6 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 //Main diagonal terms - Jacobian from chemistry
    BlockMatrix.block(j*nsp, j*nsp, nsp, nsp) = ((mat1) - (m_wjac*dt ));
    Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
-//   std::cout << "main diagonal set" << std::endl;
 //Main diagonal - diffusion term
    for(int sp = 0; sp < nsp; sp++){
    Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp);
@@ -789,9 +767,8 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 //Off diagonal terms - diffusion
    BlockMatrix((j)*nsp + sp, (j-1)*nsp + sp) = A(sp)*dt;
    BlockMatrix((j)*nsp + sp, (j+1)*nsp + sp) = C(sp)*dt;
-   }
-  //  std::cout << "Off diagonal terms set" << std::endl;
-   }
+   
+   } }
 
 //Upper boundary condition
    if(j == 0){
@@ -847,7 +824,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
    VectorXd dTdz_prev = alpha*(T_this - T_prev)*2/((T_this + T_prev)*dz);
    VectorXd dTdz_next = alpha*(T_next - T_this)*2/((T_this + T_next)*dz);
    d_next = d_next + ((dTdz_next.array()*D_next.array()).matrix()*(1/(2*dz*dz)));
-   d_prev = d_prev + ((dTdz_next.array()*D_next.array()).matrix()*(1/(2*dz*dz)));
+   d_prev = d_prev + ((dTdz_prev.array()*D_prev.array()).matrix()*(1/(2*dz*dz)));
    
 
    //std::cout << "d complete" << std::endl;
@@ -882,7 +859,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
    Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
 //Main diagonal - diffusion term
    for(int sp = 0; sp < nsp; sp++){
-//Dirichlet conditions only for species for whom boundary conditions have been specified
+//Dirichlet conditions only for species for whom boundary conditions have been specifies
    std::string speciesName = gas->speciesName(sp);
    std::string speciesD  = pinput->GetOrAddString("upperboundaryMixRat", speciesName, "nan");
    if(speciesD != "nan")
@@ -960,10 +937,8 @@ for(int rx = 0; rx < PhotoRxn; rx++){
       VectorXd D_this = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j), AtmData(iTemp,j), mWt);
       VectorXd D_next = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j), AtmData(iTemp,j), mWt);
       VectorXd D_prev = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress,j-1), AtmData(iTemp,j-1), mWt);
-      //std::cout << "Diffusion coefficient complete!" << std::endl; 
       D_next = (D_next + D_this)/2;
       D_prev = (D_prev + D_this)/2;
-      //std::cout << "Averaging diffusion coefficient" << std::endl;
       double T_next = (AtmData(iTemp,j) + AtmData(iTemp,j))/2;
       double T_prev = (AtmData(iTemp,j) + AtmData(iTemp,j-1))/2;
       double dz = (AtmData(iAlt,j-1) - AtmData(iAlt,j));
@@ -971,37 +946,28 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 //Dynamic Time Scales
       VectorXd Diff = AtmData(iKzz, j)*I + D_this;
       TDyn.col(j) = ((dz*dz)/Diff.array()).matrix();
-      //std::cout << "Identity matrix" << std::endl;
       VectorXd d_next = ((mm_next*I - mWt).array()*D_next.array()).matrix()*(1/(2*dz*dz))*(g*1e-3*dz/(6.022E23*1.38E-23*T_next));
       VectorXd d_prev = ((mm_prev*I - mWt).array()*D_prev.array()).matrix()*(1/(2*dz*dz))*(g*1e-3*dz/(6.022E23*1.38E-23*T_prev));
-      //std::cout << (d_next - d_prev).transpose() << std::endl;
       
       double T_this = AtmData(iTemp, j);
       VectorXd dTdz_prev = alpha*(T_this - T_prev)*2/((T_this + T_prev)*dz);
       VectorXd dTdz_next = alpha*(T_next - T_this)*2/((T_this + T_next)*dz);
       d_next = d_next + ((dTdz_next.array()*D_next.array()).matrix()*(1/(2*dz*dz)));
-      d_prev = d_prev + ((dTdz_next.array()*D_next.array()).matrix()*(1/(2*dz*dz)));
+      d_prev = d_prev + ((dTdz_prev.array()*D_prev.array()).matrix()*(1/(2*dz*dz)));
       
-
-      //std::cout << "d complete" << std::endl;
       VectorXd k_next = (((K_next*I) + D_next)/(dz*dz));
       VectorXd k_prev = (((K_prev*I) + D_prev)/(dz*dz));
-      //std::cout << "k complete" << std::endl;
       double N_next = AtmData(iNd, j);
       double N_this = AtmData(iNd, j);
       double N_prev = AtmData(iNd, j-1);
       double N_n = (N_this + N_next)/2;
       double N_p = (N_this + N_prev)/2;
-     // std::cout << "Averaging densities complete" << std::endl;
 //Contribution of U_i
       B = ((k_next*N_n/N_this) + (d_next*N_n/N_this) + (k_prev*N_p/N_this) - (d_prev*N_p/N_this)) ;
-    //  std::cout << "U_i complete" << std::endl;
 //Contribution of U_i-1
       A = -1*((k_prev*N_p/N_prev) + (d_prev*N_p/N_prev));
-    //  std::cout << "U_i-1 complete" << std::endl;
 //Contribution of U_i+1
       C = -1*((k_next*N_n/N_next) - (d_next*N_n/N_next));
-    //  std::cout << "U_i+1 complete" << std::endl;
 
 //Check for dn/dt
    conv.col(j) = m_wdot - (B.array()*N_this*mole_frac.array()).matrix() - (A.array()*N_prev*ChemMoleFrac.col(j-1).array()).matrix() - (C.array()*N_prev*mole_frac.array()).matrix();
@@ -1056,25 +1022,28 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 }   
     
 //Inverting the matrix
-   Eigen::SparseMatrix<double> Am = BlockMatrix.sparseView();
-   Eigen::BiCGSTAB<Eigen::SparseMatrix<double>, Eigen::DiagonalPreconditioner<double>> cg;
-   cg.setMaxIterations(1E8);
-   cg.compute(Am);
-   Ufuture = cg.solve(Upresent);
+
+//   Eigen::SparseMatrix<double> Am = BlockMatrix.sparseView();
+//   Eigen::BiCGSTAB<Eigen::SparseMatrix<double>, Eigen::DiagonalPreconditioner<double>> cg;
+//   cg.setMaxIterations(1E8);
+//   cg.compute(Am);
+//   Ufuture = cg.solve(Upresent);
 
 //   Ufuture = BlockMatrix.inverse()*Upresent;
+
+  Ufuture = ThomasSolver(BlockMatrix, Upresent,nsp,nSize);
 
 //Checking for convergence
   double conv_factor = conv.maxCoeff();
   double tau = 1.1;
-  std::cout << "#iterations:     " << cg.iterations() << std::endl;
-  std::cout << "estimated error: " << cg.error()      << std::endl;
+//  std::cout << "#iterations:     " << cg.iterations() << std::endl;
+//  std::cout << "estimated error: " << cg.error()      << std::endl;
   std::cout << "convergence: " << conv_factor << std::endl;
   std::cout << "Chemical time scale: " << TChem.minCoeff() << std::endl;
   std::cout << "Dynamic time scale: " << TDyn.minCoeff() << std::endl;
 //Condition number of matrix
-  double cd_num = (BlockMatrix.squaredNorm())*(BlockMatrix.inverse().squaredNorm());
-  std::cout << "Condition number (L^2): " << cd_num << std::endl;
+//  double cd_num = (BlockMatrix.squaredNorm())*(BlockMatrix.inverse().squaredNorm());
+//  std::cout << "Condition number (L^2): " << cd_num << std::endl;
 
   if(counter >= 1){
   if(conv_factor/conv_old >= 1){
