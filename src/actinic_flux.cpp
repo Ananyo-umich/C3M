@@ -87,7 +87,7 @@ double ActinicFlux::eval(double dt, double *x) {
     double temp = atm->getT(j);
     double pres = atm->getP(j);
     double delz = j == levels - 1 ? atm->getH(j) : atm->z(j + 1) - atm->z(j);
-
+   // std::cout << "dz : " << delz << std::endl;
     // total number density
     double num_dens = pres / (temp * Cantera::Boltzmann);
 
@@ -103,6 +103,7 @@ double ActinicFlux::eval(double dt, double *x) {
         auto &&cross =
             std::static_pointer_cast<Cantera::PhotolysisBase>(rxn->rate())
                 ->getCrossSection(temp, wave);
+   // std::cout << "cross : " << cross[0] << std::endl;
         m_dtau(j, k) += conc * cross[0] * delz;
       }
     }
@@ -114,10 +115,10 @@ double ActinicFlux::eval(double dt, double *x) {
     for (int j = levels - 1; j >= 0; j--) {
       tau += m_dtau(j, k);
       m_actinicFlux->at(j * m_wavelength->size() + k) =
-          m_toa_flux[k] * exp(-tau);
+          m_toa_flux[k] * exp(tau);
     }
   }
-
+  //std::cout << "AF calc done!" << std::endl;
   return 0.;
 };
 
@@ -129,6 +130,7 @@ void ActinicFlux::show() const {
       "Actinic Fluxes"
       " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
 
+/*
   for (int j = points - 1; j >= 0; --j) {
     std::cout << "j = " << j << ": ";
     for (size_t i = 0; i < m_wavelength->size(); ++i) {
@@ -137,4 +139,6 @@ void ActinicFlux::show() const {
     }
     std::cout << std::endl;
   }
+  */
+
 }

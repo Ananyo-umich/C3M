@@ -1,3 +1,9 @@
+problem:
+ - planet: planet/Earth.txt
+ - name: Earth
+ 
+units: {length: cm, quantity: molec, activation-energy: K}
+
 phases:
   - name: gas
     thermo: ideal-gas
@@ -54,4 +60,4 @@ reactions:
     cross-section:
       - format: VULCAN
         temperature-range: [0., 1000.]
-        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv]
+        filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv] 

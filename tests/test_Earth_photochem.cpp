@@ -5,9 +5,9 @@
 #include <application/application.hpp>
 
 // cantera
+#include "cantera/base/ct_defs.h"
 #include <cantera/base/Solution.h>
-
-// output stream
+#include <cantera/kinetics/Reaction.h>
 #include <cantera/numerics/eigen_dense.h>
 #include <cantera/numerics/eigen_sparse.h>
 
@@ -40,27 +40,28 @@ class TestEarthChem : public testing::Test {
   // constructor
   TestEarthChem() {
     // atmosphere
-    auto mech = Cantera::newSolution("Earth_CHNO.yaml");
+    auto mech = Cantera::newSolution("photolysis_o2.yaml");
     auto atm = std::make_shared<AtmChemistry>("atm", mech);
     auto gas = mech->thermo();
     auto gas_kin = mech->kinetics();
     int nsp = gas->nSpecies();
     int nrxn = gas_kin->nReactions();
     Cantera::ThermoPhase* gasThermo = gas.get();
-    iCO2 = atm->componentIndex("CO2");
     iN2 = atm->componentIndex("N2");
     iO2 = atm->componentIndex("O2");
-    iH2O = atm->componentIndex("H2O");
-    iCH4 = atm->componentIndex("CH4");
-    iNO2 = atm->componentIndex("NO2");
-    iNO = atm->componentIndex("NO");
     std::cout << "Created a mechanism" << std::endl;
     //Using YAML to extract components of atmospheric structure
-    YAML::Node config  = YAML::LoadFile("Earth_CHNOS.yaml");
+    YAML::Node config  = YAML::LoadFile("photolysis_o2.yaml");
     YAML::Node Atm_File = config["problem"][0]["planet"];
     YAML::Node Planet_Name = config["problem"][1]["name"];
     std::string AtmFile = Atm_File.as<std::string>();
     std::string PlanetName = Planet_Name.as<std::string>();
+    for (int irxn = 0; irxn < nrxn; irxn++){
+          auto& rxnObj = *(gas_kin->reaction(irxn));
+          std::string rxnEquation = rxnObj.equation();
+          std::cout << rxnEquation << std::endl;
+	}
+
     Eigen::VectorXd mWt(nsp);  // Molecular weight
     for (int insp = 0; insp < nsp; insp++) {
           mWt(insp) = gas->molecularWeight(insp);  // Kg/kml
@@ -96,6 +97,7 @@ class TestEarthChem : public testing::Test {
       z[inx] = atof(data4.c_str())*1E3; //Altitude (m)
       AtmData(iAlt, inx) = atof(data4.c_str())*1E3; //Altitude (m) 
       AtmData(iNd, inx) = atof(data5.c_str())*1E6/(6.022E23*1E3); //Concentration (1/cm^3) -> kmol/m^3
+      std::cout << "Pres: " << AtmData(iPress, inx) << ", Temp: " << AtmData(iTemp,inx) << std::endl;
       inx++;
       }
   InFile.close();
@@ -108,22 +110,21 @@ class TestEarthChem : public testing::Test {
     Eigen::MatrixXd Dzz = Eigen::MatrixXd::Zero(nsp,nsp);
     // resize function is called inside setupGrid
     atm->setupGrid(nz, z.data());
+    atm->setGraivty(9.8);
 
     hydro = std::make_shared<std::vector<double>>(atm->nPoints() * 3);
     for (size_t n = 0; n < atm->nPoints(); ++n) {
-      hydro->at(n * 3) = AtmData(iTemp,n);
-      hydro->at(n * 3 + 1) = AtmData(iPress, n);
+      hydro->at(n * 3) = AtmData(iTemp,n); 
+      hydro->at(n * 3 + 1) = AtmData(iPress,n);
       hydro->at(n * 3 + 2) = U0;
-      atm->setEddyDiffusionCoeff(0.0, n);
-      std::cout << "Pres: " << AtmData(iPress, n) << " & " << AtmData(iTemp,n) << std::endl;
-      //Eigen::VectorXd Diag  = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress, n), AtmData(iTemp,n), mWt);
-      
-      //Dzz.diagonal() = Diag;
-      atm->setBinaryDiffusionCoeff(Dzz, n); 
+      atm->setEddyDiffusionCoeff(AtmData(iKzz, n), n);
     }
     
     atm->setHydro(hydro, 3);
     std::cout << "Hydro done!" << std::endl;
+
+    for (size_t n = 0; n < atm->nPoints(); ++n) {
+    std::cout << n << ": " << atm->getP(n) << std::endl; }
     // surface
     auto surface = std::make_shared<SurfaceBoundary>("surface", mech);
     std::cout << "Surface BC done!" << std::endl;
@@ -138,35 +139,24 @@ class TestEarthChem : public testing::Test {
 
     // Setting up initial profiles
 
-    pchem->setFlatProfile(atm, iO2, 0.22);
-    pchem->setFlatProfile(atm, iN2, 0.78);
-    atm->setGravity(-9.8);
+    pchem->setFlatProfile(atm, iO2, 0.21);
+    pchem->setFlatProfile(atm, iN2, 0.79);
    
     //Initializing BC for surface and space domains
-    Eigen::VectorXd SurfaceBC = Eigen::VectorXd::Ones(nsp)*1e-30;
-    Eigen::VectorXd SpaceBC = Eigen::VectorXd::Ones(nsp)*1e-30;
+    Eigen::VectorXd SurfaceBC = Eigen::VectorXd::Ones(nsp)*0.0;
+    Eigen::VectorXd SpaceBC = Eigen::VectorXd::Ones(nsp)*0.0;
     
-    //Applying special BC for space and surface
-    //Surface
-    SurfaceBC(iN2) = 0.78; 
-    SurfaceBC(iO2) = 0.21;
-    SurfaceBC(iH2O) = 1E-6;
-    SurfaceBC(iCO2) = 400E-6;
 
-    //Space
-    SpaceBC(iN2) = 0.78;
-    SpaceBC(iO2) = 0.21;
-
-    //pchem->find<Connector>("surface")->setDirichletBC(SurfaceBC);
-    //pchem->find<Connector>("space")->setDirichletBC(SpaceBC);
-
-    std::string X = "O2:1.0";
+    std::string X = "O2:0.21 N2:0.79";
     pchem->find<Connector>("surface")->setSpeciesDirichlet(X);
     pchem->find<Connector>("space")->setSpeciesDirichlet(X);
-    //std::string X = "N2:0.78 O2:0.22 H2O:1e-6 CO2:400e-6";
-   // pchem->find<Connector>("surface")->setSpeciesDirichlet(X);
-   // std::string X_space = "N2:0.78 O2:0.22";
-   // pchem->find<Connector>("space")->setSpeciesDirichlet(X_space);
+    //pchem->find<Connector>("surface")->setDirichletBC(SurfaceBC);
+    //pchem->find<Connector>("space")->setDirichletBC(SpaceBC);
+    double dt = 1E-10;
+    
+   // pchem->advance(10);
+    pchem->timeStep(100, dt, 10);
+    pchem->show();
 
     }
 
@@ -174,22 +164,16 @@ class TestEarthChem : public testing::Test {
 };
 
 
-TEST_F(TestEarthChem, check_basic) {
-  auto atm = pchem->find<>("atm");
-
-}
-
 TEST_F(TestEarthChem, check_abundance) {
   auto atm = pchem->find<AtmChemistry>("atm");
  
-  pchem->setMaxTimeStep(1.E9);
-  pchem->show();
+ // pchem->setMaxTimeStep(1.E9);
+ // pchem->show();
 
-  int nsteps = 10;
-  double dt = 1.0;
+ // int nsteps = 10;
+ // double dt = 1.0;
 
-  pchem->timeStep(200, dt, 8);
-  pchem->show();
+
 
 }
 

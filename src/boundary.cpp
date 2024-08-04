@@ -45,7 +45,6 @@ void Connector::setSpeciesDirichlet(const std::string& xin) {
   auto xmap = Cantera::parseCompString(xin);
   // will throw an exception if the species are not in the phase
   auto mf = solution()->thermo()->getCompositionFromMap(xmap);
-
   for (auto x : xmap) {
     DirichletBC bc;
     bc.id = componentIndex(x.first);

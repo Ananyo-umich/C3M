@@ -25,14 +25,16 @@ void AtmChemistrySimulator::initFromFile(const std::string& filename) {
   auto stellar_input_file = app->FindResource(filename);
   auto stellar_input = ReadStellarRadiationInput(stellar_input_file, 1., 1.);
 
+  double h = 6.626e-34; //Planck's constant
+  double c = 3e8;  //Speed of light
+  double factor = 1/(h*c);
+  Eigen::VectorXd wav = Eigen::Map<Eigen::VectorXd>(stellar_input.first.data(), stellar_input.first.size());;
+  Eigen::VectorXd irr = Eigen::Map<Eigen::VectorXd>(stellar_input.second.data(), stellar_input.second.size());;
+  Eigen::VectorXd actinicFlux = (wav.array()*irr.array()).matrix()*factor;
   // set wavelength
-  std::vector<double> wavelength(10);
-  std::vector<double> actinic_flux(10);
+  std::vector<double> wavelength(wav.data(), wav.data() + wav.size());
+  std::vector<double> actinic_flux(actinicFlux.data(), actinicFlux.data() + actinicFlux.size());
 
-  for (int i = 0; i < 10; i++) {
-    wavelength[i] = 20.0e-9 + i * 20.0e-9;
-    actinic_flux[i] = 1.e25;
-  }
 
   auto atm = find<AtmChemistry>("atm");
   m_actinic_flux = std::make_shared<ActinicFlux>();
@@ -55,20 +57,25 @@ void AtmChemistrySimulator::resize() {
 }
 
 int AtmChemistrySimulator::solve(double* x0, double* x1, int loglevel) {
+  
+  //std::cout << "Starting C3M solve function" << std::endl;	
   // x0 is the previous state
   // x1 is the residual
   eval(Cantera::npos, x0, x1, m_rdt, 1);
-
+  //std::cout << "C3M eval function complete!" << std::endl;
   auto p = left();
   while (p != nullptr) {
+  //  std::cout << "flag 1 " << std::endl;
     double* X = x1 + p->loc();
     if (p->isConnector()) {
+  //    std::cout << "flag 2" << std::endl;
       p = p->right();
     } else {
+  //    std::cout << "flag 3" << std::endl;
       p = p->forwardSweep(X);
     }
   }
-
+//  std::cout << "forward sweep complete" << std::endl;
   p = right();
   while (p != nullptr) {
     double* X = x1 + p->loc();
@@ -79,6 +86,7 @@ int AtmChemistrySimulator::solve(double* x0, double* x1, int loglevel) {
     }
   }
 
+//  std::cout << "backward sweep complete" << std::endl;
   bool good = true;
   for (size_t n = 0; n < size(); n++) {
     if (x0[n] + x1[n] < 0.) {
@@ -172,12 +180,16 @@ double AtmChemistrySimulator::timeStep(int nsteps, double dt, int loglevel) {
   for (size_t n = 0; n < nDomains(); n++) {
     domain(n).update(m_state->data() + start(n));
   }
-
+  std::cout << "Updated domain data" << std::endl;
   // update actinic flux
   if (m_actinic_flux != nullptr) m_actinic_flux->eval(0., m_state->data());
+  if (m_actinic_flux != nullptr) m_actinic_flux->show();
+  // if (m_actinic_flux != nullptr) m_actinic_flux->eval(0., m_state->data());
 
   // update boundary conditions
   eval(Cantera::npos, m_state->data(), m_xnew.data(), m_rdt, 1);
-
+  std::cout << "Updated boundary conditions" << std::endl;
+  
+  //return AtmChemistrySimulator::solve(m_state->data(), m_xnew.data(), loglevel);
   return OneDim::timeStep(nsteps, dt, m_state->data(), m_xnew.data(), loglevel);
 }

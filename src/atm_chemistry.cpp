@@ -108,7 +108,6 @@ std::string AtmChemistry::componentName(size_t n) const {
 
 void AtmChemistry::update(double const* x) {
   auto thermo = solution()->thermo();
-
   for (size_t j = 0; j < nPoints(); j++) {
     thermo->setTemperature(getT(j));
     thermo->setPressure(getP(j));
@@ -128,14 +127,14 @@ void AtmChemistry::update(double const* x) {
     m_Pmid[j] = sqrt(getP(j - 1) * getP(j));
     thermo->setTemperature(m_Tmid[j]);
     thermo->setPressure(m_Pmid[j]);
-
+  
     const double* Xjm = x + stride() * (j - 1);
     const double* Xj = x + stride() * j;
     for (size_t k = 0; k < nSpecies(); ++k) {
       m_Xmid[k] = 0.5 * (Xjm[k] + Xj[k]);
     }
 
-    thermo->setMoleFractions_NoNorm(m_Xmid.data());
+    thermo->setMoleFractions(m_Xmid.data());
     for (size_t k = 0; k < nSpecies(); ++k) {
       m_dwtm[j](k) = thermo->molecularWeight(k) - thermo->meanMolecularWeight();
     }
