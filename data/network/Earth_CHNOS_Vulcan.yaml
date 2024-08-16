@@ -1913,6 +1913,8 @@ reactions:
   rate-constant: {A: 1 ,T0: 300 , b: 0 ,Ea: 0 }
 - equation: '1.0 H2CO => 1.0 H + 1.0 HCO '
   rate-constant: {A: 1 ,T0: 300 , b: 0 ,Ea: 0 }
+- equation: '1.0 O2 => 2.0 O '
+  rate-constant: {A: 1 ,T0: 300 , b: 0 ,Ea: 0 }
 - equation: '1.0 O2 => 1.0 O + 1.0 O_1 '
   rate-constant: {A: 1 ,T0: 300 , b: 0 ,Ea: 0 }
 - equation: '1.0 O3 => 1.0 O2 + 1.0 O '

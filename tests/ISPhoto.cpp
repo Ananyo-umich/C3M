@@ -536,6 +536,27 @@ double mm_prev, mm_next;
 std::string grav_str = pinput->GetString("grav", "g");
 double g = atof(grav_str.c_str());
 
+//Correct for the atmospheric scattering and absorption above the model boundary
+//Using column density of species to determine the absorption and scattering not
+//accounted for
+int clden = 0;
+std::string clden_species_list = pinput->GetOrAddString("coldensity", "species", "nan");
+std::cout << clden_species_list << std::endl;
+Eigen::VectorXd cldMag = VectorXd::Zero(gas->nSpecies()); //Stores the magnitude of column density difference for TOA
+Eigen::VectorXd cldMag_diff = VectorXd::Zero(gas->nSpecies()); //Stores the magnitude of column density difference for each species
+while (std::regex_search (clden_species_list,m,pattern)) {
+     for (auto x:m){
+//Column density at top of atmosphere [From input file]
+       std::string clden_toa = pinput->GetOrAddString("coldensity", x, "nan");
+       if(clden_toa != "nan"){
+       species_inx = gas->speciesIndex(x);
+       cldMag(species_inx) = atof(clden_toa.c_str())*1e4; //1/cm^2 -> 1/m^2
+       }
+       clden++;
+     }
+      clden_species_list = m.suffix().str();
+      }
+
 
 //Initialize the block matrix
 Eigen::MatrixXd BlockMatrix = MatrixXd::Zero(nsp*nSize,nsp*nSize);
@@ -549,7 +570,7 @@ int counter = 0;
 
 std::cout << "Time starts" << std::endl;
 while(Ttot < Tmax) {
-
+  MatrixXd Opacity = MatrixXd::Zero(stellar_input.row(0).size(),nSize);
   for (int j = 0; j < nSize; j++) {
 //Set the output of previous step as present condition of the system
 
@@ -566,14 +587,104 @@ while(Ttot < Tmax) {
     gas2->setState_TP(Temp, (Press/1.0132E5)*OneAtm);
     Cantera::Kinetics *gasRawPtr = sol2->kinetics().get();
     Cantera::ThermoPhase *gasThermo = gas2.get(); 
+
+
+//Radiative transfer (Beer-Lambert law) for actinic flux, and rate calculation
+    if(j != 0){
+//For each absorber, find the total absorption
+   dh = (AtmData(iAlt,j-1) - AtmData(iAlt,j));
+
+//Atomic and Molecular absorption
+   int Absorber = 0;
+   std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
+   while (std::regex_search (absorber_species_list,m,pattern)) {
+     for (auto x:m){
+      species_inx = gas2->speciesIndex(x);
+      double number_density = Press/(Kb*Temp);
+      Opacity.col(j) = Opacity.col(j) - (mole_fractions(species_inx)*number_density*absorber_cross_data.col(Absorber)*dh/cos(sz_angle*3.14/180));
+      Absorber++;
+     }
+      absorber_species_list = m.suffix().str();
+    }
+
+//Rayleigh scattering
+    int Scatter = 0;
+    std::string scat_species_list = pinput->GetString("scatcross", "scatterers");
+    while (std::regex_search (absorber_species_list,m,pattern)) {
+     for (auto x:m){
+      species_inx = gas2->speciesIndex(x);
+      double number_density = Press/(Kb*Temp);
+      Opacity.col(j) = Opacity.col(j) - (mole_fractions(species_inx)*number_density*scat_cross_data.col(Scatter)*dh/cos(sz_angle*3.14/180));
+      Scatter++;
+     }
+      scat_species_list = m.suffix().str();
+      }
+
+//The transmission coefficient from opacity
+    Opacity.col(j) = Opacity.col(j) - (dh*handleCustomOpacity(PlanetName, gasThermo, Press, Temp, AtmData(iAlt,j), stellar_input.row(0)));
+    Opacity.col(j) = Opacity.col(j).array().exp().matrix();
+    Opacity.col(j) =  (Opacity.col(j).array()*Opacity.col(j-1).array()).matrix();
+//Stellar spectrum at each altitude
+    Stellar_activity.col(j) = (Stellar_activity.col(j-1).array()*Opacity.col(j).array()).transpose().matrix();
+     }
+   if(j == 0){
+     clden_species_list = pinput->GetOrAddString("coldensity", "species", "nan");
+     if(clden_species_list != "nan"){
+//Updating the difference in column density
+        cldMag_diff = cldMag; //1/m^2
+//Atomic and molecular absorption
+       int Absorber = 0;
+       std::string absorber_species_list = pinput->GetString("abscross", "absorbers");
+      while (std::regex_search (absorber_species_list,m,pattern)) {
+        for (auto x:m){
+         species_inx = gas2->speciesIndex(x);
+         double number_density = Press/(Kb*Temp);
+         Opacity.col(j) = Opacity.col(j) - (absorber_cross_data.col(Absorber)*cldMag_diff(species_inx)/cos(sz_angle*3.14/180));
+         Absorber++;
+     }
+         absorber_species_list = m.suffix().str();
+    }
+
+//Rayleigh scattering
+      int Scatter = 0;
+      std::string scat_species_list = pinput->GetString("scatcross", "scatterers");
+      while (std::regex_search (absorber_species_list,m,pattern)) {
+      for (auto x:m){
+        species_inx = gas2->speciesIndex(x);
+        double number_density = Press/(Kb*Temp);
+        Opacity.col(j) = Opacity.col(j) - (scat_cross_data.col(Scatter)*cldMag_diff(species_inx)/cos(sz_angle*3.14/180));
+        Scatter++;
+     }
+        scat_species_list = m.suffix().str();
+      }
+
+//Updating the stellar activity at upper boundary
+//The transmission coefficient from opacity
+    Opacity.col(j) = Opacity.col(j).array().exp().matrix();
+//Stellar spectrum at each altitude
+    Stellar_activity.col(j) = (stellar_input.row(1).transpose().array()*Opacity.col(j).array()).transpose().matrix();
+    }
+
+    if(clden_species_list == "nan"){
+    Opacity.col(0) = VectorXd::Ones(stellar_input.row(0).size());
+    Stellar_activity.col(j) = (stellar_input.row(1).transpose());}
+     }
+
+for(int rx = 0; rx < PhotoRxn; rx++){
+     double j_rate = QPhotoChemRate(stellar_input.row(0),d_wavelength, photo_cross_data.col(rx), qyield_data.col(rx), Stellar_activity.col(j));
+     gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
+     auto& rxnObj = *(gas_kin->reaction(RxnIndex(rx)));
+     std::string rxnEquation = rxnObj.equation();
+     //std::cout << rxnEquation << " " << j_rate << std::endl;
+   }
+
 //Solving the net production for each species
-    gas_kin2->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera 
+    gas_kin2->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera
+    //std::cout << m_wdot.transpose()*dt << std::endl;
     m_wjac = gas_kin2->netProductionRates_ddCi(); //Extracting Jacobian from Cantera
     for (int insp = 0; insp < nsp; insp++) {
       mWt(insp) = gas2->molecularWeight(insp); // Kg/kml
      }
-
-
 //Solve for diffusion terms
     if ((j > 0) && (j < nSize-1)) {
 
@@ -845,35 +956,35 @@ while(Ttot < Tmax) {
       C = -1*((k_next*N_n/N_next) - (d_next*N_n/N_next));
     //  std::cout << "U_i+1 complete" << std::endl;
 
-//Inserting the terms into block matrix
-   if(bot == "Dirichlet"){
 //Main diagonal terms - Jacobian from chemistry
    BlockMatrix.block(j*nsp, j*nsp, nsp, nsp) = ((mat1) - (m_wjac*dt ));
    Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
 //Main diagonal - diffusion term
    for(int sp = 0; sp < nsp; sp++){
+   std::string speciesName = gas->speciesName(sp);
+   std::string speciesD  = pinput->GetOrAddString("lowerboundaryMixRat", speciesName, "nan");
+   std::string speciesN = pinput->GetOrAddString("lowerboundaryflux", speciesName, "nan");
+  
+   if(speciesD != "nan"){
    Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp) - (C(sp)*dt*N_next*mole_frac(sp));
    BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  (B(sp)*dt);
+   }
 
+   if(speciesN != "nan"){
+   double speciesNC = atof(speciesN.c_str())*1E4/6.022E26;
+   Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp) ;
+   BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  ((C(sp) + B(sp) - speciesNC*dz)*dt);
 
-//Off diagonal terms - diffusion
-   BlockMatrix(j*nsp + sp, (j-1)*nsp + sp) = A(sp)*dt;
-   } }
-
-
-   if(bot == "Neumann"){
-//Main diagonal terms - Jacobian from chemistry
-   BlockMatrix.block(j*nsp, j*nsp, nsp, nsp) = ((mat1) - (m_wjac*dt ));
-   Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
-//Main diagonal - diffusion term
-   for(int sp = 0; sp < nsp; sp++){
+    }
+   
+   if((speciesD == "nan") && (speciesN == "nan")){
    Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp);
    BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  ((C(sp) + B(sp))*dt);
-
-
+    }
+   
 //Off diagonal terms - diffusion
    BlockMatrix(j*nsp + sp, (j-1)*nsp + sp) = A(sp)*dt;
-   } }
+   }
 
 
 
@@ -894,11 +1005,23 @@ while(Ttot < Tmax) {
 
     std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
     Ttot = Ttot + dt;
-    counter++;
-    dt = dt*1.25;
+    if(counter == 0){
+      dt = dt*1.5;
+      }
+    
+    if(Ufuture.minCoeff() >= 0){
+    counter = 0;
+    }
+
+    if(Ufuture.minCoeff() < 0){
+    counter = 1;
+    dt = dt/2;
+    }
+
+    Ttot = Ttot + dt;
 
 //Updating the solution
-    if(counter > 0){
+if(counter == 0){
   for (int j = 0; j < nSize; j++) {
      for(int sp = 0; sp < nsp; sp++){
          ChemMoleFrac(sp, j) = Ufuture(j*nsp + sp)/AtmData(iNd, j);;
@@ -906,8 +1029,7 @@ while(Ttot < Tmax) {
      }
 //Use cantera to balance the net number density changes
      //AtmData(iNd,j) = ChemConc.colwise().sum()(j);
-     }
-  }
+     }}
 
 } 
       

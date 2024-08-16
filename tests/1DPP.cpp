@@ -490,7 +490,7 @@ VectorXd dQ(nsp);
 double Keddy_j;
 double Keddy_prev;
 double Keddy_next;
-double conv_old;
+double conv_old, Tchem_old;
 double Temp, Press, Kzz;
 VectorXd m_wdot(nsp);
 VectorXd mole_frac(nsp);
@@ -678,7 +678,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
      gas_kin2->setMultiplier(RxnIndex(rx), j_rate);
      auto& rxnObj = *(gas_kin->reaction(RxnIndex(rx)));
      std::string rxnEquation = rxnObj.equation();
-
+     //std::cout << rxnEquation << " " << j_rate << std::endl;
    }
 
 
@@ -686,6 +686,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 
 //Solving the net production for each species
     gas_kin2->getNetProductionRates(&m_wdot[0]); //Extracting net production rates from Cantera 
+   // std::cout << m_wdot.transpose() << std::endl;
     m_wjac = gas_kin2->netProductionRates_ddCi(); //Extracting Jacobian from Cantera
     for (int insp = 0; insp < nsp; insp++) {
       mWt(insp) = gas2->molecularWeight(insp); // Kg/kml
@@ -853,7 +854,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 //Inserting the terms into block matrix
 
 //Dirichlet boundary condition
-   if(top == "Dirichlet"){
+  
 //Main diagonal terms - Jacobian from chemistry
    BlockMatrix.block(j*nsp, j*nsp, nsp, nsp) = ((mat1) - (m_wjac*dt ));
    Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
@@ -877,24 +878,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 
 //Off diagonal terms - diffusion
    BlockMatrix(j*nsp + sp, (j+1)*nsp + sp) = C(sp)*dt;
-   } }
-
-
-
-//Neumann boundary condition
-   if(top == "Neumann"){
-//Main diagonal terms - Jacobian from chemistry
-   BlockMatrix.block(j*nsp, j*nsp, nsp, nsp) = ((mat1) - (m_wjac*dt ));
-   Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
-
-//Main diagonal - diffusion term
-   for(int sp = 0; sp < nsp; sp++){
-   Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp);
-   BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  ((A(sp) + B(sp))*dt) ;
-
-//Off diagonal terms - diffusion
-   BlockMatrix(j*nsp + sp, (j+1)*nsp + sp) = C(sp)*dt;
-   } }
+   } 
 
 
 
@@ -973,7 +957,6 @@ for(int rx = 0; rx < PhotoRxn; rx++){
    conv.col(j) = m_wdot - (B.array()*N_this*mole_frac.array()).matrix() - (A.array()*N_prev*ChemMoleFrac.col(j-1).array()).matrix() - (C.array()*N_prev*mole_frac.array()).matrix();
 
 //Inserting the terms into block matrix
-   if(bot == "Dirichlet"){
 //Main diagonal terms - Jacobian from chemistry
    BlockMatrix.block(j*nsp, j*nsp, nsp, nsp) = ((mat1) - (m_wjac*dt ));
    Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
@@ -982,35 +965,27 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 //Dirichlet conditions only for species for whom boundary conditions have been specified
    std::string speciesName = gas->speciesName(sp);
    std::string speciesD  = pinput->GetOrAddString("lowerboundaryMixRat", speciesName, "nan");
+   std::string speciesN = pinput->GetOrAddString("lowerboundaryflux", speciesName, "nan");
    
    if(speciesD != "nan"){
    Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp) - (C(sp)*dt*N_next*mole_frac(sp));
    BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  (B(sp)*dt);
    }
 
-   if(speciesD == "nan"){
+   if(speciesN != "nan"){
+   double speciesNC = atof(speciesN.c_str())*1E4/6.022E26;
+   Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp) ;
+   BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  ((C(sp) + B(sp))*dt);
+   }
+
+   if((speciesD == "nan") && (speciesN == "nan")){
    Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp);
    BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  ((C(sp) + B(sp))*dt);
    }
 
 //Off diagonal terms - diffusion
    BlockMatrix(j*nsp + sp, (j-1)*nsp + sp) = A(sp)*dt;
-   } }
-
-
-   if(bot == "Neumann"){
-//Main diagonal terms - Jacobian from chemistry
-   BlockMatrix.block(j*nsp, j*nsp, nsp, nsp) = ((mat1) - (m_wjac*dt ));
-   Un = ((mat1) - (m_wjac*dt ))*N_this*mole_frac;
-//Main diagonal - diffusion term
-   for(int sp = 0; sp < nsp; sp++){
-   Upresent(j*nsp + sp) =  (m_wdot(sp)*dt) + Un(sp);
-   BlockMatrix(j*nsp + sp, j*nsp + sp) = BlockMatrix(j*nsp + sp, j*nsp + sp) +  ((C(sp) + B(sp))*dt);
-
-
-//Off diagonal terms - diffusion
-   BlockMatrix(j*nsp + sp, (j-1)*nsp + sp) = A(sp)*dt;
-   } }
+   }
 
 
 
@@ -1029,9 +1004,9 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 //   cg.compute(Am);
 //   Ufuture = cg.solve(Upresent);
 
-//   Ufuture = BlockMatrix.inverse()*Upresent;
+   Ufuture = BlockMatrix.inverse()*Upresent;
 
-  Ufuture = ThomasSolver(BlockMatrix, Upresent,nsp,nSize);
+//  Ufuture = ThomasSolver(BlockMatrix, Upresent,nsp,nSize);
 
 //Checking for convergence
   double conv_factor = conv.maxCoeff();
@@ -1042,29 +1017,24 @@ for(int rx = 0; rx < PhotoRxn; rx++){
   std::cout << "Chemical time scale: " << TChem.minCoeff() << std::endl;
   std::cout << "Dynamic time scale: " << TDyn.minCoeff() << std::endl;
 //Condition number of matrix
-//  double cd_num = (BlockMatrix.squaredNorm())*(BlockMatrix.inverse().squaredNorm());
-//  std::cout << "Condition number (L^2): " << cd_num << std::endl;
-
+  //double cd_num = (BlockMatrix.squaredNorm())*(BlockMatrix.inverse().squaredNorm());
+  //std::cout << "Condition number (L^2): " << cd_num << std::endl;
+  
   if(counter >= 1){
-  if(conv_factor/conv_old >= 1){
-      if(dt < TDyn.minCoeff()){
-        dt = dt;}
-      if(dt >= TDyn.minCoeff()){
-        dt = TDyn.minCoeff()/100;
-      }
+      if(conv_factor/conv_old >= 1.1){
+        dt = dt;
   }
-//  if((conv_factor/conv_old  >= 0.1)  &&  (conv_factor/conv_old < 0.9)){
-//      dt = dt;
-//  }
 
-  if(conv_factor/conv_old < 1){
-    dt = dt*2;}
+  if(conv_factor/conv_old <= 1){
+    dt = dt;}
 //Updating the solution
+
   for (int j = 0; j < nSize; j++) {
      for(int sp = 0; sp < nsp; sp++){
          ChemMoleFrac(sp, j) = Ufuture(j*nsp + sp)/AtmData(iNd, j);;
          ChemConc(sp, j) = Ufuture(j*nsp + sp);
      } }
+  dt = dt*2;
   Ttot = Ttot + dt;
   std::cout << "Simulation completed at time step t = " << Ttot << std::endl;
 }
@@ -1083,6 +1053,7 @@ for(int rx = 0; rx < PhotoRxn; rx++){
 
   counter++;
   conv_old = conv_factor;
+  Tchem_old = TChem.minCoeff();
 /*  
   if(conv_factor >= tau){
 //Reject the solution, and reduce the step size

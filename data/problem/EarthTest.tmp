@@ -10,7 +10,7 @@ bot = Dirichlet
 <init>
 species = N2, O2
 N2 = 0.78
-O2 = 0.21
+O2 = 0.22
 
 <photocross>
 H2O -> H + OH = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2O/H2O_cross.csv
@@ -39,6 +39,7 @@ OH -> H + O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/OH/OH_cross.csv
 HCO -> CO + H = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/HCO/HCO_cross.csv
 H2CO -> CO + H2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_cross.csv
 H2CO -> H + HCO = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_cross.csv
+O2 -> 2 O = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
 O2 -> O + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_cross.csv
 O3 -> O + O2 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
 O3 -> O2 + O_1 = VULCAN_Diss,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_cross.csv
@@ -85,16 +86,17 @@ CO2 -> CO + O_1 = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/CO2/CO2_branch.c
 C2H4 -> C2H2 + H2 = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
 C2H4 -> C2H2 + 2 H = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
 C2H4 -> C2H3 + H = VULCAN;3,/data4/ananyo/models/C3M/data/VULCAN/C2H4/C2H4_branch.csv
-C2H6 -> C2H4 + H2 = VULCAN;4,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
-C2H6 -> C2H4 + 2 H = VULCAN;5,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
-C2H6 -> C2H2 + 2 H2 = VULCAN;6,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
-C2H6 -> CH2_1 + CH4 = VULCAN;7,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
-C2H6 -> 2 CH3 = VULCAN;8,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H4 + H2 = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H4 + 2 H = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> C2H2 + 2 H2 = VULCAN;3,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> CH2_1 + CH4 = VULCAN;4,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
+C2H6 -> 2 CH3 = VULCAN;5,/data4/ananyo/models/C3M/data/VULCAN/C2H6/C2H6_branch.csv
 OH -> H + O  = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/OH/OH_branch.csv
 HCO -> CO + H = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/HCO/HCO_branch.csv
 H2CO -> CO + H2 = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_branch.csv
 H2CO -> H + HCO = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/H2CO/H2CO_branch.csv
-O2 -> O + O_1 = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_branch.csv
+O2 -> 2 O = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_branch.csv
+O2 -> O + O_1 = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/O2/O2_branch.csv
 O3 -> O + O2 = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_branch.csv
 O3 -> O2 + O_1 = VULCAN;2,/data4/ananyo/models/C3M/data/VULCAN/O3/O3_branch.csv
 HO2 -> O + OH = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/HO2/HO2_branch.csv
@@ -123,8 +125,8 @@ S2 -> 2 S = VULCAN;1,/data4/ananyo/models/C3M/data/VULCAN/S2/S2_branch.csv
 
 
 <integrator>
-dt = 0.1
-Tmax = 1e15
+dt = 1E-8
+Tmax = 4E5
 
 <upperboundaryflux>
 species = N2, O2
@@ -133,17 +135,23 @@ O2 = 0.0
 
 
 <lowerboundaryflux>
-species = N2, O2
-N2 = 0.0
-O2 = 0.0
+species = CO, CH4, NH3, N2O, NO, SO2, COS, H2S
+CO = 3.7e11
+CH4 = 1.4e11
+NH3 = 7.7e9
+N2O = 1e9
+NO = 7e9
+SO2 = 9e9
+COS = 5e7
+H2S = 2e8
 
 
 <lowerboundaryMixRat>
-species = N2, O2
-N2 = 0.77
+species = N2, O2, H2O, CO2
+N2 = 0.78
 O2 = 0.21
 H2O = 0.01
-N2O = 300E-9
+CO2 = 350e-6
 
 <thermaldiff>
 species = N2, O2
@@ -156,9 +164,9 @@ g = -9.8 #Acceleration due to gravity (m/s^2)
 
 <radtran>
 solar = sun_spec.inp #spectral irradiance file
-radius = 5 #semi-major axis to the planet from the star (AU)
+radius = 1 #semi-major axis to the planet from the star (AU)
 reference = 1 #semi-major axis to the reference point from the star (AU)
-SZA = 60 #solar zenith angle
+SZA = 0 #solar zenith angle
 
 <abscross>
 absorbers = N2, O2, O3, H2O, CO2, H2
@@ -176,7 +184,7 @@ N2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/N2_scat.txt
 O2 = VULCAN,/data4/ananyo/models/C3M/data/VULCAN/rayleigh/O2_scat.txt
 
 <output>
-out_file = ChapmanTest.nc
+out_file = ChapmanTest2.nc
 species = H, H2O, OH, H2, O, CH, C, CH2, CH3, CH4, C2, C2H, C2H2, C2H3, C2H4, C2H5, C2H6, CO, CO2, CH2OH, H2CO, HCO, CH3O, CH3OH, CH3CO, O2, H2CCO, HCCO, N, CN, HCN, NH2, NH, NH3, NO, N2, N2H2, N2H, H2CN, HNCO, N2H4, N2H3, HNO, NO2, N2O, C4H2, CH3NH, CH2NH, CH2NH2, CH3NH2, O3, HO2, H2O2, NO3, HNO3, HNO2, CH3O2, CH3OOH, NCO, N2O5, S, SH, S2, SO, H2S, CS, COS, CS2, NS, HS2, SO2, S4, S8, HCS, S3, SO3, H2SO4, O_1, CH2_1, N_2D, Ar
 
 

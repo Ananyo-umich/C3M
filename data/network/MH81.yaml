@@ -1,9 +1,9 @@
-units: {length: cm, quantity: molec}
+units: {length: cm, quantity: molec, activation-energy: K}
 phases:
 - name: gas
   thermo: ideal-gas
   elements: [C, H, O, N]
-  species: [O3, O2, O_1d, N2O, N2, O, NO2, NO, H2O, H, OH, HO2, H2, H2O2, HNO3, NO3]
+  species: [O3, O2, O_1D, N2O, N2, O, NO2, NO, H2O, H, OH, HO2, H2, H2O2, HNO3, NO3]
   kinetics: gas
   reactions: all
   skip-undeclared-elements: true
@@ -31,7 +31,7 @@ species:
       -2.023372700E-09, 1.039040018E-12, -3.391454870E+03, 1.849699470E+01]
     - [-1.037939022E+06, 2.344830282E+03, 1.819732036E+00, 1.267847582E-03, -2.188067988E-07,
        2.053719572E-11, -8.193467050E-16, -1.689010929E+04, 1.738716506E+01]
-- name: O_1d
+- name: O_1D
   composition: {O: 1.0}
   enthalpy: 0
   thermo:
@@ -187,67 +187,88 @@ species:
       -950.158922, -3.20502331]
 
 reactions:
+#List of photochemical reactions
 - equation: '1.0 O2 => 2.0 O '
-  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
+  rate-constant: {A: 1.0,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 O2 => 1.0 O + 1.0 O_1D '
+  rate-constant: {A: 1.0,T0: 300,b: 0 ,Ea: 0 }
+- equation: '1.0 O3 => 1.0 O + 1.0 O2 '
+  rate-constant: {A: 1.0,T0: 300, b: 0 ,Ea: 0 }
+- equation: '1.0 O3 => 1.0 O2 + 1.0 O_1D '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 N2O => 1.0 N2 + 1.0 O_1D '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 H2O => 1.0 H + 1.0 OH '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 H2O => 1.0 H2 + 1.0 O_1D '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 H2O => 2.0 H + 1.0 O '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 H2 => 2.0 H '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 N2 => 2.0 N '
+#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+#- equation: '1.0 NO => 1.0 N + 1.0 O '
+#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 NO2 => 1.0 NO + 1.0 O '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 NO3 => 1.0 NO2 + 1.0 O '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 NO3 => 1.0 NO + 1.0 O2 '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 HNO3 => 1.0 NO2 + 1.0 OH '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 H2O2 => 2.0 OH '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 HO2 => 1.0 O + 1.0 OH '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+- equation: '1.0 OH => 1.0 O + 1.0 H '
+  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
+
+
+#List of thermochemical reactions
+- equation: '1.0 O3 + 1.0 H => 1.0 OH + 1.0 O2 '
+  rate-constant: {A: 1.4e-10,T0: 298.0,b: 0.0,Ea: -3.91 }
+- equation: '1.0 H + 1.0 O2 + M => 1.0 HO2 + M'
+  type: three-body
+  rate-constant: {A: 5.71e-32,T0: 298.0,b: -1.6,Ea: 0.0 }
+- equation: '1.0 H + 1.0 HO2 => 1.0 H2 + 1.0 O2 '
+  rate-constant: {A: 5.6e-12,T0: 298.0,b: 0.0,Ea: 0.0 }
+- equation: '1.0 O3 + 1.0 OH => 1.0 HO2 + 1.0 O2 '
+  rate-constant: {A: 1.7e-12,T0: 298.0,b: 0.0,Ea: 7.82 }
+- equation: '1.0 OH + 1.0 H2O2 => 1.0 HO2 + 1.0 H2O '
+  rate-constant: {A: 2.91e-12,T0: 298.0,b: 0.0,Ea: 1.33 }
+- equation: '1.0 O + 1.0 H2O2 => 1.0 OH + 1.0 HO2 '
+  rate-constant: {A: 1.4e-12,T0: 298.0,b: 0.0,Ea: 16.32 }
+- equation: '1.0 O + 1.0 HO2 => 1.0 OH + 1.0 O2 '
+  rate-constant: {A: 2.7e-11,T0: 298.0,b: 0.0,Ea: -1.862 }
+- equation: '1.0 O3 + 1.0 HO2 => 1.0 OH + 2.0 O2 '
+  rate-constant: {A: 3.6e-12,T0: 298.0,b: 0.0,Ea: -2.24 }
+- equation: '1.0 OH + 1.0 HO2 => 1.0 H2O + 1.0 O2 '
+  rate-constant: {A: 4.8e-11,T0: 298.0,b: 0.0,Ea: -2.08 }
+- equation: '2.0 HO2 => 1.0 H2O2 + 1.0 O2 '
+  rate-constant: {A: 1.7e-33,T0: 298.0,b: 0.0,Ea: -8.31 }
+- equation: '1.0 NO + 1.0 HO2 => 1.0 NO2 + 1.0 OH '
+  rate-constant: {A: 3.6e-12,T0: 298.0,b: 0.0,Ea: -2.24 }
+- equation: '1.0 H2O + 1.0 O_1D => 2.0 OH '
+  rate-constant: {A: 1.62e-10,T0: 298.0,b: 0.0,Ea: -0.54 }
+- equation: '1.0 OH + 1.0 HNO3 => 1.0 H2O + 1.0 NO3 '
+  rate-constant: {A: 1.5e-13,T0: 298.0,b: 0.0,Ea: 0.0 }
+- equation: '2.0 OH + M => 1.0 H2O2 + M'
+  type: three-body
+  rate-constant: {A: 6.94e-31,T0: 298.0,b: -0.8,Ea: 0.0 }
+- equation: '1.0 NO2 + 1.0 O => 1.0 NO + 1.0 O2 '
+  rate-constant: {A: 6.51e-12,T0: 298.0,b: 0.0,Ea: -0.998 }
+- equation: '1.0 OH + 1.0 NO2 + M => 1.0 HNO3 + M'
+  type: three-body
+  rate-constant: {A: 1.63e-30,T0: 298.0,b: -2.9,Ea: 0.0 }
+- equation: '1.0 NO + 1.0 O3 => 1.0 NO2 + 1.0 O2 '
+  rate-constant: {A: 1.4e-12,T0: 298.0,b: 0.0,Ea: 10.9 }
 - equation: '1.0 O + 1.0 O2 + M => 1.0 O3 + M'
   type: three-body
-  rate-constant: {A: 6.0e-34,T0: 300.0,b: -2.4,Ea: 0.0}
-- equation: '1.0 O3 => 1.0 O + 1.0 O2 '
-  rate-constant: {A: 1.0,b: 0 ,Ea: 0 }
-- equation: '1.0 O3 => 1.0 O2 + 1.0 O_1d '
-  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-#- equation: '1.0 N2O => 1.0 N2 + 1.0 O_1d '
-#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-#- equation: '1.0 O2 => 2.0 O '
-#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-#- equation: '1.0 NO2 => 1.0 NO + 1.0 O '
-#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-#- equation: '1.0 H2O => 1.0 H + 1.0 OH '
-#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-#- equation: '1.0 O3 + 1.0 H => 1.0 OH + 1.0 O2 '
-#  rate-constant: {A: 1.4e-10,T0: 298.0,b: 0.0,Ea: -3.91 }
-#- equation: '1.0 H + 1.0 O2 + M => 1.0 HO2 + M'
-#  type: three-body
-#  rate-constant: {A: 5.71e-32,T0: 298.0,b: -1.6,Ea: 0.0 }
-#- equation: '1.0 H + 1.0 HO2 => 1.0 H2 + 1.0 O2 '
-#  rate-constant: {A: 5.6e-12,T0: 298.0,b: 0.0,Ea: 0.0 }
-#- equation: '1.0 O3 + 1.0 OH => 1.0 HO2 + 1.0 O2 '
-#  rate-constant: {A: 1.7e-12,T0: 298.0,b: 0.0,Ea: 7.82 }
-#- equation: '1.0 OH + 1.0 H2O2 => 1.0 HO2 + 1.0 H2O '
-#  rate-constant: {A: 2.91e-12,T0: 298.0,b: 0.0,Ea: 1.33 }
-#- equation: '1.0 O + 1.0 H2O2 => 1.0 OH + 1.0 HO2 '
-#  rate-constant: {A: 1.4e-12,T0: 298.0,b: 0.0,Ea: 16.32 }
-#- equation: '1.0 O + 1.0 HO2 => 1.0 OH + 1.0 O2 '
-#  rate-constant: {A: 2.7e-11,T0: 298.0,b: 0.0,Ea: -1.862 }
-#- equation: '1.0 O3 + 1.0 HO2 => 1.0 OH + 2.0 O2 '
-#  rate-constant: {A: 3.6e-12,T0: 298.0,b: 0.0,Ea: -2.24 }
-#- equation: '1.0 OH + 1.0 HO2 => 1.0 H2O + 1.0 O2 '
-#  rate-constant: {A: 4.8e-11,T0: 298.0,b: 0.0,Ea: -2.08 }
-#- equation: '2.0 HO2 => 1.0 H2O2 + 1.0 O2 '
-#  rate-constant: {A: 1.7e-33,T0: 298.0,b: 0.0,Ea: -8.31 }
-#- equation: '1.0 NO + 1.0 HO2 => 1.0 NO2 + 1.0 OH '
-#  rate-constant: {A: 3.6e-12,T0: 298.0,b: 0.0,Ea: -2.24 }
-#- equation: '1.0 H2O2 => 2.0 OH '
-#  rate-constant: {A: 1 ,T0: 300 ,b: 0 ,Ea: 0 }
-#- equation: '1.0 H2O + 1.0 O_1d => 2.0 OH '
-#  rate-constant: {A: 1.62e-10,T0: 298.0,b: 0.0,Ea: -0.54 }
-#- equation: '1.0 OH + 1.0 HNO3 => 1.0 H2O + 1.0 NO3 '
-#  rate-constant: {A: 1.5e-13,T0: 298.0,b: 0.0,Ea: 0.0 }
-#- equation: '2.0 OH + M => 1.0 H2O2 + M'
-#  type: three-body
-#  rate-constant: {A: 6.94e-31,T0: 298.0,b: -0.8,Ea: 0.0 }
-#- equation: '1.0 NO2 + 1.0 O => 1.0 NO + 1.0 O2 '
-#  rate-constant: {A: 6.51e-12,T0: 298.0,b: 0.0,Ea: -0.998 }
-#- equation: '1.0 OH + 1.0 NO2 + M => 1.0 HNO3 + M'
-#  type: three-body
-#  rate-constant: {A: 1.63e-30,T0: 298.0,b: -2.9,Ea: 0.0 }
-#- equation: '1.0 NO + 1.0 O3 => 1.0 NO2 + 1.0 O2 '
-#  rate-constant: {A: 1.4e-12,T0: 298.0,b: 0.0,Ea: 10.9 }
-#- equation: '1.0 O + 1.0 O2 + M => 1.0 O3 + M'
-#  type: three-body
-#  rate-constant: {A: 6e-34,T0: 300.0,b: -2.4,Ea: 0.0 }
+  rate-constant: {A: 6.0e-34,T0: 300.0,b: -2.4,Ea: 0.0 }
 - equation: '1.0 O + 1.0 O3 <=> 2.0 O2'
-  rate-constant: {A: 8e-12,T0: 300.0,b: 0.0,Ea: 2060.0 K }
-- equation: '1.0 O_1d + M => 1.0 O + M'
+  rate-constant: {A: 8.0e-12,T0: 300.0,b: 0.0,Ea: 2060.0 }
+- equation: '1.0 O_1D + M => 1.0 O + M'
   type: three-body
-  rate-constant: {A: 1.8e-11,T0: 300.0,b: 0.0,Ea: 110.0 K }
+  rate-constant: {A: 1.8e-11,T0: 300.0,b: 0.0,Ea: 110.0 }
