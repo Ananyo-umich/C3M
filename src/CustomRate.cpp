@@ -291,6 +291,22 @@ H2_v1 + H2_v5 => H2 + H2_v6
 
 
 //Reversible reactions for H2-H2 VT transition
+  if(Equation == "2 H2 => H2 + H2_v1"){
+   int vVal = 1;
+   double rateValue = 1.0;
+ //  std::cout << "calculation is happening" << std::endl;
+   if(Temp < 500){
+   rateValue = 1.59E-11*exp(-78.75/pow(Temp, 1/3));
+   }
+   if(Temp >= 500){
+   rateValue = 2.14E-9*exp(-117.7/pow(Temp, 1/3));
+   }
+
+   double del = 1.3 - (0.3*(Temp - 500)/700);
+   rateValue = rateValue*exp(del*(vVal -1))*exp(-1*(E0)/(Kbe*Temp));
+   NetworkName->setMultiplier(inumRxn, rateValue);
+  }
+
   if(Equation == "H2 + H2_v1 => H2 + H2_v2"){
    int vVal = 2;
    double rateValue = 1.0;
