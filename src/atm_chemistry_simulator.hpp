@@ -39,6 +39,14 @@ class AtmChemistrySimulator : public Cantera::OneDim {
    * @param loglevel   Controls amount of diagnostic output.
    */
   int solve(double* x0, double* x1, int loglevel) override;
+   
+  void setMinTimeStep(double tmin);
+  void setMaxTimeStep(double tmax) ;
+  void setTimeStepFactor(double tfactor);
+  void setSteadyMode();
+  //! Set the maximum number of timeteps allowed before successful
+  //! steady-state solve
+  void setMaxTimeStepCount(int nmax);
 
  public:
   //---------------------------------------------------------

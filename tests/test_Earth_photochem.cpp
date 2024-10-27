@@ -120,6 +120,7 @@ class TestEarthChem : public testing::Test {
       atm->setEddyDiffusionCoeff(AtmData(iKzz, n), n);
     }
     
+    atm->setGravity(-9.8);
     atm->setHydro(hydro, 3);
     std::cout << "Hydro done!" << std::endl;
 
@@ -133,14 +134,14 @@ class TestEarthChem : public testing::Test {
     std::cout << "Space BC done!" << std::endl;
 
     // set up simulation
-    pchem = new AtmChemistrySimulator({surface, atm, space});
+    pchem = new AtmChemistrySimulator({space, atm, surface});
     pchem->initFromFile("stellar/sun.ir");
     std::cout << "Set Stellar conditions" << std::endl;
 
     // Setting up initial profiles
 
-    pchem->setFlatProfile(atm, iO2, 0.21);
-    pchem->setFlatProfile(atm, iN2, 0.79);
+    pchem->setFlatProfile(atm, iO2, 0.2);
+    pchem->setFlatProfile(atm, iN2, 0.8);
    
     //Initializing BC for surface and space domains
     Eigen::VectorXd SurfaceBC = Eigen::VectorXd::Ones(nsp)*0.0;
@@ -149,7 +150,10 @@ class TestEarthChem : public testing::Test {
 
     std::string X = "O2:0.21 N2:0.79";
     pchem->find<Connector>("surface")->setSpeciesDirichlet(X);
-    pchem->find<Connector>("space")->setSpeciesDirichlet(X);
+    std::string X2 = "O2:0.0 N2:0.0";
+    pchem->find<Connector>("space")->setSpeciesNeumann(X2);
+    
+   
     //pchem->find<Connector>("surface")->setDirichletBC(SurfaceBC);
     //pchem->find<Connector>("space")->setDirichletBC(SpaceBC);
     double dt = 1E-10;

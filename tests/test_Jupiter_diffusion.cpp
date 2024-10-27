@@ -94,7 +94,7 @@ class TestJupiter : public testing::Test {
     // grid
     double T0 = 300;
     double P0 = 0.01;
-    double U0 = 0.;
+    double U0 = 0.0;
 
     Eigen::MatrixXd Dzz = Eigen::MatrixXd::Zero(nsp,nsp);
     // resize function is called inside setupGrid
@@ -103,38 +103,48 @@ class TestJupiter : public testing::Test {
     hydro = std::make_shared<std::vector<double>>(atm->nPoints() * 3);
     for (size_t n = 0; n < atm->nPoints(); ++n) {
       hydro->at(n * 3) = AtmData(iTemp,n);
-      hydro->at(n * 3 + 1) = AtmData(iPress, n);
+      hydro->at(n * 3 + 1) = AtmData(iPress,n);
       hydro->at(n * 3 + 2) = U0;
       atm->setEddyDiffusionCoeff(AtmData(iKzz, n), n);
-      std::cout << "Pres: " << AtmData(iPress, n) << " & " << AtmData(iTemp,n) << std::endl;
+      //std::cout << "Pres: " << AtmData(iPress, n) << " & " << AtmData(iTemp,n) << std::endl;
       Eigen::VectorXd Diag  = handleCustomMolecularDiffusion(PlanetName, gasThermo, AtmData(iPress, n), AtmData(iTemp,n), mWt);
       
       Dzz.diagonal() = Diag;
       atm->setBinaryDiffusionCoeff(Dzz, n); 
     }
-
+    atm->setGravity(-24);
     atm->setHydro(hydro, 3);
+    std::cout << "Hydro done!" << std::endl;
+    
+    for (size_t n = 0; n < atm->nPoints(); ++n) {
+    std::cout << n << ": " << atm->getP(n) << std::endl; }
 
     // surface
     auto surface = std::make_shared<SurfaceBoundary>("surface", mech);
-
+    std::cout << "Surface BC done!" << std::endl;
     // space
     auto space = std::make_shared<SpaceBoundary>("space", mech);
+    std::cout << "Space BC done!" << std::endl;
 
     // set up simulation
-    pchem = new AtmChemistrySimulator({surface, atm, space});
-    // pchem = new AtmChemistrySimulator({atm});
+    
+    pchem = new AtmChemistrySimulator({space, atm, surface});
     pchem->initFromFile("stellar/sun.ir");
+    std::cout << "Set Stellar conditions" << std::endl;
 
-
-    pchem->setFlatProfile(atm, iH2, 0.8);
-    pchem->setFlatProfile(atm, iHe, 0.2);
-    atm->setGravity(-24);
+    pchem->setSteadyMode();
+    pchem->setFlatProfile(atm, iH2, 1.0);
+    pchem->setFlatProfile(atm, iHe, 0.0);
+    pchem->setMaxTimeStepCount(1E9);
 
     std::string X = "H2:0.86 He:0.14";
     pchem->find<Connector>("surface")->setSpeciesDirichlet(X);
-    std::string X_space = "H2:0.9 He:0.1";
-    pchem->find<Connector>("space")->setSpeciesDirichlet(X_space);
+    std::string X_space = "H2:0.0 He:0.0";
+    pchem->find<Connector>("space")->setSpeciesNeumann(X_space);
+    double dt = 1E-10;
+    
+    pchem->timeStep(10000, dt, 10);
+    pchem->show();
   }
 
   ~TestJupiter() { delete pchem; }
@@ -295,23 +305,10 @@ class TestJupiter : public testing::Test{
 
 
 TEST_F(TestJupiter, check_basic) {
-  auto atm = pchem->find<>("atm");
-
-}
-
-TEST_F(TestJupiter, check_abundance) {
-  auto atm = pchem->find<>("atm");
  
-  pchem->setMaxTimeStep(1.E9);
-  pchem->show();
-
-  int nsteps = 10;
-  double dt = 1.0;
-
-  pchem->timeStep(200, dt, 8);
-  pchem->show();
 
 }
+
 
 
 int main(int argc, char **argv) {

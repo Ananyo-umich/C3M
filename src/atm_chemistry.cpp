@@ -305,3 +305,4 @@ void AtmChemistry::updateDiffusion(const double* x, size_t j0, size_t j1) {
     }
   }
 }
+

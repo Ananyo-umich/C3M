@@ -10,6 +10,7 @@ phases:
     elements: [O, N]
     species: [N2, O, O(1D), O2, O3]
     kinetics: gas
+    reactions: all
 
 species:
   - name: N2
@@ -38,26 +39,34 @@ species:
       model: constant-cp
 
 reactions:
-  - equation: O2 => O + O(1D)
-    type: photolysis
-    branches:
+   - equation: '1.0 O + 1.0 O2 + M => 1.0 O3 + M '
+     type: three-body
+     rate-constant: {A: 6.0e-34,T0: 298.0, b: -2.4,Ea: 0.0}
+   - equation: '1.0 O + 1.0 O3 => 2.0 O2'
+     rate-constant: {A: 8.0e-12,T0: 1.0,b: 0.0,Ea: 2060}
+   - equation: '1.0 O(1D) + 1.0 N2 => 1.0 O + 1.0 N2 '
+     rate-constant: {A: 1.8e-11,T0: 1.0,b: 0.0,Ea: -110.0}
+   - equation: '1.0 O(1D) + 1.0 O2 => 1.0 O + 1.0 O2 '
+     rate-constant: {A: 3.2e-11,T0: 1.0,b: 0.0,Ea: -70.0}
+   - equation: O2 => O + O(1D)
+     type: photolysis
+     branches:
       - name: b1
         product: "O:2"
       - name: b2
         product: "O:1 O(1D):1"
-    cross-section:
+     cross-section:
       - format: VULCAN
         temperature-range: [0., 1000.]
         filenames: [VULCAN/O2/O2_cross.csv, VULCAN/O2/O2_branch.csv]
-
-  - equation: O3 => O2 + O + O(1D)
-    type: photolysis
-    branches:
+   - equation: O3 => O2 + O + O(1D)
+     type: photolysis
+     branches:
       - name: b1
         product: "O2:1 O:1"
       - name: b2
         product: "O2:1 O(1D):1"
-    cross-section:
+     cross-section:
       - format: VULCAN
         temperature-range: [0., 1000.]
         filenames: [VULCAN/O3/O3_cross.csv, VULCAN/O3/O3_branch.csv] 

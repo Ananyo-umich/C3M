@@ -22,11 +22,13 @@ class ActinicFlux : public Cantera::Func1 {
 
   ActinicFlux(const std::vector<double>& wavelength,
               const std::vector<double>& flux,
+              const std::vector<double>& height,
               std::shared_ptr<Cantera::Kinetics> kin,
               std::shared_ptr<AtmChemistry> atm) {
     setKinetics(kin);
     setAtmosphere(atm);
     setWavelength(wavelength);
+    setz(height);
     setTOAFlux(flux);
     initialize();
   }
@@ -40,6 +42,10 @@ class ActinicFlux : public Cantera::Func1 {
   //! set TOA irradiance [w/(m^2.m)]
   void setTOAFlux(std::vector<double> const& flux) { m_toa_flux = flux; }
 
+  void setz(const std::vector<double>& height) {
+        m_height = std::make_shared<std::vector<double>>(height);
+    }
+  
   //! set wavelength grid [m]
   void setWavelength(std::vector<double> const& wavelength) {
     m_wavelength = std::make_shared<std::vector<double>>(wavelength);
@@ -68,6 +74,10 @@ class ActinicFlux : public Cantera::Func1 {
     return m_actinicFlux->at(j * m_wavelength->size() + k);
   }
 
+  void setFlux(size_t j, size_t k, double FluxVal){
+    m_actinicFlux->at(j * m_wavelength->size() + k) = FluxVal;
+  }
+
   void show() const;
 
  protected:
@@ -91,6 +101,8 @@ class ActinicFlux : public Cantera::Func1 {
 
   //! actinic flux (nPoints x nWaves), shared with Kinetics
   std::shared_ptr<std::vector<double>> m_actinicFlux;
+  
+  std::shared_ptr<std::vector<double>> m_height;
 
   //! photolysis reactions
   std::vector<std::shared_ptr<Cantera::Reaction>> m_photo_reactions;

@@ -51,7 +51,7 @@ class Connector : public Cantera::Domain1D {
   void setSpeciesNeumann(const std::string& xin);
 
   //! The eval function of a connector modifies the tri-diagonal matrices
-  void eval(size_t jGlobal, double* yGlobal, double* rsdGlobal,
+  virtual void eval(size_t jGlobal, double* yGlobal, double* rsdGlobal,
             integer* diagGlobal, double rdt) override;
 
  protected:

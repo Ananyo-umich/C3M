@@ -62,12 +62,14 @@ void Connector::setSpeciesNeumann(const std::string& xin) {
     NeumannBC bc;
     bc.id = componentIndex(x.first);
     bc.value = x.second;
+    std::cout << bc.id << " Neumann: " << bc.value << std::endl;
     neumann.push_back(bc);
   }
 }
 
 void Connector::eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
                      integer* diagGlobal, double rdt) {
+//  std::cout << "Starting the eval" << std::endl;
   // If evaluating a Jacobian, and the global point is outside the domain of
   // influence for this domain, then skip evaluating the residual
   if (jGlobal != Cantera::npos &&
@@ -98,6 +100,7 @@ void Connector::eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
   double* x = xGlobal + loc();
   double* rsd = rsdGlobal + loc();
 
+  //std::cout << "Starting Dirichlet" << std::endl;
   // apply dirichlet boundary conditions
   for (auto bc : dirichlet) {
     x[bc.id] = bc.value;
@@ -116,45 +119,67 @@ void Connector::eval(size_t jGlobal, double* xGlobal, double* rsdGlobal,
       vright(bc.id) = bc.value;
     }
   }
-
+ 
   // apply neumann boundary conditions
   for (auto bc : neumann) {
     double *xleft, *xright;
+    
+   // std::cout << "left address: " << left() << std::endl;
+  //  std::cout << "right address: " << right() << std::endl;
     if (left() != nullptr) {
       size_t nv = left()->nComponents();
-      size_t points = right()->nPoints();
+    //  std::cout << "nv : " << nv <<   std::endl;
+      size_t points = left()->nPoints();
+      std::cout << "points : " << points << std::endl;
       double dz = left()->z(points - 1) - left()->z(points - 2);
-
+      
       xleft = xGlobal + left()->loc() + left()->size() - nv;
-      xleft[bc.id] = xleft[bc.id + nv] - bc.value * dz;
-      vleft(bc.id) = bc.value * dz;
+      xleft[bc.id] = xleft[bc.id + nv] + bc.value * dz;
+      vleft(bc.id) = -1*bc.value * dz;
+      rsd[bc.id] = 0.0;
+      x[bc.id] = xleft[bc.id];
+      std::cout << "Neumann " << bc.value << std::endl;
       left()->B(points - 2) += left()->C(points - 2);
     }
 
     if (right() != nullptr) {
+    //  std::cout << "Right is not null" << std::endl;
       size_t nv = right()->nComponents();
       double dz = right()->z(1) - right()->z(0);
-
+      std::cout << dz << std::endl;
       xright = xGlobal + right()->loc();
-      xright[bc.id] = xright[bc.id + nv] - bc.value * dz;
-      vright(bc.id) = -bc.value * dz;
+      xright[bc.id] = xright[bc.id + nv] + bc.value * dz;
+      vright(bc.id) = -1*bc.value * dz;
+      x[bc.id] = xright[bc.id];
+      std::cout << "Neumann " << bc.value << std::endl;
+      rsd[bc.id] = 0.0;
       right()->B(1) += right()->A(1);
     }
-
+    
+    /*
     if (left() != nullptr && right() != nullptr) {
       x[bc.id] = 0.5 * (xleft[bc.id] + xright[bc.id]);
+    //  std::cout << "Neumann " << x[bc.id] << std::endl;
       rsd[bc.id] = xright[bc.id] - xleft[bc.id];
-    } else if (left() != nullptr) {
+    } 
+  
+    else if (left() != nullptr) {
       x[bc.id] = xleft[bc.id];
+     // std::cout << "Neumann " << x[bc.id] << std::endl; 
       rsd[bc.id] = 0.;
     } else if (right() != nullptr) {
       x[bc.id] = xright[bc.id];
+   //   std::cout << "Neumann " << x[bc.id] << std::endl;
       rsd[bc.id] = 0.;
-    } else {
+    } 
+    */
+    
+    else {
       throw Cantera::CanteraError("Connector::eval",
                                   "Neumann boundary condition without domain");
     }
   }
+  //std::cout << "Ending Neumann" << std::endl;
 
   if (left()) {
     size_t points = left()->nPoints();

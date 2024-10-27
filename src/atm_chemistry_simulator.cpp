@@ -7,7 +7,10 @@
 // C3M
 #include "RadTran.hpp"
 #include "actinic_flux.hpp"
+#include "atm_chemistry.hpp"
 #include "atm_chemistry_simulator.hpp"
+#include "boundary.hpp"
+
 
 AtmChemistrySimulator::AtmChemistrySimulator(
     std::vector<std::shared_ptr<Cantera::Domain1D>> domains)
@@ -109,6 +112,28 @@ int AtmChemistrySimulator::solve(double* x0, double* x1, int loglevel) {
   return -1;
 }
 
+void AtmChemistrySimulator::setMinTimeStep(double tmin){
+ OneDim::setMinTimeStep(tmin);
+}
+
+
+void AtmChemistrySimulator::setMaxTimeStep(double tmax){
+ OneDim::setMaxTimeStep(tmax);
+
+}
+
+void AtmChemistrySimulator::setTimeStepFactor(double tfactor){
+ OneDim::setTimeStepFactor(tfactor);
+}
+
+void AtmChemistrySimulator::setMaxTimeStepCount(int nmax){
+ OneDim::setMaxTimeStepCount(nmax);
+}
+
+void AtmChemistrySimulator::setSteadyMode(){
+ OneDim::setSteadyMode();
+}
+
 void AtmChemistrySimulator::setValue(std::shared_ptr<Cantera::Domain1D> pdom,
                                      size_t comp, size_t localPoint,
                                      double value) {
@@ -179,15 +204,18 @@ double AtmChemistrySimulator::timeStep(int nsteps, double dt, int loglevel) {
   // update domain cached internal variable
   for (size_t n = 0; n < nDomains(); n++) {
     domain(n).update(m_state->data() + start(n));
+    if (m_actinic_flux != nullptr) m_actinic_flux->eval(n, m_state->data());
   }
   std::cout << "Updated domain data" << std::endl;
   // update actinic flux
-  if (m_actinic_flux != nullptr) m_actinic_flux->eval(0., m_state->data());
-  if (m_actinic_flux != nullptr) m_actinic_flux->show();
+//  if (m_actinic_flux != nullptr) m_actinic_flux->eval(n, m_state->data());
+  //if (m_actinic_flux != nullptr) m_actinic_flux->show();
   // if (m_actinic_flux != nullptr) m_actinic_flux->eval(0., m_state->data());
 
   // update boundary conditions
-  eval(Cantera::npos, m_state->data(), m_xnew.data(), m_rdt, 1);
+  //Connector connectorInstance;
+  int some_integer = static_cast<int>(1); 
+  eval(Cantera::npos, m_state->data(), m_xnew.data(),2, m_rdt);
   std::cout << "Updated boundary conditions" << std::endl;
   
   //return AtmChemistrySimulator::solve(m_state->data(), m_xnew.data(), loglevel);

@@ -121,6 +121,17 @@ class AtmChemistry : public Cantera::Domain1D {
   void eval(size_t jGlobal, double* yGlobal, double* rsdGlobal,
             integer* diagGlobal, double rdt) override;
 
+   /**
+   * Take time steps using Backward Euler.
+   *
+   * @param nsteps number of steps
+   * @param dt initial step size
+   * @param loglevel controls amount of printed diagnostics [0-8]
+   * @returns size of last timestep taken
+   */
+  double timeStep(int nsteps, double dt, int loglevel);
+
+
  public:
   //---------------------------------------------------------
   //             special functions

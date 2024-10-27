@@ -1,5 +1,6 @@
 // C/C++
 #include <iomanip>
+#include <fstream>
 
 // cantera
 #include <cantera/kinetics/Photolysis.h>
@@ -60,7 +61,7 @@ void ActinicFlux::initialize() {
 
   // populate first TOA actinic flux
   for (size_t k = 0; k < waves; k++) {
-    m_actinicFlux->at((points - 1) * waves + k) = m_toa_flux[k];
+    setFlux(0, k, m_toa_flux[k]);
   }
 
   m_initialized = true;
@@ -87,38 +88,59 @@ double ActinicFlux::eval(double dt, double *x) {
     double temp = atm->getT(j);
     double pres = atm->getP(j);
     double delz = j == levels - 1 ? atm->getH(j) : atm->z(j + 1) - atm->z(j);
-   // std::cout << "dz : " << delz << std::endl;
+
     // total number density
     double num_dens = pres / (temp * Cantera::Boltzmann);
-
     for (auto rxn : m_photo_reactions) {
       size_t n = atm->componentIndex(rxn->reactants.begin()->first);
 
       // number density of the parent molecule
       double conc = atm->getX(x, n, j) * num_dens;
 
+
       // absorption cross section and optical thickness
       for (size_t k = 0; k < m_wavelength->size(); k++) {
         double wave = m_wavelength->at(k);
         auto &&cross =
             std::static_pointer_cast<Cantera::PhotolysisBase>(rxn->rate())
-                ->getCrossSection(temp, wave);
-   // std::cout << "cross : " << cross[0] << std::endl;
+                ->getCrossSection(temp, wave); //m^-2
+
         m_dtau(j, k) += conc * cross[0] * delz;
+
+
       }
+
     }
   }
 
+ double tau = 0.; 
   // calculate attenuation (simple)
   for (size_t k = 0; k < m_wavelength->size(); k++) {
-    double tau = 0.;
-    for (int j = levels - 1; j >= 0; j--) {
+   tau = 0.;
+    for (int j = 1; j < levels; j++) {
       tau += m_dtau(j, k);
-      m_actinicFlux->at(j * m_wavelength->size() + k) =
-          m_toa_flux[k] * exp(tau);
+      //double atFlux = m_toa_flux[k] * exp(tau);
+   if( k == 2448)
+   {
+  // std::cout << "OD: " << m_dtau(j, k) << std::endl;
+   }
+
+      //   if(m_dtau(j, k) == 0)
+   //   {
+   //    ActinicFlux::setFlux(j, k, 0.0);
+   //   }
+      double atFlux = getFlux(j-1, k) * exp(tau);
+     // std::cout << "tau: " << m_dtau(j, k) << std::endl;
+      size_t index = j * m_wavelength->size() + k;
+   //   std::cout << "Index: " << index << " Before: " << getFlux(j, k) << std::endl;
+    ActinicFlux::setFlux(j, k, atFlux); 
+   //  std::cout <<  "Index: " << index << " After: " << getFlux(j, k) << std::endl;
+   // std::cout << m_dtau(j, k) << std::endl;
     }
+   // std::cout << ActinicFlux::getFlux(0, k) <<  " " << ActinicFlux::getFlux(levels - 1 , k) << std::endl;
   }
   //std::cout << "AF calc done!" << std::endl;
+  
   return 0.;
 };
 
